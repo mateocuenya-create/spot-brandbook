@@ -1,7 +1,20 @@
 # TP5 · Brandbook interactivo (Spot · Post · Stop)
 
 > Este archivo es la memoria compartida del equipo. Claude Code lo lee al abrir la carpeta.
-> **Regla:** cada vez que se tome una decisión nueva, anotala acá (sección 10, "Registro de decisiones") antes de hacer Commit + Push.
+> **Regla:** cada vez que se tome una decisión nueva, anotala acá (sección 11, "Registro de decisiones") antes de hacer Commit + Push.
+
+## Cómo trabajamos (leer primero)
+
+- **Link de la página (para todo el equipo):** https://mateocuenya-create.github.io/spot-brandbook/ — es GitHub Pages: se actualiza solo 1 o 2 minutos después de cada *Push*.
+- **Repo:** https://github.com/mateocuenya-create/spot-brandbook (público). Se trabaja con **GitHub Desktop**.
+- **Antes de empezar:** en GitHub Desktop, **Fetch origin** y, si aparece, **Pull origin**. Nunca trabajar dos personas a la vez.
+- **Al terminar:** **Commit to main** y **Push origin**.
+- **Instrucciones para Claude** (el equipo es nuevo en GitHub; hablarles simple):
+  1. Al terminar cualquier cambio en el repo, **decir siempre qué hacer en GitHub Desktop**: el texto exacto para poner en *Summary* (corto, en español, ej. `Agrego KM 4 Tipografías`), y después **Commit to main** y **Push origin**.
+  2. Después del Push, **pasar siempre el link** de la página (el de arriba) para ver el cambio.
+  3. Anotar en "Registro de decisiones" lo que se decidió.
+  4. Respetar la sección "Lo aprendido": no inventar, el Figma es el modelo, cada marca usa solo sus misceláneas.
+  5. Para probar en la compu: abrir `index.html` con doble clic (no moverlo de la carpeta, necesita `assets/`).
 
 **Entrega: el viernes (fecha exacta a confirmar por el equipo).** Presentación oral el mismo día en clase.
 Idioma de todo el proyecto: español rioplatense (Buenos Aires). Contexto: tesis grupal de Multimedia (UADE), tema deportes. Equipo de 4 personas, cada una con su propia cuenta de Claude. **No trabajan al mismo tiempo**: antes de empezar, hacer *Fetch/Pull* en GitHub Desktop; al terminar, *Commit* + *Push*.
