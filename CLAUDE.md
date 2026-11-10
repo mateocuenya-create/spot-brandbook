@@ -3,7 +3,7 @@
 > Este archivo es la memoria compartida del equipo. Claude Code lo lee al abrir la carpeta.
 > **Regla:** cada vez que se tome una decisión nueva, anotala acá (sección 10, "Registro de decisiones") antes de hacer Commit + Push.
 
-**Entrega: martes 10/11/2026, 18:30.** Presentación oral el mismo día en clase.
+**Entrega: el viernes (fecha exacta a confirmar por el equipo).** Presentación oral el mismo día en clase.
 Idioma de todo el proyecto: español rioplatense (Buenos Aires). Contexto: tesis grupal de Multimedia (UADE), tema deportes. Equipo de 4 personas, cada una con su propia cuenta de Claude. **No trabajan al mismo tiempo**: antes de empezar, hacer *Fetch/Pull* en GitHub Desktop; al terminar, *Commit* + *Push*.
 
 ---
@@ -146,7 +146,7 @@ Fidelidad: **exacta** en disparadores, destinos, duraciones y easing; **aproxima
 
 ## 6. Decisiones vigentes
 
-- Todo en **un único archivo .html autocontenido** (el equipo no trabaja en simultáneo, así que no hace falta dividirlo).
+- Un solo `index.html` (HTML + CSS + JS adentro) y la carpeta `assets/` con los gráficos exportados de Figma (`assets/svg/`) y el video (`assets/video/`). Sin frameworks ni pasos de compilación: se abre directo en el navegador o en GitHub Pages.
 - Scroll continuo con animaciones; recorrido tipo carrera (KM por capítulo); respetar la home del Figma (portada amarilla → mapa con puntos → capítulos, menú lateral).
 - Tono de presentación para inversores y diseñadores.
 - Supuestos sin confirmar: Spot, Post y Stop con capítulo propio y misma estructura; UX como capítulo propio al final.
@@ -186,7 +186,7 @@ Página **"Escala tipográfica"** (`9:2603`):
 5. Elegir qué animaciones del sitio STOP reutilizar.
 6. Subir a Teams los archivos que se enlacen (hoy están en Drive).
 7. Aparte de la página: video .mp4 y guion de la exposición de 8 minutos.
-8. Primer paso de construcción: home (portada, mapa, menú y KM 1–2) para ver las animaciones antes de seguir.
+8. Primer paso de construcción: home (portada, mapa, menú y KM 1–2), siguiendo el Figma como modelo.
 
 ---
 
@@ -199,7 +199,36 @@ Página **"Escala tipográfica"** (`9:2603`):
 
 ---
 
-## 10. Registro de decisiones
+## 10. Lo aprendido (se empezó de cero el 10/11/2026)
+
+El 10/11/2026 se borró todo lo construido y se empezó de nuevo. Respaldo de la versión anterior (página, propuesta y gráficos exportados del Figma) en la compu de Mateo: `Downloads/spot-brandbook-respaldo-2026-11-10/`. **No reusar ese código sin que el equipo lo pida.**
+
+### Reglas que dejó el feedback del equipo
+- **No inventar.** Ni textos, ni piezas, ni elementos gráficos. Todo sale del Figma.
+- **El Figma es referencia y también modelo a seguir** (la home es la página "Brand guidelines TP5").
+- **No sobrecargar.** Les gusta que todo sea interactivo, pero con medida: una propuesta con muchas animaciones inventadas se rechazó por "demasiado".
+- **Cada marca usa SOLO sus misceláneas.** Nunca mezclar (ej.: la estrella de STOP no va en SPOT!).
+
+### Datos confirmados del Figma
+- Colores oficiales (estilos del Figma): Amarillo #FDCE42, Naranja #FF7640, Rosa #F79EE1, Violeta #AB8AE5, Azul #7AA1FF, Negro #252525, Blanco Crema #EDE8DB (+ Negro 80/60/20 y Crema 60 como transparencias). Verde de post.: #49B867.
+- Portada (Slide 1): animación del Figma de 2,4 s: 58 puntitos del logo que parpadean (0–42 %), borde que se dibuja (16,7–55,6 %, curva cubic-bezier(.6,0,.6,1)), relleno crema y puntos que se desvanecen (75–91,7 %). El contorno que queda **es** el recorrido del mapa de la Home.
+- Fondo de la Home (Slide 2): es un **video** (ciclistas). Figma no deja exportarlo por API; hace falta el archivo original. Encima lleva velo negro 40 % y desenfoque de 10 px.
+- Hover de los puntos del mapa: el punto sube 7 px con sombra y aparece arriba una pastilla "KM n · nombre".
+- Lenguaje de movimiento de la app Spot (prototipo de "Pantallas app Spot"): casi todo Smart Animate de 0,1 a 0,3 s ease-out; cambios de estado de "Registrar" en 1 s con curva Gentle; overlays que suben desde abajo en 0,2 s; celebraciones de logro con insignia central, puntitos y formas de colores, franja diagonal con líneas onduladas, stickers inclinados ("¡Canje exitoso!") y "+30 p.".
+- Texto real de **voz y tono** cargado por el equipo en "Brand guidelines TP5" (nodo 19:9775).
+
+### Misceláneas de cada marca
+- **SPOT!:** insignias (cada familia con su forma y color), puntitos del logo, línea ondulada de "Logros conectados", círculos de colores, estallido naranja e insignia azul (lámina 24:9844).
+- **post.:** "formas marcarias": estrella ondulada de 12 puntas con contorno (verde o crema), forma de 7 puntas verde, círculos con contorno crema, puntos verdes y ondas crema a los costados (lámina 24:9862; también página POST, "Interfaz de la pantalla principal"). Comportamiento definido en el Figma: "si se acercan a la silueta de la persona, puede empujarlas al moverse".
+- **STOP:** "garabatos": estrella azul, estrella de contorno, cruz de puntos, destello de puntos, círculo punteado, puntos rosa/azul, franjas diagonales y líneas de puntos, en crema, rosa o azul según el fondo (lámina 24:9888; también página Evento STOP, "Objetos y garabatos").
+- **Caritas:** las 9 caritas de línea ("Cara 1"–"Cara 9", página "Brand guidelines TP5", nodos 24:9978–24:9986) son de las tres marcas; cambia el color del círculo. Formato (lámina de SPOT!): círculo del color, borde crema 3 px, sombra 0 3px 3px 25 %, carita al 90 %, inclinada ±15°. Colores: SPOT! violeta o naranja · post. verde · STOP rosa o crema (STOP además tiene "vec-cara-canchera", "vec-cara-sonadora", "vec-cara-dormida").
+
+### Tips técnicos
+- Figma no deja exportar videos por API.
+- Para probar la página en la compu: abrir `index.html` con doble clic.
+- Logos de post. ("Logo post.", página POST 1:21442) y STOP ("logo_stop", página Evento STOP 1:37225) se pueden exportar como SVG.
+
+## 11. Registro de decisiones
 (Anotar acá cada decisión nueva: fecha · quién · qué se decidió.)
 
-- 06/11/2026 · Mateo · Se crea el repo y este CLAUDE.md. Un solo archivo .html. Confirmado del Figma: demora de la portada 2,4 s; links en Teams (no Drive) según la consigna.
+- 10/11/2026 · Mateo · Se empieza de cero. Historial de Git limpio.
