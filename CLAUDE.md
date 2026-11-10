@@ -256,6 +256,8 @@ El 10/11/2026 se borró todo lo construido y se empezó de nuevo. Respaldo de la
 (Anotar acá cada decisión nueva: fecha · quién · qué se decidió.)
 
 - 10/11/2026 · Mateo · Se empieza de cero. Historial de Git limpio.
+- 10/11/2026 · Mateo · **Misceláneas jugables tomadas de truus.co** (sus stickers se empujan al pasar el mouse). Analizado en su código: función "Momentum-based Cards Hover" con GSAP + InertiaPlugin. Al entrar el mouse a una pieza: velocidad del mouse × 30 (máx. ±1080) para empujarla, giro = torque (según desde dónde pega) × 20 (máx. ±60°), y vuelve sola a su lugar con resistencia 200. Solo con mouse (en celular no).
+  - Aplicado en `index.html` (`iniciarStickers`): todas las misceláneas de los heros de KM 1, 2 y 3 (puntos, estrellas, insignia y carita) y las de post. y STOP en el KM 1. La insignia (estrella + dibujo) se mueve como una sola pieza. GSAP 3.13.0 + InertiaPlugin desde jsDelivr.
 - 10/11/2026 · Mateo · **Movimiento al scrollear tomado de houseofyellow.nl** (pedido del equipo: que no sea brusco). Analizado en su código: usan Lenis (duración 1,2 s, curva expo-out `t => Math.min(1, 1.001 - 2^(-10t))`, rueda suavizada, touch nativo) + GSAP ScrollTrigger con entradas de 0,45 s que suben ~24 px al llegar al 90 % de la pantalla, escalonadas de a 0,15 s, una sola vez.
   - Aplicado en `index.html`: Lenis 1.1.13 desde jsDelivr, una instancia por página KM (son las que scrollean); todos los saltos internos (links del hero, menú, flecha, "Volver arriba") usan el mismo scroll suave.
   - Entradas: lista `ENTRAN` en el script (secciones, pilares, stickers, cards, filas, fotos, botones…). El hero de cada KM no se anima (ya está a la vista).

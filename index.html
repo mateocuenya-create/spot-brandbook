@@ -79,8 +79,12 @@ a.punto{cursor:pointer} span.punto{cursor:default}
 .slide-down{position:absolute;left:936px;width:48px;height:48px}
 .slide-down img{width:100%;height:100%}
 .deco{position:absolute;pointer-events:none}
+.deco .mov{position:absolute;inset:0;will-change:transform}
 .deco img{position:absolute;max-width:none}
 .carita{position:absolute;width:116px;height:116px;display:grid;place-items:center;pointer-events:none}
+/* Stickers que se empujan al pasar el mouse (referencia: truus.co). El área sensible es un poco más grande que la pieza. */
+.jugable{pointer-events:auto}
+.jugable::after{content:"";position:absolute;inset:-14px;border-radius:50%}
 .carita span{width:93.878px;height:93.878px;border-radius:50%;border:3.12px solid var(--crema);box-shadow:0 4px 4px rgba(0,0,0,.25);background:var(--c);overflow:hidden;rotate:15.9deg}
 .carita img{width:100%;height:100%;object-fit:cover;opacity:.85}
 
@@ -541,6 +545,8 @@ a.punto{cursor:pointer} span.punto{cursor:default}
 </nav>
 
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/InertiaPlugin.min.js"></script>
 <script>
 /* =====================================================================
    DATOS DEL FIGMA
@@ -593,15 +599,23 @@ function armarDecos(){
   $$('[data-decos]').forEach(cont => {
     const key = cont.dataset.decos;
     (DECOS[key] || []).forEach(([src, x, y, w, h, ins, rot, caja]) => {
+      const img = document.createElement('img'); img.alt = '';
+      if (src.startsWith('IMG:')) {
+        // dibujo de la insignia: va dentro de la estrella anterior, así se mueven juntas
+        const prev = cont.lastElementChild, mov = prev && prev.querySelector('.mov');
+        img.src = 'assets/' + src.slice(4);
+        const px = parseFloat(prev.style.left), py = parseFloat(prev.style.top);
+        img.style.cssText = `left:${x - px}px;top:${y - py}px;width:${w}px;height:${h}px;object-fit:cover`;
+        mov.appendChild(img); return;
+      }
       const d = document.createElement('div'); d.className = 'deco';
       d.style.cssText = `left:${x}px;top:${y}px;width:${w}px;height:${h}px`;
-      const img = document.createElement('img'); img.alt = '';
-      if (src.startsWith('IMG:')) { img.src = 'assets/' + src.slice(4); img.style.cssText = 'inset:0;width:100%;height:100%;object-fit:cover'; d.appendChild(img); cont.appendChild(d); return; }
+      const mov = document.createElement('div'); mov.className = 'mov';
       img.src = 'assets/' + src;
       const inner = caja || w, innerH = caja || h, off = caja ? (w - caja) / 2 : 0;
       const [t, r, b, l] = ins;
       img.style.cssText = `left:${off + inner * l / 100}px;top:${off + innerH * t / 100}px;width:${inner * (1 - (l + r) / 100)}px;height:${innerH * (1 - (t + b) / 100)}px;${rot ? `rotate:${rot}deg;` : ''}`;
-      d.appendChild(img); cont.appendChild(d);
+      mov.appendChild(img); d.appendChild(mov); cont.appendChild(d);
     });
     if (CARITAS[key]) {
       const [x, y, c] = CARITAS[key];
@@ -826,6 +840,39 @@ function irA_Y(cont, y, ya){
 function irArriba(cont, ya){ irA_Y(cont, 0, ya); }
 
 /* =====================================================================
+   STICKERS JUGABLES (misma técnica que truus.co, "momentum-based hover"):
+   al entrar el mouse se mide su velocidad y desde dónde pega; la pieza sale empujada,
+   gira según el golpe y vuelve sola a su lugar con inercia (GSAP InertiaPlugin).
+   ===================================================================== */
+function iniciarStickers(){
+  if (REDUCIR || !matchMedia('(hover: hover) and (pointer: fine)').matches || !window.gsap || !window.InertiaPlugin) return;
+  gsap.registerPlugin(InertiaPlugin);
+  const EMPUJE = 30, GIRO = 20, RESISTENCIA = 200;               // valores de truus.co
+  const limXY = gsap.utils.clamp(-1080, 1080), limGiro = gsap.utils.clamp(-60, 60);
+  let prevX = 0, prevY = 0, velX = 0, velY = 0, cuadro = null;
+  addEventListener('mousemove', e => {
+    if (cuadro) return;
+    cuadro = requestAnimationFrame(() => { velX = e.clientX - prevX; velY = e.clientY - prevY; prevX = e.clientX; prevY = e.clientY; cuadro = null; });
+  });
+  const z = () => parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--z')) || 1;
+  $$('.deco, .carita').forEach(el => {
+    const pieza = el.querySelector('.mov') || el.firstElementChild; if (!pieza) return;
+    el.classList.add('jugable');
+    el.addEventListener('mouseenter', e => {
+      const r = pieza.getBoundingClientRect();
+      const dx = e.clientX - (r.left + r.width / 2), dy = e.clientY - (r.top + r.height / 2);
+      const torque = (dx * velY - dy * velX) / (Math.hypot(dx, dy) || 1);
+      const k = z();                                              // la página está escalada: el empuje se ve igual en cualquier pantalla
+      gsap.to(pieza, { inertia: {
+        x: { velocity: limXY(velX * EMPUJE) / k, end: 0 },
+        y: { velocity: limXY(velY * EMPUJE) / k, end: 0 },
+        rotation: { velocity: limGiro(torque * GIRO), end: 0 },
+        resistance: RESISTENCIA } });
+    });
+  });
+}
+
+/* =====================================================================
    ENTRADAS AL SCROLLEAR: suben 24 px + aparecen, 0,45 s, escalonadas 0,15 s
    ===================================================================== */
 const ENTRAN = ['.sec .fila > *', '.pilar', '.rasgo', '.card-enf', '.card-tono', '.eje', '.somos-fila', '.enfoque > h4', '.momentos > h4',
@@ -881,7 +928,7 @@ addEventListener('keydown', e => { if (e.key === 'Escape') cerrarMenu(); });
 $$('[data-a]').forEach(b => b.addEventListener('click', () => scrollA(b.closest('article.km').id, b.dataset.a)));
 $$('[data-bajar]').forEach(b => b.addEventListener('click', () => { const k = b.closest('article.km'); irA_Y(k, k.scrollTop + innerHeight * .9); }));
 $$('[data-arriba]').forEach(b => b.addEventListener('click', () => irArriba(b.closest('article.km'))));
-iniciarScrollSuave(); iniciarEntradas();
+iniciarScrollSuave(); iniciarEntradas(); iniciarStickers();
 addEventListener('hashchange', leerHash);
 
 if (location.hash && location.hash !== '#inicio') { portada.remove(); portadaFuera = true; leerHash(); }
