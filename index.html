@@ -69,9 +69,12 @@ a.punto{cursor:pointer} span.punto{cursor:default}
 .lienzo{position:relative;width:1920px;zoom:var(--z)}
 .hero{position:relative;height:1080px;background:var(--c)}
 .km-tag{position:absolute;left:118px;top:298px;border:3px solid var(--negro-80);border-radius:50px;padding:10px 30px;font:600 36px/normal var(--reddit);color:var(--negro-80);white-space:nowrap}
-.titulo-km{position:absolute;top:409px;font:600 128px/normal var(--sora);color:var(--negro);white-space:nowrap;text-shadow:0 4px 4px rgba(0,0,0,.25);isolation:isolate}
+.titulo-km{position:absolute;top:409px;height:161px;font:600 128px/normal var(--sora);color:var(--negro);white-space:nowrap}
+/* Título del KM como en el Figma: Sora SemiBold 128, borde crema 23 px por FUERA con uniones REDONDAS
+   y sombra 0 4 4 25 % sobre todo el bloque. Se dibuja en SVG porque el trazo de texto del navegador hace picos. */
+.titulo-km svg{display:block;overflow:visible;filter:drop-shadow(0 4px 4px rgba(0,0,0,.25))}
+.titulo-km text{font:600 128px var(--sora);fill:var(--negro);stroke:var(--crema);stroke-width:46px;stroke-linejoin:round;paint-order:stroke fill}
 /* borde crema por fuera (stroke OUTSIDE 23 del Figma) */
-.titulo-km::before{content:attr(data-t);position:absolute;inset:0;z-index:-1;color:var(--crema);-webkit-text-stroke:46px var(--crema);text-shadow:none}
 .bajada{position:absolute;left:828px;font:600 48px/normal var(--reddit);color:var(--negro);white-space:nowrap}
 .links{position:absolute;left:828px;display:flex;flex-direction:column;gap:16px;align-items:flex-start}
 .links button{font:600 24px/normal var(--reddit);text-transform:uppercase;color:var(--negro-60);transition:color .2s var(--ease-out)}
@@ -336,7 +339,7 @@ a.punto{cursor:pointer} span.punto{cursor:default}
   <section class="hero" style="--c:var(--amarillo)">
     <button class="btn-menu" data-abrir-menu aria-label="Abrir índice"><img src="assets/km1/lista-oscuro.svg" alt=""></button>
     <span class="km-tag">KM 1</span>
-    <h1 class="titulo-km" data-t="Acerca de">Acerca de</h1>
+    <h1 class="titulo-km" data-t="Acerca de" data-w="659" data-centro>Acerca de</h1>
     <img src="assets/km1/logo-spot-grande.svg" alt="SPOT!" style="position:absolute;left:828px;top:396px;width:570.16px;height:188.39px">
     <p class="bajada" style="top:632px">Una marca en constante movimiento</p>
     <nav class="links" style="top:744px"><button data-a="km1-bs">Brand Spirit ↗</button><button data-a="km1-mv">Misión y visión ↗</button><button data-a="km1-sub">Submarcas ↗</button></nav>
@@ -404,7 +407,7 @@ a.punto{cursor:pointer} span.punto{cursor:default}
   <section class="hero" style="--c:var(--naranja)">
     <button class="btn-menu" data-abrir-menu aria-label="Abrir índice"><img src="assets/km2/21764.svg" alt=""></button>
     <span class="km-tag">KM 2</span>
-    <h1 class="titulo-km" data-t="Manual de Voz y Tono" style="left:120px">Manual de Voz y Tono</h1>
+    <h1 class="titulo-km" data-t="Manual de Voz y Tono" data-w="1392" style="left:120px">Manual de Voz y Tono</h1>
     <p class="bajada" style="top:612px">¿Cómo le hablamos a nuestro público?</p>
     <nav class="links" style="top:724px"><button data-a="km2-voz">La voz ↗</button><button data-a="km2-tono">El tono ↗</button><button data-a="km2-guia">Guía de estilo ↗</button></nav>
     <button class="slide-down" style="top:969px" data-bajar aria-label="Bajar"><img src="assets/km2/95fa8.svg" alt=""></button>
@@ -476,7 +479,7 @@ a.punto{cursor:pointer} span.punto{cursor:default}
   <section class="hero" style="--c:var(--rosa)">
     <button class="btn-menu" data-abrir-menu aria-label="Abrir índice"><img src="assets/km2/21764.svg" alt=""></button>
     <span class="km-tag">KM 3</span>
-    <h1 class="titulo-km" data-t="Logotipos de la marca" style="left:120px">Logotipos de la marca</h1>
+    <h1 class="titulo-km" data-t="Logotipos de la marca" data-w="1448" style="left:120px">Logotipos de la marca</h1>
     <button class="slide-down" style="top:969px" data-bajar aria-label="Bajar"><img src="assets/km2/95fa8.svg" alt=""></button>
     <div class="decos" data-decos="km3"></div>
   </section>
@@ -770,6 +773,23 @@ function armarMapa(){
   }).join('');
 }
 
+/* Títulos de los KM en SVG (ver CSS .titulo-km) */
+function armarTitulos(){
+  $$('.titulo-km').forEach(h => {
+    const w = +h.dataset.w, centro = 'centro' in h.dataset;
+    h.setAttribute('aria-label', h.dataset.t);
+    h.innerHTML = `<svg width="${w}" height="161" viewBox="0 0 ${w} 161" aria-hidden="true"><text x="${centro ? w / 2 : 0}" text-anchor="${centro ? 'middle' : 'start'}">${h.dataset.t}</text></svg>`;
+  });
+  // línea de base igual a la del texto HTML ("line-height: normal" de Sora 128)
+  const ubicar = () => {
+    const c = document.createElement('canvas').getContext('2d'); c.font = '600 128px Sora';
+    const m = c.measureText('Acerca'), asc = m.fontBoundingBoxAscent || 120, desc = m.fontBoundingBoxDescent || 32;
+    const y = (161 - (asc + desc)) / 2 + asc;
+    $$('.titulo-km text').forEach(t => t.setAttribute('y', y));
+  };
+  ubicar(); if (document.fonts) document.fonts.ready.then(ubicar);
+}
+
 /* =====================================================================
    PORTADA: animación del Figma (2,4 s) → Home con Dissolve 0,1 s
    ===================================================================== */
@@ -921,7 +941,7 @@ function escalar(){
    ARRANQUE
    ===================================================================== */
 escalar(); addEventListener('resize', escalar);
-armarMapa(); armarDecos(); armarKM2(); armarKM3(); armarMenu();
+armarMapa(); armarTitulos(); armarDecos(); armarKM2(); armarKM3(); armarMenu();
 $$('[data-abrir-menu]').forEach(b => b.addEventListener('click', abrirMenu));
 $$('[data-cerrar-menu]').forEach(b => b.addEventListener('click', () => cerrarMenu()));
 addEventListener('keydown', e => { if (e.key === 'Escape') cerrarMenu(); });
