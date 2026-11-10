@@ -1,0 +1,10 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="1000" height="48" viewBox="0 0 1000 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Barra">
+<g id="Rectangle" opacity="0.35">
+<rect y="19" width="1000" height="10" rx="5" fill="#AB8AE6"/>
+<rect y="19" width="1000" height="10" rx="5" fill="black" fill-opacity="0.2"/>
+</g>
+<rect id="Rectangle_2" x="200" y="19" width="300" height="10" rx="5" fill="#AB8AE6"/>
+<circle id="Spot" cx="200" cy="24" r="22" fill="#AB8AE6"/>
+</g>
+</svg>

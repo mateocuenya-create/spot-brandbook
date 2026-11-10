@@ -1,0 +1,842 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SPOT! · Sistema de diseño</title>
+<meta name="description" content="Brandbook interactivo de SPOT!, post. y STOP. TP5 · TIF UADE.">
+<meta name="theme-color" content="#FDCE42">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Reddit+Sans:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Sora:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bitcount+Single:wght@700&display=swap" rel="stylesheet">
+<style>
+/* =====================================================================
+   SPOT! · Sistema de diseño
+   Construido 1 a 1 desde el Figma "Spot para Claude", página "Brand guidelines TP5".
+   Cada pantalla se diseña a 1920 px de ancho (como el Figma) y se escala con --z.
+   ===================================================================== */
+:root{
+  --amarillo:#FDCE42; --naranja:#FF7640; --rosa:#F79EE1; --violeta:#AB8AE5; --azul:#7AA1FF;
+  --verde:#49B867; --negro:#252525; --crema:#EDE8DB;
+  --negro-80:rgba(37,37,37,.8); --negro-60:rgba(37,37,37,.6); --negro-40:rgba(37,37,37,.4); --negro-10:rgba(37,37,37,.1);
+  --crema-60:rgba(237,232,219,.6);
+  --sora:'Sora',system-ui,sans-serif; --reddit:'Reddit Sans',system-ui,sans-serif;
+  --ease-out:cubic-bezier(0,0,.58,1); --ease-in-out:cubic-bezier(.42,0,.58,1);
+  --z:1;      /* escala de las páginas KM (ancho / 1920) */
+  --zs:1;     /* escala de portada y home (entra entera en pantalla) */
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{background:var(--negro);color:var(--negro);font-family:var(--reddit);overflow:hidden;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;text-align:inherit}
+a{color:inherit;text-decoration:none}
+img{display:block}
+:focus-visible{outline:3px solid var(--azul);outline-offset:4px;border-radius:8px}
+.pantalla{position:fixed;inset:0;overflow:hidden}
+
+/* ---------- PORTADA (lámina "1") ---------- */
+#portada{background:var(--amarillo);z-index:50;cursor:pointer;display:grid;place-items:center}
+#portada .escenario{width:1920px;height:1080px;zoom:var(--zs);flex:none}
+#portada svg{width:1920px;height:1080px;overflow:visible}
+
+/* ---------- HOME (Slide 2) ---------- */
+#inicio{background:var(--negro) url("assets/home/home-fondo.jpg") center/cover;display:grid;place-items:center}
+#inicio .velo{position:absolute;inset:0;background:rgba(0,0,0,.4);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+#inicio .escenario{position:relative;width:1920px;height:1080px;zoom:var(--zs);flex:none}
+.mapa{position:absolute;left:618px;top:428px;width:684px;height:224px}
+.mapa img{position:absolute;left:0;top:0;height:224px;transition:opacity .3s var(--ease-out)}
+.mapa .forma-logo{opacity:0}
+.mapa:hover .forma-logo{opacity:1}
+.mapa:hover .forma-contorno{opacity:0}
+.punto{position:absolute;width:42px;height:42px;--c:var(--amarillo)}
+.punto .bola{position:absolute;inset:0;border-radius:50%;background:var(--c);display:grid;place-items:center;font:400 20px var(--reddit);color:var(--negro);
+  transition:transform .1s var(--ease-out),box-shadow .1s var(--ease-out)}
+.punto .pill{position:absolute;left:50%;top:-69px;transform:translateX(-50%);display:flex;gap:10px;white-space:nowrap;padding:6px 20px;border-radius:46px;
+  background:var(--negro-60);font-size:20px;opacity:0;pointer-events:none;transition:opacity .1s var(--ease-out)}
+.punto .pill .km{font-weight:300;color:var(--crema-60)} .punto .pill .nom{font-weight:600;color:var(--crema)}
+.punto:hover .bola,.punto:focus-visible .bola{transform:translateY(-7px);box-shadow:0 4px 3px rgba(0,0,0,.4)}
+.punto:hover .pill,.punto:focus-visible .pill{opacity:1}
+a.punto{cursor:pointer} span.punto{cursor:default}
+.btn-menu{position:absolute;left:64px;top:66px;width:64px;height:64px;z-index:5}
+.btn-menu img{width:100%;height:100%}
+#inicio .logo-centro{position:absolute;left:897px;top:83px;width:127px;height:42px}
+#inicio .submarcas{position:absolute;left:1537px;top:78px;width:263px;display:flex;justify-content:space-between;align-items:center}
+
+/* ---------- PÁGINAS KM ---------- */
+.km{background:var(--crema);overflow-y:auto;overflow-x:hidden;visibility:hidden;z-index:10;overscroll-behavior:contain}
+.km.activa{visibility:visible}
+.lienzo{position:relative;width:1920px;zoom:var(--z)}
+.hero{position:relative;height:1080px;background:var(--c)}
+.km-tag{position:absolute;left:118px;top:298px;border:3px solid var(--negro-80);border-radius:50px;padding:10px 30px;font:600 36px/normal var(--reddit);color:var(--negro-80);white-space:nowrap}
+.titulo-km{position:absolute;top:409px;font:600 128px/normal var(--sora);color:var(--negro);white-space:nowrap;text-shadow:0 4px 4px rgba(0,0,0,.25);isolation:isolate}
+/* borde crema por fuera (stroke OUTSIDE 23 del Figma) */
+.titulo-km::before{content:attr(data-t);position:absolute;inset:0;z-index:-1;color:var(--crema);-webkit-text-stroke:46px var(--crema);text-shadow:none}
+.bajada{position:absolute;left:828px;font:600 48px/normal var(--reddit);color:var(--negro);white-space:nowrap}
+.links{position:absolute;left:828px;display:flex;flex-direction:column;gap:16px;align-items:flex-start}
+.links button{font:600 24px/normal var(--reddit);text-transform:uppercase;color:var(--negro-60);transition:color .2s var(--ease-out)}
+.links button:hover{color:var(--negro)}
+.slide-down{position:absolute;left:936px;width:48px;height:48px}
+.slide-down img{width:100%;height:100%}
+.deco{position:absolute;pointer-events:none}
+.deco img{position:absolute;max-width:none}
+.carita{position:absolute;width:116px;height:116px;display:grid;place-items:center;pointer-events:none}
+.carita span{width:93.878px;height:93.878px;border-radius:50%;border:3.12px solid var(--crema);box-shadow:0 4px 4px rgba(0,0,0,.25);background:var(--c);overflow:hidden;rotate:15.9deg}
+.carita img{width:100%;height:100%;object-fit:cover;opacity:.85}
+
+/* secciones de texto: título 547 + contenido 972, separación 161 */
+.sec{padding:148px 120px;width:1920px}
+.fila{display:flex;gap:161px;align-items:flex-start}
+.fila > .t{width:547px;flex:none;font:600 48px/1.05 var(--sora);color:var(--negro)}
+.fila > .c{width:972px;flex:none}
+.txt{font:400 20px/1.5 var(--reddit);color:var(--negro)}
+.txt b,.txt strong{font-weight:700}
+.txt p + p{margin-top:30px}
+.naranja{color:var(--naranja)} .violeta{color:var(--violeta)}
+.grande{font:300 52px/1.18 var(--sora);color:var(--negro)}
+.grande b{font-weight:600}
+.divisor{height:4px;width:1680px;margin:0 auto;background:radial-gradient(circle,var(--negro-40) 2px,transparent 2.4px) 0 0/12.1px 4px repeat-x}
+.divisor.crema{background-image:radial-gradient(circle,var(--crema) 2px,transparent 2.4px)}
+
+/* glosario (hover → overlay, Dissolve 0,1 s) */
+.glosa{position:relative;text-decoration:underline;text-underline-offset:3px;cursor:help}
+.glosa .def{position:absolute;left:0;top:calc(100% + 12px);width:376px;z-index:20;background:var(--negro);color:var(--crema);border-radius:20px;padding:32px;
+  font:400 20px/1.4 var(--reddit);text-decoration:none;text-align:left;white-space:normal;letter-spacing:0;
+  opacity:0;visibility:hidden;transition:opacity .1s var(--ease-out),visibility .1s;box-shadow:0 8px 24px rgba(0,0,0,.2)}
+.glosa .def strong{display:block;font:400 22px/1.2 var(--reddit);text-transform:uppercase;padding-bottom:20px;margin-bottom:20px;border-bottom:1px solid var(--crema-60)}
+.glosa:hover .def,.glosa:focus .def{opacity:1;visibility:visible}
+
+/* ---------- KM 1 ---------- */
+#km1 .hero .titulo-km{left:120px;width:659px;text-align:center}
+.mv{display:flex;flex-direction:column;gap:84px}
+.mv-item{position:relative;cursor:default;padding:13px 0}
+.mv-item .et{display:block;font:600 24px/normal var(--reddit);text-transform:uppercase;color:#000;opacity:0;height:0;transition:opacity .2s var(--ease-out),height .2s var(--ease-out),margin .2s var(--ease-out)}
+.mv-item .fr{font:300 48px/1.25 var(--sora);color:var(--negro);transition:color .2s var(--ease-out),font-weight .2s}
+.mv-item:hover .et{opacity:1;height:30px;margin-bottom:12px}
+.mv-item:hover .fr{font-weight:700;color:var(--violeta)}
+.foto-co{position:relative;height:1080px;overflow:hidden}
+.foto-co img{width:100%;height:114.8%;object-fit:cover}
+.foto-co::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,.4)}
+.foto-co p{position:absolute;z-index:2;font:400 128px/normal var(--sora);color:var(--crema);white-space:nowrap}
+.foto-co .linea{position:absolute;z-index:2;left:1px;height:4px;background:radial-gradient(circle,var(--crema) 2px,transparent 2.4px) 0 0/12.1px 4px repeat-x}
+.oscuro{background:var(--negro);color:var(--crema)}
+.oscuro .fila > .t,.oscuro .txt{color:var(--crema)}
+.submarcas-zona{position:relative;height:3779px;background:var(--negro)}
+.submarcas-zona .abs{position:absolute}
+.submarcas-zona .txt{color:var(--crema);width:830px;left:545px}
+.boton{position:absolute;display:inline-flex;align-items:center;gap:10px;padding:16px 30px;border-radius:54px;font:600 20px/normal var(--reddit);color:var(--negro);transform:translateX(-50%);
+  transition:transform .2s var(--ease-out),filter .2s}
+.boton:hover{transform:translateX(-50%) scale(1.04)}
+.boton img{width:24px;height:24px}
+.foto-rot{position:absolute;border-radius:12px;object-fit:cover}
+.parada{position:absolute;display:flex;gap:120px;align-items:center;color:var(--crema)}
+.parada .info{display:flex;gap:23px;align-items:center}
+.parada .info .tx{display:flex;flex-direction:column;gap:7px;width:261px}
+.parada .info .tx small{font:600 16px/normal var(--reddit)}
+.parada .info .tx span{font:600 24px/normal var(--sora)}
+.parada .chip{border:1px solid var(--crema);border-radius:33px;padding:4px 12px;font:600 16px/normal var(--reddit)}
+.parada .circ{width:64px;height:64px;border-radius:63px;background:var(--amarillo);display:grid;place-items:center;transition:transform .2s var(--ease-out)}
+.parada:hover .circ{transform:scale(1.1)}
+.parada .circ img{width:32px;height:32px}
+.volver-arriba{position:absolute;left:884px;width:152px;display:flex;flex-direction:column;align-items:center;gap:11px;color:var(--crema);font:600 20px/normal var(--reddit);text-transform:uppercase}
+.volver-arriba img{width:48px;height:48px;rotate:180deg}
+
+/* ---------- KM 2 ---------- */
+.pilares{display:flex}
+.pilar{position:relative;width:420px;height:600px;background:var(--negro);color:var(--c);overflow:hidden;transition:background .3s var(--ease-out),color .3s var(--ease-out)}
+.pilar .n{position:absolute;left:36px;top:40px;font:600 18px/normal var(--reddit)}
+.pilar h3{position:absolute;left:36px;top:72px;width:360px;font:600 46px/normal var(--sora)}
+.pilar .d{position:absolute;left:36px;top:158px;width:348px;font:400 21px/1.45 var(--reddit);opacity:0;transition:opacity .3s var(--ease-out)}
+.pilar .d b{font-weight:700}
+.pilar .as{position:absolute;left:36px;top:410px;font:600 14px/normal var(--reddit);letter-spacing:1.12px}
+.pilar .q{position:absolute;left:36px;top:440px;width:348px;font:italic 400 24px/1.35 var(--reddit)}
+.pilar:hover{background:var(--c);color:var(--negro)}
+.pilar:hover .d{opacity:1}
+.banda{background:var(--azul);padding:148px 120px;display:flex;justify-content:center}
+.banda p{width:1090px;font:600 36px/1.31 var(--sora);color:var(--negro)}
+.frase{transition:color .3s var(--ease-out)}
+.frase:hover{color:var(--naranja)}
+.persona{position:relative}
+.silueta{position:absolute;left:62px;top:193px;width:790px;height:494px;overflow:hidden;pointer-events:none}
+.silueta img{position:absolute;left:0;top:-29.28%;width:100%;height:159.12%}
+.rasgos{position:relative;height:317px;width:1680px}
+.rasgo{position:absolute;padding:24px 60px;border:4px solid var(--negro);border-radius:60px;background:var(--c);filter:drop-shadow(0 4px 2px rgba(0,0,0,.25));
+  font:600 36px/normal var(--reddit);text-transform:uppercase;color:var(--negro);white-space:nowrap;rotate:var(--r);transition:rotate .2s var(--ease-out),scale .2s var(--ease-out)}
+.rasgo:hover{rotate:0deg;scale:1.05}
+.enfoque h4,.momentos h4{font:600 25px/1.3 var(--reddit);color:var(--negro);margin-bottom:32px}
+.cards{display:flex;gap:20px;width:1680px}
+.card-enf{flex:1;height:340px;border-radius:24px;padding:32px;display:flex;flex-direction:column;justify-content:flex-end;background:var(--c);overflow:hidden;
+  border:1px solid var(--c);transition:background .3s var(--ease-out)}
+.card-enf h5{font:600 25px/1.3 var(--reddit);color:var(--negro)}
+.card-enf ul{list-style:none;display:flex;flex-direction:column;gap:12px;font:400 20px/1.5 var(--reddit);color:var(--negro-80);max-height:0;opacity:0;overflow:hidden;
+  transition:max-height .3s var(--ease-out),opacity .3s var(--ease-out),margin .3s var(--ease-out)}
+.card-enf:hover{background:var(--crema)}
+.card-enf:hover ul{max-height:186px;opacity:1;margin-top:16px}
+.cards-tono{display:flex;gap:24px}
+.card-tono{position:relative;width:402px;height:350px;border-radius:24px;padding:32px;background:var(--negro);border:2px solid var(--negro);overflow:hidden;
+  display:flex;flex-direction:column;justify-content:space-between}
+.card-tono::before{content:"";position:absolute;left:30px;top:30px;width:var(--w);height:43px;border-radius:21.5px;background:var(--c);
+  transition:left .4s var(--ease-out),top .4s var(--ease-out),width .4s var(--ease-out),height .4s var(--ease-out),border-radius .4s var(--ease-out)}
+.card-tono > *{position:relative}
+.card-tono .mom{align-self:flex-start;padding:10px 22px;font:600 18px/normal var(--reddit);color:var(--negro)}
+.card-tono h5{font:600 30px/1.2 var(--sora);color:var(--crema);transition:color .4s var(--ease-out)}
+.card-tono .ej{max-height:0;opacity:0;overflow:hidden;transition:max-height .4s var(--ease-out),opacity .4s var(--ease-out),margin .4s}
+.card-tono .ej small{display:block;font:600 14px/normal var(--reddit);color:var(--negro-80);margin-bottom:12px}
+.card-tono .ej p{font:400 22px/1.4 var(--reddit);color:var(--negro-80)}
+.card-tono:hover::before{left:0;top:0;width:100%;height:100%;border-radius:0}
+.card-tono:hover h5{color:var(--negro)}
+.card-tono:hover .ej{max-height:140px;opacity:1;margin-top:12px}
+.perfil{display:flex;flex-direction:column;gap:44px;padding:48px;width:1680px;align-items:center}
+.eje{display:grid;grid-template-columns:178px 1000px 260px;column-gap:32px;row-gap:14px;align-items:center}
+.eje span{font:600 23px/1.5 var(--reddit);text-transform:uppercase;color:var(--negro-60)}
+.eje span.si{color:var(--negro)}
+.eje img{width:1000px;height:48px}
+.eje p{grid-column:2;font:400 21px/1.45 var(--reddit);color:var(--negro)}
+.somos{display:flex;flex-direction:column;gap:20px;width:1680px}
+.somos-fila{display:flex;gap:122px;align-items:center;cursor:pointer}
+.toggle{position:relative;width:586px;height:84px;flex:none;border-radius:46px;background:var(--negro-10);padding:4px;display:flex;gap:4px}
+.toggle::before{content:"";position:absolute;left:4px;top:4px;width:287px;height:76px;border-radius:38px;background:var(--c);transition:left .35s var(--ease-in-out),background .35s var(--ease-in-out)}
+.toggle span{position:relative;flex:1;display:grid;place-items:center;font:600 25px/normal var(--reddit);text-transform:uppercase;color:var(--negro);transition:color .35s var(--ease-in-out)}
+.somos-fila.no .toggle::before{left:295px;background:var(--negro)}
+.somos-fila.no .toggle span:last-child{color:var(--crema)}
+.ejemplo{flex:1;display:flex;gap:16px;align-items:center;min-width:0}
+.ejemplo p{font:400 23px/1.5 var(--reddit);color:var(--negro);white-space:nowrap}
+.ejemplo img{width:32px;height:32px}
+.ejemplo .si{display:flex;gap:16px;align-items:center}
+.ejemplo .no{display:none}
+.somos-fila.no .ejemplo .si{display:none}
+.somos-fila.no .ejemplo .no{display:flex;gap:16px;align-items:center}
+.somos-fila.no .ejemplo .no p{color:var(--negro-60)}
+.somos-fila.no .ejemplo .no p.falta{font-style:italic}
+.guia{display:flex;flex-direction:column;gap:96px}
+.guia .fila > .t{font:700 32px/1.25 var(--sora)}
+.tabla{display:flex;flex-direction:column;margin-top:42px}
+.tabla .cab{display:flex;gap:20px;padding-bottom:16px}
+.tabla .cab div{flex:1;display:flex;gap:12px;align-items:center;font:700 22px/normal var(--reddit)}
+.tabla .cab div:last-child{color:#6b6b6b}
+.tabla .cab img{width:22px;height:22px}
+.tabla .r{display:flex;gap:20px;padding:18px 0;border-top:2px dashed var(--negro-80);font:italic 400 22px/1.4 var(--reddit)}
+.tabla .r p{flex:1} .tabla .r p:last-child{color:#6b6b6b}
+
+/* ---------- KM 3 ---------- */
+.sticky{position:sticky;top:40px;align-self:flex-start}
+.logo-hover{position:relative;width:480px;height:159px;margin:48px auto}
+.logo-hover img{position:absolute;inset:0;width:100%;height:100%;transition:opacity .3s var(--ease-out)}
+.logo-hover .v2{opacity:0}
+.logo-hover:hover .v2{opacity:1}
+.logo-hover:hover .v1{opacity:0}
+.logo-fijo{margin:48px auto;display:block}
+.tira{position:relative;width:1680px;height:345px;overflow:hidden;margin-top:120px}
+.tira > img{position:absolute;left:0;top:0;width:3852px;max-width:none}
+.tira .cota{position:absolute}
+.tira .lbl{position:absolute;font:400 20px/normal var(--reddit);color:var(--negro);white-space:nowrap}
+.variantes{display:flex;gap:161px;align-items:flex-start}
+.nav-fondos{width:547px;flex:none;display:flex;flex-direction:column;gap:8px;align-items:flex-end;padding-right:20px;border-right:1px solid #000;position:sticky;top:40px}
+.nav-fondos button{font:400 20px/1.5 var(--reddit);color:#000;white-space:nowrap;transition:color .15s}
+.nav-fondos button.on{font-weight:700;color:var(--azul)}
+.nav-fondos button:hover{color:var(--azul)}
+.var-card{width:972px;flex:none}
+.var-card .card{position:relative;height:474px;border-radius:20px;overflow:hidden;display:grid;place-items:center;background:var(--bg,var(--crema));transition:background .2s}
+.var-card .card .foto{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.var-card .card .oscurecer{position:absolute;inset:0;background:rgba(0,0,0,.4)}
+.var-card .card .logo{position:relative;width:350px;height:auto}
+.var-card .flecha{position:absolute;top:213px;width:48px;height:48px}
+.var-card .flecha img{width:100%;height:100%}
+.var-card .flecha.ant{left:24px} .var-card .flecha.ant img{rotate:180deg}
+.var-card .flecha.sig{left:900px}
+.var-card .ind{position:absolute;left:50%;top:446px;transform:translateX(-50%);display:flex;gap:6px}
+.var-card .ind i{width:6px;height:6px;border-radius:3px;background:var(--ic,var(--negro));opacity:.4;transition:width .2s,opacity .2s}
+.var-card .ind i.on{width:18px;opacity:1;background:var(--azul)}
+.var-card .paleta{position:absolute;left:96px;top:143.68px;display:flex;flex-direction:column;gap:11px;filter:drop-shadow(0 4px 2px rgba(0,0,0,.25))}
+.var-card .paleta button{width:24px;height:24px;border-radius:50%;border:2px solid var(--crema);background:var(--c);transition:transform .15s}
+.var-card .paleta button:hover,.var-card .paleta button.on{transform:scale(1.25)}
+.var-card .txt{margin-top:64px}
+.tamanos{display:flex;gap:118px;justify-content:center;margin-top:64px}
+.tamanos > div{width:371px;display:flex;flex-direction:column;gap:48px;align-items:center}
+.tamanos h6{font:600 20px/1.5 var(--reddit);color:var(--naranja)}
+.tamanos .muestra{position:relative;width:371px;height:117px}
+.tamanos .muestra .l{position:absolute;left:85px;top:0;width:200px}
+.tamanos .muestra .r{position:absolute;left:0;top:72px;width:371px}
+.tamanos p{font:400 20px/1.5 var(--reddit);margin-top:-26px}
+.pie{height:120px}
+
+/* ---------- MENÚ (Slide 3) ---------- */
+#menu{position:fixed;left:0;top:0;bottom:0;z-index:40;width:calc(578px * var(--zm));background:var(--negro);overflow-y:auto;overflow-x:hidden;visibility:hidden}
+#menu.abierto{visibility:visible}
+#menu .lienzo{width:578px;zoom:var(--zm);min-height:1080px;position:relative}
+#velo-menu{position:fixed;inset:0;z-index:39;background:rgba(0,0,0,.3);opacity:0;visibility:hidden;transition:opacity .2s var(--ease-out),visibility .2s}
+#velo-menu.abierto{opacity:1;visibility:visible}
+#menu .cerrar{position:absolute;left:64px;top:64px;width:64px;height:64px}
+#menu .cerrar img{width:100%;height:100%}
+#menu .volver{position:absolute;right:55px;top:67px;display:flex;gap:10px;align-items:center;background:var(--crema);border-radius:54px;padding:16px 30px;font:600 20px/normal var(--reddit);color:var(--negro)}
+#menu .volver img{width:24px;height:24px}
+#menu .linea{position:absolute;left:86px;top:265px;width:2px;bottom:0;background:var(--crema)}
+#menu ol{position:absolute;left:64px;top:244px;width:450px;list-style:none;display:flex;flex-direction:column;gap:34px;padding-bottom:64px}
+#menu li{display:flex;gap:31px;align-items:flex-start}
+#menu .num{flex:none;width:42px;height:42px;border-radius:50%;background:var(--amarillo);display:grid;place-items:center;font:400 20px var(--reddit);color:var(--negro);filter:drop-shadow(0 4px 3px rgba(0,0,0,.4))}
+#menu .cuerpo{flex:1;display:flex;flex-direction:column}
+#menu .enc{display:flex;gap:20px;align-items:center;font:600 32px/normal var(--sora);color:var(--crema);white-space:nowrap}
+#menu .enc img{width:28px;height:28px;transition:rotate .35s var(--ease-in-out)}
+#menu li.cerrado .enc img{rotate:180deg}
+#menu .subs{display:flex;flex-direction:column;gap:6px;align-items:flex-start;overflow:hidden;max-height:300px;margin-top:12px;
+  transition:max-height .35s var(--ease-in-out),margin .35s var(--ease-in-out),opacity .35s var(--ease-in-out)}
+#menu li.cerrado .subs{max-height:0;margin-top:0;opacity:0}
+#menu .subs button{font:600 20px/normal var(--reddit);color:var(--crema-60);white-space:nowrap;transition:color .15s}
+#menu .subs button:hover{color:var(--crema)}
+#menu .subs button:disabled{cursor:default}
+#menu .subs button:disabled:hover{color:var(--crema-60)}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition-duration:.01ms!important;animation:none!important}
+}
+</style>
+</head>
+<body>
+
+<!-- ======================= PORTADA ======================= -->
+<div id="portada" class="pantalla" aria-label="SPOT!" role="img">
+  <div class="escenario">
+    <svg viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <image id="p-crema" href="assets/home/portada-crema.svg" x="629" y="437" width="662.542" height="204.529"/>
+      <g id="p-puntos" fill="#252525"></g>
+      <g transform="translate(619 427)"><path id="p-borde" d="M80.4844 5C83.7995 5.04117 87.103 5.38541 90.3545 6.02539C93.7039 5.37825 97.1059 5.0343 100.519 5H102.286C105.602 5.04118 108.908 5.38498 112.16 6.02539C115.502 5.38409 118.895 5.0453 122.299 5.0127L122.323 5.01172H124.046L124.077 5.0127C127.393 5.05389 130.696 5.397 133.948 6.03711C137.297 5.39015 140.698 5.04702 144.11 5.0127L144.136 5.01172H145.848L145.879 5.0127C150.777 5.07324 155.644 5.79746 160.347 7.16602C166.619 8.98341 172.482 11.9571 177.64 15.9209C178.266 15.4364 178.902 14.9655 179.55 14.5098L180.386 13.9268C184.589 11.0591 189.201 8.83665 194.066 7.33496L194.109 7.32129L194.152 7.30957L194.692 7.15332L194.714 7.14746C199.545 5.774 204.538 5.0551 209.561 5.01172H211.291L211.321 5.0127C214.637 5.05387 217.941 5.39694 221.193 6.03711C224.542 5.39017 227.943 5.047 231.355 5.0127L231.381 5.01172H233.105L233.138 5.0127C236.452 5.05522 239.754 5.3984 243.005 6.03711C246.355 5.38984 249.757 5.047 253.17 5.0127L253.195 5.01172H254.907L254.938 5.0127C258.254 5.05389 261.558 5.39699 264.81 6.03711C268.158 5.39016 271.56 5.04702 274.972 5.0127L274.997 5.01172H276.708L276.737 5.0127C281.637 5.07065 286.507 5.79204 291.213 7.15723C296.681 8.70348 301.848 11.1657 306.494 14.4375C311.411 17.8163 315.667 22.0706 319.047 26.9873C320.354 28.8324 321.533 30.7643 322.579 32.7676C324.556 33.8007 326.462 34.9643 328.285 36.252C328.981 36.7272 329.665 37.2212 330.334 37.7324C330.972 37.2382 331.622 36.7587 332.283 36.2959C334.172 34.9682 336.15 33.7731 338.2 32.7139C339.209 30.769 340.345 28.8921 341.605 27.0986C344.822 22.3773 348.826 18.2433 353.442 14.8779L353.467 14.8604L353.491 14.8438L353.946 14.5195L353.996 14.4844L354.046 14.4512L354.525 14.127L354.532 14.1221L354.539 14.1182C358.879 11.2078 363.619 8.94309 368.61 7.39648L368.702 7.36914L369.242 7.21289L369.253 7.20996L369.263 7.20703C374.094 5.83351 379.088 5.11565 384.11 5.07227H385.871C389.186 5.11344 392.49 5.45758 395.742 6.09766C399.091 5.45112 402.492 5.1072 405.904 5.07227H407.686C411.001 5.11343 414.304 5.45767 417.556 6.09766C420.905 5.4505 424.307 5.10657 427.72 5.07227H429.468C434.356 5.1137 439.216 5.8161 443.916 7.16113C449.376 8.70402 454.533 11.1623 459.171 14.4297C459.889 14.9205 460.594 15.4318 461.284 15.9609C461.725 15.6231 462.172 15.293 462.624 14.9707L463.341 14.4697C467.747 11.3453 472.621 8.94006 477.782 7.34668L477.826 7.33398L477.869 7.32129L478.409 7.16504L478.419 7.16211L478.43 7.15918C483.261 5.78464 488.256 5.06684 493.278 5.02441H495.038C498.354 5.06559 501.658 5.40961 504.91 6.0498C508.259 5.40338 511.66 5.05935 515.071 5.02441H516.854C520.169 5.06694 523.472 5.41096 526.723 6.0498C530.072 5.40263 533.474 5.05872 536.887 5.02441H538.654C541.97 5.06559 545.274 5.40964 548.526 6.0498C551.875 5.40337 555.276 5.05937 558.688 5.02441H560.458C563.776 5.06622 567.082 5.40953 570.337 6.04883C573.687 5.40083 577.09 5.05802 580.504 5.02441H582.271C587.16 5.08405 592.02 5.80418 596.717 7.16602C598.861 7.77802 600.962 8.52919 603.008 9.41211C604.814 8.6172 606.666 7.92615 608.554 7.3457L608.594 7.33301L608.635 7.32129L609.175 7.16504L609.194 7.15918C614.022 5.78555 619.012 5.06789 624.03 5.02441H625.803C630.693 5.08402 635.552 5.80416 640.249 7.16602C645.718 8.70824 650.884 11.1671 655.532 14.4365C660.457 17.8177 664.72 22.0758 668.105 26.998L668.687 27.8408C671.548 32.0807 673.753 36.7311 675.224 41.6348C676.723 46.5939 677.503 51.743 677.538 56.9238V57.8945C677.54 58.0007 677.539 58.1067 677.536 58.2129L677.538 58.2139C677.516 61.7098 677.17 65.1954 676.511 68.627C677.162 71.9531 677.508 75.3328 677.538 78.7236V79.7051C677.54 79.8161 677.539 79.9271 677.536 80.0381L677.538 80.0391C677.515 83.5334 677.169 87.0171 676.511 90.4473C677.163 93.7743 677.508 97.155 677.538 100.547V101.527C677.54 101.634 677.539 101.74 677.536 101.847L677.538 101.848C677.516 105.343 677.17 108.828 676.511 112.26C677.163 115.586 677.508 118.966 677.538 122.357V123.338C677.54 123.446 677.539 123.553 677.536 123.661L677.538 123.662C677.514 128.649 676.825 133.609 675.495 138.413C675.476 138.514 675.457 138.607 675.437 138.69C675.361 139.002 675.274 139.249 675.229 139.372C675.215 139.408 675.202 139.441 675.192 139.468C674.608 141.35 673.918 143.197 673.131 145.003C673.939 146.878 674.64 148.799 675.227 150.757C676.723 155.717 677.502 160.867 677.538 166.048V166.995C677.54 167.098 677.538 167.201 677.536 167.305L677.538 167.306C677.515 172.296 676.826 177.259 675.495 182.067C675.476 182.169 675.457 182.263 675.437 182.348C675.361 182.659 675.274 182.906 675.229 183.029C675.215 183.065 675.202 183.098 675.192 183.124C673.602 188.252 671.214 193.096 668.116 197.479L668.117 197.48C664.743 202.397 660.492 206.649 655.579 210.027L655.58 210.028C650.927 213.322 645.747 215.798 640.264 217.353L640.265 217.354C635.456 218.739 630.48 219.459 625.476 219.493H624.205C619.139 219.456 614.101 218.739 609.227 217.36L609.213 217.356L609.198 217.353L608.659 217.196L608.616 217.184L608.574 217.171C603.408 215.579 598.53 213.172 594.123 210.042C589.225 206.674 584.985 202.439 581.611 197.545C581.495 197.381 581.379 197.216 581.265 197.051C581.166 197.193 581.069 197.336 580.97 197.477C577.598 202.397 573.347 206.652 568.431 210.027C563.778 213.32 558.6 215.797 553.117 217.352L553.118 217.353C548.313 218.74 543.339 219.46 538.338 219.493H537.069C531.999 219.457 526.956 218.74 522.077 217.36L522.05 217.353L521.51 217.196L521.465 217.184L521.421 217.169C516.427 215.624 511.684 213.36 507.344 210.446L507.273 210.397L506.28 209.706L506.235 209.674C501.637 206.318 497.649 202.2 494.439 197.499C491.318 193.105 488.922 188.238 487.341 183.085C483.767 186.507 479.723 189.417 475.32 191.725C474.272 193.722 473.093 195.648 471.789 197.49L471.79 197.491C468.405 202.425 464.137 206.691 459.201 210.072L459.2 210.071C454.564 213.342 449.408 215.804 443.95 217.352L443.951 217.353C439.146 218.74 434.172 219.46 429.171 219.493H427.897C424.433 219.465 420.979 219.12 417.578 218.466C414.212 219.123 410.791 219.469 407.359 219.493H406.082C402.619 219.464 399.166 219.119 395.767 218.466C392.403 219.124 388.985 219.469 385.556 219.493H384.284C379.215 219.456 374.173 218.738 369.295 217.36L369.281 217.356L369.267 217.353L368.727 217.196L368.635 217.169C363.643 215.622 358.903 213.358 354.562 210.447C354.222 210.22 353.848 209.961 353.466 209.674C348.856 206.313 344.857 202.186 341.643 197.473C340.345 195.644 339.173 193.731 338.131 191.747C331.134 188.035 325.032 182.825 320.268 176.479C319.96 176.072 319.686 175.674 319.445 175.313C316.568 171.01 314.325 166.314 312.785 161.372C310.833 163.228 308.731 164.927 306.496 166.447L306.497 166.448C301.867 169.712 296.718 172.169 291.27 173.717L291.271 173.718C291.267 173.719 291.263 173.72 291.26 173.721C291.253 173.723 291.247 173.725 291.24 173.727L291.239 173.726C286.423 175.12 281.437 175.839 276.423 175.86H275.161C271.692 175.832 268.234 175.487 264.828 174.834C264.036 174.991 263.24 175.127 262.442 175.248C262.104 177.551 261.622 179.832 261 182.077C260.981 182.176 260.962 182.267 260.942 182.349C260.867 182.66 260.78 182.907 260.734 183.03C260.722 183.064 260.709 183.095 260.699 183.121C259.114 188.258 256.721 193.108 253.61 197.491L253.611 197.492C250.229 202.421 245.967 206.685 241.04 210.068L241.039 210.067C236.39 213.342 231.221 215.809 225.75 217.359L225.749 217.358C220.951 218.741 215.986 219.46 210.993 219.493H209.725C204.712 219.458 199.727 218.754 194.899 217.405L194.27 217.27L194.065 217.206C188.876 215.604 183.976 213.182 179.551 210.032C174.661 206.657 170.427 202.416 167.062 197.519C166.94 197.346 166.822 197.171 166.702 196.997C166.568 197.192 166.434 197.389 166.297 197.582L166.296 197.581C162.915 202.491 158.661 206.738 153.743 210.107L153.742 210.106C149.099 213.382 143.935 215.848 138.468 217.396L138.467 217.395C133.665 218.777 128.697 219.496 123.7 219.529H122.425C118.962 219.5 115.509 219.155 112.109 218.502C108.746 219.16 105.328 219.506 101.899 219.529H100.708C97.2438 219.501 93.7902 219.156 90.3896 218.502C87.0229 219.16 83.6017 219.505 80.1699 219.529H78.8926C75.4326 219.5 71.9833 219.155 68.5869 218.502C65.2204 219.16 61.7997 219.505 58.3682 219.529H57.0957C52.0301 219.492 46.992 218.775 42.1172 217.396L41.5654 217.24L41.5049 217.223L41.4453 217.204C36.2677 215.599 31.3763 213.185 26.9541 210.05C22.0874 206.69 17.8736 202.47 14.5186 197.6C11.3678 193.176 8.94886 188.274 7.35547 183.082L7.13574 182.365V182.317C5.77274 177.525 5.05357 172.572 5 167.589V165.813C5.06387 160.922 5.78867 156.061 7.1543 151.363C8.70417 145.884 11.1741 140.708 14.459 136.058C17.8198 131.171 22.0448 126.939 26.9258 123.571C27.1168 123.436 27.3101 123.303 27.5029 123.17C27.3299 123.051 27.156 122.933 26.9844 122.812C22.2868 119.597 18.1706 115.604 14.8154 111.004L14.7793 110.954L14.7441 110.902C14.638 110.749 14.2987 110.274 14.0537 109.903C11.1446 105.562 8.88182 100.821 7.33594 95.8281L7.1123 95.1055V95.041C5.75841 90.2526 5.0473 85.3046 5 80.3281V78.5469C5.0639 73.6551 5.78864 68.7943 7.1543 64.0967C8.60709 58.961 10.8686 54.0919 13.8516 49.6719L14.459 48.792C17.8204 43.9042 22.0465 39.6722 26.9287 36.3037L27.8115 35.6904C29.407 34.6078 31.0633 33.6181 32.7705 32.7227C36.4433 25.7096 41.6428 19.6009 47.9951 14.8535L48.0674 14.7998L48.1416 14.748L48.6094 14.4238L48.6582 14.3906L49.1387 14.0664L49.1543 14.0566C53.511 11.1382 58.2708 8.87272 63.2832 7.33301L63.3232 7.32031L63.3633 7.30957L63.9033 7.15332L63.9229 7.14746C67.4503 6.14357 71.0648 5.49071 74.7139 5.19434V5H80.4844Z" fill="none" stroke="#252525" stroke-width="10" stroke-linejoin="round" pathLength="1"/></g>
+    </svg>
+  </div>
+</div>
+
+<!-- ======================= HOME ======================= -->
+<main id="inicio" class="pantalla" aria-label="Inicio">
+  <div class="velo"></div>
+  <div class="escenario">
+    <div class="mapa" aria-hidden="true">
+      <img class="forma-contorno" src="assets/home/mapa-contorno.svg" alt="" style="width:684px">
+      <img class="forma-logo" src="assets/home/mapa-logo.svg" alt="" style="width:678px">
+    </div>
+    <div id="puntos-mapa"></div>
+    <button class="btn-menu" data-abrir-menu aria-label="Abrir índice"><img src="assets/home/lista.svg" alt=""></button>
+    <img class="logo-centro" src="assets/home/logo-spot.svg" alt="SPOT!">
+    <div class="submarcas"><img src="assets/home/logo-post.svg" alt="post." style="width:102px;height:47px"><img src="assets/home/logo-stop-comp4.svg" alt="STOP" style="width:96px;height:44px"></div>
+  </div>
+</main>
+
+<!-- ======================= KM 1 · ACERCA DE SPOT! ======================= -->
+<article id="km1" class="pantalla km" aria-label="KM 1: Acerca de SPOT!">
+ <div class="lienzo">
+  <section class="hero" style="--c:var(--amarillo)">
+    <button class="btn-menu" data-abrir-menu aria-label="Abrir índice"><img src="assets/km1/lista-oscuro.svg" alt=""></button>
+    <span class="km-tag">KM 1</span>
+    <h1 class="titulo-km" data-t="Acerca de">Acerca de</h1>
+    <img src="assets/km1/logo-spot-grande.svg" alt="SPOT!" style="position:absolute;left:828px;top:396px;width:570.16px;height:188.39px">
+    <p class="bajada" style="top:632px">Una marca en constante movimiento</p>
+    <nav class="links" style="top:744px"><button data-a="km1-bs">Brand Spirit ↗</button><button data-a="km1-mv">Misión y visión ↗</button><button data-a="km1-sub">Submarcas ↗</button></nav>
+    <button class="slide-down" style="top:981px" data-bajar aria-label="Bajar"><img src="assets/km1/slide-down.svg" alt=""></button>
+    <div class="decos" data-decos="km1"></div>
+  </section>
+
+  <section class="sec" id="km1-bs" style="height:504px">
+    <div class="fila"><h2 class="t">Brand Spirit</h2>
+      <div class="c txt">
+        <p>Spot es una marca dedicada a realizar experiencias multimediales relacionadas a las comunidades de <span class="glosa" tabindex="0">deportes de recorrido<span class="def" role="tooltip"><strong>*Deportes de recorrido</strong>Refiere a aquellos deportes que se realizan recorriendo <b>distancias</b> largas, como pueden ser el running, el ciclismo, el patinaje, el trekking y decenas de variantes más.</span></span>.</p>
+        <p>Spot nació como una forma de <b class="naranja">conectar a las personas que quieren realizar deportes de recorrido con su propio entorno</b>. Sabemos que salir no es un acto aislado: hay lugares, recorridos y personas que cruzan nuestro camino todo el tiempo. Es por eso que Spot está ahí para ayudarlos. Ya sea para encontrar grupos nuevos, descubrir experiencias y eventos deportivos que los interpelen, motivarlos a mantener su ritmo o simplemente decirles dónde encontrar un baño cerca, Spot los va a acompañar en el recorrido.</p>
+      </div></div>
+  </section>
+  <div class="divisor"></div>
+  <section class="sec" id="km1-mv" style="height:796px">
+    <div class="fila"><h2 class="t">Misión y visión</h2>
+      <div class="c mv">
+        <div class="mv-item" tabindex="0"><span class="et">Misión</span><p class="fr">Conectar personas, lugares y momentos alrededor del movimiento.</p></div>
+        <div class="mv-item" tabindex="0"><span class="et">Visión</span><p class="fr">Hacer de los deportes de recorrido por la ciudad un tercer lugar para quienes los realizan, tanto para principiantes en su primer día como para los atletas más experimentados.</p></div>
+      </div></div>
+  </section>
+  <section class="foto-co">
+    <img src="assets/km1/foto-corredores.jpg" alt="Corredores en la ciudad">
+    <p style="left:120px;top:385px"><span style="color:var(--amarillo)">Co</span>mienzos</p>
+    <p style="left:908px;top:509px">en <span style="color:var(--violeta)">Co</span>mpañía,</p>
+    <p style="left:120px;top:670px"><span style="color:var(--rosa)">Co</span>munidad &amp;</p>
+    <p style="left:1024px;top:831px"><span style="color:var(--naranja)">Co</span>modidad</p>
+    <span class="linea" style="top:602px;width:827px"></span>
+    <span class="linea" style="top:898px;width:947px"></span>
+  </section>
+  <section class="sec oscuro" id="km1-sub" style="height:374px">
+    <div class="fila"><h2 class="t">Brand Spirit</h2>
+      <p class="c txt">Spot funciona como una marca paraguas con identidad propia, la cual está aplicada principalmente a la app. Sin embargo, ha desarrollado dos submarcas que forman parte de todo el ecosistema de Spot: se tratan de Post y Stop.</p></div>
+  </section>
+  <section class="submarcas-zona">
+    <div class="decos" data-decos="post"></div>
+    <img class="abs" src="assets/km1/post-logo-capa4.svg" alt="post." style="left:751px;top:232px;width:419px;height:193px">
+    <p class="abs txt" style="top:659px">Post es la experiencia multimedia de Spot que acompaña el momento que llega después del recorrido. Si Spot se ocupa de lo que pasa antes y durante, Post se ocupa de lo que viene tras la meta: <b style="color:var(--verde)">el descanso</b>. Se trata de una cabina con pantallas LED por dentro y por fuera que se instala al final de carreras largas para recordarle a cada deportista, de forma lúdica, que recuperarse también es parte del entrenamiento.</p>
+    <a class="boton" href="#inicio" style="left:960.5px;top:909px;background:var(--verde)">Conocé más sobre POST <img src="assets/km1/flecha-der.svg" alt=""></a>
+    <img class="foto-rot" src="assets/km1/foto-post-2.jpg" alt="Vista de la cabina post." style="left:964.6px;top:1282.3px;width:821.493px;height:462.324px;rotate:4.43deg">
+    <img class="foto-rot" src="assets/km1/foto-post-1.jpg" alt="Vista exterior de post." style="left:133.9px;top:1271.9px;width:806.071px;height:453.805px;rotate:-4.31deg">
+    <img class="foto-rot" src="assets/km1/foto-instalacion.jpg" alt="Instalación interactiva de estiramientos" style="left:403px;top:1183px;width:1114px;height:627px">
+    <div class="decos" data-decos="stop"></div>
+    <img class="abs" src="assets/km1/stop-logo-comp3.svg" alt="STOP" style="left:751px;top:2329px;width:419px;height:193px">
+    <p class="abs txt" style="top:2813px">Stop es el evento anual de Spot: una parada en el camino para celebrar lo recorrido. Alrededor de una carrera nocturna, propone una experiencia <b style="color:var(--rosa)">social, lúdica y reflexiva</b> donde corredores y acompañantes se encuentran, se divierten y se toman un momento para valorar todo el esfuerzo que los trajo hasta ahí. Si Spot acompaña el camino y Post cuida el después, Stop es la pausa que les da sentido a los dos.</p>
+    <a class="boton" href="#inicio" style="left:945.5px;top:3063px;background:var(--rosa)">Conocé más sobre STOP <img src="assets/km1/flecha-der.svg" alt=""></a>
+    <a class="parada" href="#km2" style="left:262px;top:3356px">
+      <span class="circ"><img src="assets/km1/flecha-izq-32.svg" alt=""></span>
+      <span class="info" style="border-right:2px solid var(--crema);padding-right:20px"><span class="chip">KM2</span><span class="tx" style="text-align:right;align-items:flex-end"><small>Siguiente parada</small><span>Manual de Voz y Tono</span></span></span>
+    </a>
+    <a class="parada" href="#km2" style="left:1112px;top:3356px">
+      <span class="info" style="border-left:2px solid var(--crema);padding-left:20px"><span class="tx"><small>Siguiente parada</small><span>Manual de Voz y Tono</span></span><span class="chip">KM2</span></span>
+      <span class="circ"><img src="assets/km1/flecha-der-32.svg" alt=""></span>
+    </a>
+    <button class="volver-arriba" style="top:3484px" data-arriba><img src="assets/km1/slide-down-crema.svg" alt="">Volver arriba</button>
+    <p class="abs" style="left:765px;top:3663px;font:400 16px/normal var(--reddit);color:#fff;white-space:nowrap">© Copyright 2026 Spot. Todos los derechos reservados</p>
+  </section>
+ </div>
+</article>
+
+<!-- ======================= KM 2 · VOZ Y TONO ======================= -->
+<article id="km2" class="pantalla km" aria-label="KM 2: Manual de voz y tono">
+ <div class="lienzo">
+  <section class="hero" style="--c:var(--naranja)">
+    <button class="btn-menu" data-abrir-menu aria-label="Abrir índice"><img src="assets/km2/21764.svg" alt=""></button>
+    <span class="km-tag">KM 2</span>
+    <h1 class="titulo-km" data-t="Manual de Voz y Tono" style="left:120px">Manual de Voz y Tono</h1>
+    <p class="bajada" style="top:612px">¿Cómo le hablamos a nuestro público?</p>
+    <nav class="links" style="top:724px"><button data-a="km2-voz">La voz ↗</button><button data-a="km2-tono">El tono ↗</button><button data-a="km2-guia">Guía de estilo ↗</button></nav>
+    <button class="slide-down" style="top:969px" data-bajar aria-label="Bajar"><img src="assets/km2/95fa8.svg" alt=""></button>
+    <div class="decos" data-decos="km2"></div>
+  </section>
+
+  <section class="sec">
+    <div class="fila">
+      <p class="grande" style="width:972px;font-size:48px">
+        <b class="naranja">Spot</b> existe para que la ciudad sea un <span class="glosa" tabindex="0"><b class="naranja">tercer lugar</b><span class="def" role="tooltip"><strong>*Tercer lugar</strong>Se define como los espacios de la vida cotidiana donde las personas socializan y se reúnen fuera de los dos entornos principales. el hogar y el trabajo. Algunos ejemplos de terceros lugares son iglesias, cafés, bares, clubes, bibliotecas, gimnasios, entre muchos otros.</span></span> para quienes se mueven. Acompañamos a quien corre, pedalea o patina desde su primera salida hasta su próxima meta, y lo conectamos con los lugares, las personas y los momentos que hacen que siempre den ganas de <b class="naranja">volver a salir</b>.</p>
+      <p class="txt" style="width:547px">Por eso hablamos como <b class="naranja">un compañero más</b>, alguien que te ayuda a encontrar un grupo, te recuerda tus objetivos o te avisa dónde hay un baño cerca, sin juzgar el ritmo de nadie.</p>
+    </div>
+  </section>
+  <div class="divisor"></div>
+  <section class="sec" id="km2-pilares" style="display:flex;flex-direction:column;gap:96px">
+    <div class="fila"><h2 class="t">Pilares de comunicación</h2>
+      <p class="c txt">Nuestro tono transmite <b>confianza, calidez y cercanía</b>. Nos paramos en los pilares de la marca para entender desde dónde hablar. Conectamos personas, lugares y socialización, por lo que es crucial pensar en la forma en la que los principiantes comienzan a descubrir el mundo de estos deportes. ¿Cómo podemos hacerlos sentirse más cómodos conociendo nuevos lugares, animándose a cumplir nuevos objetivos y sumándose a grupos y comunidades nuevas?</p></div>
+    <div class="pilares" id="pilares"></div>
+  </section>
+  <div class="banda"><p>Ahora que tenemos clara la personalidad de nuestra marca, vamos a ver cómo nos comunicamos con nuestro público.</p></div>
+  <section class="sec" id="km2-voz">
+    <div class="fila"><h2 class="t">La Voz</h2>
+      <div class="c txt">
+        <p><span class="frase">La voz es la personalidad de Spot puesta en palabras.</span> Hablamos de vos y en imperativo, <b>como quien invita a salir</b> y no como quien da órdenes. Usamos las palabras que ya circulan en los grupos de running, bici o patín, y sumamos inglés deportivo solo cuando ya forma parte del habla cotidiana. El objetivo es bajar la barrera de entrada. <b>guiamos con pasos cortos, damos datos concretos</b> de lugar, horario y distancia, y respondemos de antemano lo que da vergüenza preguntar, para que nadie se quede afuera por no animarse.</p>
+        <p>Cuando algo sale bien, <b>celebramos en plural</b>: los logros son del grupo y no de una sola persona, y cada avance se festeja con entusiasmo para que siempre haya un motivo para volver. Nuestro rol es <b>resolver lo logístico para que cada persona solo se ocupe de moverse</b>, y esa voz se mantiene igual en la app, en Post y en Stop.</p>
+      </div></div>
+  </section>
+  <div class="divisor"></div>
+  <section class="sec persona" id="km2-persona" style="display:flex;flex-direction:column;gap:96px">
+    <div class="silueta"><img src="assets/km2/76a03.png" alt=""></div>
+    <div class="fila" style="position:relative"><h2 class="t">Si Spot fuera una persona...</h2>
+      <p class="c txt">Esa del grupo que siempre propone salir a moverse y se acuerda de llevar agua para todos. Conoce cada rincón de la ciudad, sabe dónde hay un baño o un café cerca y <b class="naranja">nunca deja a nadie atrás</b>. Espera a quien va más lento y festeja cada kilómetro como si fuera propio. Le habla igual a quien sale por primera vez que a quien ya corrió diez maratones, <b class="naranja">con humor y sin juzgar</b>.</p></div>
+    <div class="rasgos" id="rasgos"></div>
+    <div class="enfoque"><h4>¿Qué enfoque tiene esta comunicación?</h4><div class="cards" id="enfoque"></div></div>
+  </section>
+  <div class="divisor"></div>
+  <section class="sec" id="km2-tono" style="display:flex;flex-direction:column;gap:96px">
+    <div class="fila"><h2 class="t">El tono</h2>
+      <div class="c" style="display:flex;flex-direction:column;gap:64px">
+        <p class="grande frase">La voz es una sola. El tono <b class="naranja">cambia según el momento</b> para generar empatía.</p>
+        <div class="txt"><p>El tono es <b class="naranja">cómo se expresa Spot en cada situación</b>, y es consecuencia de la voz. No le hablamos igual a quien está por salir a su primera carrera que a quien acaba de terminar un maratón o a quien todavía no encontró su grupo.</p>
+          <p>Aunque se adapte, <b class="naranja">siempre mantiene la coherencia</b>. Si Spot pudiera hablar, lo haría como esa amiga que te escribe para salir a moverte: con energía, con humor y sin juzgar.</p></div>
+      </div></div>
+    <div class="momentos"><h4>El tono según el momento</h4><div class="cards-tono" id="tono"></div></div>
+  </section>
+  <div class="divisor"></div>
+  <section class="sec" style="display:flex;flex-direction:column;gap:96px">
+    <div class="fila"><h2 class="t">Nuestro perfil de tono</h2><p class="c txt">Usamos las 4 dimensiones del tono de Nielsen Norman Group. El punto marca dónde se ubica Spot en cada una.</p></div>
+    <div class="perfil" id="perfil"></div>
+  </section>
+  <div class="divisor"></div>
+  <section class="sec" id="km2-somos" style="display:flex;flex-direction:column;gap:96px">
+    <div class="fila"><h2 class="t">Somos... pero no...</h2><p class="c txt">Cada rasgo de nuestra voz tiene un límite. Estas son las líneas que Spot no cruza.</p></div>
+    <div class="somos" id="somos"></div>
+  </section>
+  <div class="divisor"></div>
+  <section class="sec guia" id="km2-guia">
+    <div class="fila"><h2 class="t" style="font:600 48px/1.05 var(--sora)">Guía de estilo</h2>
+      <p class="c txt">Reúne las reglas con las que escribimos cada texto de Spot: <b class="naranja">gramática, puntuación, terminología</b> y la forma de dirigirnos a cada persona. Su objetivo es que todo lo que leemos, lo escriba quien lo escriba y aparezca donde aparezca, se sienta <b class="naranja">parte de una misma experiencia</b>.</p></div>
+    <div id="guia" style="display:flex;flex-direction:column;gap:96px"></div>
+  </section>
+  <div class="pie"></div>
+ </div>
+</article>
+
+<!-- ======================= KM 3 · LOGOTIPOS ======================= -->
+<article id="km3" class="pantalla km" aria-label="KM 3: Logotipos de la marca">
+ <div class="lienzo">
+  <section class="hero" style="--c:var(--rosa)">
+    <button class="btn-menu" data-abrir-menu aria-label="Abrir índice"><img src="assets/km2/21764.svg" alt=""></button>
+    <span class="km-tag">KM 3</span>
+    <h1 class="titulo-km" data-t="Logotipos de la marca" style="left:120px">Logotipos de la marca</h1>
+    <button class="slide-down" style="top:969px" data-bajar aria-label="Bajar"><img src="assets/km2/95fa8.svg" alt=""></button>
+    <div class="decos" data-decos="km3"></div>
+  </section>
+
+  <section class="sec">
+    <div class="fila"><h2 class="t sticky">Logos Spot</h2>
+      <div class="c" style="display:flex;flex-direction:column;gap:64px">
+        <p class="grande">Nuestro logo es el símbolo más rápido de reconocer de la marca.</p>
+        <p class="txt">El logotipo de la marca de Spot surge de su propio concepto: es una marca que invita a marcar <b>puntos</b> a lo largo de la trayectoria de alguien que hace deporte. Conoce lugares, gente y experiencias nuevas, los “spots” a lo largo del recorrido. Fue creado a partir de la tipografía <a href="https://fonts.google.com/specimen/Bitcount+Single?preview.script=Latn" target="_blank" rel="noopener" style="font-family:'Bitcount Single',var(--sora);font-weight:700;text-decoration:underline">Bitcount Single Bold</a>.</p>
+        <div class="logo-hover" title="Pasá el mouse"><img class="v1" src="assets/logos/spot-hover-default.svg" alt="SPOT!"><img class="v2" src="assets/logos/spot-hover-variant2.svg" alt=""></div>
+        <p class="txt">Además, Spot utiliza otros dos logotipos para sus submarcas. Hablamos de Post y Stop. La primera es una experiencia multimedial para el descanso y la relajación, por lo que busca transmitir estos mismos conceptos usando <a href="https://fonts.google.com/specimen/Sora?preview.script=Latn" target="_blank" rel="noopener" style="font-family:var(--sora);font-weight:700;text-decoration:underline">Sora</a> regular en minúsculas.</p>
+        <img class="logo-fijo" src="assets/km3/logo-post.svg" alt="post." style="width:480px;height:221px">
+        <p class="txt">El segundo es un evento que combina la actividad física con un after nocturno festivo, por lo que este carácter divertido aparece con <a href="https://fonts.google.com/specimen/Sora?preview.script=Latn" target="_blank" rel="noopener" style="font-weight:700;text-decoration:underline">Sora</a> en mayúsculas y semibold, y el uso de una estrella explosiva.</p>
+        <img class="logo-fijo" src="assets/km3/logo-stop.svg" alt="STOP" style="width:480px;height:220.6px">
+      </div></div>
+  </section>
+  <div class="divisor"></div>
+  <section class="sec" id="km3-construccion">
+    <div class="fila"><h2 class="t">Construcción</h2><p class="c txt">Los 3 logos comparten una misma altura de X que permite construirlos.</p></div>
+    <div style="padding:120px 0;display:flex;justify-content:center"><img src="assets/km3/construccion-1.svg" alt="Los tres logos sobre la misma altura de x" style="width:1680px;max-width:none;margin:0 -215px"></div>
+    <div class="fila"><span class="t" aria-hidden="true"></span><p class="c txt">Siendo esta altura 124px, el primer límite se define desplazando el trazado base 24px. Para crear el segundo contorno, son 9px más de desplazamiento.</p></div>
+    <div class="tira">
+      <img src="assets/km3/construccion-2.svg" alt="Construcción de los contornos del logo">
+      <div class="cota" style="left:397px;top:45px;width:887px;height:11px;background:var(--naranja);opacity:.6"></div>
+      <div class="cota" style="left:397px;top:56px;width:887px;height:30px;background:var(--rosa);opacity:.6"></div>
+      <img class="cota" src="assets/km3/cota-9.svg" alt="" style="left:257px;top:55px;width:1027px">
+      <img class="cota" src="assets/km3/linea-v2.svg" alt="" style="left:263px;top:25px;height:27px">
+      <img class="cota" src="assets/km3/linea-v1.svg" alt="" style="left:263px;top:62px;height:22px">
+      <img class="cota" src="assets/km3/linea-v3.svg" alt="" style="left:264px;top:95px;height:146px">
+      <span class="lbl" style="left:301px;top:22px">9 px</span>
+      <span class="lbl" style="left:289px;top:64px">24 px</span>
+      <span class="lbl" style="left:282px;top:156px">124 px</span>
+    </div>
+  </section>
+  <div class="divisor"></div>
+  <section class="sec" id="km3-variantes" style="display:flex;flex-direction:column;gap:96px">
+    <div class="fila"><h2 class="t sticky">Variantes de color</h2><p class="c grande">Cada logo tiene una versión en color y una a una sola tinta.</p></div>
+    <div id="variantes" style="display:flex;flex-direction:column;gap:96px"></div>
+  </section>
+  <div class="divisor"></div>
+  <section class="sec" id="km3-tamanos">
+    <div class="fila"><h2 class="t sticky">Tamaños pequeños de uso</h2>
+      <div class="c"><div class="txt"><p>Para que se entienda el logotipo y mantenga su impacto visual no recomendamos achicarlo más allá del tamaño mínimo de 70 px de ancho o 25 mm en su defecto. Tampoco recomendamos usar los logos a color en tamaños demasiado pequeños por una cuestión de contraste y de legibilidad, siendo que puede “empastarse” el color tanto en tinta para impresión como en pantalla. Esto aplica a los logos de las 3 marcas.</p></div>
+        <div class="tamanos" data-tamanos></div></div></div>
+  </section>
+  <div class="divisor"></div>
+  <section class="sec" id="km3-espacios">
+    <div class="fila"><h2 class="t sticky">Espacios seguros</h2>
+      <div class="c"><div class="txt"><p>Para que se entienda el logotipo y mantenga su impacto visual no recomendamos achicarlo más allá del tamaño mínimo de 70 px de ancho o 25 mm en su defecto. Tampoco recomendamos usar los logos a color en tamaños demasiado pequeños por una cuestión de contraste y de legibilidad, siendo que puede “empastarse” el color tanto en tinta para impresión como en pantalla. Esto aplica a los logos de las 3 marcas.</p></div>
+        <div class="tamanos" data-tamanos></div></div></div>
+  </section>
+  <div class="divisor"></div>
+  <div class="pie"></div>
+ </div>
+</article>
+
+<!-- ======================= MENÚ (Slide 3) ======================= -->
+<div id="velo-menu" data-cerrar-menu></div>
+<nav id="menu" aria-label="Índice" aria-hidden="true">
+ <div class="lienzo">
+  <span class="linea"></span>
+  <button class="cerrar" data-cerrar-menu aria-label="Cerrar índice"><img src="assets/home/icono-cerrar.svg" alt=""></button>
+  <a class="volver" href="#inicio">Volver al Inicio <img src="assets/home/icono-home.svg" alt=""></a>
+  <ol id="indice"></ol>
+ </div>
+</nav>
+
+<script>
+/* =====================================================================
+   DATOS DEL FIGMA
+   ===================================================================== */
+const REDUCIR = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const EASE_OUT = 'cubic-bezier(0,0,.58,1)';
+const dur = ms => REDUCIR ? 1 : ms;
+const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
+
+/* Puntos del mapa (Slide 2): posición, color y destino */
+const PUNTOS_MAPA = [
+  [1009,407,'amarillo','km1','Acerca de Spot'],[1171,407,'naranja','km2','Manual de voz y tono'],[1275,474,'rosa','km3','Logotipos'],
+  [1264,610,'violeta',null,'Tipografías'],[1081,598,'azul',null,'Colores'],[908,577,'amarillo',null,'Elementos gráficos'],
+  [753,619,'naranja',null,''],[597,577,'rosa',null,''],[597,461,'violeta',null,''],[721,407,'azul',null,'']
+];
+
+/* Decoraciones (Componentes "Punto", insignia y carita). [archivo, x, y, w, h, inset%(t,r,b,l), rotación, caja] */
+const HERO = (p, f) => [
+  [p+f[0],1697,243,35,35,[0,-11.43,-22.86,-11.43]],[p+f[1],1115,156,21.23,21.23,[0,-18.84,-37.68,-18.84]],[p+f[2],290,680,35,35,[0,-11.43,-22.86,-11.43]],
+  [p+f[3],687,205,21.23,21.23,[0,-18.84,-37.68,-18.84]],[p+f[4],490,733,35,35,[0,-11.43,-22.86,-11.43]],[p+f[5],1259,226,35,35,[0,-11.43,-22.86,-11.43]],
+  [p+f[6],179,739,21.23,21.23,[0,-18.84,-37.68,-18.84]],[p+f[7],558,216,108.943,108.943,[1.82,-1.86,-5.53,-1.86]],[p+f[8],616,665,77,77,[-4.58,-8.63,-12.68,-8.63]],
+  [p+f[9],1438.48,213.67,114.034,112.66,[-0.49,-0.3,-0.49,-0.3]],['IMG:'+p+f[10],1452.22,226.04,87.93,87.93,[0,0,0,0]]
+];
+const K = ['f0cb2.svg','0752e.svg','f22ae.svg','4478f.svg','36e87.svg','4cde2.svg','cfa66.svg','6b150.svg','319f2.svg','59d40.svg','b0cce.png'];
+const DECOS = {
+  km1: HERO('km1/', ['punto3.svg','punto4.svg','punto5.svg','punto6.svg','punto7.svg','punto8.svg','punto9.svg','star8.svg','star10.svg','star9-insignia.svg','insignia-img.png']),
+  km2: HERO('km2/', K), km3: HERO('km2/', K),
+  post: [ // relativos a la zona de submarcas (y − 3838)
+    ['km1/spot2.svg',1438,251,41.988,41.988,[-11.62,-20.91,-30.2,-20.91],28.36,30.989],['km1/spot5.svg',576.42,121.19,14.921,14.921,[-24.13,-43.43,-62.73,-43.43]],
+    ['km1/spot5.svg',1607,339,14.921,14.921,[-24.13,-43.43,-62.73,-43.43]],['km1/spot5.svg',1085.93,436.82,14.921,14.921,[-24.13,-43.43,-62.73,-43.43]],
+    ['km1/spot5.svg',1101.07,137.1,14.921,14.921,[-24.13,-43.43,-62.73,-43.43]],['km1/spot10.svg',265,253.5,14.921,14.921,[-24.13,-43.43,-62.73,-43.43]],
+    ['km1/spot12.svg',1398.52,137.14,20.217,20.217,[-24.13,-43.43,-62.73,-43.43],28.36,14.921],['km1/spot5.svg',621.34,359.35,14.921,14.921,[-24.13,-43.43,-62.73,-43.43]],
+    ['km1/spot9.svg',280.14,293.35,26.972,26.972,[-13.35,-24.03,-34.7,-24.03]],['km1/spot9.svg',1631,282.99,26.972,26.972,[-13.35,-24.03,-34.7,-24.03]],
+    ['km1/spot3.svg',1349,405.71,45.909,45.909,[-7.84,-14.11,-20.39,-14.11]],['km1/spot4.svg',385.07,406.5,53.943,53.943,[-6.67,-12.01,-17.35,-12.01]],
+    ['km1/star6.svg',1234.98,224.81,113.943,113.943,[8.97,6.58,5.61,6.58],15.82,92.277],['km1/star7.svg',451.73,181.45,109.609,109.609,[8.47,5.85,3.22,5.85]]
+  ],
+  stop: [
+    ['km1/spot2.svg',1277,2369,41.988,41.988,[-11.62,-20.91,-30.2,-20.91],28.36,30.989],['km1/spot5.svg',573.42,2255,14.921,14.921,[-24.13,-43.43,-62.73,-43.43]],
+    ['km1/spot5.svg',1082.93,2570.63,14.921,14.921,[-24.13,-43.43,-62.73,-43.43]],['km1/spot5.svg',1098.07,2270.91,14.921,14.921,[-24.13,-43.43,-62.73,-43.43]],
+    ['km1/spot19.svg',262,2387.31,14.921,14.921,[-24.13,-43.43,-62.73,-43.43]],['km1/spot20.svg',1395.52,2270.94,20.217,20.217,[-24.13,-43.43,-62.73,-43.43],28.36,14.921],
+    ['km1/spot5.svg',618.34,2493.15,14.921,14.921,[-24.13,-43.43,-62.73,-43.43]],['km1/spot9.svg',277.14,2427.16,26.972,26.972,[-13.35,-24.03,-34.7,-24.03]],
+    ['km1/spot25.svg',382.07,2540.31,53.943,53.943,[-6.67,-12.01,-17.35,-12.01]],['km1/punto-a.svg',1431,2392,52.828,52.828,[0,-0.88,-0.88,0]],
+    ['km1/punto-b.svg',436,2332,115.078,115.078,[0,0,0,0],-12.01,97.018],['km1/ellipse148.svg',1568,2418,90.43,90.43,[-4.76,-4.76,-4.76,-4.76]],
+    ['km1/stop-cruz.svg',1291,2361,88,88,[0,0,0,0]]
+  ]
+};
+const CARITAS = { km1:[1527,414,'naranja'], km2:[1629,414,'amarillo'], km3:[1642,351,'amarillo'] };
+
+function armarDecos(){
+  $$('[data-decos]').forEach(cont => {
+    const key = cont.dataset.decos;
+    (DECOS[key] || []).forEach(([src, x, y, w, h, ins, rot, caja]) => {
+      const d = document.createElement('div'); d.className = 'deco';
+      d.style.cssText = `left:${x}px;top:${y}px;width:${w}px;height:${h}px`;
+      const img = document.createElement('img'); img.alt = '';
+      if (src.startsWith('IMG:')) { img.src = 'assets/' + src.slice(4); img.style.cssText = 'inset:0;width:100%;height:100%;object-fit:cover'; d.appendChild(img); cont.appendChild(d); return; }
+      img.src = 'assets/' + src;
+      const inner = caja || w, innerH = caja || h, off = caja ? (w - caja) / 2 : 0;
+      const [t, r, b, l] = ins;
+      img.style.cssText = `left:${off + inner * l / 100}px;top:${off + innerH * t / 100}px;width:${inner * (1 - (l + r) / 100)}px;height:${innerH * (1 - (t + b) / 100)}px;${rot ? `rotate:${rot}deg;` : ''}`;
+      d.appendChild(img); cont.appendChild(d);
+    });
+    if (CARITAS[key]) {
+      const [x, y, c] = CARITAS[key];
+      const k = document.createElement('div'); k.className = 'carita';
+      k.style.cssText = `left:${x}px;top:${y}px;--c:var(--${c})`;
+      k.innerHTML = '<span><img src="assets/km1/carita-b.png" alt=""></span>';
+      cont.appendChild(k);
+    }
+  });
+}
+
+/* ---------- KM 2: componentes (textos exactos del Figma) ---------- */
+const PILARES = [
+  ['01','Comienzos','amarillo','Todo recorrido empieza por una primera salida. Le hablamos a quien recién arranca <b>sin apurarlo ni compararlo</b>, para que se anime a dar el primer paso.','“¿Primera vez?<br>Arrancá con 3 km, nosotros te mostramos el camino.”'],
+  ['02','Compañía','violeta','Salir a moverse <b>no tiene por qué ser un plan solitario</b>. Acompañamos a quien busca compañía y a quien quiere conocer gente pero no sabe cómo o no se anima: hacemos que el primer contacto sea más fácil y ameno. <b>Somos ese puente.</b>','“Hay un grupo que sale a las 7 cerca tuyo. ¿Te sumás?”'],
+  ['03','Comunidad','rosa','Los recorridos se disfrutan más compartidos. Celebramos los logros de todos, del primer kilómetro a la maratón, y <b>hacemos lugar para que cada uno encuentre su gente.</b>','“Tu equipo sumó 120 km esta semana. ¡Bien ahí!”'],
+  ['04','Comodidad','naranja','Nadie debería enloquecer buscando un baño en pleno recorrido. <b>Organizamos esas comodidades</b> y resolvemos lo que incomoda en el camino, sabiendo que <b>no todos necesitan lo mismo</b>: cada persona se mueve distinto.','“Hay agua y un baño a 200 m de tu recorrido.”']
+];
+const RASGOS = [['Optimista','amarillo',30,0,4],['Transparente','rosa',434,8,-3],['Motivadora','violeta',873,16,2],['Sociable','naranja',1281,7,-4],
+  ['Inclusiva','violeta',98,159,-3],['Divertida','naranja',461,158,3],['Confiable','azul',871,163,-2],['Práctica','amarillo',1254,170,4]];
+const ENFOQUE = [['Invitamos a hacer','azul',['“Encontrá grupos cerca tuyo”','“Marcá una zona aproximada”','“Buscá amigos por nombre”','“Canjeá tus puntos por beneficios”']],
+  ['Hablamos como grupo','rosa',['“Por acá nos juntamos”','“¿Corriendo con alguien?”','“Contá qué onda tiene el grupo”','“Ya son 12 amigos en el equipo”']],
+  ['Damos datos concretos','amarillo',['“Running · Principiante · a 800 m”','“Mar, Jue y Sáb · 07:00 h”','“Locker gratis 2 hs · a 300 m”','“Abierto ahora · hasta las 20 h”']],
+  ['Celebramos los logros','violeta',['“¡Ya hicieron equipo!”','“¡5 actividades juntos!”','“¡Mirá ese progreso!”','“¡Qué gusto verte de vuelta!”']]];
+const TONO = [['Primera vez en la app','amarillo',219,'Paciente y entusiasta','“¡Qué bueno que te sumes! Contanos cómo te movés y te armamos tu primer recorrido.”'],
+  ['Haciendo actividad','naranja',201,'Motivador','¡Wow! Recorriste 18km este mes. ¿Vamos por los 20?'],
+  ['Si algo falla','azul',139,'Claro y sin dramatismo','“Se cortó la conexión, pero tu recorrido quedó guardado. Seguí cuando quieras.”'],
+  ['Al terminar un recorrido','rosa',241,'Festivo y celebratorio','"¡Bien hecho! Hoy recorriste 4km. Te merecés un buen descanso este finde."']];
+const PERFIL = [['Divertido','Serio','79b70.svg',0,'Somos divertidos, pero no ridículos. El humor acompaña, pero no tapa la información ni molesta.'],
+  ['Casual','Formal','25617.svg',0,'Hablamos de vos y con palabras de todos los días. La formalidad la dejamos para términos y condiciones.'],
+  ['Irreverente','Respetuoso','e1157.svg',1,'Nos animamos a jugar, pero respetamos los tiempos, los cuerpos y el nivel de cada persona.'],
+  ['Entusiasta','Práctico','0f2c0.svg',0,'Contagiamos ganas de salir, siempre con datos útiles: dónde, cuándo y qué necesitás.']];
+/* "Pero no": el Figma solo tiene el ejemplo de la primera fila */
+const SOMOS = [['Divertidos','Ridículos','amarillo','Recorriste más distancia que nadie en tu equipo esta semana. ¡Presumilo un poco!','¡¡SOS UNA MÁQUINA IMPARABLE!! 🔥🔥🔥 Nadie te gana, jajaja'],
+  ['Motivadores','Exigentes','naranja','¡Vas por el km 3! Un poco más y llegás al parque.'],['Cercanos','Invasivos','violeta','Hace unos días que no salís. ¿Te armamos un recorrido corto?'],
+  ['Informales','Desprolijos','rosa','Listo, ya estás en el equipo. ¡A moverse!'],['Expertos','Sobradores','azul','Para tu primer 5K, conviene alternar trote y caminata.'],
+  ['Inclusivos','Condescendientes','amarillo','Este recorrido es tranquilo y tiene bancos para descansar.'],['Entusiastas','Exagerados','violeta','¡5 actividades juntos! Qué buen equipo están armando.'],
+  ['Prácticos','Fríos','rosa','Locker gratis 2 hs a 300 m. Te guardamos el lugar.']];
+const GUIA = [
+  ['Hablamos en primera persona','8a5db.svg','Spot habla siempre en <b class="naranja">primera persona del plural</b>: somos nosotros quienes avisamos, mostramos y acompañamos. Nunca nos nombramos en tercera persona ni le cedemos la voz a “la app” o “el sistema”.',
+    [['“Te avisamos 30 minutos antes de que venza tu locker.”','“Spot te notificará 30 minutos antes del vencimiento.”'],['“En tu perfil mostramos el área, nunca la dirección exacta.”','“La aplicación mostrará el área del equipo.”'],['“Le avisamos al equipo que querés sumarte.”','“El sistema enviará tu solicitud al grupo.”']]],
+  ['Ni “usted” ni “tú”','d505a.svg','Elegimos el vos y lo sostenemos <b class="naranja">en todas las conjugaciones</b>: imperativos, verbos y pronombres. Nunca mezclamos formas dentro de una misma pantalla, porque un cambio de persona se lee como un cambio de quien habla.',
+    [['“Podés cambiarlo más adelante.”','“Puede cambiarlo más adelante.”'],['“Iniciá sesión con tu cuenta.”','“Inicia sesión con tu cuenta.”'],['“Registrá tus primeros 5 km.”','“Registra tus primeros 5 km.”']]],
+  ['Nadie queda afuera del texto','ade3e.svg','Evitamos el masculino genérico y los estereotipos sobre cuerpos, edades o niveles. Preferimos <b class="naranja">estructuras neutras</b> (quienes, cada persona, la comunidad) antes que la e, la x o la @, que dificultan la lectura en pantalla.',
+    [['“¡Te damos la bienvenida a Spot!”','“¡Bienvenido a Spot!”'],['“Ideal para quienes recién empiezan.”','“Ideal para los principiantes.”'],['“Sumá kilómetros a tu ritmo.”','“Quemá esas calorías de más.”']]],
+  ['Inglés, solo donde suma','93035.svg','Lo reservamos para <b class="naranja">nombres propios de la comunidad</b>, como niveles, insignias o encuentros del grupo. En instrucciones, botones y mensajes de error escribimos siempre en español, para que nadie tenga que traducir lo que tiene que hacer.',
+    [['“¿Te sumás al After Run?”','“Are you coming to the After Run?”'],['“Buscalo en la sección Equipos.”','“Buscalo en la sección Teams.”'],['“¡Desbloqueaste la insignia Noobie!”','“¡Noobie badge unlocked!”']]],
+  ['Signos, números y marcas','b15a3.svg','Abrimos siempre los signos ¡ y ¿, y usamos <b class="naranja">uno solo por frase</b>. Escribimos los números en cifras, con la unidad separada por un espacio. Nuestras marcas se escriben siempre igual: <b class="naranja">Spot</b>, <b class="naranja">post.</b> (en minúscula y con punto) y <b class="naranja">Stop</b>.',
+    [['“¡Mirá ese progreso!”','“Mirá ese progreso!!!”'],['“Mar, Jue y Sáb · 07:00 h · 5 km”','“martes y jueves 7hs · 5km”'],['“Viví la experiencia post.”','“Viví la experiencia POST”']]]
+];
+
+function armarKM2(){
+  $('#pilares').innerHTML = PILARES.map(([n, t, c, d, q]) =>
+    `<article class="pilar" style="--c:var(--${c})" tabindex="0"><span class="n">${n}</span><h3>${t}</h3><p class="d">${d}</p><span class="as">ASÍ SUENA</span><p class="q">${q}</p></article>`).join('');
+  $('#rasgos').innerHTML = RASGOS.map(([t, c, x, y, r]) => `<span class="rasgo" style="left:${x}px;top:${y}px;--c:var(--${c});--r:${r}deg">${t}</span>`).join('');
+  $('#enfoque').innerHTML = ENFOQUE.map(([t, c, l]) => `<article class="card-enf" style="--c:var(--${c})" tabindex="0"><h5>${t}</h5><ul>${l.map(x => `<li>${x}</li>`).join('')}</ul></article>`).join('');
+  $('#tono').innerHTML = TONO.map(([m, c, w, t, ej]) => `<article class="card-tono" style="--c:var(--${c});--w:${w}px" tabindex="0"><span class="mom">${m}</span><div><h5>${t}</h5><div class="ej"><small>ASÍ SUENA</small><p>${ej}</p></div></div></article>`).join('');
+  $('#perfil').innerHTML = PERFIL.map(([a, b, img, lado, d]) => `<div class="eje"><span class="${lado ? '' : 'si'}">${a}</span><img src="assets/km2/${img}" alt=""><span class="${lado ? 'si' : ''}">${b}</span><p>${d}</p></div>`).join('');
+  $('#somos').innerHTML = SOMOS.map(([s, n, c, ej, ejNo]) => `<div class="somos-fila" role="button" tabindex="0" aria-pressed="false" style="--c:var(--${c})">
+      <div class="toggle"><span>${s}</span><span>${n}</span></div>
+      <div class="ejemplo"><span class="si"><p>${ej}</p><img src="assets/km2/12a07.svg" alt="Así sí"></span>
+        <span class="no">${ejNo ? `<p>${ejNo}</p>` : `<p class="falta">Falta el ejemplo de “${n.toLowerCase()}” en el Figma</p>`}<img src="assets/km2/876eb.svg" alt="Así no"></span></div></div>`).join('');
+  $$('.somos-fila').forEach(f => {
+    const t = () => { f.classList.toggle('no'); f.setAttribute('aria-pressed', f.classList.contains('no')); };
+    f.addEventListener('click', t); f.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); t(); } });
+  });
+  $('#guia').innerHTML = GUIA.map(([t, ic, d, filas]) => `<div class="fila"><h3 class="t">${t}</h3><div class="c"><p class="txt">${d}</p>
+      <div class="tabla"><div class="cab"><div><img src="assets/km2/${ic}" alt="">Así sí</div><div><img src="assets/km2/876eb.svg" alt="">Así no</div></div>
+      ${filas.map(([si, no]) => `<div class="r"><p>${si}</p><p>${no}</p></div>`).join('')}</div></div></div>`).join('');
+}
+
+/* ---------- KM 3: variantes de color (textos y archivos del Figma) ---------- */
+const VARIANTES = {
+  spot: [
+    ['Blanco Crema',{bg:'var(--crema)'},'spot-principal.svg','oscura','Cuando el fondo del logo principal de la marca es el blanco crema de la marca, el relleno siempre es del mismo color. El negro que va a estar usando es el Negro Spot (#252525).'],
+    ['Color',{bg:'var(--azul)',paleta:true},'spot-principal.svg','oscura','Sobre los colores de la paleta, el logo mantiene su versión principal: relleno blanco crema y contorno Negro Spot. Así conserva el contraste sobre cualquiera de los seis colores de la marca, que son los únicos que usamos como fondo.'],
+    ['Negro',{bg:'var(--negro)'},'spot-invertido.svg','clara','Sobre el Negro Spot (#252525) usamos la versión invertida: el contorno pasa a blanco crema para que el logo no se pierda en el fondo y mantenga su peso visual.'],
+    ['Imagen Oscura',{foto:'fondo-oscuro.jpg',oscurecer:true},'spot-invertido.svg','clara','Sobre fotografías oscuras o con mucho movimiento usamos la versión invertida, con contorno blanco crema. Ubicamos el logo sobre una zona con poco detalle para que se lea a simple vista.'],
+    ['Imagen Clara',{foto:'fondo-claro.jpg'},'spot-principal.svg','oscura','Sobre fotografías claras usamos la versión principal, con contorno Negro Spot. Si la imagen está muy cargada, ubicamos el logo sobre el cielo o una superficie lisa.']],
+  post: [
+    ['Blanco Crema',{bg:'var(--crema)'},'post-principal.svg','oscura','Sobre el blanco crema, post. se usa en su versión principal: contorno Negro Spot e interior del mismo tono que el fondo, para que la palabra se lea liviana y limpia.'],
+    ['Color',{bg:'var(--verde)'},'post-principal.svg','oscura','Sobre color, post. mantiene el contorno Negro Spot y deja que el fondo ocupe el interior de las letras. Su color propio dentro de la paleta es el verde.'],
+    ['Negro',{bg:'var(--negro)'},'post-negro.svg','clara','Sobre el Negro Spot usamos la versión invertida: el contorno pasa a blanco crema y suma un borde verde que mantiene el vínculo con su color.'],
+    ['Imagen Oscura',{foto:'fondo-oscuro.jpg',oscurecer:true},'post-oscuro.svg','clara','Sobre fotografías oscuras usamos la versión invertida a una sola tinta, en blanco crema, para que el logo se lea sin competir con la imagen.']],
+  stop: [
+    ['Blanco Crema',{bg:'var(--crema)'},'stop-una-tinta.svg','oscura','Sobre el blanco crema, Stop se usa a una sola tinta: contorno Negro Spot y la estrella explosiva en el mismo tono, para una lectura simple y directa.'],
+    ['Color',{bg:'var(--rosa)'},'stop-color.svg','oscura','Sobre color, Stop aparece en su versión a todo color, con la estrella en rosa y el contorno en azul, que transmite el carácter festivo del evento.'],
+    ['Negro',{bg:'var(--negro)'},'stop-color.svg','clara','Sobre el Negro Spot también usamos la versión a color: el contraste con el fondo oscuro refuerza el clima nocturno del after.'],
+    ['Imagen Oscura',{foto:'fondo-oscuro.jpg',oscurecer:true},'stop-oscuro.svg','clara','Sobre fotografías oscuras volvemos a la versión a una sola tinta, en blanco crema, para que el logo no compita con la imagen.']]
+};
+const PALETA_SPOT = ['amarillo','naranja','rosa','violeta','azul'];
+function armarKM3(){
+  $('#variantes').innerHTML = Object.keys(VARIANTES).map(m => `<div class="variantes" data-marca="${m}">
+      <div class="nav-fondos">${VARIANTES[m].map((v, i) => `<button data-i="${i}">Fondo ${v[0]}</button>`).join('')}</div>
+      <div class="var-card"><div class="card"></div><p class="txt"></p></div></div>`).join('');
+  $$('.variantes').forEach(fila => {
+    const lista = VARIANTES[fila.dataset.marca]; let i = 0, colorSpot = 'azul';
+    const card = $('.card', fila), txt = $('.txt', fila);
+    const pintar = () => {
+      const [nombre, f, logo, flecha, texto] = lista[i];
+      card.style.setProperty('--bg', f.paleta ? `var(--${colorSpot})` : (f.bg || 'transparent'));
+      card.innerHTML = (f.foto ? `<img class="foto" src="assets/logos/${f.foto}" alt="">` : '') + (f.oscurecer ? '<span class="oscurecer"></span>' : '') +
+        `<img class="logo" src="assets/logos/${logo}" alt="Logo sobre fondo ${nombre.toLowerCase()}">` +
+        (f.paleta ? `<div class="paleta">${PALETA_SPOT.map(c => `<button style="--c:var(--${c})" data-c="${c}" class="${c === colorSpot ? 'on' : ''}" aria-label="Fondo ${c}"></button>`).join('')}</div>` : '') +
+        `<button class="flecha ant" aria-label="Anterior"><img src="assets/logos/flecha-${flecha}.svg" alt=""></button>` +
+        `<button class="flecha sig" aria-label="Siguiente"><img src="assets/logos/flecha-${flecha}.svg" alt=""></button>` +
+        `<div class="ind" style="--ic:${flecha === 'clara' ? 'var(--crema)' : 'var(--negro)'}">${lista.map((_, k) => `<i class="${k === i ? 'on' : ''}"></i>`).join('')}</div>`;
+      txt.textContent = texto;
+      $$('.nav-fondos button', fila).forEach((b, k) => b.classList.toggle('on', k === i));
+    };
+    fila.addEventListener('click', e => {
+      const b = e.target.closest('button'); if (!b) return;
+      if (b.dataset.i) i = +b.dataset.i;
+      else if (b.classList.contains('sig')) i = (i + 1) % lista.length;
+      else if (b.classList.contains('ant')) i = (i - 1 + lista.length) % lista.length;
+      else if (b.dataset.c) colorSpot = b.dataset.c;
+      pintar();
+    });
+    pintar();
+  });
+  $$('[data-tamanos]').forEach(t => t.innerHTML = ['DIGITAL|70px','IMPRESIÓN|25mm'].map(x => { const [a, b] = x.split('|');
+    return `<div><h6>${a}</h6><div class="muestra"><img class="l" src="assets/km3/logo-spot-chico.svg" alt=""><img class="r" src="assets/km3/regla.svg" alt=""></div><p>${b}</p></div>`; }).join(''));
+}
+
+/* ---------- Menú (Slide 3): ítems desplegables ---------- */
+const INDICE = [
+  ['Acerca de Spot','km1',[['Brand Spirit','km1-bs'],['Post','km1-sub'],['Stop','km1-sub']]],
+  ['Manual de voz y tono','km2',[['La esencia y los pilares','km2-pilares'],['Personalidad','km2-persona'],['La voz','km2-voz'],['El tono y su perfil','km2-tono'],['Somos… pero no…','km2-somos'],['Guía de estilo','km2-guia']]],
+  ['Logotipos','km3',[['Construcción','km3-construccion'],['Variantes de color','km3-variantes'],['Espacios seguros','km3-espacios'],['Usos correctos e incorrectos',null],['Tamaños','km3-tamanos'],['Ejemplos de uso',null]]],
+  ['Tipografías',null,[]],
+  ['Colores',null,[['Usos correctos e incorrectos',null]]],
+  ['Elementos gráficos',null,[['Misceláneas',null],['Fotografías',null],['Espacios seguros',null]]]
+];
+function armarMenu(){
+  $('#indice').innerHTML = INDICE.map(([t, km, subs], n) => `<li><button class="num" data-toggle aria-label="Abrir o cerrar ${t}">${n + 1}</button><div class="cuerpo">
+      <button class="enc" data-toggle aria-expanded="true">${t}${subs.length ? '<img src="assets/home/menu-flecha.svg" alt="" style="rotate:180deg">' : ''}</button>
+      ${subs.length ? `<div class="subs">${subs.map(([s, a]) => `<button ${a ? `data-ir="${km}" data-ancla="${a}"` : 'disabled'}>${s}</button>`).join('')}</div>` : ''}</div></li>`).join('');
+  // "Smart animate" 0,35 s ease-in-out al abrir/cerrar
+  $$('#indice [data-toggle]').forEach(b => b.addEventListener('click', () => {
+    const li = b.closest('li'); li.classList.toggle('cerrado');
+    $('.enc', li).setAttribute('aria-expanded', !li.classList.contains('cerrado'));
+  }));
+  $$('#indice [data-ir]').forEach(b => b.addEventListener('click', () => { cerrarMenu(true); irA(b.dataset.ir, b.dataset.ancla); history.replaceState(null, '', '#' + b.dataset.ir); }));
+}
+
+/* Puntos del mapa */
+function armarMapa(){
+  $('#puntos-mapa').innerHTML = PUNTOS_MAPA.map(([x, y, c, km, nom], i) => {
+    const tag = km ? `a href="#${km}"` : 'span tabindex="0"', fin = km ? 'a' : 'span';
+    return `<${tag} class="punto" style="left:${x}px;top:${y}px;--c:var(--${c})" aria-label="KM ${i + 1}${nom ? ': ' + nom : ''}">
+      <span class="pill"><span class="km">KM ${i + 1}</span>${nom ? `<span class="nom">${nom}</span>` : ''}</span><span class="bola">${i + 1}</span></${fin}>`;
+  }).join('');
+}
+
+/* =====================================================================
+   PORTADA: animación del Figma (2,4 s) → Home con Dissolve 0,1 s
+   ===================================================================== */
+const PUNTOS_LOGO = [[744.7,465.3,1.52,8.137,14.41],[810,465.3,18.279,24.759,31.175],[831.8,465.3,21.63,28.392,33.533],[875.4,465.3,6.309,12.04,18.15],[853.6,465.3,16.363,21.945,27.776],[984.5,465.3,17.8,24.247,29.405],[1028.1,465.3,13.012,18.55,24.498],[1006.3,465.3,19.715,25.433,30.612],[1093.6,465.3,26.418,32.215,37.851],[1137.2,465.3,19.236,25.324,30.571],[1115.5,465.3,4.872,11.548,17.832],[984.5,574.4,10.139,16.104,21.837],[1028.1,574.4,23.545,30.035,36.421],[1006.3,574.4,11.096,17.451,23.839],[810,530.8,10.618,17.219,22.738],[810,552.6,27.855,33.902,39.447],[810,574.4,14.448,20.353,26.379],[810,508.9,14.927,21.266,26.606],[810,487.1,2.478,8.442,14.037],[1137.2,465.3,26.897,33.012,38.137],[1159,465.3,2.957,8.423,14.251],[1180.9,465.3,15.885,22.161,27.323],[1137.3,530.7,24.982,31.331,37.057],[1137.3,552.6,3.914,10.576,16.737],[1137.3,574.4,24.024,30.09,35.804],[1137.3,508.9,11.575,17.551,23.684],[1137.3,487.1,8.703,15.101,21.404],[1224.4,465.3,25.461,31.609,37.963],[1224.4,530.8,7.266,13.35,19.71],[1224.4,574.4,7.745,14.315,20.392],[1224.4,508.9,8.224,14.051,19.495],[1224.4,487.1,22.109,28.608,35.008],[962.7,530.8,12.054,17.866,23.567],[962.7,552.6,5.83,12.499,17.913],[962.7,508.9,1.042,7.108,13.074],[962.7,487.1,22.588,28.345,34.785],[1050,530.7,27.376,33.876,38.961],[1049.9,552.6,24.503,30.752,36.33],[1049.9,508.9,1.999,8.737,14.672],[1049.9,487.1,17.321,23.753,29.018],[897.1,508.9,12.533,19.177,24.806],[897.1,487.1,23.067,28.538,34.121],[831.8,530.8,13.969,20.557,25.966],[875.4,530.7,28.333,34.243,41.667],[853.6,530.8,4.393,10.677,16.449],[722.2,465.3,6.787,13.18,19.27],[699.9,465.3,9.66,15.19,20.988],[677.5,465.3,18.757,24.53,30.129],[700.5,508.8,15.406,21.721,27.312],[678.2,508.8,13.49,19.881,25.627],[723.2,530.9,20.673,27.488,33.623],[744.5,552.8,5.351,11.556,16.679],[700.8,530.9,25.939,32.138,37.617],[656.9,487.5,3.436,9.447,15.688],[722.7,574.6,21.151,26.956,32.287],[700.3,574.7,16.842,22.693,27.838],[677.9,574.6,20.194,25.697,31.572],[655.5,574.6,9.181,15.282,20.304]];
+const portada = $('#portada');
+function animarPortada(){
+  const g = $('#p-puntos'), NS = 'http://www.w3.org/2000/svg', o = { duration: 2400, fill: 'both' }, e = .0001;
+  PUNTOS_LOGO.forEach(([x, y, a, b, d]) => {
+    const c = document.createElementNS(NS, 'circle'); c.setAttribute('cx', x + 19.65); c.setAttribute('cy', y + 19.65); c.setAttribute('r', 19.65); g.appendChild(c);
+    a /= 100; b /= 100; d /= 100;
+    c.animate([{opacity:0,offset:0},{opacity:0,offset:a},{opacity:1,offset:a+e},{opacity:1,offset:b},{opacity:0,offset:b+e},{opacity:0,offset:d},{opacity:1,offset:d+e},{opacity:1,offset:1}], o);
+  });
+  $('#p-borde').animate([{strokeDasharray:'0 1',strokeDashoffset:-1,offset:0},{strokeDasharray:'0 1',strokeDashoffset:-1,offset:.16675,easing:'cubic-bezier(.6,0,.6,1)'},{strokeDasharray:'1 1',strokeDashoffset:0,offset:.55556},{strokeDasharray:'1 1',strokeDashoffset:0,offset:1}], o);
+  const fade = [{opacity:1,offset:0},{opacity:1,offset:.75,easing:'ease-in-out'},{opacity:0,offset:.91667},{opacity:0,offset:1}];
+  $('#p-crema').animate(fade, o); g.animate(fade, o);
+}
+let portadaFuera = false;
+function salirDePortada(){
+  if (portadaFuera) return; portadaFuera = true;
+  portada.animate([{opacity:1},{opacity:0}], {duration: dur(100), easing:'ease-in-out', fill:'forwards'}).onfinish = () => portada.remove();
+}
+
+/* =====================================================================
+   NAVEGACIÓN (prototipo): KM entra desde la derecha 0,3 s · Volver al Inicio sale a la izquierda 0,3 s
+   ===================================================================== */
+let actual = 'inicio';
+const KMS = ['km1','km2','km3'];
+function irA(destino, ancla){
+  const de = actual;
+  if (destino === de) { if (ancla) scrollA(destino, ancla); return; }
+  actual = destino;
+  if (destino === 'inicio') {
+    const sale = document.getElementById(de); if (!sale) return;
+    sale.style.zIndex = 20;
+    sale.animate([{transform:'translateX(0)'},{transform:'translateX(-100%)'}], {duration: dur(300), easing: EASE_OUT}).onfinish = () => { sale.classList.remove('activa'); sale.style.zIndex = ''; };
+    return;
+  }
+  const entra = document.getElementById(destino);
+  entra.scrollTop = 0; entra.classList.add('activa'); entra.style.zIndex = 20;
+  if (ancla) requestAnimationFrame(() => scrollA(destino, ancla, true));
+  entra.animate([{transform:'translateX(100%)'},{transform:'translateX(0)'}], {duration: dur(300), easing: EASE_OUT}).onfinish = () => {
+    entra.style.zIndex = ''; const prev = document.getElementById(de); if (prev && prev !== entra && prev.classList.contains('km')) prev.classList.remove('activa');
+  };
+}
+function scrollA(km, ancla, ya){
+  const cont = document.getElementById(km), el = document.getElementById(ancla); if (!el) return;
+  const z = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--z')) || 1;
+  const y = el.getBoundingClientRect().top - cont.getBoundingClientRect().top + cont.scrollTop;
+  cont.scrollTo({top: y, behavior: (ya || REDUCIR) ? 'auto' : 'smooth'});
+}
+function leerHash(){
+  const h = location.hash.replace('#', '');
+  cerrarMenu(true);
+  irA(KMS.includes(h) ? h : 'inicio');
+}
+
+/* Menú: overlay que entra desde la izquierda, 0,2 s ease-out; cerrar es instantáneo */
+const menu = $('#menu'), veloMenu = $('#velo-menu');
+function abrirMenu(){
+  menu.classList.add('abierto'); veloMenu.classList.add('abierto'); menu.setAttribute('aria-hidden','false');
+  menu.animate([{transform:'translateX(-100%)'},{transform:'translateX(0)'}], {duration: dur(200), easing: EASE_OUT});
+  $('.cerrar', menu).focus({preventScroll:true});
+}
+function cerrarMenu(){ menu.classList.remove('abierto'); veloMenu.classList.remove('abierto'); menu.setAttribute('aria-hidden','true'); }
+
+/* Escala: las páginas se diseñaron a 1920 px */
+function escalar(){
+  const r = document.documentElement.style;
+  r.setProperty('--z', innerWidth / 1920);
+  r.setProperty('--zs', Math.min(innerWidth / 1920, innerHeight / 1080));
+  r.setProperty('--zm', Math.min(1, Math.max(.55, innerHeight / 1080)));
+}
+
+/* =====================================================================
+   ARRANQUE
+   ===================================================================== */
+escalar(); addEventListener('resize', escalar);
+armarMapa(); armarDecos(); armarKM2(); armarKM3(); armarMenu();
+$$('[data-abrir-menu]').forEach(b => b.addEventListener('click', abrirMenu));
+$$('[data-cerrar-menu]').forEach(b => b.addEventListener('click', () => cerrarMenu()));
+addEventListener('keydown', e => { if (e.key === 'Escape') cerrarMenu(); });
+$$('[data-a]').forEach(b => b.addEventListener('click', () => scrollA(b.closest('.km').id, b.dataset.a)));
+$$('[data-bajar]').forEach(b => b.addEventListener('click', () => { const k = b.closest('.km'); k.scrollBy({top: innerHeight * .9, behavior: REDUCIR ? 'auto' : 'smooth'}); }));
+$$('[data-arriba]').forEach(b => b.addEventListener('click', () => b.closest('.km').scrollTo({top: 0, behavior: REDUCIR ? 'auto' : 'smooth'})));
+addEventListener('hashchange', leerHash);
+
+if (location.hash && location.hash !== '#inicio') { portada.remove(); portadaFuera = true; leerHash(); }
+else if (REDUCIR) { portada.remove(); portadaFuera = true; }
+else { animarPortada(); setTimeout(salirDePortada, 2400); portada.addEventListener('click', salirDePortada); }
+</script>
+</body>
+</html>
