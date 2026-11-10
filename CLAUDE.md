@@ -243,6 +243,10 @@ El 10/11/2026 se borró todo lo construido y se empezó de nuevo. Respaldo de la
 (Anotar acá cada decisión nueva: fecha · quién · qué se decidió.)
 
 - 10/11/2026 · Mateo · Se empieza de cero. Historial de Git limpio.
+- 10/11/2026 · Mateo · **Movimiento al scrollear tomado de houseofyellow.nl** (pedido del equipo: que no sea brusco). Analizado en su código: usan Lenis (duración 1,2 s, curva expo-out `t => Math.min(1, 1.001 - 2^(-10t))`, rueda suavizada, touch nativo) + GSAP ScrollTrigger con entradas de 0,45 s que suben ~24 px al llegar al 90 % de la pantalla, escalonadas de a 0,15 s, una sola vez.
+  - Aplicado en `index.html`: Lenis 1.1.13 desde jsDelivr, una instancia por página KM (son las que scrollean); todos los saltos internos (links del hero, menú, flecha, "Volver arriba") usan el mismo scroll suave.
+  - Entradas: lista `ENTRAN` en el script (secciones, pilares, stickers, cards, filas, fotos, botones…). El hero de cada KM no se anima (ya está a la vista).
+  - Sin la librería o con "reducir movimiento", queda el scroll normal y todo visible.
 - 10/11/2026 · Mateo · **Se construyó todo lo diseñado** en `index.html`: portada, home (10 puntos), menú desplegable, KM 1, KM 2 y KM 3. Sin contenido inventado: textos, gráficos y fotos exportados del Figma (`assets/home`, `assets/km1`, `assets/km2`, `assets/km3`, `assets/logos`, `assets/img/caritas`).
   - Cómo está hecho: cada pantalla está maquetada a 1920 px como el Figma y se escala con `zoom` (variables `--z`, `--zs`, `--zm`). Pensado para compu; en celular se ve chico.
   - Animaciones del prototipo respetadas: portada 2,4 s → Home con Dissolve 0,1 s; hover de puntos 0,1 s; contorno → logo 0,3 s; KM entra desde la derecha 0,3 s; "Volver al Inicio" sale a la izquierda 0,3 s; menú entra 0,2 s; ítems del menú abren/cierran 0,35 s ease-in-out; toggles "Somos / Pero no" 0,35 s ease-in-out; hovers de pilares (0,3 s), cards de enfoque (0,3 s), cards de tono (0,4 s), misión/visión (0,2 s) y glosario (Dissolve 0,1 s); botones de fondo en variantes de color (instantáneo).

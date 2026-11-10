@@ -286,8 +286,15 @@ a.punto{cursor:pointer} span.punto{cursor:default}
 #menu .subs button:disabled{cursor:default}
 #menu .subs button:disabled:hover{color:var(--crema-60)}
 
+/* ---------- Movimiento al scrollear (referencia: houseofyellow.nl) ----------
+   Scroll suave con Lenis (1,2 s, expo-out) y entradas: suben 24 px y aparecen en 0,45 s,
+   escalonadas de a 0,15 s, cuando el elemento llega al 90 % de la pantalla. Una sola vez. */
+.rv{opacity:0}
+.km.lenis-smooth{scroll-behavior:auto}
+
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{transition-duration:.01ms!important;animation:none!important}
+  .rv{opacity:1}
 }
 </style>
 </head>
@@ -533,6 +540,7 @@ a.punto{cursor:pointer} span.punto{cursor:default}
  </div>
 </nav>
 
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
 <script>
 /* =====================================================================
    DATOS DEL FIGMA
@@ -786,7 +794,7 @@ function irA(destino, ancla){
     return;
   }
   const entra = document.getElementById(destino);
-  entra.scrollTop = 0; entra.classList.add('activa'); entra.style.zIndex = 20;
+  irArriba(entra, true); entra.classList.add('activa'); entra.style.zIndex = 20;
   if (ancla) requestAnimationFrame(() => scrollA(destino, ancla, true));
   entra.animate([{transform:'translateX(100%)'},{transform:'translateX(0)'}], {duration: dur(300), easing: EASE_OUT}).onfinish = () => {
     entra.style.zIndex = ''; const prev = document.getElementById(de); if (prev && prev !== entra && prev.classList.contains('km')) prev.classList.remove('activa');
@@ -794,9 +802,50 @@ function irA(destino, ancla){
 }
 function scrollA(km, ancla, ya){
   const cont = document.getElementById(km), el = document.getElementById(ancla); if (!el) return;
-  const z = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--z')) || 1;
   const y = el.getBoundingClientRect().top - cont.getBoundingClientRect().top + cont.scrollTop;
-  cont.scrollTo({top: y, behavior: (ya || REDUCIR) ? 'auto' : 'smooth'});
+  irA_Y(cont, y, ya);
+}
+
+/* =====================================================================
+   SCROLL SUAVE (Lenis) — una instancia por página KM, que es la que scrollea
+   ===================================================================== */
+const SUAVE = new Map();
+const EXPO_OUT = t => Math.min(1, 1.001 - Math.pow(2, -10 * t));
+function iniciarScrollSuave(){
+  if (REDUCIR || typeof Lenis === 'undefined') return;   // sin la librería, queda el scroll normal
+  $$('article.km').forEach(km => SUAVE.set(km, new Lenis({ wrapper: km, content: km.firstElementChild, duration: 1.2, easing: EXPO_OUT, smoothWheel: true })));
+  // el ciclo se agenda primero: si una página falla en un cuadro, el scroll suave sigue andando
+  const raf = t => { requestAnimationFrame(raf); SUAVE.forEach(l => { try { l.raf(t); } catch (e) { console.warn('Lenis', e); } }); };
+  requestAnimationFrame(raf);
+}
+function irA_Y(cont, y, ya){
+  const l = SUAVE.get(cont);
+  if (l) l.scrollTo(y, { immediate: !!ya, duration: 1.2, easing: EXPO_OUT });
+  else cont.scrollTo({ top: y, behavior: (ya || REDUCIR) ? 'auto' : 'smooth' });
+}
+function irArriba(cont, ya){ irA_Y(cont, 0, ya); }
+
+/* =====================================================================
+   ENTRADAS AL SCROLLEAR: suben 24 px + aparecen, 0,45 s, escalonadas 0,15 s
+   ===================================================================== */
+const ENTRAN = ['.sec .fila > *', '.pilar', '.rasgo', '.card-enf', '.card-tono', '.eje', '.somos-fila', '.enfoque > h4', '.momentos > h4',
+  '.banda p', '.foto-co p', '.tira', '.variantes', '.tamanos > div', '.submarcas-zona > img.abs', '.submarcas-zona > p', '.foto-rot', '.boton', '.parada', '.volver-arriba']
+  .join(',');
+function iniciarEntradas(){
+  if (REDUCIR || !('IntersectionObserver' in window)) return;
+  $$('article.km').forEach(km => {
+    const io = new IntersectionObserver(entradas => {
+      const nuevas = entradas.filter(e => e.isIntersecting).map(e => e.target)
+        .sort((a, b) => a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1);
+      nuevas.forEach((el, i) => {
+        io.unobserve(el);
+        el.classList.remove('rv');
+        el.animate([{ opacity: 0, translate: '0 24px' }, { opacity: 1, translate: '0 0' }],
+          { duration: 450, delay: 150 + Math.min(i, 3) * 150, easing: 'ease', fill: 'backwards' });
+      });
+    }, { root: km, rootMargin: '0px 0px -10% 0px' });   // cuando llega al 90 % de la pantalla
+    $$(ENTRAN, km).forEach(el => { if (el.closest('.hero')) return; el.classList.add('rv'); io.observe(el); });
+  });
 }
 function leerHash(){
   const h = location.hash.replace('#', '');
@@ -829,9 +878,10 @@ armarMapa(); armarDecos(); armarKM2(); armarKM3(); armarMenu();
 $$('[data-abrir-menu]').forEach(b => b.addEventListener('click', abrirMenu));
 $$('[data-cerrar-menu]').forEach(b => b.addEventListener('click', () => cerrarMenu()));
 addEventListener('keydown', e => { if (e.key === 'Escape') cerrarMenu(); });
-$$('[data-a]').forEach(b => b.addEventListener('click', () => scrollA(b.closest('.km').id, b.dataset.a)));
-$$('[data-bajar]').forEach(b => b.addEventListener('click', () => { const k = b.closest('.km'); k.scrollBy({top: innerHeight * .9, behavior: REDUCIR ? 'auto' : 'smooth'}); }));
-$$('[data-arriba]').forEach(b => b.addEventListener('click', () => b.closest('.km').scrollTo({top: 0, behavior: REDUCIR ? 'auto' : 'smooth'})));
+$$('[data-a]').forEach(b => b.addEventListener('click', () => scrollA(b.closest('article.km').id, b.dataset.a)));
+$$('[data-bajar]').forEach(b => b.addEventListener('click', () => { const k = b.closest('article.km'); irA_Y(k, k.scrollTop + innerHeight * .9); }));
+$$('[data-arriba]').forEach(b => b.addEventListener('click', () => irArriba(b.closest('article.km'))));
+iniciarScrollSuave(); iniciarEntradas();
 addEventListener('hashchange', leerHash);
 
 if (location.hash && location.hash !== '#inicio') { portada.remove(); portadaFuera = true; leerHash(); }
