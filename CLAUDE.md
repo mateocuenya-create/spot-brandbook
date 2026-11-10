@@ -50,8 +50,9 @@ Contenido que pide la consigna: nombre del proyecto y claim, voz y tono, signos 
 | Pantallas app Spot | `1:2882` | 49 pantallas: Crear equipo (pasos 1–4 y éxito), Registrar entrenamiento (en proceso, pausa, cargando, finalizado, logros), Buscar equipo (mapa, filtros, perfil, confirmación), Canjear locker (beneficios, QR, canje exitoso, mapa), Login, Splash, Inicio, Welcome Home, Equipos (Mis equipos / Descubrir) | 0 |
 | POST | `1:18433` | 138 elementos (TP3) | 21 (ver 2.3) |
 | Evento STOP | `1:27208` | 159 elementos (TP4) | 20 (ver 2.4) |
-| Brand guidelines TP5 | `4:9125` | **Diseño imaginado de la home de esta página** (ver sección 4) | 0 |
+| Brand guidelines TP5 | `4:9125` | **Primera página. Diseño de la página web del TP5: es el modelo a seguir** (ver sección 4) | 0 |
 | Escala tipográfica | `9:2603` | Escala tipográfica (ver sección 7) | 0 |
+| Sistema de íconos | `77:159` | Página nueva (10/11): 65 íconos de la app, con variante Outline/Fill y solo outline | 0 |
 
 Nota: "Brand guidelines TP5" NO es un brand guidelines de Spot: es el diseño de la home de la página del TP5.
 
@@ -99,34 +100,44 @@ Links de Drive de los informes (fuente; en la página final van por Teams):
 
 ---
 
-## 4. Home del TP5 (Figma, página "Brand guidelines TP5", `4:9125`)
+## 4. La página "Brand guidelines TP5" (`4:9125`) — ES EL MODELO A SEGUIR
 
-Lo más importante para el equipo: **las animaciones de esta página**. Se reconstruyen a mano en HTML/CSS/JS.
-
-Idea: el brandbook es **una carrera**. Los capítulos son "kilómetros" (KM) y la home es un mapa de recorrido con puntos.
+Releída el 10/11/2026. Es la primera página del Figma. El equipo la diseñó como la página web: **construir lo que está ahí, sin inventar.** Cada lámina es una pantalla (1920 de ancho; las altas son pantallas con scroll).
 
 ### Pantallas
-- `4:9456` **Slide 1 · Portada** (1920×1080): fondo amarillo, logo SPOT! centrado.
-- `4:9521` **Slide 2 · Home/mapa** (1920×1080): foto de ciclistas desenfocada de fondo, logo SPOT! arriba, botones "post." y "STOP", contorno de recorrido tipo mapa con 6 puntos de colores (`4:9524`–`4:9529`), ícono de lista (menú) arriba a la izquierda.
-- `4:9537` **Slide 3 · Menú lateral** (overlay 525×1080, oscuro): cerrar, "Volver al Inicio", índice: Acerca de Spot (Brand Spirit, Post, Stop…), Manual de voz y tono, Logotipos (construcción, variantes de color, espacios seguros, usos correctos e incorrectos, tamaños, ejemplos), Tipografías, Colores (usos correctos e incorrectos), Elementos gráficos (misceláneas, fotografías…).
-- `4:9550` **Slide 4 · KM 1 "Acerca de SPOT!"** (1920×**2343**, más alta): amarillo, tag "KM 1", título con logo, tagline **"Una marca en constante movimiento"**, links internos (Brand Spirit ↗, Misión y visión ↗, Submarcas ↗), flecha hacia abajo; debajo, bloque crema con "Brand Spirit" + texto (hoy lorem ipsum) y un tag.
-- `4:9575` **Slide 5 · KM 2 "Manual de Voz y Tono"** (1920×1080): naranja, tag "KM 2", pregunta **"¿Cómo le hablamos a nuestro público?"**, mismos links internos (placeholder), flecha.
+| Lámina | ID | Qué es | Estado |
+|---|---|---|---|
+| "1" | `4:9456` | Portada amarilla con el logo SPOT! animado | Lista |
+| Slide 2 | `4:9521` | Home: video de ciclistas, mapa-circuito con **10 puntos** de colores, menú, logo SPOT! y logos de **post.** y **STOP** arriba a la derecha | Lista |
+| Slide 3 | `4:9537` | Menú lateral (578 px), con ítems que se abren/cierran (componente "Item menú": Abierto/Cerrado) | Lista |
+| Slide 4 | `4:9550` | **KM 1 · Acerca de SPOT!** (7617 px): Brand Spirit, Misión y visión, frase "Comienzos en Compañía, Comunidad & Comodidad" sobre foto, Submarcas (post. con fotos de la instalación y STOP, con botones "Conocé más"), "Siguiente parada: KM 2", "Volver arriba", footer © 2026 | Completa con textos reales |
+| Slide 5 | `4:9575` | **KM 2 · Manual de Voz y Tono** (12025 px): pilares (Comienzos, Compañía, Comunidad, Comodidad, con "Así suena"), La voz, "Si Spot fuera una persona…" (8 rasgos), enfoque (4 cards), El tono (4 momentos), perfil de tono (4 dimensiones de Nielsen Norman Group), "Somos… pero no…" (8 pares), Guía de estilo (Así sí / Así no) | Completa con textos reales |
+| Slide 6 | `198:425` | **KM 3 · Logotipos**: Logos Spot (los 3), Construcción (altura de x 124 px, contornos +24 px y +9 px), Variantes de color (5 fondos: Blanco crema, Color, Negro, Imagen oscura, Imagen clara), Tamaños mínimos (70 px digital / 25 mm impresión), Espacios seguros | Casi completa (el subtítulo y los links de arriba todavía son los del KM 2) |
+| Slide 7 | `281:746` | Tipografías | Borrador (textos sueltos, imágenes de referencia, tag dice "KM 2") |
+| Slide 8 | `281:1181` | Colores: colores de SPOT, POST y STOP, reglas de fondos, ejemplos con componentes de la app | Borrador (textos "Hola" de prueba) |
+| Slide 9 | `282:9418` | Elementos gráficos: formas de cada marca ("Post: estanque relajante"; "Stop: fiesta, fuegos artificiales, luces, noche") | Borrador |
 
-### Interacciones del prototipo (datos exactos leídos del Figma)
-1. **Portada → Home:** automático a los **2,4 s**, Smart Animate 0,3 s ease-out (probable morph del logo).
-2. **Contorno del mapa** ("Component 2" `4:9523`, variantes `4:9659` Vector → `4:9656` Component 1): hover → cambia de forma, Smart Animate 0,3 s ease-out.
-3. **Puntos del mapa** (set `4:9591`, Default `4:9598` → Hover `4:9592`): hover, Smart Animate 0,1 s ease-out.
-4. **Click en punto:** `4:9524` → KM 1; `4:9525` → KM 2. Move In desde la izquierda, 0,3 s ease-out. Los otros 4 puntos todavía sin destino.
-5. **KM 1 → KM 2:** click en KM 1, Move In desde la izquierda, 0,3 s ease-out.
-6. **Menú:** ícono lista (en Home, KM 1 y KM 2) → overlay entra desde la derecha, 0,2 s ease-out; "close" lo cierra.
-7. **"Volver al Inicio"** (`4:9547`) → Home, Move Out hacia la izquierda, 0,3 s ease-out.
+Cada KM tiene su color de fondo arriba: KM 1 amarillo, KM 2 naranja, KM 3 rosa, Tipografías violeta, Colores azul, Elementos gráficos amarillo. Todos llevan el tag "KM n", el título con borde crema, una carita sticker, misceláneas flotando y links internos.
 
-### Componentes web (sección `4:9590`)
-"Puntos mapa" (Default/Hover), "Logo SPOT" (Default y Variant2, `4:9618`), "Component 2" (contorno del mapa, `4:9655`), botón "SPOT" (`4:9616`), un tag, un ícono de mapa.
+Texto suelto con la voz y tono resumida: `19:9775`. Lista de contenidos del equipo: `4:9615` (incluye además "sistema de marca", "Ubicación" en logos y "Arquigrafía").
 
-Fidelidad: **exacta** en disparadores, destinos, duraciones y easing; **aproximada** en los morph de formas (recrear con SVG mirando los dos estados de cada componente).
+### Notas de implementación que dejó el equipo (sección "Componentes web" `4:9590`)
+- **Navegación general:** puntos del mapa de KM y menú índice; se usan en todas las secciones.
+- **KM 1:** Misión y visión con hover.
+- **KM 2:** Pilares de la marca (hover: la tarjeta pasa al color del pilar) y frases destacadas de La voz y El tono (hover: la frase se marca en naranja, como la misión del KM 1).
+- **Logos:** SPOT · post. · STOP y animación del logo SPOT (hover).
 
----
+### Componentes con estados (en "Componentes web")
+Puntos mapa (Default/Hover) · Logo SPOT (2 variantes) · Component 2 (contorno del mapa ↔ logo) · Logo Post (2 capas) · Component 3 y Component 5 · Pilar de marca (4 pilares × Default/Hover) · Frase destacada KM2 (La voz / El tono × Default/Hover) · Card enfoque (Azul/Rosa/Verde/Violeta × Default/Hover) · Card tono (4 momentos × Default/Hover) · Toggle y Fila "Somos / Pero no" (4 colores × Somos/Pero no) · Logo Spot/Post/Stop · Variantes de color y "Nav fondos logo" (5 fondos) · Item menú (Abierto/Cerrado).
+
+### Interacciones del prototipo (220 en total)
+- Portada → Home: a los 2,4 s, Dissolve 0,1 s.
+- Hover: Smart Animate de 0,1 s (puntos del mapa), 0,2 s, 0,3 s (contorno del mapa y otros) y 0,4 s (Card tono).
+- Click en punto del mapa → KM: Move in desde la derecha, 0,3 s ease-out. "Volver al Inicio": Move out hacia la izquierda, 0,3 s.
+- Menú: overlay Move in, 0,2 s ease-out.
+- Click que cambia de estado (toggles "Somos / Pero no", ítems del menú): Smart Animate 0,35 s ease-in-out.
+- 132 clics que cambian una variable (botones de fondo "Blanco Crema", "Color", etc. en Variantes de color de logos).
+- Detalles exactos: leer `node.reactions` con `use_figma`.
 
 ## 5. Estructura de contenido de la página
 
@@ -232,3 +243,4 @@ El 10/11/2026 se borró todo lo construido y se empezó de nuevo. Respaldo de la
 (Anotar acá cada decisión nueva: fecha · quién · qué se decidió.)
 
 - 10/11/2026 · Mateo · Se empieza de cero. Historial de Git limpio.
+- 10/11/2026 · Mateo · Se releyó el Figma después de los cambios del equipo (sección 4 actualizada): KM 1 y KM 2 completos, KM 3 casi completo, Tipografías/Colores/Elementos gráficos en borrador, Home con 10 puntos, página nueva "Sistema de íconos".
