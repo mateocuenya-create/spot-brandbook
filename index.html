@@ -544,6 +544,9 @@ a.punto{cursor:pointer} span.punto{cursor:default}
 .rasgo{cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none}
 .rasgo.agarrado{cursor:grabbing;scale:1.08}
 .pin-tira{position:relative}
+/* KM 6 · carruseles de fotos: quedan fijos en pantalla y se deslizan de costado mientras se scrollea */
+.pin-carrusel{position:relative}
+.pin-carrusel > .carrusel{position:sticky}
 .pin-tira .pin-sticky{position:sticky;top:40px}
 .var-card .card .capa{position:absolute;inset:0;display:grid;place-items:center;background:var(--bg)}
 .var-card .card .ctrl{position:absolute;inset:0;pointer-events:none}
@@ -1893,7 +1896,7 @@ function armarKM6(){
     f.innerHTML = PIEZAS[f.dataset.piezas].map(([a, bw, bh, w, h, x, y]) => `<div class="pieza" style="width:${bw}px;height:${bh}px"><div class="mov"><img src="assets/km6/${a}.svg" alt="" style="left:${x}px;top:${y}px;width:${w}px;height:${h}px"></div></div>`).join('');
   });
   $$('[data-carrusel]').forEach(c => {
-    c.innerHTML = `<div class="ventana arrastrable"><div class="pista">${FOTOS[c.dataset.carrusel].map(([f, t, pos]) =>
+    c.innerHTML = `<div class="ventana"><div class="pista">${FOTOS[c.dataset.carrusel].map(([f, t, pos]) =>
       `<figure><div class="marco"><img src="assets/km6/${f}.jpg" alt="" style="${pos ? `object-position:50% ${pos}` : ''}" loading="lazy"></div><figcaption>${t}</figcaption></figure>`).join('')}</div></div>
       <button class="fl ant" aria-label="Foto anterior"><img src="assets/km6/caret-izq.svg" alt=""></button>
       <button class="fl sig" aria-label="Foto siguiente"><img src="assets/km6/caret-der.svg" alt=""></button>`;
@@ -2213,31 +2216,43 @@ function iniciarTira(){
   km.addEventListener('scroll', act, { passive: true });
 }
 
-/* Carruseles de fotos (KM 6): flechas como el prototipo (Smart animate 0,5 s, la última vuelve a la primera),
-   más arrastre y trackpad. Cada foto se corre un poco dentro de su marco (paralaje). */
+/* Carruseles de fotos (KM 6): se deslizan de costado con el scroll (como la tira del KM 3). El carrusel queda fijo
+   en el medio de la pantalla y cada foto se detiene un momento antes de dar paso a la siguiente. Las flechas del
+   prototipo siguen: llevan el scroll hasta la foto anterior o siguiente. Cada foto se corre un poco dentro de su marco (paralaje). */
 function iniciarCarruseles(){
   $$('[data-carrusel]').forEach(c => {
-    const pista = $('.pista', c), figs = $$('figure', pista), PASO = 1275, n = figs.length;
-    let i = 0, x = 0, base = 0, bloqueo = 0;
-    const EASE = 'cubic-bezier(.22,1,.36,1)';
-    const pintar = (v, ms) => {
-      x = v; const t = ms ? `transform ${ms}ms ${EASE}` : 'none';
-      pista.style.transition = t; pista.style.transform = `translateX(${v}px)`;
-      figs.forEach((f, k) => { const img = $('img', f), rel = (k * PASO + v) / PASO;
-        img.style.transition = t; img.style.transform = `translateX(${Math.max(-1, Math.min(1, rel)) * -50}px)`; });
+    const pista = $('.pista', c), figs = $$('figure', pista), PASO = 1275, n = figs.length, km = c.closest('article.km');
+    const POR_FOTO = 700, RECORRIDO = POR_FOTO * (n - 1), ALTO = 786;
+    const pin = document.createElement('div'); pin.className = 'pin-carrusel';
+    c.parentNode.insertBefore(pin, c); pin.appendChild(c);
+    let arriba = 40, i = 0;
+    const pintar = v => {
+      pista.style.transform = `translateX(${v.toFixed(1)}px)`;
+      figs.forEach((f, k) => { const rel = (k * PASO + v) / PASO; $('img', f).style.transform = `translateX(${Math.max(-1, Math.min(1, rel)) * -50}px)`; });
     };
-    const ir = (k, vuelta = true) => { i = vuelta ? (k + n) % n : Math.max(0, Math.min(n - 1, k)); pintar(-i * PASO, REDUCIR ? 0 : 500); };
+    const medir = () => {
+      const z = zoomActual();
+      arriba = Math.max(40, (innerHeight / z - ALTO) / 2);
+      c.style.top = arriba + 'px'; pin.style.height = (ALTO + RECORRIDO) + 'px';
+    };
+    const suave = t => t <= 0 ? 0 : t >= 1 ? 1 : t * t * (3 - 2 * t);
+    const act = () => {
+      const z = zoomActual(), r = pin.getBoundingClientRect();
+      const p = Math.max(0, Math.min(1, (arriba * z - r.top) / (RECORRIDO * z)));
+      const t = p * (n - 1), k = Math.min(n - 2, Math.floor(t)), f = suave((t - k - .15) / .7);   // cada foto se queda quieta un rato
+      i = Math.round(t); pintar(-(k + f) * PASO);
+    };
+    // flechas: llevan el scroll hasta la foto pedida (de la última vuelve a la primera, como el prototipo)
+    const ir = j => {
+      j = (j + n) % n;
+      const z = zoomActual(), topPin = pin.getBoundingClientRect().top + km.scrollTop;
+      irA_Y(km, topPin - arriba * z + (j / (n - 1)) * RECORRIDO * z);
+    };
     $('.fl.sig', c).addEventListener('click', () => ir(i + 1));
     $('.fl.ant', c).addEventListener('click', () => ir(i - 1));
-    deslizable($('.ventana', c), {
-      mover: (d, inicio) => { if (inicio) { base = x; return; }
-        let v = base + d; if (v > 0) v *= .3; if (v < -(n - 1) * PASO) v = -(n - 1) * PASO + (v + (n - 1) * PASO) * .3; pintar(v, 0); },
-      soltar: (vel, movio) => { if (!movio) return ir(i, false);
-        let k = Math.round(-x / PASO); if (Math.abs(vel) > .35) k = Math.round(-base / PASO) + (vel < 0 ? 1 : -1); ir(k, false); },
-      rueda: dx => { const ahora = performance.now(); if (ahora < bloqueo || Math.abs(dx) < 12) return; bloqueo = ahora + 650; ir(i + (dx > 0 ? 1 : -1), false); }
-    });
-    c.tabIndex = -1;
-    pintar(0, 0);
+    medir(); act();
+    addEventListener('resize', () => { medir(); act(); });
+    km.addEventListener('scroll', act, { passive: true });
   });
 }
 

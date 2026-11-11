@@ -344,3 +344,7 @@ El 10/11/2026 se borró todo lo construido y se empezó de nuevo. Respaldo de la
 - 11/11/2026 · Mateo · **KM 6 · Signos Display: el rastro deja signos display**, como cuenta el texto ("las estrellas de Post y Stop pueden usarse en tamaños mucho más grandes"). Ya no se dejan misceláneas chicas: ahora son las estrellas de cada marca en tamaño grande (150 a 340 px) y en línea fina.
   - Las piezas son `assets/km6/display-post-1/2.svg`, las estrellas de post. en verde, y `display-stop-1/2.svg`, las de STOP en azul y rosa. Tienen la misma forma que las piezas originales, solo el contorno, con un trazo que no engorda al agrandarse.
   - post. al lado de post. y STOP al lado de STOP. Como máximo 6 a la vez.
+- 11/11/2026 · Mateo · **KM 6 · carruseles de fotos (Spot, Post y Stop) se deslizan con el scroll** (reemplaza el arrastre, `iniciarCarruseles`). Funciona como la tira de construcción del KM 3.
+  - Al llegar, el carrusel queda fijo en el medio de la pantalla y las fotos pasan de costado mientras scrolleás: 700 px de scroll por foto.
+  - Cada foto se queda quieta un momento antes de dar paso a la siguiente. Cuando termina, la página sigue normal, y volviendo hacia arriba se recorre al revés.
+  - Las flechas del prototipo siguen andando: llevan el scroll hasta la foto anterior o la siguiente, y de la última vuelven a la primera. El paralaje de la foto dentro del marco se mantiene.
