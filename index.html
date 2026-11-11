@@ -1755,8 +1755,16 @@ const PIEZAS_SPOT = [
   ['km1/punto3.svg',43,'naranja','p'],['km1/punto4.svg',29.23,'naranja','p'],['km6/intro-10.svg',71,'naranja','p'],['km6/intro-8.svg',47,'naranja','p'],['km1/star8.svg',112.988,'naranja','e'],['km6/spot-estrella7.svg',94,'naranja','e'],
   ['km1/punto5.svg',43,'rosa','p'],['km2/4478f.svg',29.23,'rosa','p'],['km6/intro-11.svg',71,'rosa','p'],['km6/intro-14.svg',47,'rosa','p'],['km2/6b150.svg',112.988,'rosa','e'],['km6/spot-estrella12.svg',97,'rosa','e'],
   ['km1/punto7.svg',43,'violeta','p'],['km2/36e87.svg',43,'violeta','p'],['km6/intro-15.svg',71,'violeta','p'],['km6/intro-3.svg',113,'violeta','e'],
-  ['km1/punto8.svg',43,'azul','p'],['km2/cfa66.svg',29.23,'azul','p'],['km6/spot-punto.svg',61,'azul','p'],['km6/intro-16.svg',47,'azul','p'],['km1/star10.svg',90.2858,'azul','e'],['km6/intro-4.svg',113,'azul','e']
+  ['km1/punto8.svg',43,'azul','p'],['km2/cfa66.svg',29.23,'azul','p'],['km6/spot-punto.svg',61,'azul','p'],['km6/intro-16.svg',47,'azul','p'],['km1/star10.svg',90.2858,'azul','e'],['km6/intro-4.svg',113,'azul','e'],
+  // insignias de logros de la app (página "Spot" del Figma: grupo, consistencia, participación social, lugares, lugar asociado, lugar repetido)
+  ['miscelaneas/insignia-grupo.svg',96,'rosa','i'],['miscelaneas/insignia-consistencia.svg',102,'azul','i'],['miscelaneas/insignia-asistencia.svg',113,'amarillo','i'],
+  ['miscelaneas/insignia-integrante.svg',94,'amarillo','i'],['miscelaneas/insignia-lugares.svg',94,'rosa','i'],['miscelaneas/insignia-asociado.svg',108,'naranja','i'],['miscelaneas/insignia-repetido.svg',103,'violeta','i']
 ];
+// las 9 caritas de "Brand guidelines TP5" (Cara 1–9): van dentro de un círculo de color de SPOT! con borde crema
+const CARAS = [1, 2, 3, 4, 5, 6, 7, 8, 9].map(n => `assets/miscelaneas/cara-${n}.png`);
+const COLORES_SPOT = ['amarillo', 'naranja', 'rosa', 'violeta', 'azul'];
+// qué sale más seguido: puntos, después caritas, insignias y estrellas
+const MEZCLA = [['p', .5], ['c', .18], ['i', .17], ['e', .15]];
 
 function iniciarFlotar(){
   if (REDUCIR) return;
@@ -1775,7 +1783,7 @@ function iniciarFlotar(){
         el.classList.contains('carita') ? 50 : Math.max(w, h) * .45, Math.cos(a) * v, Math.sin(a) * v, fija);
     });
     const piezas = PIEZAS_SPOT.filter(p => p[2] !== fondo);
-    return { km, hero, cuerpos, piezas, obst: [], medido: false, max: cuerpos.length + 4, proxima: performance.now() + azar(2500, 5000) };
+    return { km, hero, fondo, cuerpos, piezas, obst: [], medido: false, max: cuerpos.length + 4, proxima: performance.now() + azar(2500, 5000) };
   }).filter(Boolean);
 
   const medir = esc => {
@@ -1808,22 +1816,33 @@ function iniciarFlotar(){
     const vn = p.vx * nx + p.vy * ny; if (vn < 0) { p.vx -= vn * nx * Math.min(1, 4 * dt); p.vy -= vn * ny * Math.min(1, 4 * dt); }
     if (d < p.r) { p.x += nx * (p.r - d); p.y += ny * (p.r - d); } // nunca encima del título
   };
+  const elegir = l => l[Math.floor(Math.random() * l.length)];
+  const colorCarita = esc => elegir(COLORES_SPOT.filter(c => c !== esc.fondo));
+  // una carita al azar: cara, color de SPOT! (nunca el del fondo) e inclinación
+  const vestirCarita = (el, esc) => {
+    el.style.setProperty('--c', `var(--${colorCarita(esc)})`);
+    el.innerHTML = `<span style="rotate:${azar(-16, 16).toFixed(1)}deg"><img src="${elegir(CARAS)}" alt=""></span>`;
+  };
   const crear = esc => {
-    // como en los heros del Figma: muchos más puntos que estrellas (1 de cada 4 es estrella)
-    const grupo = esc.piezas.filter(q => q[3] === (Math.random() < .25 ? 'e' : 'p'));
-    const [src, tam, , tipo] = grupo[Math.floor(Math.random() * grupo.length)];
-    const r = tam * .45, izq = Math.random() < .5, x = izq ? -r - 10 : W + r + 10, y = azar(70, H - 70);
+    let s = Math.random(), tipo = 'p';
+    for (const [t, peso] of MEZCLA) { if (s < peso) { tipo = t; break; } s -= peso; }
+    const caja = tipo === 'c' ? 116 : 0;
+    const pieza = tipo === 'c' ? null : elegir(esc.piezas.filter(q => q[3] === tipo));
+    const tam = caja || pieza[1], r = tipo === 'c' ? 50 : tipo === 'e' ? tam * .42 : tam * .45;
+    const izq = Math.random() < .5, x = izq ? -r - 10 : W + r + 10, y = azar(70, H - 70);
     if (esc.cuerpos.some(q => Math.hypot(q.x - x, q.y - y) < q.r + r + 20)) return;   // hay otra entrando ahí: espera
-    const el = document.createElement('div'); el.className = 'deco';
+    const el = document.createElement('div');
     el.style.cssText = `left:${x - tam / 2}px;top:${y - tam / 2}px;width:${tam}px;height:${tam}px`;
-    el.innerHTML = `<div class="mov"><img src="assets/${src}" alt="" style="left:0;top:0;width:100%;height:100%"></div>`;
+    if (tipo === 'c') { el.className = 'carita'; vestirCarita(el, esc); }
+    else { el.className = 'deco'; el.innerHTML = `<div class="mov"><img src="assets/${pieza[0]}" alt="" style="left:0;top:0;width:100%;height:100%"></div>`; }
     $('.decos', esc.hero).appendChild(el);
     const v = azar(12, 22);
-    esc.cuerpos.push(nuevoCuerpo(el, x, y, tipo === 'e' ? tam * .42 : r, (izq ? 1 : -1) * v, azar(-6, 6), false));
+    esc.cuerpos.push(nuevoCuerpo(el, x, y, r, (izq ? 1 : -1) * v, azar(-6, 6), false));
   };
-  const reentrar = p => {                                          // carita / insignia: vuelven por un costado
+  const reentrar = (p, esc) => {                                   // carita / insignia del Figma: vuelven por un costado
     const izq = Math.random() < .5; p.x = izq ? -p.r - 10 : W + p.r + 10; p.y = azar(90, H - 90);
     const v = azar(12, 20); p.vx = (izq ? 1 : -1) * v; p.vy = azar(-5, 5); p.crucero = v; p.fuera = 0;
+    if (p.el.classList.contains('carita')) vestirCarita(p.el, esc);  // y la carita vuelve con otra cara y otro color
   };
   if (document.fonts) document.fonts.ready.then(() => escenas.forEach(medir)); else escenas.forEach(medir);
   addEventListener('resize', () => escenas.forEach(medir));
@@ -1870,7 +1889,7 @@ function iniciarFlotar(){
         const m = p.r + 40;
         if (p.x < -m || p.x > W + m || p.y < -m || p.y > H + m) {
           if ((p.fuera += dt) > .5) {
-            if (p.fija) reentrar(p); else { p.el.remove(); cs.splice(k, 1); continue; }
+            if (p.fija) reentrar(p, esc); else { p.el.remove(); cs.splice(k, 1); continue; }
           }
         } else p.fuera = 0;
         p.el.style.translate = `${(p.x - p.x0).toFixed(1)}px ${(p.y - p.y0).toFixed(1)}px`;
