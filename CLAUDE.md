@@ -356,3 +356,7 @@ El 10/11/2026 se borró todo lo construido y se empezó de nuevo. Respaldo de la
   - Con teclado también funciona (al hacer foco), y en pantallas táctiles se alterna tocando.
   - Typos del Figma copiados tal cual: "usar colocar", "princincipiantes".
 - 11/11/2026 · Mateo · **KM 6 · "Efecto puntos" pasó a llamarse "Insignias"** (Figma `448:2449`), con el texto nuevo. Typo del Figma copiado tal cual: "caritaa." y "utilizamos" en minúscula. La grilla de caritas repetida ya no está en el Figma.
+- 11/11/2026 · Mateo · **Elementos sobre fotografías: el cartel ya no es la captura de Figma** (pedido del equipo; se borraron `panel-color.png` y `panel-degradado.png`). Ahora es un cartel propio con la gráfica de la marca: negro, borde crema, Sora y Reddit Sans, y el porcentaje en naranja.
+  - Foto 1, "Capa sobre la foto": muestra #000000 y el porcentaje. Tiene una regla con el rango recomendado 20–30 % marcado con línea punteada naranja. Al mover el control (de 0 a 60 %) cambia la capa de la foto de verdad.
+  - Foto 2, "Degradado lineal": muestra #000000 al 80 % y dónde está cada parada (0 % arriba, 80 % al 87 % de la altura). Al mover el control cambia lo oscuro del final del degradado.
+  - El cartel aparece con el hover y se puede usar sin que se cierre.
