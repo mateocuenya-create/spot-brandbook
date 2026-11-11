@@ -1050,7 +1050,7 @@ const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [..
 
 /* Puntos del mapa (Slide 2): posición, color y destino */
 const PUNTOS_MAPA = [
-  [1009,407,'amarillo','km1','Acerca de Spot'],[1171,407,'naranja','km2','Manual de voz y tono'],[1275,474,'rosa','km3','Logotipos'],
+  [1009,407,'amarillo','km1','SPOT!'],[1171,407,'naranja','km2','Manual de voz y tono'],[1275,474,'rosa','km3','Logotipos'],
   [1264,610,'violeta','km4','Tipografías'],[1081,598,'azul','km5','Colores'],[908,577,'amarillo','km6','Elementos gráficos'],
   [753,619,'naranja',null,''],[597,577,'rosa',null,''],[597,461,'violeta',null,''],[721,407,'azul',null,'']
 ];
@@ -1151,7 +1151,29 @@ function armarDecos(){
       k.innerHTML = `<span><img src="assets/${CARITAS[key][3] ? 'miscelaneas/' + CARITAS[key][3] : 'km1/carita-b'}.png" alt=""></span>`;
       cont.appendChild(k);
     }
+    if (!cont.closest('.hero')) separarDecos(cont);              // las de los heros se separan solas con la física
   });
+}
+
+/* Que ninguna miscelánea quede encimada con otra: si dos se tocan, se corren lo mínimo
+   (cada una la mitad) hasta quedar con 8 px de aire. El resto queda donde está en el Figma. */
+function separarDecos(cont){
+  const ps = $$(':scope > .deco, :scope > .carita', cont).map(el => {
+    const w = parseFloat(el.style.width) || 116, h = parseFloat(el.style.height) || 116;
+    return { el, x: parseFloat(el.style.left) + w / 2, y: parseFloat(el.style.top) + h / 2, w, h, r: Math.max(w, h) / 2 * .9 };
+  });
+  for (let vuelta = 0; vuelta < 60; vuelta++) {
+    let movio = false;
+    for (let i = 0; i < ps.length; i++) for (let j = i + 1; j < ps.length; j++) {
+      const a = ps[i], b = ps[j]; let dx = b.x - a.x, dy = b.y - a.y, d = Math.hypot(dx, dy);
+      const min = a.r + b.r + 8; if (d >= min) continue;
+      if (d < .01) { dx = 1; dy = 0; d = 1; }
+      const m = (min - d) / 2, nx = dx / d, ny = dy / d;
+      a.x -= nx * m; a.y -= ny * m; b.x += nx * m; b.y += ny * m; movio = true;
+    }
+    if (!movio) break;
+  }
+  ps.forEach(p => { p.el.style.left = (p.x - p.w / 2).toFixed(1) + 'px'; p.el.style.top = (p.y - p.h / 2).toFixed(1) + 'px'; });
 }
 
 /* ---------- KM 2: componentes (textos exactos del Figma) ---------- */
@@ -1394,7 +1416,23 @@ function animarPortada(){
 let portadaFuera = false;
 function salirDePortada(){
   if (portadaFuera) return; portadaFuera = true;
-  portada.animate([{opacity:1},{opacity:0}], {duration: dur(100), easing:'ease-in-out', fill:'forwards'}).onfinish = () => portada.remove();
+  if (REDUCIR) { portada.remove(); return; }
+  /* Transición a la Home: el contorno del logo ES el recorrido del mapa (están en el mismo lugar).
+     El amarillo se va de a poco y deja ver el video, el contorno pasa de negro a crema y se afina hasta
+     convertirse en el mapa; después aparecen los puntos de los KM uno por uno y el resto de la Home. */
+  const D = 1300, curva = 'cubic-bezier(.65,0,.35,1)', borde = $('#p-borde');
+  portada.style.cursor = 'default'; portada.style.pointerEvents = 'none';
+  portada.animate([{ backgroundColor: 'rgba(253,206,66,1)' }, { backgroundColor: 'rgba(253,206,66,0)' }], { duration: D, easing: curva, fill: 'forwards' });
+  $$('#p-crema, #p-puntos').forEach(e => e.animate([{ opacity: getComputedStyle(e).opacity }, { opacity: 0 }], { duration: D * .4, fill: 'forwards' }));
+  borde.animate([{ stroke: '#252525', strokeWidth: 10 }, { stroke: '#EDE8DB', strokeWidth: 6, offset: .75 }, { stroke: '#EDE8DB', strokeWidth: 6 }], { duration: D, easing: curva, fill: 'forwards' });
+  borde.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 400, delay: D, fill: 'forwards' }).onfinish = () => portada.remove();
+  // la Home entra: el recorrido ya está, los puntos aparecen en orden y después menú, logo y submarcas
+  $('#inicio .mapa').animate([{ opacity: 0 }, { opacity: 1 }], { duration: 400, delay: D * .8, fill: 'backwards' });
+  $$('#puntos-mapa .punto').forEach((p, i) => p.animate([{ transform: 'translateY(10px) scale(0)', opacity: 0 }, { transform: 'none', opacity: 1 }],
+    { duration: 500, delay: D * .7 + i * 90, easing: 'cubic-bezier(.34,1.56,.64,1)', fill: 'backwards' }));
+  $$('#inicio .btn-menu, #inicio .logo-centro, #inicio .submarcas').forEach((e, i) => e.animate([{ opacity: 0, transform: 'translateY(-12px)' }, { opacity: 1, transform: 'none' }],
+    { duration: 600, delay: D * .9 + i * 120, easing: 'cubic-bezier(.22,1,.36,1)', fill: 'backwards' }));
+  $('#inicio .fondo-video').animate([{ transform: 'scale(1.08)' }, { transform: 'scale(1)' }], { duration: D + 900, easing: 'cubic-bezier(.22,1,.36,1)' });
 }
 
 /* =====================================================================
@@ -1613,7 +1651,8 @@ function iniciarKM5(){
 const PIEZAS = {
   spot: [['spot-punto',53,53,61,61,-4,0],['spot-estrella7',92,91,94,95,-1,-1.5],['spot-estrella12',83,82,97,96,-7,-3.5]],
   post: [['post-p1',53,53,53,53,0,0],['post-p2',53,53,53,53,0,0],['post-p3',53,53,53,53,0,0],['post-p4',95.698,95.698,95.698,95.698,0,0],['post-p5',80.568,80.568,80.568,80.568,0,0]],
-  stop1: [['stop-fila1',672,91,672,91,0,0]],
+  // fila de arriba de STOP: cada pieza por separado (antes era una sola imagen)
+  stop1: [['stop-f1',53,53,53,53,0,0],['stop-f2',53,53,53,53,0,0],['stop-f3',53,53,53,53,0,0],['stop-f4',53,53,53,53,0,0],['stop-f5',53,53,53,53,0,0],['stop-f6',92,91,86,87,3,2]],
   stop2: [['stop-estrella',92,91,86,87,3,2],['stop-punteado1',65,65,65,65,0,0],['stop-elipse',61,61,66.8,66.8,-2.9,-2.9],['stop-punto',83,83,83.8,83.8,-.4,-.4],['stop-punteado2',85,85,85,85,0,0]]
 };
 const FOTOS = {
