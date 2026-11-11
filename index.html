@@ -2382,9 +2382,12 @@ function iniciarRastro(){
   if (REDUCIR || !matchMedia('(hover:hover) and (pointer:fine)').matches) return;
   const PIEZAS = { spot: Array.from({ length: 16 }, (_, i) => 'intro-' + (i + 1)),
     post: ['post-p1', 'post-p3', 'post-p4', 'post-p5'], stop: ['stop-f1', 'stop-f2', 'stop-f4', 'stop-f5', 'stop-f6', 'stop-estrella'] };
-  $$('#km6-puntos, #km6-signos').forEach(sec => rastroEn(sec, PIEZAS));
+  rastroEn($('#km6-puntos'), PIEZAS, { min: 48, max: 178, paso: 90, cupo: 14 });
+  // Signos Display: lo que se deja son las estrellas de post. y STOP en tamaño grande y línea fina, como cuenta el texto
+  rastroEn($('#km6-signos'), { post: ['display-post-1', 'display-post-2'], stop: ['display-stop-1', 'display-stop-2'] }, { min: 150, max: 340, paso: 170, cupo: 6 });
 }
-function rastroEn(sec, PIEZAS){
+function rastroEn(sec, PIEZAS, op){
+  if (!sec) return;
   const capa = document.createElement('div'); capa.className = 'rastro'; capa.setAttribute('aria-hidden', 'true'); sec.prepend(capa);
   const signos = $$('[data-marca]', sec), vivas = [];
   let ultX = null, ultY = null, ultMarca = null, ultPieza = '';
@@ -2400,10 +2403,10 @@ function rastroEn(sec, PIEZAS){
     }
     if (!zona) { ultX = null; return; }
     if (zona.marca !== ultMarca) { ultMarca = zona.marca; ultX = null; }
-    if (ultX !== null && Math.hypot(x - ultX, y - ultY) < 90) return;
+    if (ultX !== null && Math.hypot(x - ultX, y - ultY) < op.paso) return;
     ultX = x; ultY = y;
     const lista = PIEZAS[zona.marca].filter(n => n !== ultPieza), nombre = lista[Math.floor(Math.random() * lista.length)]; ultPieza = nombre;
-    const tam = 48 + Math.random() * 130;
+    const tam = op.min + Math.random() * (op.max - op.min);
     const cx = Math.min(Math.max(x, tam / 2 + 8), zona.izq - 24 - tam / 2), cy = Math.min(Math.max(y, zona.top + tam / 2), zona.top + zona.alto - tam / 2);
     const img = new Image(); img.src = `assets/km6/${nombre}.svg`; img.alt = '';
     img.style.width = img.style.height = tam + 'px';
@@ -2415,7 +2418,7 @@ function rastroEn(sec, PIEZAS){
       img.animate([{ transform: `${base} scale(1) rotate(${giro}deg)`, opacity: 1 }, { transform: `${base} scale(0) rotate(${giro + 30}deg)`, opacity: 0 }],
         { duration: 350, easing: 'cubic-bezier(.55,0,1,.45)', fill: 'forwards' }).onfinish = () => img.remove(); };
     setTimeout(irse, 2600);
-    while (vivas.length > 14) { const v = vivas.shift(); v.dataset.yendo = 1; v.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 250, fill: 'forwards' }).onfinish = () => v.remove(); }
+    while (vivas.length > op.cupo) { const v = vivas.shift(); v.dataset.yendo = 1; v.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 250, fill: 'forwards' }).onfinish = () => v.remove(); }
   });
 }
 
