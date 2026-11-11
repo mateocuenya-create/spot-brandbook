@@ -488,6 +488,23 @@ a.punto{cursor:pointer} span.punto{cursor:default}
 .indebido .caja svg{position:absolute;inset:0;width:100%;height:100%}
 .indebido p{font:400 20px/normal var(--reddit);color:#000}
 
+/* ---------- Más juego (11/11) ---------- */
+.hero{overflow:hidden}
+.submarcas-zona .foto-rot{cursor:pointer;user-select:none;-webkit-user-select:none;-webkit-user-drag:none;touch-action:pan-y}
+.submarcas-zona .foto-rot.frente{cursor:grab}
+.submarcas-zona .foto-rot.frente:active{cursor:grabbing}
+.decos.flota{position:absolute;inset:0;z-index:4;pointer-events:none}
+.flota .mov > img{animation:mecer var(--d,7s) ease-in-out var(--dl,0s) infinite alternate}
+@keyframes mecer{from{translate:0 -12px}to{translate:0 12px}}
+.rasgo{cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none}
+.rasgo.agarrado{cursor:grabbing;scale:1.08}
+.pin-tira{position:relative}
+.pin-tira .pin-sticky{position:sticky;top:40px}
+.var-card .card .capa{position:absolute;inset:0;display:grid;place-items:center;background:var(--bg)}
+.var-card .card .ctrl{position:absolute;inset:0;pointer-events:none}
+.var-card .card .ctrl button{pointer-events:auto}
+@media (prefers-reduced-motion:reduce){.flota .mov > img{animation:none}}
+
 /* ---------- Movimiento al scrollear (referencia: houseofyellow.nl) ----------
    Scroll suave con Lenis (1,2 s, expo-out) y entradas: suben 24 px y aparecen en 0,45 s,
    escalonadas de a 0,15 s, cuando el elemento llega al 90 % de la pantalla. Una sola vez. */
@@ -579,6 +596,7 @@ a.punto{cursor:pointer} span.punto{cursor:default}
     <img class="foto-rot" src="assets/km1/foto-post-2.jpg" alt="Vista de la cabina post." style="left:964.6px;top:1282.3px;width:821.493px;height:462.324px;rotate:4.43deg">
     <img class="foto-rot" src="assets/km1/foto-post-1.jpg" alt="Vista exterior de post." style="left:133.9px;top:1271.9px;width:806.071px;height:453.805px;rotate:-4.31deg">
     <img class="foto-rot" src="assets/km1/foto-instalacion.jpg" alt="Instalación interactiva de estiramientos" style="left:403px;top:1183px;width:1114px;height:627px">
+    <div class="decos flota" data-decos="postfotos"></div>
     <div class="decos" data-decos="stop"></div>
     <img class="abs" src="assets/km1/stop-logo-comp3.svg" alt="STOP" style="left:751px;top:2329px;width:419px;height:193px">
     <p class="abs txt" style="top:2813px">Stop es el evento anual de Spot: una parada en el camino para celebrar lo recorrido. Alrededor de una carrera nocturna, propone una experiencia <b style="color:var(--rosa)">social, lúdica y reflexiva</b> donde corredores y acompañantes se encuentran, se divierten y se toman un momento para valorar todo el esfuerzo que los trajo hasta ahí. Si Spot acompaña el camino y Post cuida el después, Stop es la pausa que les da sentido a los dos.</p>
@@ -696,8 +714,9 @@ a.punto{cursor:pointer} span.punto{cursor:default}
   <section class="sec" id="km3-construccion">
     <div class="fila"><h2 class="t">Construcción</h2><p class="c txt">Los 3 logos comparten una misma altura de X que permite construirlos.</p></div>
     <div style="padding:120px 0;display:flex;justify-content:center"><img src="assets/km3/construccion-1.svg" alt="Los tres logos sobre la misma altura de x" style="width:1680px;max-width:none;margin:0 -215px"></div>
+    <div class="pin-tira"><div class="pin-sticky">
     <div class="fila"><span class="t" aria-hidden="true"></span><p class="c txt">Siendo esta altura 124px, el primer límite se define desplazando el trazado base 24px. Para crear el segundo contorno, son 9px más de desplazamiento.</p></div>
-    <div class="tira arrastrable" role="region" aria-label="Construcción de los contornos: arrastrá de costado para ver los tres logos">
+    <div class="tira" role="img" aria-label="Construcción de los contornos de los tres logos: se recorre de costado al scrollear">
      <div class="pista-tira">
       <img src="assets/km3/construccion-2.svg" alt="Construcción de los contornos del logo">
       <div class="cota" style="left:397px;top:45px;width:887px;height:11px;background:var(--naranja);opacity:.6"></div>
@@ -711,6 +730,7 @@ a.punto{cursor:pointer} span.punto{cursor:default}
       <span class="lbl" style="left:282px;top:156px">124 px</span>
      </div>
     </div>
+    </div></div>
   </section>
   <div class="divisor"></div>
   <section class="sec" id="km3-variantes" style="display:flex;flex-direction:column;gap:96px">
@@ -1055,6 +1075,14 @@ const DECOS = {
     ['km1/spot3.svg',1349,405.71,45.909,45.909,[-7.84,-14.11,-20.39,-14.11]],['km1/spot4.svg',385.07,406.5,53.943,53.943,[-6.67,-12.01,-17.35,-12.01]],
     ['km1/star6.svg',1234.98,224.81,113.943,113.943,[8.97,6.58,5.61,6.58],15.82,92.277],['km1/star7.svg',451.73,181.45,109.609,109.609,[8.47,5.85,3.22,5.85]]
   ],
+  // post. alrededor de las fotos del mazo (mismas piezas que arriba, en otras posiciones)
+  postfotos: [
+    ['km1/spot3.svg',70,1225,45.909,45.909,[-7.84,-14.11,-20.39,-14.11]],['km1/star7.svg',40,1690,109.609,109.609,[8.47,5.85,3.22,5.85]],
+    ['km1/spot5.svg',345,1150,14.921,14.921,[-24.13,-43.43,-62.73,-43.43]],['km1/spot12.svg',250,1820,20.217,20.217,[-24.13,-43.43,-62.73,-43.43],28.36,14.921],
+    ['km1/spot2.svg',1585,1150,41.988,41.988,[-11.62,-20.91,-30.2,-20.91],28.36,30.989],['km1/spot9.svg',1825,1265,26.972,26.972,[-13.35,-24.03,-34.7,-24.03]],
+    ['km1/star6.svg',1745,1660,113.943,113.943,[8.97,6.58,5.61,6.58],15.82,92.277],['km1/spot4.svg',1515,1835,53.943,53.943,[-6.67,-12.01,-17.35,-12.01]],
+    ['km1/spot10.svg',965,1875,14.921,14.921,[-24.13,-43.43,-62.73,-43.43]],['km1/spot5.svg',1240,1120,14.921,14.921,[-24.13,-43.43,-62.73,-43.43]]
+  ],
   stop: [
     ['km1/spot2.svg',1277,2369,41.988,41.988,[-11.62,-20.91,-30.2,-20.91],28.36,30.989],['km1/spot5.svg',573.42,2255,14.921,14.921,[-24.13,-43.43,-62.73,-43.43]],
     ['km1/spot5.svg',1082.93,2570.63,14.921,14.921,[-24.13,-43.43,-62.73,-43.43]],['km1/spot5.svg',1098.07,2270.91,14.921,14.921,[-24.13,-43.43,-62.73,-43.43]],
@@ -1186,25 +1214,45 @@ function armarKM3(){
   $$('.variantes').forEach(fila => {
     const lista = VARIANTES[fila.dataset.marca]; let i = 0, colorSpot = 'azul';
     const card = $('.card', fila), txt = $('.txt', fila);
-    const pintar = () => {
+    // Cambio de fondo con una transición propia: el fondo nuevo crece como un punto (el elemento de la marca)
+    // desde donde hiciste click, y el logo entra girando con un rebote.
+    const ctrl = document.createElement('div'); ctrl.className = 'ctrl'; card.appendChild(ctrl);
+    const pintar = origen => {
       const [nombre, f, logo, flecha, texto] = lista[i];
-      card.style.setProperty('--bg', f.paleta ? `var(--${colorSpot})` : (f.bg || 'transparent'));
-      card.innerHTML = (f.foto ? `<img class="foto" src="assets/logos/${f.foto}" alt="">` : '') + (f.oscurecer ? '<span class="oscurecer"></span>' : '') +
+      const capa = document.createElement('div'); capa.className = 'capa';
+      capa.style.setProperty('--bg', f.paleta ? `var(--${colorSpot})` : (f.bg || 'transparent'));
+      capa.innerHTML = (f.foto ? `<img class="foto" src="assets/logos/${f.foto}" alt="">` : '') + (f.oscurecer ? '<span class="oscurecer"></span>' : '') +
         `<img class="logo" src="assets/logos/${logo}" alt="Logo sobre fondo ${nombre.toLowerCase()}">` +
-        (f.paleta ? `<div class="paleta">${PALETA_SPOT.map(c => `<button style="--c:var(--${c})" data-c="${c}" class="${c === colorSpot ? 'on' : ''}" aria-label="Fondo ${c}"></button>`).join('')}</div>` : '') +
-        `<button class="flecha ant" aria-label="Anterior"><img src="assets/logos/flecha-${flecha}.svg" alt=""></button>` +
+        (f.paleta ? `<div class="paleta">${PALETA_SPOT.map(c => `<button style="--c:var(--${c})" data-c="${c}" class="${c === colorSpot ? 'on' : ''}" aria-label="Fondo ${c}"></button>`).join('')}</div>` : '');
+      card.insertBefore(capa, ctrl);
+      ctrl.innerHTML = `<button class="flecha ant" aria-label="Anterior"><img src="assets/logos/flecha-${flecha}.svg" alt=""></button>` +
         `<button class="flecha sig" aria-label="Siguiente"><img src="assets/logos/flecha-${flecha}.svg" alt=""></button>` +
         `<div class="ind" style="--ic:${flecha === 'clara' ? 'var(--crema)' : 'var(--negro)'}">${lista.map((_, k) => `<i class="${k === i ? 'on' : ''}"></i>`).join('')}</div>`;
+      const anteriores = $$('.capa', card).slice(0, -1), viejas = () => anteriores.forEach(c => c.remove());
+      if (origen && !REDUCIR) {
+        const [ox, oy] = origen;
+        capa.animate([{ clipPath: `circle(0px at ${ox}px ${oy}px)` }, { clipPath: `circle(1150px at ${ox}px ${oy}px)` }],
+          { duration: 750, easing: 'cubic-bezier(.7,0,.2,1)' }).onfinish = viejas;
+        setTimeout(viejas, 900);                                       // por si la pestaña estaba en segundo plano
+        $('.logo', capa).animate([{ transform: 'scale(.35) rotate(-16deg)', opacity: 0 }, { transform: 'scale(1.08) rotate(3deg)', opacity: 1, offset: .7 }, { transform: 'none', opacity: 1 }],
+          { duration: 700, delay: 260, easing: 'cubic-bezier(.3,0,.2,1)', fill: 'backwards' });
+        const pal = $('.paleta', capa);
+        if (pal) $$('button', pal).forEach((b, k) => b.animate([{ transform: 'scale(0)' }, { transform: 'scale(1)' }], { duration: 350, delay: 420 + k * 60, easing: 'cubic-bezier(.3,1.6,.5,1)', fill: 'backwards' }));
+      } else viejas();
       txt.textContent = texto;
       $$('.nav-fondos button', fila).forEach((b, k) => b.classList.toggle('on', k === i));
     };
     fila.addEventListener('click', e => {
       const b = e.target.closest('button'); if (!b) return;
-      if (b.dataset.i) i = +b.dataset.i;
+      if (b.dataset.i) { if (+b.dataset.i === i) return; i = +b.dataset.i; }
       else if (b.classList.contains('sig')) i = (i + 1) % lista.length;
       else if (b.classList.contains('ant')) i = (i - 1 + lista.length) % lista.length;
-      else if (b.dataset.c) colorSpot = b.dataset.c;
-      pintar();
+      else if (b.dataset.c) { if (b.dataset.c === colorSpot) return; colorSpot = b.dataset.c; }
+      else return;
+      // punto de origen: el centro del botón tocado, dentro de la tarjeta (los del menú de fondos salen del borde izquierdo)
+      const z = zoomActual(), rc = card.getBoundingClientRect(), rb = b.getBoundingClientRect();
+      const ox = Math.max(0, Math.min(972, (rb.left + rb.width / 2 - rc.left) / z)), oy = Math.max(0, Math.min(474, (rb.top + rb.height / 2 - rc.top) / z));
+      pintar([ox, oy]);
     });
     pintar();
   });
@@ -1553,36 +1601,141 @@ function deslizable(zona, { mover, soltar, rueda }){
   }, { passive: false });
 }
 
-/* Tira de construcción (KM 3): libre, con inercia y rebote suave en los bordes */
-function iniciarTira(){
-  const tira = $('.tira'); if (!tira) return;
-  const pista = $('.pista-tira', tira), max = 3852 - 1680;
-  let x = 0, base = 0, anim = null;
-  const pintar = v => { x = v; pista.style.transform = `translateX(${v}px)`; };
-  const elastico = v => v > 0 ? v * .3 : v < -max ? -max + (v + max) * .3 : v;
-  const lanzar = v0 => {
-    cancelAnimationFrame(anim); let v = v0 * 16;                        // px por cuadro
-    const paso = () => {
-      v *= .94; let n = x + v;
-      if (n > 0 || n < -max) { const borde = n > 0 ? 0 : -max; n = x + (borde - x) * .18; v *= .5; if (Math.abs(n - borde) < .5) { pintar(borde); return; } }
-      pintar(n); if (Math.abs(v) > .2 || x > 0 || x < -max) anim = requestAnimationFrame(paso);
-    };
-    anim = requestAnimationFrame(paso);
+/* =====================================================================
+   MÁS JUEGO (pedido del equipo, 11/11)
+   ===================================================================== */
+
+/* KM 1 · fotos de post. como el mazo de truus.co: la de adelante se arrastra y se tira
+   a un costado; las de atrás pasan adelante con un click. Vuelven a los lugares del Figma. */
+function iniciarMazo(){
+  const fotos = $$('.submarcas-zona .foto-rot'); if (fotos.length !== 3 || !window.gsap) return;
+  const SLOT = {
+    izq:    { left: 133.9, top: 1271.9, width: 806.071, height: 453.805, rotation: -4.31, z: 1 },
+    der:    { left: 964.6, top: 1282.3, width: 821.493, height: 462.324, rotation: 4.43,  z: 2 },
+    centro: { left: 403,   top: 1183,   width: 1114,    height: 627,     rotation: 0,     z: 3 }
   };
-  deslizable(tira, {
-    mover: (d, inicio) => { if (inicio) { cancelAnimationFrame(anim); base = x; return; } pintar(elastico(base + d)); },
-    soltar: v => lanzar(v),
-    rueda: dx => { cancelAnimationFrame(anim); pintar(Math.max(-max, Math.min(0, x - dx))); }
+  const pos = ['der', 'izq', 'centro'];                       // lugar de cada foto (orden del HTML)
+  const props = s => ({ left: s.left, top: s.top, width: s.width, height: s.height, rotation: s.rotation, x: 0, y: 0 });
+  fotos.forEach((f, k) => { f.style.rotate = ''; f.draggable = false; f.style.zIndex = SLOT[pos[k]].z; gsap.set(f, props(SLOT[pos[k]])); });
+  const acomodar = () => fotos.forEach((f, k) => {
+    const s = SLOT[pos[k]]; f.style.zIndex = s.z; f.classList.toggle('frente', pos[k] === 'centro');
+    gsap.to(f, { ...props(s), duration: .75, ease: 'back.out(1.3)', overwrite: 'auto' });
   });
-  // pista visual la primera vez que aparece: se corre un poco y vuelve, para mostrar que se mueve
-  if (!REDUCIR && 'IntersectionObserver' in window) {
-    const io = new IntersectionObserver(es => es.forEach(e => {
-      if (!e.isIntersecting) return; io.disconnect();
-      setTimeout(() => pista.animate([{ transform: 'translateX(0)' }, { transform: 'translateX(-220px)', offset: .45 }, { transform: 'translateX(0)' }],
-        { duration: 1600, easing: 'cubic-bezier(.45,0,.2,1)' }), 500);
-    }), { root: tira.closest('article.km'), threshold: .6 });
-    io.observe(tira);
-  }
+  const traer = k => { const j = pos.indexOf('centro'); if (j === k) return; pos[j] = pos[k]; pos[k] = 'centro'; acomodar(); };
+  const tirar = lado => {                                      // la de adelante va al costado, la de ese costado al otro, y la otra pasa adelante
+    const otro = lado === 'izq' ? 'der' : 'izq';
+    for (let k = 0; k < 3; k++) pos[k] = pos[k] === 'centro' ? lado : pos[k] === lado ? otro : 'centro';
+    acomodar();
+  };
+  fotos.forEach((f, k) => {
+    let x0 = 0, y0 = 0, xa = 0, ta = 0, vel = 0, activo = false, movio = false;
+    f.addEventListener('pointerdown', e => {
+      if (e.button !== 0) return; activo = true; movio = false; x0 = xa = e.clientX; y0 = e.clientY; ta = performance.now(); vel = 0;
+      try { f.setPointerCapture(e.pointerId); } catch (_) {}
+      if (pos[k] === 'centro') gsap.killTweensOf(f);
+    });
+    f.addEventListener('pointermove', e => {
+      if (!activo || pos[k] !== 'centro') return;
+      const z = zoomActual(), dx = (e.clientX - x0) / z, dy = (e.clientY - y0) / z, ahora = performance.now();
+      vel = (e.clientX - xa) / z / Math.max(1, ahora - ta); xa = e.clientX; ta = ahora;
+      if (Math.abs(dx) > 4) movio = true;
+      gsap.set(f, { x: dx, y: dy * .35, rotation: dx * .03 });
+    });
+    const fin = () => {
+      if (!activo) return; activo = false;
+      if (pos[k] !== 'centro') { if (!movio) traer(k); return; }
+      const dx = gsap.getProperty(f, 'x');
+      if (Math.abs(dx) > 160 || Math.abs(vel) > .6) tirar((dx || vel) < 0 ? 'izq' : 'der'); else acomodar();
+    };
+    f.addEventListener('pointerup', fin); f.addEventListener('pointercancel', fin);
+    f.addEventListener('mouseenter', () => { if (pos[k] !== 'centro') gsap.to(f, { y: -16, rotation: SLOT[pos[k]].rotation * 1.8, duration: .3, ease: 'power2.out' }); });
+    f.addEventListener('mouseleave', () => { if (pos[k] !== 'centro' && !activo) gsap.to(f, { y: 0, rotation: SLOT[pos[k]].rotation, duration: .4, ease: 'power2.out' }); });
+  });
+  acomodar();
+}
+
+/* Misceláneas que se mecen suave (post. alrededor de las fotos): cada una con su ritmo */
+function iniciarMecer(){
+  $$('.flota .mov > img').forEach(img => { img.style.setProperty('--d', (5 + Math.random() * 4).toFixed(1) + 's'); img.style.setProperty('--dl', (-Math.random() * 8).toFixed(1) + 's'); });
+}
+
+/* KM 2 · rasgos de "Si Spot fuera una persona…": se agarran, se tiran y siguen de largo con inercia.
+   Doble click: vuelven a su lugar. */
+function iniciarRasgos(){
+  if (!window.gsap || !window.InertiaPlugin) return;
+  gsap.registerPlugin(InertiaPlugin);
+  let arriba = 10;
+  $$('#rasgos .rasgo').forEach(el => {
+    let x0, y0, bx, by, xa, ya, ta, vx = 0, vy = 0, activo = false;
+    el.addEventListener('pointerdown', e => {
+      if (e.button !== 0) return; activo = true; e.preventDefault();
+      try { el.setPointerCapture(e.pointerId); } catch (_) {}
+      gsap.killTweensOf(el); x0 = xa = e.clientX; y0 = ya = e.clientY; ta = performance.now(); vx = vy = 0;
+      bx = gsap.getProperty(el, 'x'); by = gsap.getProperty(el, 'y');
+      el.classList.add('agarrado'); el.style.zIndex = ++arriba;
+    });
+    el.addEventListener('pointermove', e => {
+      if (!activo) return;
+      const z = zoomActual(), ahora = performance.now(), dt = Math.max(1, ahora - ta);
+      vx = (e.clientX - xa) / z / dt * 1000; vy = (e.clientY - ya) / z / dt * 1000; xa = e.clientX; ya = e.clientY; ta = ahora;
+      gsap.set(el, { x: bx + (e.clientX - x0) / z, y: by + (e.clientY - y0) / z, rotation: gsap.utils.clamp(-25, 25, vx / 60) });
+    });
+    const fin = () => {
+      if (!activo) return; activo = false; el.classList.remove('agarrado');
+      const z = zoomActual(), r = el.getBoundingClientRect(), w = r.width / z, h = r.height / z;
+      const L = parseFloat(el.style.left), T = parseFloat(el.style.top);
+      gsap.to(el, { inertia: { x: { velocity: vx, min: -L, max: 1680 - L - w }, y: { velocity: vy, min: -T - 120, max: 420 - T - h }, resistance: 260 } });
+      gsap.to(el, { rotation: 0, duration: 1.2, ease: 'elastic.out(1,.35)' });
+    };
+    el.addEventListener('pointerup', fin); el.addEventListener('pointercancel', fin);
+    el.addEventListener('dblclick', () => gsap.to(el, { x: 0, y: 0, rotation: 0, duration: .7, ease: 'back.out(1.6)' }));
+  });
+}
+
+/* Heros · las misceláneas flotan: cada una va lento en una dirección al azar, sale por un borde
+   y vuelve a entrar por el otro. Se siguen pudiendo empujar (el empuje va en la pieza de adentro). */
+function iniciarFlotar(){
+  if (REDUCIR) return;
+  const piezas = $$('.hero .deco, .hero .carita').map(el => {
+    const a = Math.random() * Math.PI * 2, v = 10 + Math.random() * 16;    // 10–26 px por segundo
+    return { el, km: el.closest('article.km'), x: parseFloat(el.style.left), y: parseFloat(el.style.top),
+      w: parseFloat(el.style.width) || 116, h: parseFloat(el.style.height) || 116, dx: 0, dy: 0, vx: Math.cos(a) * v, vy: Math.sin(a) * v, f: Math.random() * 6.3 };
+  });
+  let t0 = performance.now();
+  const ciclo = t => {
+    requestAnimationFrame(ciclo);
+    const dt = Math.min(.05, (t - t0) / 1000); t0 = t;
+    piezas.forEach(p => {
+      if (!p.km.classList.contains('activa') || p.km.scrollTop > innerHeight * 1.2) return;
+      p.dx += p.vx * dt; p.dy += p.vy * dt + Math.sin(t / 900 + p.f) * 6 * dt;
+      const X = p.x + p.dx, Y = p.y + p.dy, m = 30;
+      if (X > 1920 + m) p.dx -= 1920 + 2 * m + p.w; else if (X < -m - p.w) p.dx += 1920 + 2 * m + p.w;
+      if (Y > 1080 + m) p.dy -= 1080 + 2 * m + p.h; else if (Y < -m - p.h) p.dy += 1080 + 2 * m + p.h;
+      p.el.style.translate = `${p.dx.toFixed(1)}px ${p.dy.toFixed(1)}px`;
+    });
+  };
+  requestAnimationFrame(ciclo);
+}
+
+/* KM 3 · tira de construcción: se queda quieta en pantalla y, mientras scrolleás hacia abajo,
+   se corre sola de costado hasta mostrar los tres logos. Después sigue el scroll normal. */
+function iniciarTira(){
+  const pin = $('.pin-tira'); if (!pin) return;
+  const st = $('.pin-sticky', pin), pista = $('.pista-tira', pin), km = pin.closest('article.km'), MAX = 3852 - 1680, RECORRIDO = 1500;
+  let arriba = 40;
+  const medir = () => {
+    const z = zoomActual(), h = st.getBoundingClientRect().height / z || 560;
+    arriba = Math.max(40, (innerHeight / z - h) / 2);
+    st.style.top = arriba + 'px'; pin.style.height = (h + RECORRIDO) + 'px';
+  };
+  const act = () => {
+    const z = zoomActual(), r = pin.getBoundingClientRect();
+    const p = Math.max(0, Math.min(1, (arriba * z - r.top) / (RECORRIDO * z)));
+    pista.style.transform = `translateX(${(-MAX * p).toFixed(1)}px)`;
+  };
+  medir(); act();
+  addEventListener('resize', () => { medir(); act(); });
+  km.addEventListener('scroll', act, { passive: true });
 }
 
 /* Carruseles de fotos (KM 6): flechas como el prototipo (Smart animate 0,5 s, la última vuelve a la primera),
@@ -1683,7 +1836,7 @@ addEventListener('keydown', e => { if (e.key === 'Escape') cerrarMenu(); });
 $$('[data-a]').forEach(b => b.addEventListener('click', () => scrollA(b.closest('article.km').id, b.dataset.a)));
 $$('[data-bajar]').forEach(b => b.addEventListener('click', () => { const k = b.closest('article.km'); irA_Y(k, k.scrollTop + innerHeight * .9); }));
 $$('[data-arriba]').forEach(b => b.addEventListener('click', () => irArriba(b.closest('article.km'))));
-iniciarScrollSuave(); iniciarEntradas(); iniciarStickers(); iniciarTira(); iniciarCarruseles(); iniciarCarruselUI(); iniciarParalaje();
+iniciarScrollSuave(); iniciarEntradas(); iniciarStickers(); iniciarTira(); iniciarCarruseles(); iniciarCarruselUI(); iniciarParalaje(); iniciarMazo(); iniciarMecer(); iniciarRasgos(); iniciarFlotar();
 addEventListener('hashchange', leerHash);
 
 if (location.hash && location.hash !== '#inicio') { portada.remove(); portadaFuera = true; leerHash(); }
