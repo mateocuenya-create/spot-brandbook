@@ -1435,6 +1435,7 @@ function iniciarStickers(){
   });
   const z = () => parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--z')) || 1;
   $$('.deco, .carita, .pieza').forEach(el => {
+    if (el.closest('.hero')) return;                             // las de los heros tienen su propia física (iniciarFlotar)
     const pieza = el.querySelector('.mov') || el.firstElementChild; if (!pieza) return;
     el.classList.add('jugable');
     el.addEventListener('mouseenter', e => {
@@ -1734,26 +1735,117 @@ function iniciarRasgos(){
   });
 }
 
-/* Heros · las misceláneas flotan: cada una va lento en una dirección al azar, sale por un borde
-   y vuelve a entrar por el otro. Se siguen pudiendo empujar (el empuje va en la pieza de adentro). */
+/* Heros · las misceláneas se mueven solas con física simple:
+   - van lento (12–24 px/s) en una dirección al azar y nunca se quedan quietas;
+   - rebotan contra los bordes del cuadro (no se van), contra el título (con su borde crema),
+     el tag "KM n" y el logo grande del KM 1, y chocan entre ellas;
+   - el mouse las empuja (como truus.co): toman velocidad y giro según el golpe y después
+     vuelven de a poco a su ritmo tranquilo. */
+const PUNTERO = { x: -1e4, y: -1e4, vx: 0, vy: 0, t: 0 };
+addEventListener('pointermove', e => {
+  const t = performance.now(), dt = Math.max(8, t - PUNTERO.t);
+  const viejo = t - PUNTERO.t > 120;
+  PUNTERO.vx = viejo ? 0 : (e.clientX - PUNTERO.x) / dt * 1000; PUNTERO.vy = viejo ? 0 : (e.clientY - PUNTERO.y) / dt * 1000;
+  PUNTERO.x = e.clientX; PUNTERO.y = e.clientY; PUNTERO.t = t;
+}, { passive: true });
+
 function iniciarFlotar(){
   if (REDUCIR) return;
-  const piezas = $$('.hero .deco, .hero .carita').map(el => {
-    const a = Math.random() * Math.PI * 2, v = 10 + Math.random() * 16;    // 10–26 px por segundo
-    return { el, km: el.closest('article.km'), x: parseFloat(el.style.left), y: parseFloat(el.style.top),
-      w: parseFloat(el.style.width) || 116, h: parseFloat(el.style.height) || 116, dx: 0, dy: 0, vx: Math.cos(a) * v, vy: Math.sin(a) * v, f: Math.random() * 6.3 };
-  });
+  const W = 1920, H = 1080, BORDE = 23, lim = (v, a) => Math.max(-a, Math.min(a, v));
+  const escenas = $$('article.km').map(km => {
+    const hero = $('.hero', km); if (!hero) return null;
+    const cuerpos = $$('.deco, .carita', hero).map(el => {
+      const w = parseFloat(el.style.width) || 116, h = parseFloat(el.style.height) || 116;
+      const cx = parseFloat(el.style.left) + w / 2, cy = parseFloat(el.style.top) + h / 2;
+      const r = el.classList.contains('carita') ? 50 : Math.max(w, h) / 2;
+      const a = Math.random() * Math.PI * 2, crucero = 12 + Math.random() * 12;
+      return { el, x0: cx, y0: cy, x: cx, y: cy, r, m: r * r,
+        vx: Math.cos(a) * crucero, vy: Math.sin(a) * crucero, crucero, ang: 0, giro: 0, adentro: false };
+    });
+    return { km, hero, cuerpos, obst: [], medido: false };
+  }).filter(Boolean);
+
+  // zonas donde no pueden entrar: el título (medido con la tinta real de las letras + el borde crema), el tag y el logo del KM 1
+  const medir = esc => {
+    const z = zoomActual(), hr = esc.hero.getBoundingClientRect(), o = [];
+    const caja = (r, m = 6) => o.push({ x1: (r.left - hr.left) / z - m, x2: (r.right - hr.left) / z + m, y1: (r.top - hr.top) / z - m, y2: (r.bottom - hr.top) / z + m });
+    const tit = $('.titulo-km', esc.hero);
+    if (tit) {
+      const t = $('text', tit), sr = $('svg', tit).getBoundingClientRect();
+      const c = document.createElement('canvas').getContext('2d'); c.font = '600 128px Sora';
+      c.textAlign = t.getAttribute('text-anchor') === 'middle' ? 'center' : 'left';
+      const me = c.measureText(tit.dataset.t);
+      const ox = (sr.left - hr.left) / z + (+t.getAttribute('x')), oy = (sr.top - hr.top) / z + (+t.getAttribute('y'));
+      o.push({ x1: ox - me.actualBoundingBoxLeft - BORDE, x2: ox + me.actualBoundingBoxRight + BORDE,
+        y1: oy - me.actualBoundingBoxAscent - BORDE, y2: oy + me.actualBoundingBoxDescent + BORDE });
+    }
+    $$('.km-tag, img[alt="SPOT!"]', esc.hero).forEach(e => caja(e.getBoundingClientRect()));
+    esc.obst = o; esc.medido = true;
+    // si alguna arrancó encima de una zona, la saca afuera
+    esc.cuerpos.forEach(p => esc.obst.forEach(b => chocarCaja(p, b)));
+  };
+  const chocarCaja = (p, b) => {
+    const cx = Math.max(b.x1, Math.min(p.x, b.x2)), cy = Math.max(b.y1, Math.min(p.y, b.y2));
+    let dx = p.x - cx, dy = p.y - cy, d = Math.hypot(dx, dy);
+    if (d >= p.r) return;
+    if (d === 0) {                                                 // el centro quedó adentro: sale por el lado más cercano
+      const op = [[p.x - b.x1, -1, 0], [b.x2 - p.x, 1, 0], [p.y - b.y1, 0, -1], [b.y2 - p.y, 0, 1]].sort((a, c) => a[0] - c[0])[0];
+      dx = op[1]; dy = op[2]; d = 1;
+      p.x = op[1] ? (op[1] < 0 ? b.x1 - p.r : b.x2 + p.r) : p.x; p.y = op[2] ? (op[2] < 0 ? b.y1 - p.r : b.y2 + p.r) : p.y;
+    } else { p.x = cx + dx / d * p.r; p.y = cy + dy / d * p.r; }
+    const nx = dx / d, ny = dy / d, vn = p.vx * nx + p.vy * ny;
+    if (vn < 0) { p.vx -= 2 * vn * nx; p.vy -= 2 * vn * ny; p.giro += (p.vx * ny - p.vy * nx) * .15; }
+  };
+  if (document.fonts) document.fonts.ready.then(() => escenas.forEach(medir)); else escenas.forEach(medir);
+  addEventListener('resize', () => escenas.forEach(medir));
+
   let t0 = performance.now();
   const ciclo = t => {
     requestAnimationFrame(ciclo);
-    const dt = Math.min(.05, (t - t0) / 1000); t0 = t;
-    piezas.forEach(p => {
-      if (!p.km.classList.contains('activa') || p.km.scrollTop > innerHeight * 1.2) return;
-      p.dx += p.vx * dt; p.dy += p.vy * dt + Math.sin(t / 900 + p.f) * 6 * dt;
-      const X = p.x + p.dx, Y = p.y + p.dy, m = 30;
-      if (X > 1920 + m) p.dx -= 1920 + 2 * m + p.w; else if (X < -m - p.w) p.dx += 1920 + 2 * m + p.w;
-      if (Y > 1080 + m) p.dy -= 1080 + 2 * m + p.h; else if (Y < -m - p.h) p.dy += 1080 + 2 * m + p.h;
-      p.el.style.translate = `${p.dx.toFixed(1)}px ${p.dy.toFixed(1)}px`;
+    const dt = Math.min(.04, (t - t0) / 1000); t0 = t;
+    escenas.forEach(esc => {
+      if (!esc.km.classList.contains('activa') || esc.km.scrollTop > innerHeight * 1.2) { esc.medido = false; return; }
+      if (!esc.medido) medir(esc);
+      const z = zoomActual(), hr = esc.hero.getBoundingClientRect();
+      const mx = (PUNTERO.x - hr.left) / z, my = (PUNTERO.y - hr.top) / z, mvx = PUNTERO.vx / z, mvy = PUNTERO.vy / z;
+      const cs = esc.cuerpos;
+      cs.forEach(p => {
+        // empujón del mouse al entrar en la pieza
+        const toca = Math.hypot(mx - p.x, my - p.y) < p.r + 6;
+        if (toca && !p.adentro && performance.now() - PUNTERO.t < 120) {
+          const k = Math.min(1.2, 70 / p.r);                        // las grandes pesan más
+          p.vx += lim(mvx * .7 * k, 900); p.vy += lim(mvy * .7 * k, 900);
+          p.giro += lim(((mx - p.x) * mvy - (my - p.y) * mvx) / (p.r * 6), 400);
+        }
+        p.adentro = toca;
+        p.x += p.vx * dt; p.y += p.vy * dt;
+        // bordes del cuadro: rebotan
+        if (p.x < p.r) { p.x = p.r; p.vx = Math.abs(p.vx); } else if (p.x > W - p.r) { p.x = W - p.r; p.vx = -Math.abs(p.vx); }
+        if (p.y < p.r) { p.y = p.r; p.vy = Math.abs(p.vy); } else if (p.y > H - p.r) { p.y = H - p.r; p.vy = -Math.abs(p.vy); }
+        esc.obst.forEach(b => chocarCaja(p, b));
+      });
+      // choques entre ellas (elásticos, las más grandes empujan más)
+      for (let i = 0; i < cs.length; i++) for (let j = i + 1; j < cs.length; j++) {
+        const a = cs[i], b = cs[j], dx = b.x - a.x, dy = b.y - a.y, d = Math.hypot(dx, dy), min = a.r + b.r;
+        if (d >= min || d === 0) continue;
+        const nx = dx / d, ny = dy / d, sobra = min - d, ta = b.m / (a.m + b.m), tb = a.m / (a.m + b.m);
+        a.x -= nx * sobra * ta; a.y -= ny * sobra * ta; b.x += nx * sobra * tb; b.y += ny * sobra * tb;
+        const vn = (a.vx - b.vx) * nx + (a.vy - b.vy) * ny;
+        if (vn > 0) {
+          const imp = 2 * vn / (1 / a.m + 1 / b.m);
+          a.vx -= imp / a.m * nx; a.vy -= imp / a.m * ny; b.vx += imp / b.m * nx; b.vy += imp / b.m * ny;
+          a.giro += vn * .2; b.giro -= vn * .2;
+        }
+      }
+      cs.forEach(p => {
+        // vuelve de a poco a su velocidad tranquila (nunca se frena del todo)
+        const v = Math.hypot(p.vx, p.vy) || 1, nv = p.crucero + (v - p.crucero) * Math.exp(-dt * 1.4);
+        p.vx *= nv / v; p.vy *= nv / v;
+        // giro con resorte: gira con el golpe y vuelve derecho
+        p.giro += -p.ang * 6 * dt; p.giro *= Math.exp(-dt * 2.5); p.ang += p.giro * dt;
+        p.el.style.translate = `${(p.x - p.x0).toFixed(1)}px ${(p.y - p.y0).toFixed(1)}px`;
+        p.el.style.rotate = `${p.ang.toFixed(1)}deg`;
+      });
     });
   };
   requestAnimationFrame(ciclo);
