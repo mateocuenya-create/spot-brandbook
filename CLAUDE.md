@@ -334,3 +334,9 @@ El 10/11/2026 se borró todo lo construido y se empezó de nuevo. Respaldo de la
   - Solo se usan las piezas que se ven sobre crema: post. `post-p1/p3/p4/p5`; STOP `stop-f1/f2/f4/f5/f6` y `stop-estrella`. Las de contorno crema no se ven sobre ese fondo.
   - Solo funciona con mouse.
 - 11/11/2026 · Mateo · **Botón del menú: sin círculo** (pedido del equipo, reemplaza lo anterior). Queda fijo; arriba de todo tiene el tamaño del Figma y al bajar más de 140 px se achica al 60 % y se corre un poco hacia la esquina (0,35 s). Además cambia de color según el fondo: negro sobre fondos claros, crema sobre fondos oscuros y fotos (fundido de 0,3 s).
+- 11/11/2026 · Mateo · **KM 2 · "Nuestro perfil de tono" rehecho como en el Figma nuevo** (`180:258`).
+  - Fondo negro y textos crema. Cada dimensión tiene una barra de 1000 px de su color al 35 % (Divertido/Serio amarillo, Casual/Formal violeta, Irreverente/Respetuoso rosa, Entusiasta/Práctico naranja).
+  - Sobre cada barra, un tramo lleno que va del centro hasta donde está Spot, y una marca de 13 × 45 px. Posiciones sobre 1000: 300, 200, 650 y 400.
+  - El extremo donde está Spot va en crema y el otro al 40 %. Ya no se usan las imágenes de las barras y se sacaron los divisores de alrededor.
+  - **Animación al llegar scrolleando** (`iniciarPerfil`): cada barra se dibuja de izquierda a derecha. La marca nace en el centro y se desliza con un rebotecito hasta donde está Spot, y el tramo de color la acompaña. El extremo elegido se enciende y la frase sube.
+  - Va de a una fila (0,16 s entre filas) y se repite cada vez que la sección vuelve a entrar en pantalla. No se puede mover a mano.
