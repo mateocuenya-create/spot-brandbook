@@ -42,6 +42,8 @@ img{display:block}
 
 /* ---------- HOME (Slide 2) ---------- */
 #inicio{background:var(--negro) url("assets/home/home-fondo.jpg") center/cover;display:grid;place-items:center}
+/* Fondo de la Home: video de corredores (como en el Figma), en loop y sin sonido. La foto queda de respaldo mientras carga. */
+#inicio .fondo-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 #inicio .velo{position:absolute;inset:0;background:rgba(0,0,0,.4);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
 #inicio .escenario{position:relative;width:1920px;height:1080px;zoom:var(--zs);flex:none}
 .mapa{position:absolute;left:618px;top:428px;width:684px;height:224px}
@@ -320,6 +322,7 @@ a.punto{cursor:pointer} span.punto{cursor:default}
 
 <!-- ======================= HOME ======================= -->
 <main id="inicio" class="pantalla" aria-label="Inicio">
+  <video class="fondo-video" src="assets/home/home.mp4" poster="assets/home/home-fondo.jpg" autoplay muted loop playsinline preload="auto" aria-hidden="true"></video>
   <div class="velo"></div>
   <div class="escenario">
     <div class="mapa" aria-hidden="true">
