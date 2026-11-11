@@ -56,7 +56,7 @@ img{display:block}
   transition:transform .1s var(--ease-out),box-shadow .1s var(--ease-out)}
 .punto .pill{position:absolute;left:50%;top:-69px;transform:translateX(-50%);display:flex;gap:10px;white-space:nowrap;padding:6px 20px;border-radius:46px;
   background:var(--negro-60);font-size:20px;opacity:0;pointer-events:none;transition:opacity .1s var(--ease-out)}
-.punto .pill .km{font-weight:300;color:var(--crema-60)} .punto .pill .nom{font-weight:600;color:var(--crema)}
+.punto .pill .pkm{font-weight:300;color:var(--crema-60)} .punto .pill .nom{font-weight:600;color:var(--crema)}
 .punto:hover .bola,.punto:focus-visible .bola{transform:translateY(-7px);box-shadow:0 4px 3px rgba(0,0,0,.4)}
 .punto:hover .pill,.punto:focus-visible .pill{opacity:1}
 a.punto{cursor:pointer} span.punto{cursor:default}
@@ -265,9 +265,19 @@ a.punto{cursor:pointer} span.punto{cursor:default}
 .tamanos > div{width:371px;display:flex;flex-direction:column;gap:48px;align-items:center}
 .tamanos h6{font:600 20px/1.5 var(--reddit);color:var(--naranja)}
 .tamanos .muestra{position:relative;width:371px;height:117px}
-.tamanos .muestra .l{position:absolute;left:85px;top:0;width:200px}
-.tamanos .muestra .r{position:absolute;left:0;top:72px;width:371px}
+.tamanos .muestra .l{position:absolute;left:85.5px;top:0;width:200px;max-width:none}
 .tamanos p{font:400 20px/1.5 var(--reddit);margin-top:-26px}
+/* regla interactiva (mismo dibujo que en el Figma: dos triangulitos y línea punteada) */
+.tamanos .regla{position:absolute;left:0;top:72px;width:371px;height:46px;border:1.5px dotted rgba(37,37,37,.55);border-top:0}
+.tamanos .regla::before,.tamanos .regla::after{content:"";position:absolute;top:-7px;border:6px solid transparent;border-top:9px solid rgba(37,37,37,.6);border-bottom:0}
+.tamanos .regla::before{left:-7.5px} .tamanos .regla::after{right:-7.5px}
+.tamanos .tirador{position:absolute;top:-24px;width:40px;height:84px;cursor:ew-resize;touch-action:none;border-radius:20px;transition:background .2s}
+.tamanos .tirador.izq{left:-21px} .tamanos .tirador.der{right:-21px}
+.tamanos .tirador:hover,.tamanos .agarrado .tirador{background:rgba(255,118,64,.12)}
+.tamanos .val{transition:color .2s}
+.tamanos .aviso{display:block;margin-top:-36px;font:600 16px/1.4 var(--reddit);color:var(--naranja);opacity:0;transform:translateY(-4px);transition:opacity .25s,transform .25s}
+.tamanos .bajo .val{color:var(--naranja);font-weight:600}
+.tamanos .bajo .aviso{opacity:1;transform:none}
 .pie{height:120px}
 
 /* ---------- MENÚ (Slide 3) ---------- */
@@ -1305,8 +1315,51 @@ function armarKM3(){
     });
     pintar();
   });
-  $$('[data-tamanos]').forEach(t => t.innerHTML = ['DIGITAL|70px','IMPRESIÓN|25mm'].map(x => { const [a, b] = x.split('|');
-    return `<div><h6>${a}</h6><div class="muestra"><img class="l" src="assets/km3/logo-spot-chico.svg" alt=""><img class="r" src="assets/km3/regla.svg" alt=""></div><p>${b}</p></div>`; }).join(''));
+  $$('[data-tamanos]').forEach(t => {
+    t.innerHTML = [['DIGITAL', 70, 'px'], ['IMPRESIÓN', 25, 'mm']].map(([a, min, u]) =>
+      `<div class="tam" data-min="${min}" data-u="${u}"><h6>${a}</h6>
+        <div class="muestra"><img class="l" src="assets/km3/logo-spot-chico.svg" alt="Logo de Spot al tamaño mínimo">
+          <div class="regla"><button class="tirador izq" aria-label="Achicar o agrandar el logo"></button><button class="tirador der" aria-label="Achicar o agrandar el logo"></button></div></div>
+        <p><span class="val">${min}${u}</span></p><small class="aviso">Mínimo recomendado: ${min} ${u}</small></div>`).join('');
+    $$('.tam', t).forEach(iniciarTamano);
+  });
+}
+
+/* Tamaños pequeños de uso: los extremos de la regla se arrastran y el logo se achica o se agranda con ella.
+   Quieto se ve como el Figma (regla de 371 px = tamaño mínimo). Por debajo del mínimo el número pasa a naranja,
+   aparece el aviso y el logo se "empasta" (se desenfoca de a poco), que es justo lo que explica el texto. */
+function iniciarTamano(tam){
+  const REGLA = 371, LOGO = 200, MIN_W = 120, MAX_W = 371;
+  const min = +tam.dataset.min, u = tam.dataset.u, logo = $('.l', tam), regla = $('.regla', tam), val = $('.val', tam);
+  let ancho = REGLA;
+  const pintar = w => {
+    ancho = Math.max(MIN_W, Math.min(MAX_W, w));
+    const lw = ancho * LOGO / REGLA, v = min * ancho / REGLA, bajo = v < min - .5;
+    regla.style.width = ancho + 'px'; regla.style.left = (REGLA - ancho) / 2 + 'px';
+    logo.style.width = lw + 'px'; logo.style.left = (REGLA - lw) / 2 + 'px'; logo.style.top = (66.25 - lw * 66.25 / LOGO) + 'px';
+    logo.style.filter = bajo ? `blur(${((min - v) / min * 2.4).toFixed(2)}px)` : '';
+    val.textContent = (u === 'mm' ? v.toFixed(0) : Math.round(v)) + u;
+    tam.classList.toggle('bajo', bajo);
+  };
+  $$('.tirador', tam).forEach(tir => {
+    let x0 = 0, w0 = 0, activo = false;
+    tir.addEventListener('pointerdown', e => { activo = true; x0 = e.clientX; w0 = ancho; try { tir.setPointerCapture(e.pointerId); } catch (_) {} tam.classList.add('agarrado'); });
+    tir.addEventListener('pointermove', e => { if (!activo) return; const d = (e.clientX - x0) / zoomActual() * 2; pintar(w0 + (tir.classList.contains('der') ? d : -d)); });
+    const fin = () => { if (!activo) return; activo = false; tam.classList.remove('agarrado'); };
+    tir.addEventListener('pointerup', fin); tir.addEventListener('pointercancel', fin);
+    tir.addEventListener('keydown', e => { if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') { e.preventDefault(); pintar(ancho - 12); } if (e.key === 'ArrowRight' || e.key === 'ArrowUp') { e.preventDefault(); pintar(ancho + 12); } });
+  });
+  pintar(REGLA);
+  // la primera vez que aparece, se achica y vuelve sola, para mostrar que se puede tocar
+  if (!REDUCIR && 'IntersectionObserver' in window) {
+    const io = new IntersectionObserver(es => es.forEach(e => {
+      if (!e.isIntersecting) return; io.disconnect();
+      const t0 = performance.now() + 600, D = 2200;
+      const paso = t => { const p = Math.min(1, Math.max(0, (t - t0) / D)); pintar(REGLA - (REGLA - 170) * Math.sin(p * Math.PI) ** 2); if (p < 1) requestAnimationFrame(paso); };
+      requestAnimationFrame(paso);
+    }), { root: tam.closest('article.km'), threshold: .8 });
+    io.observe(tam);
+  }
 }
 
 /* ---------- Menú (Slide 3): ítems desplegables ---------- */
@@ -1335,7 +1388,7 @@ function armarMapa(){
   $('#puntos-mapa').innerHTML = PUNTOS_MAPA.map(([x, y, c, km, nom], i) => {
     const tag = km ? `a href="#${km}"` : 'span tabindex="0"', fin = km ? 'a' : 'span';
     return `<${tag} class="punto" style="left:${x}px;top:${y}px;--c:var(--${c})" aria-label="KM ${i + 1}${nom ? ': ' + nom : ''}">
-      <span class="pill"><span class="km">KM ${i + 1}</span>${nom ? `<span class="nom">${nom}</span>` : ''}</span><span class="bola">${i + 1}</span></${fin}>`;
+      <span class="pill"><span class="pkm">KM ${i + 1}</span>${nom ? `<span class="nom">${nom}</span>` : ''}</span><span class="bola">${i + 1}</span></${fin}>`;
   }).join('');
 }
 
