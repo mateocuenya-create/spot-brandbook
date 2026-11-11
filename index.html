@@ -1735,40 +1735,51 @@ function iniciarRasgos(){
   });
 }
 
-/* Heros · las misceláneas se mueven solas con física simple:
-   - van lento (12–24 px/s) en una dirección al azar y nunca se quedan quietas;
-   - rebotan contra los bordes del cuadro (no se van), contra el título (con su borde crema),
-     el tag "KM n" y el logo grande del KM 1, y chocan entre ellas;
-   - el mouse las empuja (como truus.co): toman velocidad y giro según el golpe y después
-     vuelven de a poco a su ritmo tranquilo. */
+/* Heros · misceláneas en movimiento (pedido del equipo):
+   - se mueven lento y suave (10–20 px/s); los choques son blandos: se esquivan con un "colchón", sin golpes secos;
+   - no pasan por arriba del título (ni del tag "KM n" ni del logo grande del KM 1) y no se enciman entre ellas;
+   - los bordes de la pantalla no las frenan: salen del cuadro y, cada tanto, entran nuevas desde los costados;
+   - el mouse las empuja suave y después vuelven a su ritmo.
+   Las nuevas son solo piezas de SPOT! (la marca de estas páginas, según el Figma): puntos y estrellas de 7 y 12 puntas
+   en amarillo, naranja, rosa, violeta y azul, siempre con borde crema, y nunca del mismo color que el fondo del hero. */
 const PUNTERO = { x: -1e4, y: -1e4, vx: 0, vy: 0, t: 0 };
 addEventListener('pointermove', e => {
-  const t = performance.now(), dt = Math.max(8, t - PUNTERO.t);
-  const viejo = t - PUNTERO.t > 120;
+  const t = performance.now(), dt = Math.max(8, t - PUNTERO.t), viejo = t - PUNTERO.t > 120;
   PUNTERO.vx = viejo ? 0 : (e.clientX - PUNTERO.x) / dt * 1000; PUNTERO.vy = viejo ? 0 : (e.clientY - PUNTERO.y) / dt * 1000;
   PUNTERO.x = e.clientX; PUNTERO.y = e.clientY; PUNTERO.t = t;
 }, { passive: true });
 
+// [archivo, tamaño, color, tipo] — piezas de SPOT! exportadas del Figma
+const PIEZAS_SPOT = [
+  ['km2/f0cb2.svg',43,'amarillo','p'],['km2/0752e.svg',29.23,'amarillo','p'],['km6/intro-6.svg',71,'amarillo','p'],['km6/intro-7.svg',47,'amarillo','p'],['km6/intro-5.svg',113,'amarillo','e'],
+  ['km1/punto3.svg',43,'naranja','p'],['km1/punto4.svg',29.23,'naranja','p'],['km6/intro-10.svg',71,'naranja','p'],['km6/intro-8.svg',47,'naranja','p'],['km1/star8.svg',112.988,'naranja','e'],['km6/spot-estrella7.svg',94,'naranja','e'],
+  ['km1/punto5.svg',43,'rosa','p'],['km2/4478f.svg',29.23,'rosa','p'],['km6/intro-11.svg',71,'rosa','p'],['km6/intro-14.svg',47,'rosa','p'],['km2/6b150.svg',112.988,'rosa','e'],['km6/spot-estrella12.svg',97,'rosa','e'],
+  ['km1/punto7.svg',43,'violeta','p'],['km2/36e87.svg',43,'violeta','p'],['km6/intro-15.svg',71,'violeta','p'],['km6/intro-3.svg',113,'violeta','e'],
+  ['km1/punto8.svg',43,'azul','p'],['km2/cfa66.svg',29.23,'azul','p'],['km6/spot-punto.svg',61,'azul','p'],['km6/intro-16.svg',47,'azul','p'],['km1/star10.svg',90.2858,'azul','e'],['km6/intro-4.svg',113,'azul','e']
+];
+
 function iniciarFlotar(){
   if (REDUCIR) return;
-  const W = 1920, H = 1080, BORDE = 23, lim = (v, a) => Math.max(-a, Math.min(a, v));
+  const W = 1920, H = 1080, BORDE = 23, COLCHON = 22, lim = (v, a) => Math.max(-a, Math.min(a, v)), azar = (a, b) => a + Math.random() * (b - a);
+  const nuevoCuerpo = (el, cx, cy, r, vx, vy, fija) => ({ el, x0: cx, y0: cy, x: cx, y: cy, r, m: r * r, vx, vy,
+    crucero: Math.hypot(vx, vy) || azar(10, 20), ang: 0, giro: 0, adentro: false, fija, fuera: 0 });
   const escenas = $$('article.km').map(km => {
     const hero = $('.hero', km); if (!hero) return null;
+    const fondo = ((hero.getAttribute('style') || '').match(/--c:\s*var\(--(\w+)\)/) || [])[1];
     const cuerpos = $$('.deco, .carita', hero).map(el => {
       const w = parseFloat(el.style.width) || 116, h = parseFloat(el.style.height) || 116;
-      const cx = parseFloat(el.style.left) + w / 2, cy = parseFloat(el.style.top) + h / 2;
-      const r = el.classList.contains('carita') ? 50 : Math.max(w, h) / 2;
-      const a = Math.random() * Math.PI * 2, crucero = 12 + Math.random() * 12;
-      return { el, x0: cx, y0: cy, x: cx, y: cy, r, m: r * r,
-        vx: Math.cos(a) * crucero, vy: Math.sin(a) * crucero, crucero, ang: 0, giro: 0, adentro: false };
+      const a = Math.random() * Math.PI * 2, v = azar(10, 20);
+      // la carita y la insignia son únicas: si se van, vuelven a entrar por un costado
+      const fija = el.classList.contains('carita') || el.querySelectorAll('img').length > 1;
+      return nuevoCuerpo(el, parseFloat(el.style.left) + w / 2, parseFloat(el.style.top) + h / 2,
+        el.classList.contains('carita') ? 50 : Math.max(w, h) * .45, Math.cos(a) * v, Math.sin(a) * v, fija);
     });
-    return { km, hero, cuerpos, obst: [], medido: false };
+    const piezas = PIEZAS_SPOT.filter(p => p[2] !== fondo);
+    return { km, hero, cuerpos, piezas, obst: [], medido: false, max: cuerpos.length + 4, proxima: performance.now() + azar(2500, 5000) };
   }).filter(Boolean);
 
-  // zonas donde no pueden entrar: el título (medido con la tinta real de las letras + el borde crema), el tag y el logo del KM 1
   const medir = esc => {
     const z = zoomActual(), hr = esc.hero.getBoundingClientRect(), o = [];
-    const caja = (r, m = 6) => o.push({ x1: (r.left - hr.left) / z - m, x2: (r.right - hr.left) / z + m, y1: (r.top - hr.top) / z - m, y2: (r.bottom - hr.top) / z + m });
     const tit = $('.titulo-km', esc.hero);
     if (tit) {
       const t = $('text', tit), sr = $('svg', tit).getBoundingClientRect();
@@ -1779,22 +1790,40 @@ function iniciarFlotar(){
       o.push({ x1: ox - me.actualBoundingBoxLeft - BORDE, x2: ox + me.actualBoundingBoxRight + BORDE,
         y1: oy - me.actualBoundingBoxAscent - BORDE, y2: oy + me.actualBoundingBoxDescent + BORDE });
     }
-    $$('.km-tag, img[alt="SPOT!"]', esc.hero).forEach(e => caja(e.getBoundingClientRect()));
+    $$('.km-tag, img[alt="SPOT!"]', esc.hero).forEach(e => { const r = e.getBoundingClientRect();
+      o.push({ x1: (r.left - hr.left) / z - 6, x2: (r.right - hr.left) / z + 6, y1: (r.top - hr.top) / z - 6, y2: (r.bottom - hr.top) / z + 6 }); });
     esc.obst = o; esc.medido = true;
-    // si alguna arrancó encima de una zona, la saca afuera
-    esc.cuerpos.forEach(p => esc.obst.forEach(b => chocarCaja(p, b)));
   };
-  const chocarCaja = (p, b) => {
+  // choque blando con una zona: un colchón empuja de a poco; solo si se mete de verdad se la corre de golpe
+  const empujarCaja = (p, b, dt) => {
     const cx = Math.max(b.x1, Math.min(p.x, b.x2)), cy = Math.max(b.y1, Math.min(p.y, b.y2));
     let dx = p.x - cx, dy = p.y - cy, d = Math.hypot(dx, dy);
-    if (d >= p.r) return;
-    if (d === 0) {                                                 // el centro quedó adentro: sale por el lado más cercano
+    if (d >= p.r + COLCHON) return;
+    if (d < .01) {                                                 // centro adentro: sale hacia el lado más cercano
       const op = [[p.x - b.x1, -1, 0], [b.x2 - p.x, 1, 0], [p.y - b.y1, 0, -1], [b.y2 - p.y, 0, 1]].sort((a, c) => a[0] - c[0])[0];
       dx = op[1]; dy = op[2]; d = 1;
-      p.x = op[1] ? (op[1] < 0 ? b.x1 - p.r : b.x2 + p.r) : p.x; p.y = op[2] ? (op[2] < 0 ? b.y1 - p.r : b.y2 + p.r) : p.y;
-    } else { p.x = cx + dx / d * p.r; p.y = cy + dy / d * p.r; }
-    const nx = dx / d, ny = dy / d, vn = p.vx * nx + p.vy * ny;
-    if (vn < 0) { p.vx -= 2 * vn * nx; p.vy -= 2 * vn * ny; p.giro += (p.vx * ny - p.vy * nx) * .15; }
+    }
+    const nx = dx / d, ny = dy / d, hund = p.r + COLCHON - d;
+    p.vx += nx * hund * 9 * dt; p.vy += ny * hund * 9 * dt;        // resorte suave
+    const vn = p.vx * nx + p.vy * ny; if (vn < 0) { p.vx -= vn * nx * Math.min(1, 4 * dt); p.vy -= vn * ny * Math.min(1, 4 * dt); }
+    if (d < p.r) { p.x += nx * (p.r - d); p.y += ny * (p.r - d); } // nunca encima del título
+  };
+  const crear = esc => {
+    // como en los heros del Figma: muchos más puntos que estrellas (1 de cada 4 es estrella)
+    const grupo = esc.piezas.filter(q => q[3] === (Math.random() < .25 ? 'e' : 'p'));
+    const [src, tam, , tipo] = grupo[Math.floor(Math.random() * grupo.length)];
+    const r = tam * .45, izq = Math.random() < .5, x = izq ? -r - 10 : W + r + 10, y = azar(70, H - 70);
+    if (esc.cuerpos.some(q => Math.hypot(q.x - x, q.y - y) < q.r + r + 20)) return;   // hay otra entrando ahí: espera
+    const el = document.createElement('div'); el.className = 'deco';
+    el.style.cssText = `left:${x - tam / 2}px;top:${y - tam / 2}px;width:${tam}px;height:${tam}px`;
+    el.innerHTML = `<div class="mov"><img src="assets/${src}" alt="" style="left:0;top:0;width:100%;height:100%"></div>`;
+    $('.decos', esc.hero).appendChild(el);
+    const v = azar(12, 22);
+    esc.cuerpos.push(nuevoCuerpo(el, x, y, tipo === 'e' ? tam * .42 : r, (izq ? 1 : -1) * v, azar(-6, 6), false));
+  };
+  const reentrar = p => {                                          // carita / insignia: vuelven por un costado
+    const izq = Math.random() < .5; p.x = izq ? -p.r - 10 : W + p.r + 10; p.y = azar(90, H - 90);
+    const v = azar(12, 20); p.vx = (izq ? 1 : -1) * v; p.vy = azar(-5, 5); p.crucero = v; p.fuera = 0;
   };
   if (document.fonts) document.fonts.ready.then(() => escenas.forEach(medir)); else escenas.forEach(medir);
   addEventListener('resize', () => escenas.forEach(medir));
@@ -1806,46 +1835,47 @@ function iniciarFlotar(){
     escenas.forEach(esc => {
       if (!esc.km.classList.contains('activa') || esc.km.scrollTop > innerHeight * 1.2) { esc.medido = false; return; }
       if (!esc.medido) medir(esc);
+      // cada 3 a 6 segundos entra una nueva por un costado (con un máximo para no llenar el cuadro)
+      if (t > esc.proxima) { esc.proxima = t + azar(3000, 6000); if (esc.cuerpos.length < esc.max) crear(esc); }
       const z = zoomActual(), hr = esc.hero.getBoundingClientRect();
       const mx = (PUNTERO.x - hr.left) / z, my = (PUNTERO.y - hr.top) / z, mvx = PUNTERO.vx / z, mvy = PUNTERO.vy / z;
       const cs = esc.cuerpos;
       cs.forEach(p => {
-        // empujón del mouse al entrar en la pieza
-        const toca = Math.hypot(mx - p.x, my - p.y) < p.r + 6;
-        if (toca && !p.adentro && performance.now() - PUNTERO.t < 120) {
-          const k = Math.min(1.2, 70 / p.r);                        // las grandes pesan más
-          p.vx += lim(mvx * .7 * k, 900); p.vy += lim(mvy * .7 * k, 900);
-          p.giro += lim(((mx - p.x) * mvy - (my - p.y) * mvx) / (p.r * 6), 400);
+        const toca = Math.hypot(mx - p.x, my - p.y) < p.r + 8;
+        if (toca && !p.adentro && performance.now() - PUNTERO.t < 120) {     // empujón suave del mouse
+          const k = Math.min(.4, 18 / p.r);
+          p.vx += lim(mvx * k, 320); p.vy += lim(mvy * k, 320);
+          p.giro += lim(((mx - p.x) * mvy - (my - p.y) * mvx) / (p.r * 14), 70);
         }
         p.adentro = toca;
-        p.x += p.vx * dt; p.y += p.vy * dt;
-        // bordes del cuadro: rebotan
-        if (p.x < p.r) { p.x = p.r; p.vx = Math.abs(p.vx); } else if (p.x > W - p.r) { p.x = W - p.r; p.vx = -Math.abs(p.vx); }
-        if (p.y < p.r) { p.y = p.r; p.vy = Math.abs(p.vy); } else if (p.y > H - p.r) { p.y = H - p.r; p.vy = -Math.abs(p.vy); }
-        esc.obst.forEach(b => chocarCaja(p, b));
+        esc.obst.forEach(b => empujarCaja(p, b, dt));
       });
-      // choques entre ellas (elásticos, las más grandes empujan más)
+      // entre ellas: también con colchón, sin golpes
       for (let i = 0; i < cs.length; i++) for (let j = i + 1; j < cs.length; j++) {
-        const a = cs[i], b = cs[j], dx = b.x - a.x, dy = b.y - a.y, d = Math.hypot(dx, dy), min = a.r + b.r;
-        if (d >= min || d === 0) continue;
-        const nx = dx / d, ny = dy / d, sobra = min - d, ta = b.m / (a.m + b.m), tb = a.m / (a.m + b.m);
-        a.x -= nx * sobra * ta; a.y -= ny * sobra * ta; b.x += nx * sobra * tb; b.y += ny * sobra * tb;
-        const vn = (a.vx - b.vx) * nx + (a.vy - b.vy) * ny;
-        if (vn > 0) {
-          const imp = 2 * vn / (1 / a.m + 1 / b.m);
-          a.vx -= imp / a.m * nx; a.vy -= imp / a.m * ny; b.vx += imp / b.m * nx; b.vy += imp / b.m * ny;
-          a.giro += vn * .2; b.giro -= vn * .2;
-        }
+        const a = cs[i], b = cs[j], dx = b.x - a.x, dy = b.y - a.y, d = Math.hypot(dx, dy) || .01, min = a.r + b.r + 10;
+        if (d >= min) continue;
+        const nx = dx / d, ny = dy / d, hund = min - d, ta = b.m / (a.m + b.m), tb = a.m / (a.m + b.m);
+        a.vx -= nx * hund * 7 * dt * ta * 2; a.vy -= ny * hund * 7 * dt * ta * 2;
+        b.vx += nx * hund * 7 * dt * tb * 2; b.vy += ny * hund * 7 * dt * tb * 2;
+        const encima = a.r + b.r - d; if (encima > 0) { a.x -= nx * encima * ta; a.y -= ny * encima * ta; b.x += nx * encima * tb; b.y += ny * encima * tb; }
       }
-      cs.forEach(p => {
-        // vuelve de a poco a su velocidad tranquila (nunca se frena del todo)
-        const v = Math.hypot(p.vx, p.vy) || 1, nv = p.crucero + (v - p.crucero) * Math.exp(-dt * 1.4);
+      for (let k = cs.length - 1; k >= 0; k--) {
+        const p = cs[k];
+        // vuelve despacio a su velocidad tranquila
+        const v = Math.hypot(p.vx, p.vy) || 1, nv = p.crucero + (v - p.crucero) * Math.exp(-dt * .9);
         p.vx *= nv / v; p.vy *= nv / v;
-        // giro con resorte: gira con el golpe y vuelve derecho
-        p.giro += -p.ang * 6 * dt; p.giro *= Math.exp(-dt * 2.5); p.ang += p.giro * dt;
+        p.x += p.vx * dt; p.y += p.vy * dt;
+        p.giro += -p.ang * 3 * dt; p.giro *= Math.exp(-dt * 1.8); p.ang += p.giro * dt;
+        // salió del cuadro: las nuevas y las del Figma se van; la carita y la insignia vuelven a entrar
+        const m = p.r + 40;
+        if (p.x < -m || p.x > W + m || p.y < -m || p.y > H + m) {
+          if ((p.fuera += dt) > .5) {
+            if (p.fija) reentrar(p); else { p.el.remove(); cs.splice(k, 1); continue; }
+          }
+        } else p.fuera = 0;
         p.el.style.translate = `${(p.x - p.x0).toFixed(1)}px ${(p.y - p.y0).toFixed(1)}px`;
         p.el.style.rotate = `${p.ang.toFixed(1)}deg`;
-      });
+      }
     });
   };
   requestAnimationFrame(ciclo);
