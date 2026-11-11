@@ -441,12 +441,16 @@ a.punto{cursor:pointer} span.punto{cursor:default}
   opacity:0;transform:translate(-50%,-50%) scale(.5) rotate(-6deg);transition:opacity .2s var(--ease-out),transform .35s cubic-bezier(.34,1.56,.64,1)}
 .crema-negro .base[data-hex="#252525"] .copiado{background:var(--crema);color:var(--negro)}
 .copiar.ok .copiado{opacity:1;transform:translate(-50%,-50%) scale(1) rotate(-3deg)}
-.crema-negro{display:flex;height:480px}
-.crema-negro .base{width:924px;flex:none;padding:50px;position:relative;cursor:copy}
+.crema-negro{display:flex;height:480px;transition:background-color .5s var(--ease-in-out)}
+.crema-negro .base{width:950px;flex:none;padding:50px;position:relative;cursor:copy}
 .crema-negro .base .valores{margin-top:35.4px}
 .crema-negro .tonos{flex:1;display:flex}
 .crema-negro .tonos div{flex:1;padding:50px;font:700 18px/1.18 var(--reddit);transition:flex-grow .45s var(--ease-in-out)}
 .crema-negro .tonos div:hover{flex-grow:1.8}
+.crema-negro .fondos{position:absolute;left:545px;top:394px;display:flex;gap:18px}
+.crema-negro .fondos button{width:36px;height:36px;border-radius:50%;background:var(--c);border:3.67px solid var(--borde);cursor:pointer;transition:transform .25s cubic-bezier(.34,1.56,.64,1)}
+.crema-negro .fondos button:hover{transform:scale(1.12)}
+.crema-negro .fondos button.on{transform:scale(1.25)}
 .filtros{display:flex;gap:165px;padding-left:120px;margin-top:-23px}
 .filtros figure{width:402px;display:flex;flex-direction:column;gap:34px}
 .filtros img{width:402px;height:778px;transition:transform .3s var(--ease-out),filter .3s}
@@ -993,12 +997,12 @@ html.cursor-propio.cursor-visible :is(#cursor,#cursor-mini){opacity:1}
   </section>
   <div class="crema-negro" style="background:var(--negro)">
     <div class="base copiar" data-hex="#EDE8DB" style="background:var(--crema);color:var(--negro)"><h4>Crema Spot</h4>
-      <div class="valores"><div><b>CMYK</b>0  2   8   7</div><div><b>RGB</b>237, 232, 219</div><div><b>HEX</b><span class="hex">#EDE8DB</span></div></div><span class="copiado">¡Copiado!</span></div>
+      <div class="valores"><div><b>CMYK</b>0  2   8   7</div><div><b>RGB</b>237, 232, 219</div><div><b>HEX</b><span class="hex">#EDE8DB</span></div></div><span class="copiado">¡Copiado!</span><div class="fondos" role="group" aria-label="Color de fondo de los tonos" style="--borde:var(--negro)"><button style="--c:var(--amarillo)" data-fondo="amarillo" aria-pressed="false" aria-label="Ver los tonos sobre Amarillo"></button><button style="--c:var(--naranja)" data-fondo="naranja" aria-pressed="false" aria-label="Ver los tonos sobre Naranja"></button><button style="--c:var(--rosa)" data-fondo="rosa" aria-pressed="false" aria-label="Ver los tonos sobre Rosa"></button><button style="--c:var(--violeta)" data-fondo="violeta" aria-pressed="false" aria-label="Ver los tonos sobre Violeta"></button><button style="--c:var(--azul)" data-fondo="azul" aria-pressed="false" aria-label="Ver los tonos sobre Azul"></button><button style="--c:var(--verde)" data-fondo="verde" aria-pressed="false" aria-label="Ver los tonos sobre Verde"></button><button style="--c:var(--negro)" data-fondo="negro" aria-pressed="true" aria-label="Ver los tonos sobre Negro Spot" class="on"></button></div></div>
     <div class="tonos"><div style="background:rgba(237,232,219,.8)">80%</div><div style="background:rgba(237,232,219,.6)">60%</div><div style="background:rgba(237,232,219,.4)">40%</div><div style="background:rgba(237,232,219,.2)">20%</div><div style="background:rgba(237,232,219,.1)">10%</div></div>
   </div>
   <div class="crema-negro" style="background:var(--crema)">
     <div class="base copiar" data-hex="#252525" style="background:var(--negro);color:var(--crema)"><h4>Negro Spot</h4>
-      <div class="valores"><div><b>CMYK</b>0  0   0   85</div><div><b>RGB</b>37, 37, 37</div><div><b>HEX</b><span class="hex">#252525</span></div></div><span class="copiado">¡Copiado!</span></div>
+      <div class="valores"><div><b>CMYK</b>0  0   0   85</div><div><b>RGB</b>37, 37, 37</div><div><b>HEX</b><span class="hex">#252525</span></div></div><span class="copiado">¡Copiado!</span><div class="fondos" role="group" aria-label="Color de fondo de los tonos" style="--borde:var(--crema)"><button style="--c:var(--amarillo)" data-fondo="amarillo" aria-pressed="false" aria-label="Ver los tonos sobre Amarillo"></button><button style="--c:var(--naranja)" data-fondo="naranja" aria-pressed="false" aria-label="Ver los tonos sobre Naranja"></button><button style="--c:var(--rosa)" data-fondo="rosa" aria-pressed="false" aria-label="Ver los tonos sobre Rosa"></button><button style="--c:var(--violeta)" data-fondo="violeta" aria-pressed="false" aria-label="Ver los tonos sobre Violeta"></button><button style="--c:var(--azul)" data-fondo="azul" aria-pressed="false" aria-label="Ver los tonos sobre Azul"></button><button style="--c:var(--verde)" data-fondo="verde" aria-pressed="false" aria-label="Ver los tonos sobre Verde"></button><button style="--c:var(--crema)" data-fondo="crema" aria-pressed="true" aria-label="Ver los tonos sobre Crema Spot" class="on"></button></div></div>
     <div class="tonos" style="color:var(--crema)"><div style="background:rgba(37,37,37,.8)">80%</div><div style="background:rgba(37,37,37,.6)">60%</div><div style="background:rgba(37,37,37,.4)">40%</div><div style="background:rgba(37,37,37,.2)">20%</div><div style="background:rgba(37,37,37,.1)">10%</div></div>
   </div>
   <section class="sec km4-intro" style="height:562px">
@@ -1563,7 +1567,8 @@ function bordesSinHuecos(){
    PORTADA: animación del Figma (2,4 s) → Home con Dissolve 0,1 s
    ===================================================================== */
 const PUNTOS_LOGO = [[744.7,465.3,1.52,8.137,14.41],[810,465.3,18.279,24.759,31.175],[831.8,465.3,21.63,28.392,33.533],[875.4,465.3,6.309,12.04,18.15],[853.6,465.3,16.363,21.945,27.776],[984.5,465.3,17.8,24.247,29.405],[1028.1,465.3,13.012,18.55,24.498],[1006.3,465.3,19.715,25.433,30.612],[1093.6,465.3,26.418,32.215,37.851],[1137.2,465.3,19.236,25.324,30.571],[1115.5,465.3,4.872,11.548,17.832],[984.5,574.4,10.139,16.104,21.837],[1028.1,574.4,23.545,30.035,36.421],[1006.3,574.4,11.096,17.451,23.839],[810,530.8,10.618,17.219,22.738],[810,552.6,27.855,33.902,39.447],[810,574.4,14.448,20.353,26.379],[810,508.9,14.927,21.266,26.606],[810,487.1,2.478,8.442,14.037],[1137.2,465.3,26.897,33.012,38.137],[1159,465.3,2.957,8.423,14.251],[1180.9,465.3,15.885,22.161,27.323],[1137.3,530.7,24.982,31.331,37.057],[1137.3,552.6,3.914,10.576,16.737],[1137.3,574.4,24.024,30.09,35.804],[1137.3,508.9,11.575,17.551,23.684],[1137.3,487.1,8.703,15.101,21.404],[1224.4,465.3,25.461,31.609,37.963],[1224.4,530.8,7.266,13.35,19.71],[1224.4,574.4,7.745,14.315,20.392],[1224.4,508.9,8.224,14.051,19.495],[1224.4,487.1,22.109,28.608,35.008],[962.7,530.8,12.054,17.866,23.567],[962.7,552.6,5.83,12.499,17.913],[962.7,508.9,1.042,7.108,13.074],[962.7,487.1,22.588,28.345,34.785],[1050,530.7,27.376,33.876,38.961],[1049.9,552.6,24.503,30.752,36.33],[1049.9,508.9,1.999,8.737,14.672],[1049.9,487.1,17.321,23.753,29.018],[897.1,508.9,12.533,19.177,24.806],[897.1,487.1,23.067,28.538,34.121],[831.8,530.8,13.969,20.557,25.966],[875.4,530.7,28.333,34.243,41.667],[853.6,530.8,4.393,10.677,16.449],[722.2,465.3,6.787,13.18,19.27],[699.9,465.3,9.66,15.19,20.988],[677.5,465.3,18.757,24.53,30.129],[700.5,508.8,15.406,21.721,27.312],[678.2,508.8,13.49,19.881,25.627],[723.2,530.9,20.673,27.488,33.623],[744.5,552.8,5.351,11.556,16.679],[700.8,530.9,25.939,32.138,37.617],[656.9,487.5,3.436,9.447,15.688],[722.7,574.6,21.151,26.956,32.287],[700.3,574.7,16.842,22.693,27.838],[677.9,574.6,20.194,25.697,31.572],[655.5,574.6,9.181,15.282,20.304]];
-const portada = $('#portada');
+let portada = $('#portada');
+const portadaMolde = portada.cloneNode(true), portadaPadre = portada.parentNode, portadaSig = portada.nextElementSibling;
 function animarPortada(){
   const g = $('#p-puntos'), NS = 'http://www.w3.org/2000/svg', o = { duration: 2400, fill: 'both' }, e = .0001;
   PUNTOS_LOGO.forEach(([x, y, a, b, d]) => {
@@ -1576,6 +1581,17 @@ function animarPortada(){
   $('#p-crema').animate(fade, o); g.animate(fade, o);
 }
 let portadaFuera = false;
+// al volver a la Home desde un KM se vuelve a ver la animación principal (la portada entra con un fundido)
+function repetirPortada(){
+  if (REDUCIR || document.getElementById('portada')) return;
+  portada = portadaMolde.cloneNode(true);
+  portadaPadre.insertBefore(portada, portadaSig);
+  portadaFuera = false;
+  portada.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 250, easing: 'ease-out' });
+  animarPortada();
+  setTimeout(salirDePortada, 2400);
+  portada.addEventListener('click', salirDePortada);
+}
 function salirDePortada(){
   if (portadaFuera) return; portadaFuera = true;
   if (REDUCIR) { portada.remove(); return; }
@@ -1608,6 +1624,7 @@ function irA(destino, ancla){
   actual = destino;
   if (destino === 'inicio') {
     const sale = document.getElementById(de); if (!sale) return;
+    repetirPortada();
     sale.style.zIndex = 20;
     sale.animate([{transform:'translateX(0)'},{transform:'translateX(-100%)'}], {duration: dur(300), easing: EASE_OUT}).onfinish = () => { sale.classList.remove('activa'); sale.style.zIndex = ''; };
     return;
@@ -1794,6 +1811,14 @@ function iniciarKM5(){
   $$('.logos button', zona).forEach(b => b.addEventListener('click', () => elegir(b.dataset.marca)));
   elegir('spot');
   // un click en cualquier color copia su HEX
+  // KM 5 · puntos de color: cambian el fondo que está detrás de los tonos (para entender las opacidades)
+  $$('.crema-negro .fondos').forEach(g => g.addEventListener('click', e => {
+    e.stopPropagation();
+    const b = e.target.closest('button'); if (!b) return;
+    $$('button', g).forEach(x => { const on = x === b; x.classList.toggle('on', on); x.setAttribute('aria-pressed', on); });
+    g.closest('.crema-negro').style.background = `var(--${b.dataset.fondo})`;
+  }));
+  $$('.crema-negro .fondos button').forEach(b => b.addEventListener('keydown', e => e.stopPropagation()));
   $$('.copiar').forEach(el => {
     const ir = () => copiarHex(el, el.dataset.hex);
     el.addEventListener('click', ir);
