@@ -347,7 +347,7 @@ a.punto{cursor:pointer} span.punto{cursor:default}
 .tipos .aa{font:300 522.099px/1.18 var(--sora);color:var(--negro);width:689px;cursor:default;transition:font-weight .5s var(--ease-in-out)}
 .tipos .aa.reddit{font-family:var(--reddit)}
 .tipos .frase-caja{width:970px;height:370px;padding:10px 120px 10px 48px;display:flex;align-items:center;justify-content:space-between;background:var(--c)}
-.tipos .frase-caja p{font:600 48px/1.18 var(--sora);color:var(--negro);transition:opacity .15s var(--ease-out)}
+.tipos .frase-caja p{font:600 48px/1.18 var(--sora);color:var(--negro);transition:opacity .15s var(--ease-out),font-weight .45s var(--ease-in-out)}
 .tipos .frase-caja p.reddit{font:400 48px/1.18 var(--reddit)}
 .alinear{display:flex;flex-direction:column;gap:12.979px;align-items:flex-end;justify-content:center;width:121px;height:198.536px;flex:none}
 .alinear button{width:39.9px;height:39.9px;border-radius:8px;transition:transform .15s var(--ease-out),background .15s}
@@ -434,8 +434,12 @@ a.punto{cursor:pointer} span.punto{cursor:default}
 .valores{display:flex;flex-direction:column;gap:10.275px;font:300 17.467px/1.18 var(--sora)}
 .valores div{display:flex;gap:20.207px;white-space:pre}
 .valores b{font-weight:600;width:54.8px;flex:none}
-.color .copiado,.crema-negro .copiado{position:absolute;right:50px;top:50px;font:600 16px/normal var(--reddit);opacity:0;transition:opacity .2s}
-.copiar.ok .copiado{opacity:1}
+/* "¡Copiado!": pastilla grande que aparece con un rebote en el medio del color */
+.color .copiado,.crema-negro .copiado{position:absolute;left:50%;top:50%;z-index:2;padding:16px 34px;border-radius:60px;background:var(--negro);color:var(--crema);
+  font:600 34px/1 var(--sora);white-space:nowrap;box-shadow:0 10px 30px rgba(0,0,0,.25);pointer-events:none;
+  opacity:0;transform:translate(-50%,-50%) scale(.5) rotate(-6deg);transition:opacity .2s var(--ease-out),transform .35s cubic-bezier(.34,1.56,.64,1)}
+.crema-negro .base[data-hex="#252525"] .copiado{background:var(--crema);color:var(--negro)}
+.copiar.ok .copiado{opacity:1;transform:translate(-50%,-50%) scale(1) rotate(-3deg)}
 .crema-negro{display:flex;height:480px}
 .crema-negro .base{width:924px;flex:none;padding:50px;position:relative;cursor:copy}
 .crema-negro .base .valores{margin-top:35.4px}
@@ -517,6 +521,18 @@ a.punto{cursor:pointer} span.punto{cursor:default}
 .var-card .card .ctrl{position:absolute;inset:0;pointer-events:none}
 .var-card .card .ctrl button{pointer-events:auto}
 @media (prefers-reduced-motion:reduce){.flota .mov > img{animation:none}}
+
+/* ---------- Cursores de la marca (idea de bitwip.fr: cursores propios en imagen, con halo para verse en cualquier fondo) ----------
+   flecha: la de siempre, con interior crema · estrella de 7 puntas de SPOT!: todo lo que se puede clickear
+   mano: lo que se arrastra. Solo con mouse; en pantallas táctiles no cambia nada. */
+@media (hover:hover) and (pointer:fine){
+  :root{--cur-flecha:url("assets/cursor/flecha.svg") 5 5, default; --cur-clic:url("assets/cursor/estrella.svg") 16 16, pointer; --cur-mano:url("assets/cursor/mano.svg") 16 16, grab}
+  html, html *{cursor:var(--cur-flecha) !important}
+  html :where(a[href], a[href] *, button:not(:disabled), button:not(:disabled) *, [role=button], [role=button] *, label, summary, select, .copiar, .copiar *, .glosa, .somos-fila *, .pieza, .pieza *, #portada, #portada *, .submarcas-zona .foto-rot){cursor:var(--cur-clic) !important}
+  html :where(.arrastrable, .arrastrable *, .rasgo, .submarcas-zona .foto-rot.frente, .tamanos .tirador){cursor:var(--cur-mano) !important}
+  html :where(.arrastrable button, .arrastrable button *){cursor:var(--cur-clic) !important}
+  html :where(input:not([type=button], [type=submit], [type=checkbox], [type=radio]), textarea){cursor:text !important}
+}
 
 /* ---------- Movimiento al scrollear (referencia: houseofyellow.nl) ----------
    Scroll suave con Lenis (1,2 s, expo-out) y entradas: suben 24 px y aparecen en 0,45 s,
@@ -1350,12 +1366,19 @@ function iniciarTamano(tam){
     tir.addEventListener('keydown', e => { if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') { e.preventDefault(); pintar(ancho - 12); } if (e.key === 'ArrowRight' || e.key === 'ArrowUp') { e.preventDefault(); pintar(ancho + 12); } });
   });
   pintar(REGLA);
-  // la primera vez que aparece, se achica y vuelve sola, para mostrar que se puede tocar
+  // cada vez que aparece en pantalla (también al volver a subir), se achica y vuelve sola para mostrar que se puede tocar
   if (!REDUCIR && 'IntersectionObserver' in window) {
+    let animando = false;
     const io = new IntersectionObserver(es => es.forEach(e => {
-      if (!e.isIntersecting) return; io.disconnect();
-      const t0 = performance.now() + 600, D = 2200;
-      const paso = t => { const p = Math.min(1, Math.max(0, (t - t0) / D)); pintar(REGLA - (REGLA - 170) * Math.sin(p * Math.PI) ** 2); if (p < 1) requestAnimationFrame(paso); };
+      if (!e.isIntersecting || animando || tam.classList.contains('agarrado')) return;
+      animando = true;
+      const desde = ancho, t0 = performance.now() + 500, D = 2200;
+      const paso = t => {
+        if (tam.classList.contains('agarrado')) { animando = false; return; }   // si lo agarrás, manda el usuario
+        const p = Math.min(1, Math.max(0, (t - t0) / D)), ida = Math.sin(p * Math.PI) ** 2;
+        pintar(p < .5 ? desde + (170 - desde) * ida : REGLA + (170 - REGLA) * ida);
+        if (p < 1) requestAnimationFrame(paso); else animando = false;
+      };
       requestAnimationFrame(paso);
     }), { root: tam.closest('article.km'), threshold: .8 });
     io.observe(tam);
@@ -1640,10 +1663,12 @@ function iniciarKM4(){
     });
   });
   // pasar el mouse por un peso (Light, Semi Bold…) cambia el "Aa" grande a ese peso
+  // …y también la frase del recuadro de color de esa misma tipografía (celeste para Sora, amarillo para Reddit Sans)
+  const frases = $$('[data-frase]');
   $$('[data-peso]').forEach(s => {
-    const aa = $(`[data-aa="${s.dataset.para}"]`);
-    s.addEventListener('mouseenter', () => aa.style.fontWeight = s.dataset.peso);
-    s.addEventListener('mouseleave', () => aa.style.fontWeight = '');
+    const aa = $(`[data-aa="${s.dataset.para}"]`), frase = frases[s.dataset.para === 'sora' ? 0 : 1];
+    s.addEventListener('mouseenter', () => { aa.style.fontWeight = s.dataset.peso; frase.style.fontWeight = s.dataset.peso; });
+    s.addEventListener('mouseleave', () => { aa.style.fontWeight = ''; frase.style.fontWeight = ''; });
   });
   $$('[data-aa]').forEach(aa => {
     aa.addEventListener('mouseenter', () => aa.style.fontWeight = 600);
