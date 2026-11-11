@@ -549,6 +549,34 @@ html.cursor-propio.cursor-visible :is(#cursor,#cursor-mini){opacity:1}
 #cursor-mini{width:20px;height:20px;will-change:transform}
 #cursor-mini img{width:100%;height:100%;transition:transform .45s cubic-bezier(.34,1.56,.64,1)}
 #cursor-mini.grande img{transform:scale(1.15)}
+/* ---------- Figma 11/11 (2.ª ronda): Home, KM 6 nuevo ---------- */
+#inicio .actualizado{position:absolute;left:1395px;top:967px;width:405px;text-align:right;font:300 23.69px/normal var(--sora);color:var(--crema-60)}
+.indebidos{flex-direction:column;gap:96px}
+.indebidos .fila-ind{display:flex;gap:20px;align-items:flex-start}
+.indebido .caja{overflow:hidden;background:none}
+.indebido .caja img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.indebido p{color:var(--negro-80)}
+.indebido:hover .caja{animation:negar .45s var(--ease-in-out)}
+.caritas-set{display:grid;grid-template-columns:repeat(5,211px);column-gap:29px;row-gap:82px;justify-content:center}
+.carita-ej{display:flex;flex-direction:column;gap:20px;align-items:center;font:400 20px/1.5 var(--reddit);color:var(--negro)}
+.carita-ej .pieza{width:176px;height:176px}
+.carita-ej .circulo{position:absolute;inset:0;border-radius:88px;border:6px solid var(--crema);background:var(--c);box-shadow:0 4px 12px rgba(0,0,0,.18);overflow:hidden}
+.carita-ej .circulo img{position:absolute;left:50%;top:calc(50% + 2px);width:164px;height:164px;transform:translate(-50%,-50%);opacity:.8;object-fit:cover}
+.insignia-card{display:flex;justify-content:center}
+.insignia-card img{width:255px;height:344px;transition:transform .35s cubic-bezier(.34,1.56,.64,1)}
+.insignia-card img:hover{transform:translateY(-10px) rotate(-3deg)}
+.siluetas{position:relative}
+.siluetas .halftone{position:absolute;left:0;top:468px;width:790px;height:1050px;pointer-events:none;animation:respirar 6s ease-in-out infinite alternate}
+@keyframes respirar{from{transform:translateY(0)}to{transform:translateY(-14px)}}
+.siluetas .fila{position:relative}
+.siluetas .como{font:600 25px/1.3 var(--reddit);color:var(--negro)}
+.siluetas-fila{display:flex;gap:32px;align-items:flex-end}
+.siluetas-ej{width:536px;height:382px;border:2px solid #000;border-radius:12px;object-fit:cover;mix-blend-mode:multiply}
+.pastilla-link{display:inline-flex;gap:10px;align-items:center;padding:10px 30px;border-radius:43px;background:var(--negro);color:var(--crema);font:400 20px/1.5 var(--reddit);white-space:nowrap;transition:transform .2s var(--ease-out)}
+.pastilla-link:hover{transform:scale(1.05)}
+.pastilla-link img{width:24px;height:24px}
+.siluetas-grande{width:975px;height:462px;border-radius:12px;object-fit:cover}
+
 /* ---------- Movimiento al scrollear (referencia: houseofyellow.nl) ----------
    Scroll suave con Lenis (1,2 s, expo-out) y entradas: suben 24 px y aparecen en 0,45 s,
    escalonadas de a 0,15 s, cuando el elemento llega al 90 % de la pantalla. Una sola vez. */
@@ -586,6 +614,7 @@ html.cursor-propio.cursor-visible :is(#cursor,#cursor-mini){opacity:1}
     <div id="puntos-mapa"></div>
     <button class="btn-menu" data-abrir-menu aria-label="Abrir índice"><img src="assets/home/lista.svg" alt=""></button>
     <img class="logo-centro" src="assets/home/logo-spot.svg" alt="SPOT!">
+    <p class="actualizado">Última actualización Nov 2026</p>
     <div class="submarcas"><img src="assets/home/logo-post.svg" alt="post." style="width:102px;height:47px"><img src="assets/home/logo-stop-comp4.svg" alt="STOP" style="width:96px;height:44px"></div>
   </div>
 </main>
@@ -645,10 +674,10 @@ html.cursor-propio.cursor-visible :is(#cursor,#cursor-mini){opacity:1}
     <img class="abs" src="assets/km1/stop-logo-comp3.svg" alt="STOP" style="left:751px;top:2329px;width:419px;height:193px">
     <p class="abs txt" style="top:2813px">Stop es el evento anual de Spot: una parada en el camino para celebrar lo recorrido. Alrededor de una carrera nocturna, propone una experiencia <b style="color:var(--rosa)">social, lúdica y reflexiva</b> donde corredores y acompañantes se encuentran, se divierten y se toman un momento para valorar todo el esfuerzo que los trajo hasta ahí. Si Spot acompaña el camino y Post cuida el después, Stop es la pausa que les da sentido a los dos.</p>
     <a class="boton" href="#inicio" style="left:945.5px;top:3063px;background:var(--rosa)">Conocé más sobre STOP <img src="assets/km1/flecha-der.svg" alt=""></a>
-    <a class="parada" href="#km2" style="left:262px;top:3356px">
+    <span class="parada" style="left:262px;top:3356px;cursor:default">
       <span class="circ"><img src="assets/km1/flecha-izq-32.svg" alt=""></span>
-      <span class="info" style="border-right:2px solid var(--crema);padding-right:20px"><span class="chip">KM2</span><span class="tx" style="text-align:right;align-items:flex-end"><small>Siguiente parada</small><span>Manual de Voz y Tono</span></span></span>
-    </a>
+      <span class="info" style="border-right:2px solid var(--crema);padding-right:20px"><span class="chip">KM10</span><span class="tx" style="text-align:right;align-items:flex-end"><small>Parada anterior</small><span>Arquigrafía</span></span></span>
+    </span>
     <a class="parada" href="#km2" style="left:1112px;top:3356px">
       <span class="info" style="border-left:2px solid var(--crema);padding-left:20px"><span class="tx"><small>Siguiente parada</small><span>Manual de Voz y Tono</span></span><span class="chip">KM2</span></span>
       <span class="circ"><img src="assets/km1/flecha-der-32.svg" alt=""></span>
@@ -738,6 +767,8 @@ html.cursor-propio.cursor-visible :is(#cursor,#cursor-mini){opacity:1}
     <button class="btn-menu" data-abrir-menu aria-label="Abrir índice"><img src="assets/km2/21764.svg" alt=""></button>
     <span class="km-tag">KM 3</span>
     <h1 class="titulo-km" data-t="Logotipos de la marca" data-w="1448" style="left:120px">Logotipos de la marca</h1>
+    <p class="bajada" style="top:612px">Nuestra firma en todo lugar</p>
+    <nav class="links" style="top:724px"><button data-a="km3-construccion">Construcción ↗</button><button data-a="km3-variantes">Variantes de color ↗</button><button data-a="km3-malas">Malas prácticas ↗</button></nav>
     <button class="slide-down" style="top:969px" data-bajar aria-label="Bajar"><img src="assets/km2/95fa8.svg" alt=""></button>
     <div class="decos" data-decos="km3"></div>
   </section>
@@ -831,6 +862,7 @@ html.cursor-propio.cursor-visible :is(#cursor,#cursor-mini){opacity:1}
     <button class="btn-menu" data-abrir-menu aria-label="Abrir índice"><img src="assets/km2/21764.svg" alt=""></button>
     <span class="km-tag">KM 4</span>
     <h1 class="titulo-km" data-t="Uso de Tipografías" data-w="1300" style="left:120px">Uso de Tipografías</h1>
+    <p class="bajada" style="top:612px">Incluso el texto lleva nuestra impronta</p>
     <nav class="links" style="top:724px"><button data-a="km4-sora">Sora ↗</button><button data-a="km4-reddit">Reddit Sans ↗</button><button data-a="km4-display">Títulos Display ↗</button></nav>
     <button class="slide-down" style="top:969px" data-bajar aria-label="Bajar"><img src="assets/km2/95fa8.svg" alt=""></button>
     <div class="decos" data-decos="km4"></div>
@@ -932,6 +964,7 @@ html.cursor-propio.cursor-visible :is(#cursor,#cursor-mini){opacity:1}
     <button class="btn-menu" data-abrir-menu aria-label="Abrir índice"><img src="assets/km2/21764.svg" alt=""></button>
     <span class="km-tag">KM 5</span>
     <h1 class="titulo-km" data-t="Colores de la marca" data-w="1300" style="left:120px">Colores de la marca</h1>
+    <p class="bajada" style="top:612px">La clave de nuestra expresión visual</p>
     <nav class="links" style="top:724px"><button data-a="km5-paleta">Paleta por marca ↗</button><button data-a="km5-usos">Tipografía y color ↗</button><button data-a="km5-vectores">Vectores y color ↗</button></nav>
     <button class="slide-down" style="top:969px" data-bajar aria-label="Bajar"><img src="assets/km2/95fa8.svg" alt=""></button>
     <div class="decos" data-decos="km5"></div>
@@ -981,7 +1014,7 @@ html.cursor-propio.cursor-visible :is(#cursor,#cursor-mini){opacity:1}
   </div>
   <section class="sec usos" id="km5-usos" style="margin-top:34px">
     <div class="fila"><h2 class="t">Tipografía y color</h2>
-      <div class="c txt"><p>La tipografía puede ir en color, pero solo cuando el fondo es negro o crema. Sobre un fondo de color, el texto va siempre en negro o crema: en Spot los colores nunca se tocan entre sí, siempre hay uno neutro de por medio.</p><p>Estas combinaciones valen para títulos, destacados y textos de lectura, y aplican también a post. y Stop.</p></div></div>
+      <div class="c txt"><p>La tipografía puede ir en color, pero solo cuando el fondo es negro o crema. Sobre un fondo de color, el texto va siempre en negro o crema: en Spot los colores nunca se tocan entre sí, siempre hay uno neutro de por medio. Estas combinaciones valen para títulos, destacados y textos de lectura, aplican también a Post y Stop.</p></div></div>
     <div class="fila-usos" data-usos="tipo-si"></div>
     <div class="fila-usos" data-usos="tipo-no"></div>
   </section>
@@ -1005,7 +1038,7 @@ html.cursor-propio.cursor-visible :is(#cursor,#cursor-mini){opacity:1}
     <button class="btn-menu" data-abrir-menu aria-label="Abrir índice"><img src="assets/km2/21764.svg" alt=""></button>
     <span class="km-tag">KM 6</span>
     <h1 class="titulo-km" data-t="Elementos gráficos" data-w="1300" style="left:120px">Elementos gráficos</h1>
-    <p class="bajada" style="top:612px">Potenciando la marca</p>
+    <p class="bajada" style="top:612px">Nuestra expresión visual potenciada</p>
     <nav class="links" style="top:724px"><button data-a="km6-puntos">Puntos y estrellas ↗</button><button data-a="km6-signos">Signos Display ↗</button><button data-a="km6-fotos">Fotografías ↗</button></nav>
     <button class="slide-down" style="top:969px" data-bajar aria-label="Bajar"><img src="assets/km2/95fa8.svg" alt=""></button>
     <div class="decos" data-decos="km6"></div>
@@ -1058,9 +1091,42 @@ html.cursor-propio.cursor-visible :is(#cursor,#cursor-mini){opacity:1}
     <div class="fila"><h3 class="t">Fotografías Stop</h3><p class="c txt">Como Stop es un evento nocturno, pueden usarse fotografías nocturnas obviando la regla de iluminación natural. Puede usarse luz de flash o iluminación de los colores del evento. Seguimos priorizando la diversión, socialización y el trabajo en equipo.</p></div>
     <div class="carrusel" data-carrusel="stop"></div>
   </section>
-  <section class="sec-foto" style="padding-top:0">
-    <div class="fila"><h3 class="t">Usos indebidos de fotografías</h3><div class="c txt"><p>Para ilustrar este punto aquí sugerimos algunos ejemplos de usos no permitidos.</p><p>Básicamente, es importante que respetes la integridad del isologotipo en su conjunto: no lo desintegres, no lo deformes desproporcionadamente ni asignes colores en otra disposición a lo que en esta guía se aconseja.</p><p>Recordá que todas estas reglas aplican también a los logos de las marcas Post y Stop.</p></div></div>
+  <div class="divisor"></div>
+  <section class="sec-foto">
+    <div class="fila"><h3 class="t">Usos indebidos de fotografías</h3><div class="c txt"><p>Para ilustrar este punto aquí sugerimos algunos ejemplos de usos no permitidos.</p><p>Estas reglas aplican a las tres marcas. En resumen, no apliques edición exagerada a las imágenes, y priorizá siempre una buena calidad de iluminación y tratamiento.</p></div></div>
     <div class="indebidos" data-indebidos></div>
+  </section>
+  <div class="divisor"></div>
+  <section class="sec" id="km6-ilustraciones">
+    <div class="fila"><h2 class="t">Ilustraciones</h2><p class="c txt">Utilizamos dos tipos de elementos gráficos por fuera de los puntos y fotografías: Se tratan de ilustraciones de caritas y un tratamiento de imagen especial, fromado por puntos.</p></div>
+  </section>
+  <div class="divisor"></div>
+  <section class="sec-foto" id="km6-caritas">
+    <div class="fila"><h3 class="t">Caritas</h3><p class="c txt">Utilizamos un set de 10 caritas que no solo sirven para adornar las composiciones con puntos, sino que ayudan a expresar diferentes momentos del recorrido. Sirven para armar piezas (como publicaciones o presentaciones) con storytelling.</p></div>
+    <div class="caritas-set" data-caritas></div>
+  </section>
+  <div class="divisor"></div>
+  <section class="sec-foto" id="km6-efecto">
+    <div class="fila"><h3 class="t">Efecto puntos</h3><p class="c txt">Similar a las caritas, en la app de Spot utilizamos pequeños íconos compuestos de puntos para los logros.</p></div>
+    <div class="insignia-card"><img src="assets/km6/insignia-card.svg" alt="Tarjeta de logro de la app: insignia de consistencia, 1 por semana" width="255" height="344"></div>
+  </section>
+  <div class="divisor"></div>
+  <section class="sec-foto siluetas" id="km6-siluetas">
+    <img class="halftone" src="assets/km6/siluetas-halftone.jpg" alt="" aria-hidden="true">
+    <div class="fila"><h3 class="t sticky">Puntos en siluetas</h3>
+      <div class="c" style="display:flex;flex-direction:column;gap:64px">
+        <p class="txt">Además, los puntos aparecen en siluetas de personas. Esto aparece más que nada en la experiencia Post, ya que esta es la forma en que la gente ve su propia silueta al estirar, pero puede ser utilizado como recurso en toda la marca.</p>
+        <div style="display:flex;flex-direction:column;gap:32px">
+          <h5 class="como">¿CÓMO PODEMOS REALIZARLO?</h5>
+          <p class="txt">Para esto vamos a necesitar una imagen o video donde pueda separarse la figura del fondo fácilmente, ya sea con inteligencia artificial o herramientas de edición (el efecto umbral o curvas sirven para aislar las zonas más oscuras).</p>
+          <div class="siluetas-fila">
+            <img class="siluetas-ej" src="assets/km6/siluetas-1.jpg" alt="Silueta de una persona convertida en puntos">
+            <a class="pastilla-link" href="https://meshic.app/" target="_blank" rel="noopener">Ir a meshic.app <img src="assets/km6/flecha-der-crema.svg" alt=""></a>
+          </div>
+          <div class="txt"><p>Con herramientas de edición web, puede aplicarse el efecto a la silueta. Nosotros recomendamos <a href="https://meshic.app/" target="_blank" rel="noopener" style="text-decoration:underline">meshic.app</a></p><p style="margin-top:0">pero puede realizarse de múltiples otras formas. Lo importante es que los puntos estén ordenados y no sean muy grandes o muy pequeños.</p></div>
+        </div>
+        <img class="siluetas-grande" src="assets/km6/siluetas-2.jpg" alt="Ejemplo del efecto de puntos aplicado a siluetas">
+      </div></div>
   </section>
   <footer class="pie-km" data-ant="km5|KM5|Colores" data-sig="|KM7|Design System"></footer>
  </div>
@@ -1093,7 +1159,7 @@ const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [..
 const PUNTOS_MAPA = [
   [1009,407,'amarillo','km1','SPOT!'],[1171,407,'naranja','km2','Manual de voz y tono'],[1275,474,'rosa','km3','Logotipos'],
   [1264,610,'violeta','km4','Tipografías'],[1081,598,'azul','km5','Colores'],[908,577,'amarillo','km6','Elementos gráficos'],
-  [753,619,'naranja',null,''],[597,577,'rosa',null,''],[597,461,'violeta',null,''],[721,407,'azul',null,'']
+  [753,619,'naranja',null,'Design System'],[597,577,'rosa',null,'Animaciones'],[597,461,'violeta',null,'Íconos'],[721,407,'azul',null,'Arquigrafía']
 ];
 
 /* Decoraciones (Componentes "Punto", insignia y carita). [archivo, x, y, w, h, inset%(t,r,b,l), rotación, caja] */
@@ -1411,7 +1477,8 @@ const INDICE = [
   ['Logotipos','km3',[['Construcción','km3-construccion'],['Variantes de color','km3-variantes'],['Espacios seguros','km3-espacios'],['Usos correctos e incorrectos','km3-malas'],['Tamaños','km3-tamanos'],['Ejemplos de uso',null]]],
   ['Tipografías','km4',[]],
   ['Colores','km5',[['Usos correctos e incorrectos','km5-usos']]],
-  ['Elementos gráficos','km6',[['Misceláneas','km6-puntos'],['Fotografías','km6-fotos'],['Espacios seguros',null]]]
+  ['Elementos gráficos','km6',[['Misceláneas','km6-puntos'],['Fotografías','km6-fotos'],['Espacios seguros',null]]],
+  ['Design System',null,[]], ['Animaciones',null,[]], ['Íconos',null,[]], ['Arquigrafía',null,[]]
 ];
 function armarMenu(){
   $('#indice').innerHTML = INDICE.map(([t, km, subs], n) => `<li><button class="num" data-toggle aria-label="Abrir o cerrar ${t}">${n + 1}</button><div class="cuerpo">
@@ -1615,7 +1682,7 @@ function iniciarStickers(){
    ENTRADAS AL SCROLLEAR: suben 24 px + aparecen, 0,45 s, escalonadas 0,15 s
    ===================================================================== */
 const ENTRAN = ['.sec .fila > *', '.pilar', '.rasgo', '.card-enf', '.card-tono', '.eje', '.somos-fila', '.enfoque > h4', '.momentos > h4',
-  '.banda p', '.foto-co p', '.tira', '.variantes', '.tamanos > div', '.submarcas-zona > img.abs', '.submarcas-zona > p', '.foto-rot', '.boton', '.parada', '.volver-arriba', '.diagramas > *', '.mala', '.app-pantallas', '.marca-card', '.piezas', '.signo', '.carrusel', '.uso', '.filtros figure', '.indebido', '.km6-intro > p']
+  '.banda p', '.foto-co p', '.tira', '.variantes', '.tamanos > div', '.submarcas-zona > img.abs', '.submarcas-zona > p', '.foto-rot', '.boton', '.parada', '.volver-arriba', '.diagramas > *', '.mala', '.app-pantallas', '.marca-card', '.piezas', '.signo', '.carrusel', '.uso', '.filtros figure', '.indebido', '.km6-intro > p', '.carita-ej', '.insignia-card', '.siluetas-fila', '.siluetas-grande']
   .join(',');
 function iniciarEntradas(){
   if (REDUCIR || !('IntersectionObserver' in window)) return;
@@ -1760,7 +1827,17 @@ const FOTOS = {
   stop: [['stop-1','Continuamos mostrando la socialización','43%'],['stop-2','No es necesario solo mostrar el deporte: ¡Es bueno celebrar los logros!'],['stop-3','También pueden usarse fotos de momentos dentro del evento.'],
     ['stop-4','Puede mostrarse el consumo de alcohol de forma celebratoria, pero su uso debe ser moderado. No recomendamos mostrar un consumo excesivo o excesiva cantidad de estas fotos, como puede ser varias seguidas en un carrusel.','55%']]
 };
-const INDEBIDOS = ['No uses fotos de baja calidad o pixeladas','No apliques filtros que alteren los colores','Evitá fotos posadas de estudio o sin contexto'];
+// usos indebidos de fotografías (Figma, componente "Uso indebido · Foto"): [foto, texto, estilo de la imagen]
+const INDEBIDOS = [
+  [['indebido-1','No uses fotos de baja calidad o pixeladas','left:-51.4%;top:-56.65%;width:214%;height:181.65%;inset:auto'],['indebido-2','No apliques filtros que alteren los colores'],
+   ['indebido-3','Evitá fotos demasiado profesionales, que parezcan sacadas de bancos de imágenes. Buscamos momentos reales.']],
+  [['indebido-4','No uses fotografías hehcas con inteligencia artificial. La única excepción son renders de eventos o experiencias que aun no hayan sido realizadas físicamente, como puede ser la experiencia Post.','object-position:bottom'],
+   ['indebido-5','Evitá fotografías que claramente no son de Argentina'],['indebido-6','Por otro lado, tampoco utilices fotografías demasiado caseras']],
+  [['indebido-7','Si bien se pueden usar fotografías donde aparece una sola persona, un plano general puede hacerla parecer solitaria'],
+   ['indebido-8','Como nuestro público no abarca tanto las competiciones profesionales, es preferible usar imágenes de entrenamientos en grupo informales'],['indebido-9','No subexpongas o sobreexpongas mucho las fotografías']]];
+// las 10 caritas de la marca (sección Caritas del KM 6, componente "Carita")
+const CARITAS_SET = [['Contenta','contenta','rosa'],['Esforzada','esforzada','naranja'],['Neutral','neutral','azul'],['Pícara','picara','violeta'],['Canchera','canchera','amarillo'],
+  ['Aburrida','aburrida','violeta'],['Agotada','agotada','azul'],['Eufórica','euforica','amarillo'],['Enamorada','enamorada','rosa'],['Sorprendida','sorprendida','naranja']];
 function armarKM6(){
   $$('[data-piezas]').forEach(f => {
     f.innerHTML = PIEZAS[f.dataset.piezas].map(([a, bw, bh, w, h, x, y]) => `<div class="pieza" style="width:${bw}px;height:${bh}px"><div class="mov"><img src="assets/km6/${a}.svg" alt="" style="left:${x}px;top:${y}px;width:${w}px;height:${h}px"></div></div>`).join('');
@@ -1771,8 +1848,11 @@ function armarKM6(){
       <button class="fl ant" aria-label="Foto anterior"><img src="assets/km6/caret-izq.svg" alt=""></button>
       <button class="fl sig" aria-label="Foto siguiente"><img src="assets/km6/caret-der.svg" alt=""></button>`;
   });
-  const cruz = '<svg viewBox="0 0 547 364" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0L547 364M547 0L0 364" stroke="#252525" stroke-opacity=".3" stroke-width="1" vector-effect="non-scaling-stroke"/></svg>';
-  const ind = $('[data-indebidos]'); if (ind) ind.innerHTML = INDEBIDOS.map(t => `<div class="indebido"><div class="caja">${cruz}</div><p>${t}</p></div>`).join('');
+  const cruz = '<svg viewBox="0 0 547 364" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0L547 364M547 0L0 364" stroke="#252525" stroke-width="1" vector-effect="non-scaling-stroke"/></svg>';
+  const ind = $('[data-indebidos]'); if (ind) ind.innerHTML = INDEBIDOS.map(fila => `<div class="fila-ind">${fila.map(([f, t, est]) =>
+    `<div class="indebido"><div class="caja"><img src="assets/km6/${f}.jpg" alt="Ejemplo de mal uso: ${t}" style="${est || ''}" loading="lazy">${cruz}</div><p>${t}</p></div>`).join('')}</div>`).join('');
+  const cs = $('[data-caritas]'); if (cs) cs.innerHTML = CARITAS_SET.map(([n, f, c]) =>
+    `<div class="carita-ej"><div class="pieza"><div class="mov"><div class="circulo" style="--c:var(--${c})"><img src="assets/miscelaneas/carita-${f}.png" alt="Carita ${n.toLowerCase()}"></div></div></div><span>${n}</span></div>`).join('');
 }
 
 /* =====================================================================
@@ -1923,7 +2003,7 @@ const PIEZAS_SPOT = [
   ['miscelaneas/insignia-integrante.svg',94,'amarillo','i'],['miscelaneas/insignia-lugares.svg',94,'rosa','i'],['miscelaneas/insignia-asociado.svg',108,'naranja','i'],['miscelaneas/insignia-repetido.svg',103,'violeta','i']
 ];
 // las 9 caritas de "Brand guidelines TP5" (Cara 1–9): van dentro de un círculo de color de SPOT! con borde crema
-const CARAS = [1, 2, 3, 4, 5, 6, 7, 8, 9].map(n => `assets/miscelaneas/cara-${n}.png`);
+const CARAS = ['contenta','esforzada','neutral','picara','canchera','aburrida','agotada','euforica','enamorada','sorprendida'].map(n => `assets/miscelaneas/carita-${n}.png`);
 const COLORES_SPOT = ['amarillo', 'naranja', 'rosa', 'violeta', 'azul'];
 // qué sale más seguido: puntos, después caritas, insignias y estrellas
 const MEZCLA = [['p', .5], ['c', .18], ['i', .17], ['e', .15]];

@@ -314,3 +314,15 @@ El 10/11/2026 se borró todo lo construido y se empezó de nuevo. Respaldo de la
 - 11/11/2026 · Mateo · **Favicon animado** del Figma (componente "Favicon animado" `320:1134`, en Brand guidelines TP5): 12 cuadros (`assets/favicon/f01.svg`…`f12.svg`: el logo SPOT!, el punto de post. y la estrella de STOP en distintos colores), cada uno 0,625 s, corte seco y en loop, igual que el prototipo (`iniciarFavicon`). Funciona en Chrome y Firefox; Safari muestra el primer cuadro fijo.
 - 11/11/2026 · Mateo · **Se sacó la pastilla explicativa** del cursor (no quedó bien). **Estrellita del cursor:** ahora es la estrella de 12 puntas azul de SPOT! (`assets/km2/319f2.svg`, 20 px) y se mueve más sutil: se acomoda en unos 0,16 s, a la misma velocidad sin importar los cuadros por segundo, y nunca queda a más de 46 px de su lugar (sin tirones ni saltos); flota apenas y no gira.
 - 11/11/2026 · Mateo · **KM 2 · "Somos… pero no…" completo.** Los ejemplos de "pero no" sí estaban en el Figma: cada instancia de "Fila Somos / Pero no" guarda sus textos en las propiedades "Ejemplo sí" y "Ejemplo no" (por eso en el prototipo andaba). Se cargaron las 8 filas en `SOMOS`. Ya no aparece "Falta el ejemplo…". Tip: para leer textos de instancias, mirar `componentProperties`, no solo las capas de texto visibles.
+- 11/11/2026 · Mateo · **Sincronización con el Figma actualizado (2.ª ronda).**
+  - Inicio: "Última actualización Nov 2026" abajo a la derecha (Sora Light, crema 60 %).
+  - Menú y mapa: KM 7 Design System, KM 8 Animaciones, KM 9 Íconos, KM 10 Arquigrafía. Todavía sin página, así que no son links.
+  - KM 1: la parada anterior es KM10 · Arquigrafía (sin link).
+  - Subtítulos de los heros: KM 3 "Nuestra firma en todo lugar" (con links a Construcción / Variantes / Malas prácticas), KM 4 "Incluso el texto lleva nuestra impronta", KM 5 "La clave de nuestra expresión visual", KM 6 "Nuestra expresión visual potenciada".
+  - KM 5 · Tipografía y color: queda un solo párrafo, como en el Figma.
+  - KM 6 · Usos indebidos: texto nuevo y 9 fotos reales en 3 filas (`assets/km6/indebido-1..9.jpg`), con la cruz de 1 px; al pasar el mouse la foto hace "que no".
+  - KM 6 · Secciones nuevas: Ilustraciones, Caritas (set de 10 con nombre y color, `assets/miscelaneas/carita-*.png`, se pueden empujar), Efecto puntos (tarjeta de logro `insignia-card.svg`; en el Figma no tiene fondo) y Puntos en siluetas (botón a meshic.app).
+  - Las caritas que aparecen flotando en los heros ahora son las 10 oficiales.
+  - No se construyó: la sección "Tipografía y color" duplicada en el Figma del KM 5, ni la grilla de caritas repetida dentro de "Efecto puntos".
+  - Typos del Figma copiados tal cual: "hehcas", "fromado".
+  - El fondo de "Puntos en siluetas" es un cuadro fijo del video halftone (`siluetas-halftone.jpg`) hasta que tengamos el archivo de video.
