@@ -8,7 +8,7 @@
 <meta name="theme-color" content="#FDCE42">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Reddit+Sans:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Sora:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Reddit+Sans:ital,wght@0,200..900;1,200..900&family=Sora:wght@100..800&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Bitcount+Single:wght@700&display=swap" rel="stylesheet">
 <style>
 /* =====================================================================
@@ -295,6 +295,199 @@ a.punto{cursor:pointer} span.punto{cursor:default}
 #menu .subs button:disabled{cursor:default}
 #menu .subs button:disabled:hover{color:var(--crema-60)}
 
+
+/* ---------- FOOTER · PARADAS (componente del Figma, al final de cada KM) ---------- */
+.pie-km{background:var(--negro);padding:120px 0;display:flex;flex-direction:column;align-items:center;gap:79px;color:var(--crema)}
+.pie-km .paradas{display:flex;gap:302px;justify-content:center;align-items:center}
+.pie-km .parada,.pie-km .volver-arriba{position:static}
+.pie-km span.parada{cursor:default}
+.pie-km span.parada:hover .circ{transform:none}
+.pie-km .copy{font:400 16px/normal var(--reddit);color:#fff}
+
+/* ---------- DESLIZABLES (lo que en el Figma se sale del cuadro hacia el costado) ---------- */
+.arrastrable{cursor:grab;touch-action:pan-y;user-select:none;-webkit-user-select:none}
+.arrastrable.agarrado{cursor:grabbing}
+.arrastrable img{-webkit-user-drag:none;user-select:none}
+
+/* KM 3 · tira de construcción: se arrastra de costado para ver los tres logos */
+.tira .pista-tira{position:absolute;left:0;top:0;width:3852px;height:100%;will-change:transform}
+.tira .pista-tira > img:first-child{position:absolute;left:0;top:0;width:3852px;max-width:none}
+
+/* KM 3 · espacios seguros, ubicación y malas prácticas */
+.diagramas{display:flex;flex-direction:column;gap:140px}
+.diagramas > img{align-self:center;max-width:none}
+.malas{display:flex;flex-direction:column;gap:96px;margin-top:96px}
+.malas .fila-malas{display:flex;gap:20px}
+.mala{width:405px;flex:none;display:flex;flex-direction:column;gap:45px}
+.mala img{width:405px;height:271px;transition:transform .2s var(--ease-out)}
+.mala p{font:400 20px/normal var(--reddit);color:#000}
+.mala:hover img{animation:negar .45s var(--ease-in-out)}
+@keyframes negar{0%,100%{transform:none}20%{transform:rotate(-2.5deg)}40%{transform:rotate(2.5deg)}60%{transform:rotate(-1.5deg)}80%{transform:rotate(1deg)}}
+
+/* ---------- KM 4 · TIPOGRAFÍAS ---------- */
+.lienzo .sora{font-family:var(--sora)}
+.km4-intro .t-grande{width:828px;flex:none;font:300 52px/1.18 var(--sora);color:var(--negro)}
+.km4-intro .t-grande b{font-weight:600;font-size:48px;color:var(--naranja)}
+.km4-intro .col{display:flex;flex-direction:column;gap:56px;width:547px;flex:none}
+.tipos{position:relative;height:2710px}
+.tipos > *{position:absolute}
+.tipos .bloque{background:var(--c)}
+.tipos .etq{font:300 52px/1.18 var(--sora);color:var(--negro);white-space:nowrap}
+.tipos .aa{font:300 522.099px/1.18 var(--sora);color:var(--negro);width:689px;cursor:default;transition:font-weight .5s var(--ease-in-out)}
+.tipos .aa.reddit{font-family:var(--reddit)}
+.tipos .frase-caja{width:970px;height:370px;padding:10px 120px 10px 48px;display:flex;align-items:center;justify-content:space-between;background:var(--c)}
+.tipos .frase-caja p{font:600 48px/1.18 var(--sora);color:var(--negro);transition:opacity .15s var(--ease-out)}
+.tipos .frase-caja p.reddit{font:400 48px/1.18 var(--reddit)}
+.alinear{display:flex;flex-direction:column;gap:12.979px;align-items:flex-end;justify-content:center;width:121px;height:198.536px;flex:none}
+.alinear button{width:39.9px;height:39.9px;border-radius:8px;transition:transform .15s var(--ease-out),background .15s}
+.alinear button img{width:100%;height:100%}
+.alinear button:hover{transform:scale(1.12)}
+.alinear button.on{background:rgba(37,37,37,.12)}
+.tipos .pesos{width:445px;height:419px;padding:39px 48px;display:flex;flex-direction:column;justify-content:center}
+.tipos .pesos div{display:flex;flex-direction:column;justify-content:space-between;font:51px/1.18 var(--sora);color:var(--negro)}
+.tipos .pesos span{cursor:default;transition:color .2s var(--ease-out)}
+.tipos .pesos span:hover{color:var(--naranja)}
+.tipos .expl{width:405px;height:419px;padding:10px;display:flex;align-items:center;justify-content:center}
+.tipos .expl p{width:354px;font:400 20px/1.5 var(--reddit);color:var(--negro)}
+.tipos .familias{width:969px;height:626px;padding:10px 10px 10px 48px;display:flex;flex-direction:column;gap:59px;justify-content:center;color:var(--crema)}
+.tipos .familias .t{width:602px;font:300 52px/1.18 var(--sora)}
+.tipos .familias .dos{display:flex;gap:59px}
+.tipos .familias .dos p{width:390px;font:400 20px/1.5 var(--reddit)}
+.tipos .familias .dos b{color:var(--naranja);font-weight:700}
+.tipos .familias .nombres{position:absolute;left:48px;top:581px;display:flex;gap:174px;font:300 25px/1.18 var(--sora);color:var(--crema-60)}
+.tipos .familias .nombres span{width:274.918px}
+.tipos .familias .nombres span + span{font:400 25px/1.18 var(--reddit);color:rgba(237,232,219,.4)}
+.tipos .lh{height:1px;width:970px;left:950px;background:var(--crema-60)}
+.tipos .lv{width:1px;height:508px;top:1414px;background:var(--crema-60)}
+.tipos .xan{font:300 243.05px/1.18 var(--sora);color:var(--crema);transition:color .3s var(--ease-out)}
+.tipos .xan.reddit{font:300 250px/1.18 var(--reddit)}
+.tipos .xan:hover{color:var(--amarillo)}
+/* carrusel de pantallas de la app (ventana de 951 px) */
+.ui-ventana{left:-1px;top:789px;width:951px;height:1133px;overflow:hidden}
+.ui-pista{position:absolute;left:0;top:0;height:1031px;padding:0 263px;display:flex;gap:315px;align-items:center;will-change:transform}
+.ui-pista > *{flex:none}
+.ui-puntos{position:absolute;left:435.5px;top:1011px;display:flex;gap:10px}
+.ui-puntos button{width:20px;height:20px;border-radius:50%;background:var(--negro);opacity:.6;transition:opacity .2s,transform .2s}
+.ui-puntos button.on{opacity:1;transform:scale(1.1)}
+/* pantalla "Crear equipo" (Group 14 del Figma) */
+.ui-equipo{position:relative;width:402px;height:766px;color:var(--negro)}
+.ui-equipo > *{position:absolute}
+.ui-cab{left:0;top:0;width:402px;height:60px;padding:10px 20px;display:flex;align-items:center;justify-content:space-between}
+.ui-cab .titulo{position:absolute;left:50%;transform:translateX(-50%);font:600 20px/normal var(--sora);white-space:nowrap}
+.ui-cab .ib{width:40px;height:40px;border-radius:29px;background:rgba(37,37,37,.15);display:grid;place-items:center}
+.ui-paso{left:76px;top:72px;width:250px;display:flex;flex-direction:column;gap:36px;align-items:center}
+.ui-paso > p{font:600 14px/normal var(--reddit);opacity:.7;text-align:center;white-space:pre-wrap}
+.ui-avatar{position:relative;width:109px;height:109px;border-radius:58.5px;border:6px solid #fff;background:#fff;display:grid;place-items:center;filter:drop-shadow(0 4px 5px rgba(0,0,0,.18))}
+.ui-avatar .mas{position:absolute;left:85px;top:0;width:32px;height:32px;border-radius:51px;background:var(--negro);display:grid;place-items:center}
+.ui-nombre{width:286px;padding:10px;border-bottom:2px solid rgba(37,37,37,.2);display:flex;gap:10px;align-items:center;justify-content:center;font:600 20px/normal var(--sora)}
+.ui-desc{left:20px;top:426px;width:362px;display:flex;flex-direction:column;gap:15px;align-items:center}
+.ui-desc h6{font:700 14px/normal var(--reddit);color:var(--negro-80)}
+.ui-desc div{width:100%;height:143px;padding:16px;border-radius:10px;background:var(--negro-10);font:400 16px/normal var(--reddit);color:var(--negro-80)}
+.ui-desc small{width:100%;font:400 14px/normal var(--reddit);color:var(--negro-60)}
+.ui-sigue{left:115px;top:681px;width:172px;display:flex;flex-direction:column;gap:36px;align-items:center}
+.ui-boton{display:flex;gap:10px;align-items:center;justify-content:center;padding:10px 16px;border-radius:29px;background:var(--negro);color:var(--crema);font:400 16px/normal var(--reddit);white-space:nowrap}
+.ui-progreso{display:flex;gap:8px;align-items:center}
+.ui-progreso i{width:8px;height:8px;border-radius:4px;background:rgba(37,37,37,.2)}
+.ui-progreso i.on{width:28px;background:#ff5e27}
+/* hoja "Confirmación solicitud" */
+.ui-hoja{position:relative;width:402px;height:430px;border-radius:32px 32px 0 0;background:var(--crema);color:var(--negro)}
+.ui-hoja > *{position:absolute}
+.ui-hoja .tirador{left:181px;top:12px;width:40px;height:5px;border-radius:3px;background:rgba(37,37,37,.2)}
+.ui-hoja h5{left:75px;top:80px;font:700 26px/normal var(--sora);white-space:nowrap}
+.ui-hoja .txt-c{left:201px;top:124px;width:330px;transform:translateX(-50%);text-align:center;font:400 16px/1.4 var(--reddit);color:var(--negro-60)}
+.ui-hoja .mientras{left:17.24px;top:214px;rotate:1.5deg;display:flex;gap:10px;align-items:center;padding:12px 16px;border-radius:18px;border:2px solid #fff;background:rgba(37,37,37,.2);font:700 14px/normal var(--reddit);white-space:nowrap}
+.ui-hoja .ui-boton{left:50%;top:299px;transform:translateX(-50%)}
+.ui-hoja u{left:calc(50% - 56px);top:360px;font:600 14px/normal var(--reddit);color:var(--negro-60);white-space:nowrap}
+/* títulos display: pantallas de la app */
+.app-pantallas{display:flex;gap:32.35px}
+.app-pantallas img{width:302.433px;height:657.529px;object-fit:cover;transition:transform .35s var(--ease-out)}
+.app-pantallas img:hover{transform:translateY(-14px) rotate(-1.5deg)}
+
+/* ---------- KM 5 · COLORES ---------- */
+.marcas{background:var(--negro)}
+.marcas .foto-marca{position:relative;height:788px;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.marcas .foto-marca .ft{position:absolute;max-width:none;object-fit:cover;opacity:0;transition:opacity .3s var(--ease-in-out)}
+.marcas .foto-marca .ft.on{opacity:1}
+.marcas .foto-marca::after{content:"";position:absolute;inset:0;background:var(--negro-60)}
+.marcas .logos{position:relative;z-index:1;width:1249.318px;height:150.463px}
+.marcas .logos button{position:absolute;opacity:.5;transition:opacity .3s var(--ease-in-out),transform .2s var(--ease-out)}
+.marcas .logos button:hover{opacity:.8;transform:scale(1.04)}
+.marcas .logos button.on{opacity:1}
+.marcas .logos img{width:100%;height:100%}
+.paleta-marca{display:grid;grid-template-columns:repeat(3,1fr)}
+.color{position:relative;height:279px;padding:50px;display:flex;flex-direction:column;justify-content:space-between;background:var(--c);color:var(--negro);cursor:copy;transition:opacity .3s var(--ease-in-out)}
+.color.apagado{opacity:.15}
+.color h4,.crema-negro h4{font:600 30.6px/1.18 var(--sora);white-space:nowrap}
+.valores{display:flex;flex-direction:column;gap:10.275px;font:300 17.467px/1.18 var(--sora)}
+.valores div{display:flex;gap:20.207px;white-space:pre}
+.valores b{font-weight:600;width:54.8px;flex:none}
+.color .copiado,.crema-negro .copiado{position:absolute;right:50px;top:50px;font:600 16px/normal var(--reddit);opacity:0;transition:opacity .2s}
+.copiar.ok .copiado{opacity:1}
+.crema-negro{display:flex;height:480px}
+.crema-negro .base{width:924px;flex:none;padding:50px;position:relative;cursor:copy}
+.crema-negro .base .valores{margin-top:35.4px}
+.crema-negro .tonos{flex:1;display:flex}
+.crema-negro .tonos div{flex:1;padding:50px;font:700 18px/1.18 var(--reddit);transition:flex-grow .45s var(--ease-in-out)}
+.crema-negro .tonos div:hover{flex-grow:1.8}
+.filtros{display:flex;gap:165px;padding-left:120px;margin-top:-23px}
+.filtros figure{width:402px;display:flex;flex-direction:column;gap:34px}
+.filtros img{width:402px;height:778px;transition:transform .3s var(--ease-out),filter .3s}
+.filtros figure:hover img{transform:translateY(-10px);filter:drop-shadow(0 18px 24px rgba(0,0,0,.18))}
+.filtros figcaption{font:300 40px/1.18 var(--sora);color:var(--negro)}
+.usos{display:flex;flex-direction:column;gap:96px}
+.usos .fila-usos{display:flex;gap:20px;align-items:flex-start}
+.uso{width:405px;flex:none;display:flex;flex-direction:column;gap:24px}
+.uso .muestra{position:relative;height:480px;background:var(--c);overflow:hidden}
+.uso .muestra.chica{height:300px}
+.uso .muestra .ic{position:absolute;left:32px;top:32px;width:40px;height:40px;transition:transform .3s var(--ease-out)}
+.uso .muestra h5{position:absolute;left:32px;bottom:32px;width:341px;font:600 46px/1.05 var(--sora);color:var(--t)}
+.uso .muestra .vec{position:absolute;left:32px;top:72px;width:341px;height:196px}
+.uso p{font:400 20px/1.5 var(--reddit);color:var(--negro)}
+.uso:hover .ic{transform:scale(1.15) rotate(-8deg)}
+.uso.no:hover .ic{animation:negar .45s var(--ease-in-out)}
+
+/* ---------- KM 6 · ELEMENTOS GRÁFICOS ---------- */
+.km6-intro{position:relative;height:540px;padding:148px 120px}
+.km6-intro p{position:relative;width:1254px;font:300 52px/1.18 var(--sora);color:var(--negro)}
+.km6-intro .decos{position:absolute;inset:0;z-index:2}
+.marca-card{position:relative;height:500px;border-radius:12px;background:var(--c);overflow:hidden;display:flex;align-items:center;justify-content:center}
+.marca-card .deco-card{position:absolute;left:146.78px;top:57px;max-width:none}
+.marca-card .logo{position:relative}
+.piezas{height:127px;border-radius:12px;background:var(--c);display:flex;gap:63px;align-items:center;justify-content:center;margin-top:20px}
+.piezas.doble{height:281px;flex-direction:column;gap:12px}
+.piezas .fila-p{display:flex;gap:63px;align-items:center}
+.pieza{position:relative;flex:none;cursor:pointer}
+.pieza .mov{position:absolute;inset:0;will-change:transform}
+.pieza img{position:absolute;max-width:none}
+.signo{width:972px;height:546px;border-radius:12px;overflow:hidden}
+.signo img{width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease-out)}
+.signo:hover img{transform:scale(1.04)}
+.foto-banner{position:relative;height:479px;overflow:hidden;padding:148px 120px}
+.foto-banner > img{position:absolute;left:0;top:-15%;width:100%;height:130%;object-fit:cover;will-change:transform}
+.foto-banner::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,.2)}
+.foto-banner .fila{position:relative;z-index:1}
+.foto-banner .fila > .t,.foto-banner .grande{color:var(--crema)}
+.sec-foto{padding:148px 0;display:flex;flex-direction:column;gap:96px}
+.sec-foto .fila{padding:0 120px}
+.sec-foto .fila > .t{font:700 32px/1.25 var(--sora)}
+.carrusel{position:relative;height:786px;overflow:hidden}
+.carrusel .ventana{position:absolute;left:120px;top:0;width:1800px;height:786px;overflow:hidden}
+.carrusel .pista{position:absolute;left:0;top:0;display:flex;gap:20px;align-items:flex-start;will-change:transform}
+.carrusel figure{width:1255px;flex:none;display:flex;flex-direction:column;gap:20px}
+.carrusel .marco{width:1255px;height:706px;overflow:hidden;position:relative}
+.carrusel .marco img{position:absolute;left:-5%;top:0;width:110%;height:100%;object-fit:cover;will-change:transform}
+.carrusel figcaption{width:830px;font:400 20px/1.5 var(--reddit);color:var(--negro)}
+.carrusel .fl{position:absolute;top:305px;width:96px;height:96px;display:grid;place-items:center;z-index:2;transition:transform .2s var(--ease-out)}
+.carrusel .fl:hover{transform:scale(1.15)}
+.carrusel .fl.ant{left:12px} .carrusel .fl.sig{left:1812px}
+.carrusel .fl img{width:48px;height:auto}
+
+.indebidos{display:flex;gap:20px;padding:0 120px}
+.indebido{width:547px;display:flex;flex-direction:column;gap:45px}
+.indebido .caja{position:relative;height:364px;background:var(--negro-10)}
+.indebido .caja svg{position:absolute;inset:0;width:100%;height:100%}
+.indebido p{font:400 20px/normal var(--reddit);color:#000}
+
 /* ---------- Movimiento al scrollear (referencia: houseofyellow.nl) ----------
    Scroll suave con Lenis (1,2 s, expo-out) y entradas: suben 24 px y aparecen en 0,45 s,
    escalonadas de a 0,15 s, cuando el elemento llega al 90 % de la pantalla. Una sola vez. */
@@ -472,7 +665,7 @@ a.punto{cursor:pointer} span.punto{cursor:default}
       <p class="c txt">Reúne las reglas con las que escribimos cada texto de Spot: <b class="naranja">gramática, puntuación, terminología</b> y la forma de dirigirnos a cada persona. Su objetivo es que todo lo que leemos, lo escriba quien lo escriba y aparezca donde aparezca, se sienta <b class="naranja">parte de una misma experiencia</b>.</p></div>
     <div id="guia" style="display:flex;flex-direction:column;gap:96px"></div>
   </section>
-  <div class="pie"></div>
+  <footer class="pie-km" data-ant="km1|KM1|Acerca de Spot" data-sig="km3|KM3|Logotipos"></footer>
  </div>
 </article>
 
@@ -504,7 +697,8 @@ a.punto{cursor:pointer} span.punto{cursor:default}
     <div class="fila"><h2 class="t">Construcción</h2><p class="c txt">Los 3 logos comparten una misma altura de X que permite construirlos.</p></div>
     <div style="padding:120px 0;display:flex;justify-content:center"><img src="assets/km3/construccion-1.svg" alt="Los tres logos sobre la misma altura de x" style="width:1680px;max-width:none;margin:0 -215px"></div>
     <div class="fila"><span class="t" aria-hidden="true"></span><p class="c txt">Siendo esta altura 124px, el primer límite se define desplazando el trazado base 24px. Para crear el segundo contorno, son 9px más de desplazamiento.</p></div>
-    <div class="tira">
+    <div class="tira arrastrable" role="region" aria-label="Construcción de los contornos: arrastrá de costado para ver los tres logos">
+     <div class="pista-tira">
       <img src="assets/km3/construccion-2.svg" alt="Construcción de los contornos del logo">
       <div class="cota" style="left:397px;top:45px;width:887px;height:11px;background:var(--naranja);opacity:.6"></div>
       <div class="cota" style="left:397px;top:56px;width:887px;height:30px;background:var(--rosa);opacity:.6"></div>
@@ -515,6 +709,7 @@ a.punto{cursor:pointer} span.punto{cursor:default}
       <span class="lbl" style="left:301px;top:22px">9 px</span>
       <span class="lbl" style="left:289px;top:64px">24 px</span>
       <span class="lbl" style="left:282px;top:156px">124 px</span>
+     </div>
     </div>
   </section>
   <div class="divisor"></div>
@@ -531,11 +726,279 @@ a.punto{cursor:pointer} span.punto{cursor:default}
   <div class="divisor"></div>
   <section class="sec" id="km3-espacios">
     <div class="fila"><h2 class="t sticky">Espacios seguros</h2>
-      <div class="c"><div class="txt"><p>Para que se entienda el logotipo y mantenga su impacto visual no recomendamos achicarlo más allá del tamaño mínimo de 70 px de ancho o 25 mm en su defecto. Tampoco recomendamos usar los logos a color en tamaños demasiado pequeños por una cuestión de contraste y de legibilidad, siendo que puede “empastarse” el color tanto en tinta para impresión como en pantalla. Esto aplica a los logos de las 3 marcas.</p></div>
-        <div class="tamanos" data-tamanos></div></div></div>
+      <div class="c diagramas">
+        <p class="txt">Cuando se utilice la marca Spot con otros elementos gráficos, asegurate de que tenga un espaciado mínimo de “aire visual”. Este espaciado será horizontal y verticalmente la altura de X del logo, es decir, la palabra sin los trazados desplazados.</p>
+        <img src="assets/km3b/espacio-1.svg" alt="La altura de x del logo de Spot marcada como medida" style="width:479px">
+        <p class="txt">Esta medida servirá para evitar colocar elementos muy cerca del logo.</p>
+        <img src="assets/km3b/espacio-2.svg" alt="Espacio seguro alrededor del logo de Spot" style="width:436px">
+        <p class="txt">Esta regla aplica tanto para Spot como para las submarcas Post y Stop.</p>
+        <img src="assets/km3b/espacio-3.svg" alt="Espacio seguro alrededor del logo de post." style="width:436px">
+        <img src="assets/km3b/espacio-4.svg" alt="Espacio seguro alrededor del logo de Stop" style="width:399px">
+        <p class="txt">¡Ya podemos posicionarlas juntas para nuestro próximo evento! De todos modos, este es solo el espacio mínimo. Podés agrandarlo cuanto veas necesario.</p>
+        <img src="assets/km3b/espacio-5.svg" alt="Los tres logos juntos respetando el espacio mínimo" style="width:972px">
+      </div></div>
   </section>
   <div class="divisor"></div>
-  <div class="pie"></div>
+  <section class="sec" id="km3-ubicacion">
+    <div class="fila"><h2 class="t sticky">Ubicación</h2>
+      <div class="c diagramas">
+        <p class="txt">La misma medida de X utilizada para los espacios seguros será utilizada como espacio mínimo respecto a los márgenes a la hora de ubicar el logo en una composición, ya sea un afiche, un sitio web, una tarjeta o cualquier pieza de merchandising.</p>
+        <img src="assets/km3b/ubicacion-1.svg" alt="La medida de x como margen mínimo" style="width:436px">
+        <p class="txt">Esto permite ubicarlo tanto en esquinas como en el centro de un borde.</p>
+        <img src="assets/km3b/ubicacion-2.svg" alt="El logo ubicado en una esquina respetando el margen" style="width:537px">
+        <img src="assets/km3b/ubicacion-3.svg" alt="Posiciones posibles del logo en una pieza: esquinas y centro de los bordes" style="width:752px">
+      </div></div>
+  </section>
+  <div class="divisor"></div>
+  <section class="sec" id="km3-malas">
+    <div class="fila"><h2 class="t">Malas prácticas</h2>
+      <div class="c txt"><p>Para ilustrar este punto aquí sugerimos algunos ejemplos de usos no permitidos.</p><p>Básicamente, es importante que respetes la integridad del isologotipo en su conjunto: no lo desintegres, no lo deformes desproporcionadamente ni asignes colores en otra disposición a lo que en esta guía se aconseja.</p><p>Recordá que todas estas reglas aplican también a los logos de las marcas Post y Stop.</p></div></div>
+    <div class="malas" data-malas></div>
+  </section>
+  <footer class="pie-km" data-ant="km2|KM2|Manual de Voz y Tono" data-sig="km4|KM4|Tipografías"></footer>
+ </div>
+</article>
+
+
+<!-- ======================= KM 4 · TIPOGRAFÍAS ======================= -->
+<article id="km4" class="pantalla km" aria-label="KM 4: Uso de tipografías">
+ <div class="lienzo">
+  <section class="hero" style="--c:var(--violeta)">
+    <button class="btn-menu" data-abrir-menu aria-label="Abrir índice"><img src="assets/km2/21764.svg" alt=""></button>
+    <span class="km-tag">KM 4</span>
+    <h1 class="titulo-km" data-t="Uso de Tipografías" data-w="1300" style="left:120px">Uso de Tipografías</h1>
+    <nav class="links" style="top:724px"><button data-a="km4-sora">Sora ↗</button><button data-a="km4-reddit">Reddit Sans ↗</button><button data-a="km4-display">Títulos Display ↗</button></nav>
+    <button class="slide-down" style="top:969px" data-bajar aria-label="Bajar"><img src="assets/km2/95fa8.svg" alt=""></button>
+    <div class="decos" data-decos="km4"></div>
+  </section>
+
+  <section class="sec km4-intro">
+    <div class="fila">
+      <p class="t-grande">Elegimos <b>Sora</b> y <b>Reddit Sans</b> porque traducen en lo visual el tono de Spot: social, cercano y no estrictamente deportivo.</p>
+      <div class="col txt">
+        <p>Se ubican en<b class="naranja"> un punto medio</b> entre las tipografías de las marcas deportivas de alta competencia, más rígidas y orientadas al rendimiento, y la identidad cálida de los clubes sociales de barrio, donde lo importante es encontrarse.</p>
+        <p style="margin-top:0">Además, buscamos que <b class="naranja">la tipografía aporte flexibilidad</b>. Sus distintos pesos y su carácter amigable permiten que el sistema se adapte a la variedad de submarcas, como post. y Stop, sin perder la coherencia de la marca madre.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="tipos">
+    <!-- Sora -->
+    <div class="bloque" id="km4-sora" style="--c:var(--naranja);left:0;top:0;width:950px;height:789px"></div>
+    <p class="etq" style="left:122px;top:112px">Sora</p>
+    <p class="aa" data-aa="sora" style="left:244px;top:154px">Aa</p>
+    <div class="frase-caja" style="--c:var(--azul);left:950px;top:0">
+      <p data-frase>Nosotros te damos los spots, vos te enfocás en el recorrido.</p>
+      <div class="alinear" data-alinear></div>
+    </div>
+    <div class="pesos" style="left:950px;top:370px"><div style="height:134px"><span data-peso="300" data-para="sora" style="font-weight:300">Light</span><span data-peso="600" data-para="sora" style="font-weight:600">Semi Bold</span></div></div>
+    <div class="expl" style="left:1395px;top:370px"><p>Generalmente, los textos van a estar alineados a la izquierda. No se recomienda justificarlos ya que suele generar espaciados irregulares. Para instancias más creativas, poéticas o de mayor impacto, puede alinearse al centro o a la derecha.</p></div>
+    <!-- Dos familias -->
+    <div style="left:950px;top:789px;width:970px;height:1133px;background:var(--negro);border:1px solid var(--crema-60)"></div>
+    <div class="ui-ventana arrastrable" data-carrusel-ui aria-label="Ejemplos de la app: arrastrá para ver más" role="region">
+      <div class="ui-pista">
+        <img src="assets/km4/ui-grupo.png" alt="Tarjeta de grupo en la app" style="width:378px;height:566.5px">
+        <div class="ui-equipo" aria-label="Pantalla Crear equipo de la app">
+          <div class="ui-cab"><img src="assets/km4/ui-atras.svg" alt="" style="width:32px;margin:4px"><span class="titulo">Crear equipo</span><span class="ib"><img src="assets/km4/ui-icono.svg" alt="" style="width:24px"></span></div>
+          <div class="ui-paso"><p>Paso 1 ·  Agregá una foto de perfil, nombre y descripción</p>
+            <div class="ui-avatar"><img src="assets/km4/ui-camara.svg" alt="" style="width:34px"><span class="mas"><img src="assets/km4/ui-mas.svg" alt="" style="width:16px"></span></div>
+            <div class="ui-nombre">Team Peaks<img src="assets/km4/ui-cursor.svg" alt="" style="height:34.5px;width:1px"></div></div>
+          <div class="ui-desc"><h6>Descripción</h6><div>Somos un grupo de running que se formó hace un par de años, conocidos del gimnasio Peak Fit de Barracas. Solemos hacer un recorrido alrededor de Puerto Madero. ¡Te esperamos!</div><small>Ayuda a que otros sepan si el grupo es para ellos.</small></div>
+          <div class="ui-sigue"><span class="ui-boton" style="width:100%">Continuar<img src="assets/km4/ui-flecha.svg" alt="" style="width:20px"></span><span class="ui-progreso"><i class="on"></i><i></i><i></i><i></i></span></div>
+        </div>
+        <div class="ui-hoja" aria-label="Confirmación de solicitud en la app">
+          <span class="tirador"></span>
+          <img src="assets/km4/ui-elipse.png" alt="" style="left:138px;top:-51px;width:126px;height:126px">
+          <span style="left:231.7px;top:-17px;width:55px;height:55px;rotate:12deg;border:4px solid #fff;border-radius:66px;overflow:hidden;background:rgba(37,37,37,.4);box-shadow:0 4px 10px rgba(0,0,0,.18)"><img src="assets/km4/ui-carita.png" alt="" style="width:100%;height:100%;object-fit:cover;opacity:.9"></span>
+          <h5>¡Solicitud enviada!</h5>
+          <p class="txt-c">Le avisamos a Abasto Run que querés sumarte. Cuando alguien del grupo te acepte, te llegará una notificación.</p>
+          <span class="mientras"><img src="assets/km4/ui-party.svg" alt="" style="width:24px">Tu próxima salida podría ser el martes 07:00 h</span>
+          <span class="ui-boton">Volver al Inicio<img src="assets/km4/ui-casa.svg" alt="" style="width:20px"></span>
+          <u>Cancelar solicitud</u>
+        </div>
+      </div>
+      <div class="ui-puntos" data-puntos></div>
+    </div>
+    <div class="familias" style="left:951px;top:789px">
+      <p class="t">Son dos familias parecidas a propósito. </p>
+      <div class="dos"><p>Queríamos que se notara la diferencia entre títulos y texto de lectura para <b>ordenar las jerarquías</b>, pero sin que el sistema se sintiera partido en dos.</p>
+        <p>Las dos comparten <b>formas redondeadas</b>, aperturas amplias y un trazo limpio, así que conviven como parte de una misma voz.</p></div>
+      <div class="nombres"><span>Sora</span><span>Reddit Sans</span></div>
+    </div>
+    <span class="lh" style="top:1599px"></span><span class="lh" style="top:1414px"></span><span class="lh" style="top:1653px"></span><span class="lh" style="top:1729px"></span>
+    <span class="lv" style="left:1448px"></span><span class="lv" style="left:999px;top:1415px"></span><span class="lv" style="left:1557px"></span><span class="lv" style="left:1118px"></span>
+    <p class="xan" style="left:991px;top:1477px">xan</p>
+    <p class="xan reddit" style="left:1440px;top:1465px">xan</p>
+    <!-- Reddit Sans -->
+    <div class="bloque" id="km4-reddit" style="--c:var(--rosa);left:0;top:1922px;width:950px;height:788px"></div>
+    <p class="etq" style="left:122px;top:2040px;font:400 52px/1.18 var(--reddit)">Reddit Sans</p>
+    <p class="aa reddit" data-aa="reddit" style="left:244px;top:2076px">Aa</p>
+    <div class="frase-caja" style="--c:var(--amarillo);left:950px;top:1922px">
+      <p class="reddit" data-frase style="width:660px">Nosotros te damos los spots, vos te enfocás en el recorrido.</p>
+      <div class="alinear" data-alinear></div>
+    </div>
+    <div class="pesos" style="left:950px;top:2292px;height:418px"><div style="height:210px;font-family:var(--reddit)"><span data-peso="400" data-para="reddit" style="font-weight:400">Regular</span><span data-peso="600" data-para="reddit" style="font-weight:600">Semi bold</span><span data-peso="700" data-para="reddit" style="font-weight:700">Bold</span></div></div>
+    <div class="expl" style="left:1395px;top:2292px;height:418px"><p>La variable Regular es la de uso principal para textos de lectura. La <b>Bold</b> aparece cuando hay que destacar una palabra o frase. Despúes la <b style="font-weight:600">semibold</b> es usada para botones o subtitulos.</p></div>
+  </section>
+
+  <div class="divisor"></div>
+  <section class="sec" id="km4-display">
+    <div class="fila"><h2 class="t sticky">Títulos Display</h2>
+      <div class="c" style="display:flex;flex-direction:column;gap:64px;align-items:center">
+        <p class="txt">A la hora de diseñar composiciones, si necesitás un título que destaque por sobre todo lo demás, a Sora se le puede aplicar un outline-stroke bien grueso con puntas redondeadas para darle una apariencia de sticker. También se le puede aplicar una leve sombra paralela si el diseñador lo ve necesario para despegar el título del fondo. Debajo mostramos algunos ejemplos de su uso en la app. De todos modos, estas son pantallas destacadas donde solo se usa una o dos veces. No recomendamos un uso excesivo de este recurso.</p>
+        <div class="app-pantallas"><img src="assets/km4/app-inicio.png" alt="Pantalla de inicio de la app"><img src="assets/km4/app-registrar.png" alt="Pantalla de registro en proceso"><img src="assets/km4/app-equipo.png" alt="Pantalla de equipo creado con éxito"></div>
+      </div></div>
+  </section>
+  <div class="divisor"></div>
+  <section class="sec km4-intro" style="height:592px;display:flex;align-items:center">
+    <div class="fila">
+      <p class="t-grande">Pueden variar los colores y elementos, pero la tipografía siempre se mantiene a lo largo de la marca.</p>
+      <div class="col txt"><p>La tipografía funciona como una base estable que ordena y sostiene esa diversidad visual sin competir con ella.</p>
+        <p style="margin-top:0">Mantuvimos ese contraste moderado porque Spot cambia mucho en otros elementos entre marcas (como pueden ser los colores, fotografías o elementos gráficos). La tipografía unifica todo el sistema.</p></div>
+    </div>
+  </section>
+  <footer class="pie-km" data-ant="km3|KM3|Logotipos" data-sig="km5|KM5|Colores"></footer>
+ </div>
+</article>
+
+<!-- ======================= KM 5 · COLORES ======================= -->
+<article id="km5" class="pantalla km" aria-label="KM 5: Colores de la marca">
+ <div class="lienzo">
+  <section class="hero" style="--c:var(--azul)">
+    <button class="btn-menu" data-abrir-menu aria-label="Abrir índice"><img src="assets/km2/21764.svg" alt=""></button>
+    <span class="km-tag">KM 5</span>
+    <h1 class="titulo-km" data-t="Colores de la marca" data-w="1300" style="left:120px">Colores de la marca</h1>
+    <nav class="links" style="top:724px"><button data-a="km5-paleta">Paleta por marca ↗</button><button data-a="km5-usos">Tipografía y color ↗</button><button data-a="km5-vectores">Vectores y color ↗</button></nav>
+    <button class="slide-down" style="top:969px" data-bajar aria-label="Bajar"><img src="assets/km2/95fa8.svg" alt=""></button>
+    <div class="decos" data-decos="km5"></div>
+  </section>
+
+  <section class="sec km4-intro" style="height:562px">
+    <div class="fila">
+      <p class="t-grande">Es muy importante entender como dialogan los colores, ya que cada submarca es marcada por una paleta especifica</p>
+      <div class="col txt"><p>En Spot puede haber fondos oscuros tranquilamente, solo que no tan seguido. En Post y Stop casi siempre todo es con fondo negro.</p>
+        <p style="margin-top:0">Los colores nunca se van a tocar entre sí en las decoraciones. Siempre tiene que haber blanco o negro de por medio.<br>Puede haber tipografía a color siempre y cuando el fondo sea blanco o negro.</p></div>
+    </div>
+  </section>
+
+  <section class="marcas" id="km5-paleta" data-marcas>
+    <div class="foto-marca">
+      <img class="ft on" data-foto="spot" src="assets/km5/foto-spot.jpg" alt="" style="left:0;top:-1358px;width:1921px;height:2549px">
+      <img class="ft" data-foto="post" src="assets/km5/foto-post.jpg" alt="" style="left:0;top:-277px;width:1920px;height:1081px">
+      <img class="ft" data-foto="stop" src="assets/km5/foto-stop.jpg" alt="" style="left:-4px;top:-185px;width:1929px;height:1077px">
+      <div class="logos">
+        <button class="on" data-marca="spot" aria-pressed="true" style="left:0;top:19.4px;width:327.622px;height:108.252px"><img src="assets/km5/logo-spot.svg" alt="SPOT!"></button>
+        <button data-marca="post" aria-pressed="false" style="left:482.66px;top:.4px;width:327.383px;height:150.463px"><img src="assets/km5/logo-post.svg" alt="post."></button>
+        <button data-marca="stop" aria-pressed="false" style="left:965.66px;top:6.4px;width:284.423px;height:130.719px"><img src="assets/km5/logo-stop.svg" alt="STOP"></button>
+      </div>
+    </div>
+    <div class="paleta-marca" data-paleta></div>
+  </section>
+  <div class="crema-negro" style="background:var(--negro)">
+    <div class="base copiar" data-hex="#EDE8DB" style="background:var(--crema);color:var(--negro)"><h4>Crema Spot</h4>
+      <div class="valores"><div><b>CMYK</b>0  2   8   7</div><div><b>RGB</b>237, 232, 219</div><div><b>HEX</b><span class="hex">#EDE8DB</span></div></div><span class="copiado">¡Copiado!</span></div>
+    <div class="tonos"><div style="background:rgba(237,232,219,.8)">80%</div><div style="background:rgba(237,232,219,.6)">60%</div><div style="background:rgba(237,232,219,.4)">40%</div><div style="background:rgba(237,232,219,.2)">20%</div><div style="background:rgba(237,232,219,.1)">10%</div></div>
+  </div>
+  <div class="crema-negro" style="background:var(--crema)">
+    <div class="base copiar" data-hex="#252525" style="background:var(--negro);color:var(--crema)"><h4>Negro Spot</h4>
+      <div class="valores"><div><b>CMYK</b>0  0   0   85</div><div><b>RGB</b>37, 37, 37</div><div><b>HEX</b><span class="hex">#252525</span></div></div><span class="copiado">¡Copiado!</span></div>
+    <div class="tonos" style="color:var(--crema)"><div style="background:rgba(37,37,37,.8)">80%</div><div style="background:rgba(37,37,37,.6)">60%</div><div style="background:rgba(37,37,37,.4)">40%</div><div style="background:rgba(37,37,37,.2)">20%</div><div style="background:rgba(37,37,37,.1)">10%</div></div>
+  </div>
+  <section class="sec km4-intro" style="height:562px">
+    <div class="fila">
+      <p class="t-grande">Los variantes de porcentajes del <b>negro</b> y el <b>crema</b> son pilares de nuestra jerarquía de colores</p>
+      <div class="col txt"><p>Las variables en porcentaje de  100 / 80 / 60 / 40 / 20 /10 de los colores blanco y negro son para este tipo de instancias, para que no esté todo tan cargado.</p>
+        <p style="margin-top:0">Se puede dar este ejemplo de un buen y un mal uso.<br>El 1 destaca mejor instancias más importantes y jerarquiza mejor a lo largo de pantallas extensas. El 2 puede ser molesto para la vista.</p></div>
+    </div>
+  </section>
+  <div class="filtros">
+    <figure><img src="assets/km5/filtros-1.png" alt="Hoja de filtros de la app con los porcentajes de negro bien jerarquizados"><figcaption>1</figcaption></figure>
+    <figure><img src="assets/km5/filtros-2.png" alt="Hoja de filtros de la app con todo el negro al mismo nivel"><figcaption>2</figcaption></figure>
+  </div>
+  <section class="sec usos" id="km5-usos" style="margin-top:34px">
+    <div class="fila"><h2 class="t">Tipografía y color</h2>
+      <div class="c txt"><p>La tipografía puede ir en color, pero solo cuando el fondo es negro o crema. Sobre un fondo de color, el texto va siempre en negro o crema: en Spot los colores nunca se tocan entre sí, siempre hay uno neutro de por medio.</p><p>Estas combinaciones valen para títulos, destacados y textos de lectura, y aplican también a post. y Stop.</p></div></div>
+    <div class="fila-usos" data-usos="tipo-si"></div>
+    <div class="fila-usos" data-usos="tipo-no"></div>
+  </section>
+  <div class="divisor"></div>
+  <section class="sec usos" id="km5-vectores">
+    <div class="fila"><h2 class="t">Vectores y color</h2>
+      <div class="c txt"><p>Los puntos, estrellas y punteados siguen la misma lógica que la tipografía: dos colores nunca se tocan. Sobre negro pueden ir en cualquier color de la paleta, rellenos o en línea. Sobre un fondo de color, el vector lleva siempre borde crema para separarse.</p><p>Las versiones de línea fina y punteadas necesitan contraste, por eso se reservan para fondos negros.</p></div></div>
+    <div class="fila-usos" data-usos="vec-si"></div>
+    <div class="fila-usos" data-usos="vec-no"></div>
+  </section>
+  <div class="divisor"></div>
+  <div class="pie" style="height:148px"></div>
+  <footer class="pie-km" data-ant="km4|KM4|Tipografías" data-sig="km6|KM6|Elementos gráficos"></footer>
+ </div>
+</article>
+
+<!-- ======================= KM 6 · ELEMENTOS GRÁFICOS ======================= -->
+<article id="km6" class="pantalla km" aria-label="KM 6: Elementos gráficos">
+ <div class="lienzo">
+  <section class="hero" style="--c:var(--amarillo)">
+    <button class="btn-menu" data-abrir-menu aria-label="Abrir índice"><img src="assets/km2/21764.svg" alt=""></button>
+    <span class="km-tag">KM 6</span>
+    <h1 class="titulo-km" data-t="Elementos gráficos" data-w="1300" style="left:120px">Elementos gráficos</h1>
+    <p class="bajada" style="top:612px">Potenciando la marca</p>
+    <nav class="links" style="top:724px"><button data-a="km6-puntos">Puntos y estrellas ↗</button><button data-a="km6-signos">Signos Display ↗</button><button data-a="km6-fotos">Fotografías ↗</button></nav>
+    <button class="slide-down" style="top:969px" data-bajar aria-label="Bajar"><img src="assets/km2/95fa8.svg" alt=""></button>
+    <div class="decos" data-decos="km6"></div>
+  </section>
+
+  <section class="km6-intro">
+    <p>La marca de Spot y sus sumbarcas utilizan múltiples elementos gráficos, tanto puntos decorativos como líneas, imágenes y hasta ilustraciones. ¿Cómo las ordenamos?</p>
+    <div class="decos" data-decos="km6intro"></div>
+  </section>
+  <div class="divisor"></div>
+  <section class="sec" id="km6-puntos">
+    <div class="fila"><h2 class="t sticky">Puntos y estrellas</h2>
+      <div class="c" style="display:flex;flex-direction:column;gap:64px">
+        <p class="grande">Los puntos son el elemento más usado en la gráfica de la marca. ¡Pueden decorar lo que sea!</p>
+        <p class="txt">En el caso de la marca general Spot, se usan puntos con los colores de la marca y un borde blanco, a veces con sombra paralela aplicada. Utilizamos 3 formas principales para Spot: El punto, la estrella de 7 puntas y la de 12 puntas. Las tres usan el borde blanco y a veces sombra paralela.</p>
+        <div><div class="marca-card" style="--c:var(--amarillo)"><img class="logo" src="assets/km6/spot-logo.svg" alt="SPOT!" style="width:350px;height:116px"></div>
+          <div class="piezas" style="--c:var(--amarillo)" data-piezas="spot"></div></div>
+        <p class="txt">En el caso de Post, utiliza el punto en variantes diferentes: relleno de verde y el borde por separado, tanto en blanco como verde. Este sistema está pensado para usarse sobre fondo oscuro. Además, las estrellas de 7 y 12 puntas continúan pero con las puntas internas y externas redondeadas.</p>
+        <div><div class="marca-card" style="--c:var(--negro)"><img class="logo" src="assets/km6/post-logo.svg" alt="post." style="width:350px;height:161px"><img class="deco-card" src="assets/km6/post-deco.svg" alt="" style="width:682.707px;top:54.6px"></div>
+          <div class="piezas" style="--c:var(--negro)" data-piezas="post"></div></div>
+        <p class="txt">En el caso de Post, utiliza el punto en variantes diferentes: relleno de verde y el borde por separado, tanto en blanco como verde. Este sistema está pensado para usarse sobre fondo oscuro. Además, las estrellas de 7 y 12 puntas continúan pero con las puntas internas y externas redondeadas.</p>
+        <div><div class="marca-card" style="--c:var(--negro)"><img class="logo" src="assets/km6/stop-logo.svg" alt="STOP" style="width:348px;height:160px"><img class="deco-card" src="assets/km6/stop-deco.svg" alt="" style="width:679px"></div>
+          <div class="piezas doble" style="--c:var(--negro)"><div class="fila-p" data-piezas="stop1"></div><div class="fila-p" data-piezas="stop2"></div></div></div>
+      </div></div>
+  </section>
+  <div class="divisor"></div>
+  <section class="sec" id="km6-signos">
+    <div class="fila"><h2 class="t sticky">Signos Display</h2>
+      <div class="c" style="display:flex;flex-direction:column;gap:64px">
+        <p class="grande">Las estrellas de Post y Stop pueden usarse en tamaños mucho más grandes para generar dinamismo en nuevas composiciones.</p>
+        <div class="signo"><img src="assets/km6/signo-1.jpg" alt="Pieza de Stop con estrellas en gran tamaño"></div>
+        <div class="signo"><img src="assets/km6/signo-2.jpg" alt="Otra pieza de Stop con estrellas en gran tamaño"></div>
+      </div></div>
+  </section>
+  <section class="foto-banner" id="km6-fotos" data-paralaje>
+    <img src="assets/km6/banner-a.jpg" alt="">
+    <div class="fila"><h2 class="t">Fotografías</h2><p class="c grande">Las fotografías ayudan a transmitir nuestros valores de forma más rápida y genuina.</p></div>
+  </section>
+  <section class="sec-foto">
+    <div class="fila"><h3 class="t">Fotografías Spot</h3><p class="c txt">Como fotografías representativas de la marca, priorizamos los conceptos de sociabilidad y motivación. Gente haciendo deporte en grupo, preparándose para salir, divirtiéndose o simplemente charlando. Sugerimos el uso de iluminación natural y entornos exteriores. Para fotografías más generales en contextos más específicos, basta con una buena calidad e iluminación.</p></div>
+    <div class="carrusel" data-carrusel="spot"></div>
+  </section>
+  <div class="divisor"></div>
+  <section class="sec-foto">
+    <div class="fila"><h3 class="t">Fotografías Post</h3><p class="c txt">Como fotografías representativas de la marca, priorizamos los conceptos de sociabilidad y motivación. Gente haciendo deporte en grupo, preparándose para salir, divirtiéndose o simplemente charlando. Sugerimos el uso de iluminación natural y entornos exteriores. Para fotografías más generales en contextos más específicos, basta con una buena calidad e iluminación.</p></div>
+    <div class="carrusel" data-carrusel="post"></div>
+  </section>
+  <div class="divisor"></div>
+  <section class="sec-foto">
+    <div class="fila"><h3 class="t">Fotografías Stop</h3><p class="c txt">Como Stop es un evento nocturno, pueden usarse fotografías nocturnas obviando la regla de iluminación natural. Puede usarse luz de flash o iluminación de los colores del evento. Seguimos priorizando la diversión, socialización y el trabajo en equipo.</p></div>
+    <div class="carrusel" data-carrusel="stop"></div>
+  </section>
+  <section class="sec-foto" style="padding-top:0">
+    <div class="fila"><h3 class="t">Usos indebidos de fotografías</h3><div class="c txt"><p>Para ilustrar este punto aquí sugerimos algunos ejemplos de usos no permitidos.</p><p>Básicamente, es importante que respetes la integridad del isologotipo en su conjunto: no lo desintegres, no lo deformes desproporcionadamente ni asignes colores en otra disposición a lo que en esta guía se aconseja.</p><p>Recordá que todas estas reglas aplican también a los logos de las marcas Post y Stop.</p></div></div>
+    <div class="indebidos" data-indebidos></div>
+  </section>
+  <footer class="pie-km" data-ant="km5|KM5|Colores" data-sig="|KM7|Design System"></footer>
  </div>
 </article>
 
@@ -565,7 +1028,7 @@ const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [..
 /* Puntos del mapa (Slide 2): posición, color y destino */
 const PUNTOS_MAPA = [
   [1009,407,'amarillo','km1','Acerca de Spot'],[1171,407,'naranja','km2','Manual de voz y tono'],[1275,474,'rosa','km3','Logotipos'],
-  [1264,610,'violeta',null,'Tipografías'],[1081,598,'azul',null,'Colores'],[908,577,'amarillo',null,'Elementos gráficos'],
+  [1264,610,'violeta','km4','Tipografías'],[1081,598,'azul','km5','Colores'],[908,577,'amarillo','km6','Elementos gráficos'],
   [753,619,'naranja',null,''],[597,577,'rosa',null,''],[597,461,'violeta',null,''],[721,407,'azul',null,'']
 ];
 
@@ -579,7 +1042,10 @@ const HERO = (p, f) => [
 const K = ['f0cb2.svg','0752e.svg','f22ae.svg','4478f.svg','36e87.svg','4cde2.svg','cfa66.svg','6b150.svg','319f2.svg','59d40.svg','b0cce.png'];
 const DECOS = {
   km1: HERO('km1/', ['punto3.svg','punto4.svg','punto5.svg','punto6.svg','punto7.svg','punto8.svg','punto9.svg','star8.svg','star10.svg','star9-insignia.svg','insignia-img.png']),
-  km2: HERO('km2/', K), km3: HERO('km2/', K),
+  km2: HERO('km2/', K), km3: HERO('km2/', K), km4: HERO('km2/', K), km5: HERO('km2/', K), km6: HERO('km2/', K),
+  // KM 6: puntos y estrellas sueltos sobre el texto de introducción (relativos a la sección, y − 1080)
+  km6intro: [[1,332,230,113],[2,544,160,113],[3,948,235,113],[4,327.4,109.5,112.3],[5,801.4,314.5,112.3],[6,195,298,71],[7,697.8,219,46.4],[8,696.8,330,46.4],
+    [9,219.8,190,46.4],[10,959,148,71],[11,1151,292,71],[12,123,132,71],[13,791,131,71],[14,1088.8,133,46.4],[15,439,347,71],[16,588.8,304,46.4]].map(([n, x, y, w]) => ['km6/intro-' + n + '.svg', x, y, w, w, [0,0,0,0]]),
   post: [ // relativos a la zona de submarcas (y − 3838)
     ['km1/spot2.svg',1438,251,41.988,41.988,[-11.62,-20.91,-30.2,-20.91],28.36,30.989],['km1/spot5.svg',576.42,121.19,14.921,14.921,[-24.13,-43.43,-62.73,-43.43]],
     ['km1/spot5.svg',1607,339,14.921,14.921,[-24.13,-43.43,-62.73,-43.43]],['km1/spot5.svg',1085.93,436.82,14.921,14.921,[-24.13,-43.43,-62.73,-43.43]],
@@ -599,7 +1065,7 @@ const DECOS = {
     ['km1/stop-cruz.svg',1291,2361,88,88,[0,0,0,0]]
   ]
 };
-const CARITAS = { km1:[1527,414,'naranja'], km2:[1629,414,'amarillo'], km3:[1642,351,'amarillo'] };
+const CARITAS = { km1:[1527,414,'naranja'], km2:[1629,414,'amarillo'], km3:[1642,351,'amarillo'], km4:[1629,414,'amarillo'], km5:[1629,414,'amarillo'], km6:[1629,414,'amarillo'] };
 
 function armarDecos(){
   $$('[data-decos]').forEach(cont => {
@@ -750,14 +1216,14 @@ function armarKM3(){
 const INDICE = [
   ['Acerca de Spot','km1',[['Brand Spirit','km1-bs'],['Post','km1-sub'],['Stop','km1-sub']]],
   ['Manual de voz y tono','km2',[['La esencia y los pilares','km2-pilares'],['Personalidad','km2-persona'],['La voz','km2-voz'],['El tono y su perfil','km2-tono'],['Somos… pero no…','km2-somos'],['Guía de estilo','km2-guia']]],
-  ['Logotipos','km3',[['Construcción','km3-construccion'],['Variantes de color','km3-variantes'],['Espacios seguros','km3-espacios'],['Usos correctos e incorrectos',null],['Tamaños','km3-tamanos'],['Ejemplos de uso',null]]],
-  ['Tipografías',null,[]],
-  ['Colores',null,[['Usos correctos e incorrectos',null]]],
-  ['Elementos gráficos',null,[['Misceláneas',null],['Fotografías',null],['Espacios seguros',null]]]
+  ['Logotipos','km3',[['Construcción','km3-construccion'],['Variantes de color','km3-variantes'],['Espacios seguros','km3-espacios'],['Usos correctos e incorrectos','km3-malas'],['Tamaños','km3-tamanos'],['Ejemplos de uso',null]]],
+  ['Tipografías','km4',[]],
+  ['Colores','km5',[['Usos correctos e incorrectos','km5-usos']]],
+  ['Elementos gráficos','km6',[['Misceláneas','km6-puntos'],['Fotografías','km6-fotos'],['Espacios seguros',null]]]
 ];
 function armarMenu(){
   $('#indice').innerHTML = INDICE.map(([t, km, subs], n) => `<li><button class="num" data-toggle aria-label="Abrir o cerrar ${t}">${n + 1}</button><div class="cuerpo">
-      <button class="enc" data-toggle aria-expanded="true">${t}${subs.length ? '<img src="assets/home/menu-flecha.svg" alt="" style="rotate:180deg">' : ''}</button>
+      <button class="enc" ${subs.length || !km ? 'data-toggle aria-expanded="true"' : `data-ir="${km}"`}>${t}${subs.length ? '<img src="assets/home/menu-flecha.svg" alt="" style="rotate:180deg">' : ''}</button>
       ${subs.length ? `<div class="subs">${subs.map(([s, a]) => `<button ${a ? `data-ir="${km}" data-ancla="${a}"` : 'disabled'}>${s}</button>`).join('')}</div>` : ''}</div></li>`).join('');
   // "Smart animate" 0,35 s ease-in-out al abrir/cerrar
   $$('#indice [data-toggle]').forEach(b => b.addEventListener('click', () => {
@@ -819,7 +1285,7 @@ function salirDePortada(){
    NAVEGACIÓN (prototipo): KM entra desde la derecha 0,3 s · Volver al Inicio sale a la izquierda 0,3 s
    ===================================================================== */
 let actual = 'inicio';
-const KMS = ['km1','km2','km3'];
+const KMS = ['km1','km2','km3','km4','km5','km6'];
 function irA(destino, ancla){
   const de = actual;
   if (destino === de) { if (ancla) scrollA(destino, ancla); return; }
@@ -878,7 +1344,7 @@ function iniciarStickers(){
     cuadro = requestAnimationFrame(() => { velX = e.clientX - prevX; velY = e.clientY - prevY; prevX = e.clientX; prevY = e.clientY; cuadro = null; });
   });
   const z = () => parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--z')) || 1;
-  $$('.deco, .carita').forEach(el => {
+  $$('.deco, .carita, .pieza').forEach(el => {
     const pieza = el.querySelector('.mov') || el.firstElementChild; if (!pieza) return;
     el.classList.add('jugable');
     el.addEventListener('mouseenter', e => {
@@ -899,7 +1365,7 @@ function iniciarStickers(){
    ENTRADAS AL SCROLLEAR: suben 24 px + aparecen, 0,45 s, escalonadas 0,15 s
    ===================================================================== */
 const ENTRAN = ['.sec .fila > *', '.pilar', '.rasgo', '.card-enf', '.card-tono', '.eje', '.somos-fila', '.enfoque > h4', '.momentos > h4',
-  '.banda p', '.foto-co p', '.tira', '.variantes', '.tamanos > div', '.submarcas-zona > img.abs', '.submarcas-zona > p', '.foto-rot', '.boton', '.parada', '.volver-arriba']
+  '.banda p', '.foto-co p', '.tira', '.variantes', '.tamanos > div', '.submarcas-zona > img.abs', '.submarcas-zona > p', '.foto-rot', '.boton', '.parada', '.volver-arriba', '.diagramas > *', '.mala', '.app-pantallas', '.marca-card', '.piezas', '.signo', '.carrusel', '.uso', '.filtros figure', '.indebido', '.km6-intro > p']
   .join(',');
 function iniciarEntradas(){
   if (REDUCIR || !('IntersectionObserver' in window)) return;
@@ -917,6 +1383,272 @@ function iniciarEntradas(){
     $$(ENTRAN, km).forEach(el => { if (el.closest('.hero')) return; el.classList.add('rv'); io.observe(el); });
   });
 }
+
+/* =====================================================================
+   KM 4 · 5 · 6 y lo nuevo de KM 3 (Figma actualizado)
+   ===================================================================== */
+const zoomActual = () => parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--z')) || 1;
+
+/* ---------- Footer · Paradas ---------- */
+function armarPies(){
+  $$('.pie-km').forEach(f => {
+    const parada = (dato, lado) => {
+      const [km, chip, nombre] = dato.split('|');
+      const tag = km ? `a class="parada" href="#${km}"` : 'span class="parada"', fin = km ? 'a' : 'span';
+      const flecha = `<span class="circ"><img src="assets/km1/flecha-${lado === 'ant' ? 'izq' : 'der'}-32.svg" alt=""></span>`;
+      const info = lado === 'ant'
+        ? `<span class="info" style="border-right:2px solid var(--crema);padding-right:20px"><span class="chip">${chip}</span><span class="tx" style="text-align:right;align-items:flex-end"><small>Parada anterior</small><span>${nombre}</span></span></span>`
+        : `<span class="info" style="border-left:2px solid var(--crema);padding-left:20px"><span class="tx"><small>Siguiente parada</small><span>${nombre}</span></span><span class="chip">${chip}</span></span>`;
+      return `<${tag}>${lado === 'ant' ? flecha + info : info + flecha}</${fin}>`;
+    };
+    f.innerHTML = `<div class="paradas">${parada(f.dataset.ant, 'ant')}${parada(f.dataset.sig, 'sig')}</div>
+      <button class="volver-arriba" data-arriba><img src="assets/km1/slide-down-crema.svg" alt="">Volver arriba</button>
+      <p class="copy">© Copyright 2026 Spot. Todos los derechos reservados</p>`;
+  });
+}
+
+/* ---------- KM 3 · malas prácticas ---------- */
+const MALAS = [['No lo deformes ni lo estires','No lo rotes','No lo desintegres en otras partes que no sean las indicadas','No utilices el logotipo sin su reborde. Recordá que puede haber excepciones si se trata de una animación o elemento interactivo, como es el inicio de este sitio.'],
+  ['No cambies la inclinación, escala o posición de los elementos que componen el isotipo','No apliques outline a ninguno de los elementos. La única excepción es para explicar la construcción del logo, como en este mismo sitio.','No utilices colores que no pertenezcan a ninguna marca de Spot.','Y si pertenecen a la marca, solo está permitida la versión explicada más arriba, según el fondo.'],
+  ['No apliques efectos al logo (sombra paralela, resplandor, etc.)','No lo coloques sobre fondos muy complejos sin antes oscurecer la imagen (puede aplicarse una capa en negro en baja opacidad para areglarlo).']];
+function armarMalas(){
+  let n = 0;
+  const cont = $('[data-malas]'); if (!cont) return;
+  cont.innerHTML = MALAS.map(fila => `<div class="fila-malas">${fila.map(t => { n++;
+    return `<div class="mala"><img src="assets/km3b/mala-${n}.${n === 10 ? 'jpg' : 'png'}" alt="Ejemplo de mal uso: ${t}"><p>${t}</p></div>`; }).join('')}</div>`).join('');
+}
+
+/* ---------- KM 4 · alineación y pesos ---------- */
+const ALINEAR = [['center','centro'],['justify','justificado'],['left','izq'],['right','der']];
+function iniciarKM4(){
+  $$('[data-alinear]').forEach(caja => {
+    const frase = $('[data-frase]', caja.parentElement);
+    caja.innerHTML = ALINEAR.map(([v, f]) => `<button data-v="${v}" class="${v === 'left' ? 'on' : ''}" aria-label="Alinear ${f}"><img src="assets/km4/alinear-${f}.svg" alt=""></button>`).join('');
+    caja.addEventListener('click', e => {
+      const b = e.target.closest('button'); if (!b || b.classList.contains('on')) return;
+      $$('button', caja).forEach(x => x.classList.toggle('on', x === b));
+      frase.style.opacity = 0;                                      // cambio suave: se apaga, se acomoda y vuelve
+      setTimeout(() => { frase.style.textAlign = b.dataset.v; frase.style.opacity = 1; }, 150);
+    });
+  });
+  // pasar el mouse por un peso (Light, Semi Bold…) cambia el "Aa" grande a ese peso
+  $$('[data-peso]').forEach(s => {
+    const aa = $(`[data-aa="${s.dataset.para}"]`);
+    s.addEventListener('mouseenter', () => aa.style.fontWeight = s.dataset.peso);
+    s.addEventListener('mouseleave', () => aa.style.fontWeight = '');
+  });
+  $$('[data-aa]').forEach(aa => {
+    aa.addEventListener('mouseenter', () => aa.style.fontWeight = 600);
+    aa.addEventListener('mouseleave', () => aa.style.fontWeight = '');
+  });
+}
+
+/* ---------- KM 5 · paleta por marca (componente "Colores por marca") ---------- */
+const COLORES = [['Amarillo Sprint','amarillo','0  19   74   1','253, 206, 66','#FDCE42'],['Naranja Warm-up','naranja','0  54   75   0','255, 118, 64','#FF7640'],
+  ['Rosa After','rosa','0  36   9   3','247, 158, 225','#F79EE1'],['Violeta Stretch','violeta','25  40   0   10','171, 138, 229','#AB8AE5'],
+  ['Azul Pace','azul','52  37   0   0','122, 161, 255','#7AA1FF'],['Verde Relax','verde','60  0   44   28','73, 184, 103','#49B867']];
+const PALETA_DE = { spot:['amarillo','naranja','rosa','violeta','azul'], post:['violeta','verde'], stop:['rosa','azul'] };
+const USOS = {
+  'tipo-si': [['negro','crema','Crema<br>sobre Negro','Crema sobre negro: la combinación base para cualquier texto sobre fondo oscuro.'],['negro','amarillo','Amarillo<br>sobre Negro','Sobre negro, el texto puede ir en cualquier color de la paleta para destacar una palabra o un dato.'],
+    ['rosa','negro','Negro<br>sobre Rosa','Sobre un fondo de color, el texto va en negro.'],['rosa','crema','Crema<br>sobre Rosa','También puede ir en crema, el otro neutro de la marca.']],
+  'tipo-no': [['naranja','amarillo','Amarillo<br>sobre Naranja','No uses texto de color sobre un fondo de color.'],['naranja','azul','Azul<br>sobre Naranja','Aunque los colores contrasten, se tocan entre sí y rompen la regla del neutro de por medio.'],
+    ['rosa','amarillo','Amarillo<br>sobre Rosa','Tampoco entre tonos cercanos: el texto pierde lectura y se mezcla con el fondo.'],['rosa','violeta','Violeta<br>sobre Rosa','Si el fondo es de color, cambiá el texto a negro o crema.']],
+  'vec-si': [['negro','vec-si-1','Sobre negro, los vectores pueden ir rellenos de color con borde crema, o solo en línea crema.'],['negro','vec-si-2','Las versiones de línea y punteadas van sobre negro, en crema o en un color de la paleta.'],
+    ['negro','vec-si-3','Un mismo color puede usarse en relleno o en contorno, siempre que el fondo sea negro.'],['amarillo','vec-si-4','Sobre un fondo de color, el vector lleva borde crema: es el neutro que separa los dos colores.']],
+  'vec-no': [['amarillo','vec-no-1','Sin el borde crema, el vector de color toca directamente el fondo de color.'],['naranja','vec-no-2','No uses contornos de color sobre un fondo de color: la línea se mezcla con el fondo.'],
+    ['rosa','vec-no-3','Los punteados y las líneas finas se pierden sobre color. Usalos solo sobre negro.'],['rosa','vec-no-4','No uses un vector del mismo color que el fondo: aunque tenga borde, deja de leerse.']]
+};
+function copiarHex(el, hex){
+  if (navigator.clipboard) navigator.clipboard.writeText(hex).catch(() => {});
+  el.classList.add('ok'); clearTimeout(el._t); el._t = setTimeout(() => el.classList.remove('ok'), 1200);
+}
+function iniciarKM5(){
+  const pal = $('[data-paleta]'); if (!pal) return;
+  pal.innerHTML = COLORES.map(([n, c, cmyk, rgb, hex]) => `<div class="color copiar" role="button" tabindex="0" data-c="${c}" data-hex="${hex}" aria-label="Copiar ${hex}" style="--c:var(--${c})">
+      <h4>${n}</h4><div class="valores"><div><b style="width:auto">CMYK</b>${cmyk}</div><div><b>RGB</b>${rgb}</div><div><b>HEX</b>${hex}</div></div><span class="copiado">¡Copiado!</span></div>`).join('');
+  const zona = $('[data-marcas]');
+  const elegir = m => {
+    $$('.logos button', zona).forEach(b => { b.classList.toggle('on', b.dataset.marca === m); b.setAttribute('aria-pressed', b.dataset.marca === m); });
+    $$('.ft', zona).forEach(f => f.classList.toggle('on', f.dataset.foto === m));
+    $$('.color', zona).forEach(s => s.classList.toggle('apagado', !PALETA_DE[m].includes(s.dataset.c)));
+  };
+  $$('.logos button', zona).forEach(b => b.addEventListener('click', () => elegir(b.dataset.marca)));
+  elegir('spot');
+  // un click en cualquier color copia su HEX
+  $$('.copiar').forEach(el => {
+    const ir = () => copiarHex(el, el.dataset.hex);
+    el.addEventListener('click', ir);
+    el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); ir(); } });
+  });
+  $$('[data-usos]').forEach(fila => {
+    const tipo = fila.dataset.usos, no = tipo.endsWith('no'), vec = tipo.startsWith('vec');
+    fila.innerHTML = USOS[tipo].map(u => {
+      const icono = `<img class="ic" src="assets/km5/icono-${no ? 'no' : 'si'}.svg" alt="${no ? 'No permitido' : 'Permitido'}">`;
+      const muestra = vec ? `<div class="muestra chica" style="--c:var(--${u[0]})">${icono}<img class="vec" src="assets/km5/${u[1]}.svg" alt=""></div><p>${u[2]}</p>`
+        : `<div class="muestra" style="--c:var(--${u[0]});--t:var(--${u[1]})">${icono}<h5>${u[2]}</h5></div><p>${u[3]}</p>`;
+      return `<div class="uso${no ? ' no' : ''}">${muestra}</div>`;
+    }).join('');
+  });
+}
+
+/* ---------- KM 6 · piezas (misceláneas de cada marca, jugables) ---------- */
+// [archivo, ancho de la caja, alto de la caja, ancho de la imagen, alto, x, y]
+const PIEZAS = {
+  spot: [['spot-punto',53,53,61,61,-4,0],['spot-estrella7',92,91,94,95,-1,-1.5],['spot-estrella12',83,82,97,96,-7,-3.5]],
+  post: [['post-p1',53,53,53,53,0,0],['post-p2',53,53,53,53,0,0],['post-p3',53,53,53,53,0,0],['post-p4',95.698,95.698,95.698,95.698,0,0],['post-p5',80.568,80.568,80.568,80.568,0,0]],
+  stop1: [['stop-fila1',672,91,672,91,0,0]],
+  stop2: [['stop-estrella',92,91,86,87,3,2],['stop-punteado1',65,65,65,65,0,0],['stop-elipse',61,61,66.8,66.8,-2.9,-2.9],['stop-punto',83,83,83.8,83.8,-.4,-.4],['stop-punteado2',85,85,85,85,0,0]]
+};
+const FOTOS = {
+  spot: [['spot-1','Priorizamos el uso de fotografías donde el deporte y la socialización sean visibles.'],['spot-2','¡Mejor si predominan colores de la marca!'],
+    ['spot-3','Podemos usar fotografías de grupos reales. No necesitan estar haciendo deporte, pueden simplemente estar descansando, charlando o preparándose para salir.'],['spot-4','Pueden usarse fotos con desenfoque de movimiento para mayor dinamismo.']],
+  post: [['post-1','Pueden usarse fotografías de la experiencia por dentro.'],['post-2','Y también pueden usarse por fuera. No olvidemos la calidad y buena iluminación.'],
+    ['post-3','No necesariamente debe mostrarse la experiencia como algo principal; puede también verse la gente disfrutando el día cerca de ella o haciendo la fila para entrar.']],
+  stop: [['stop-1','Continuamos mostrando la socialización','43%'],['stop-2','No es necesario solo mostrar el deporte: ¡Es bueno celebrar los logros!'],['stop-3','También pueden usarse fotos de momentos dentro del evento.'],
+    ['stop-4','Puede mostrarse el consumo de alcohol de forma celebratoria, pero su uso debe ser moderado. No recomendamos mostrar un consumo excesivo o excesiva cantidad de estas fotos, como puede ser varias seguidas en un carrusel.','55%']]
+};
+const INDEBIDOS = ['No uses fotos de baja calidad o pixeladas','No apliques filtros que alteren los colores','Evitá fotos posadas de estudio o sin contexto'];
+function armarKM6(){
+  $$('[data-piezas]').forEach(f => {
+    f.innerHTML = PIEZAS[f.dataset.piezas].map(([a, bw, bh, w, h, x, y]) => `<div class="pieza" style="width:${bw}px;height:${bh}px"><div class="mov"><img src="assets/km6/${a}.svg" alt="" style="left:${x}px;top:${y}px;width:${w}px;height:${h}px"></div></div>`).join('');
+  });
+  $$('[data-carrusel]').forEach(c => {
+    c.innerHTML = `<div class="ventana arrastrable"><div class="pista">${FOTOS[c.dataset.carrusel].map(([f, t, pos]) =>
+      `<figure><div class="marco"><img src="assets/km6/${f}.jpg" alt="" style="${pos ? `object-position:50% ${pos}` : ''}" loading="lazy"></div><figcaption>${t}</figcaption></figure>`).join('')}</div></div>
+      <button class="fl ant" aria-label="Foto anterior"><img src="assets/km6/caret-izq.svg" alt=""></button>
+      <button class="fl sig" aria-label="Foto siguiente"><img src="assets/km6/caret-der.svg" alt=""></button>`;
+  });
+  const cruz = '<svg viewBox="0 0 547 364" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0L547 364M547 0L0 364" stroke="#252525" stroke-opacity=".3" stroke-width="1" vector-effect="non-scaling-stroke"/></svg>';
+  const ind = $('[data-indebidos]'); if (ind) ind.innerHTML = INDEBIDOS.map(t => `<div class="indebido"><div class="caja">${cruz}</div><p>${t}</p></div>`).join('');
+}
+
+/* =====================================================================
+   DESLIZAR DE COSTADO: arrastre con el mouse/dedo, trackpad horizontal e inercia.
+   Lo que en el Figma se sale del cuadro (la tira de construcción, los carruseles)
+   se puede mover sin cambiar cómo se ve quieto.
+   ===================================================================== */
+function deslizable(zona, { mover, soltar, rueda }){
+  let x0 = 0, vel = 0, tAnt = 0, xAnt = 0, activo = false, movio = false;
+  zona.addEventListener('pointerdown', e => {
+    if (e.button !== 0 || e.target.closest('button')) return;
+    activo = true; movio = false; x0 = xAnt = e.clientX; tAnt = performance.now(); vel = 0;
+    try { zona.setPointerCapture(e.pointerId); } catch (_) {} zona.classList.add('agarrado');
+    mover(0, true);
+  });
+  zona.addEventListener('pointermove', e => {
+    if (!activo) return;
+    const ahora = performance.now(), z = zoomActual();
+    vel = (e.clientX - xAnt) / Math.max(1, ahora - tAnt) / z; xAnt = e.clientX; tAnt = ahora;
+    if (Math.abs(e.clientX - x0) > 4) movio = true;
+    mover((e.clientX - x0) / z, false);
+  });
+  const fin = () => { if (!activo) return; activo = false; zona.classList.remove('agarrado'); soltar(vel, movio); };
+  zona.addEventListener('pointerup', fin); zona.addEventListener('pointercancel', fin);
+  zona.addEventListener('click', e => { if (movio) { e.preventDefault(); e.stopPropagation(); } }, true);
+  // trackpad / rueda horizontal (shift + rueda también)
+  zona.addEventListener('wheel', e => {
+    const dx = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : (e.shiftKey ? e.deltaY : 0);
+    if (!dx) return;
+    e.preventDefault(); e.stopPropagation(); rueda(dx / zoomActual());
+  }, { passive: false });
+}
+
+/* Tira de construcción (KM 3): libre, con inercia y rebote suave en los bordes */
+function iniciarTira(){
+  const tira = $('.tira'); if (!tira) return;
+  const pista = $('.pista-tira', tira), max = 3852 - 1680;
+  let x = 0, base = 0, anim = null;
+  const pintar = v => { x = v; pista.style.transform = `translateX(${v}px)`; };
+  const elastico = v => v > 0 ? v * .3 : v < -max ? -max + (v + max) * .3 : v;
+  const lanzar = v0 => {
+    cancelAnimationFrame(anim); let v = v0 * 16;                        // px por cuadro
+    const paso = () => {
+      v *= .94; let n = x + v;
+      if (n > 0 || n < -max) { const borde = n > 0 ? 0 : -max; n = x + (borde - x) * .18; v *= .5; if (Math.abs(n - borde) < .5) { pintar(borde); return; } }
+      pintar(n); if (Math.abs(v) > .2 || x > 0 || x < -max) anim = requestAnimationFrame(paso);
+    };
+    anim = requestAnimationFrame(paso);
+  };
+  deslizable(tira, {
+    mover: (d, inicio) => { if (inicio) { cancelAnimationFrame(anim); base = x; return; } pintar(elastico(base + d)); },
+    soltar: v => lanzar(v),
+    rueda: dx => { cancelAnimationFrame(anim); pintar(Math.max(-max, Math.min(0, x - dx))); }
+  });
+  // pista visual la primera vez que aparece: se corre un poco y vuelve, para mostrar que se mueve
+  if (!REDUCIR && 'IntersectionObserver' in window) {
+    const io = new IntersectionObserver(es => es.forEach(e => {
+      if (!e.isIntersecting) return; io.disconnect();
+      setTimeout(() => pista.animate([{ transform: 'translateX(0)' }, { transform: 'translateX(-220px)', offset: .45 }, { transform: 'translateX(0)' }],
+        { duration: 1600, easing: 'cubic-bezier(.45,0,.2,1)' }), 500);
+    }), { root: tira.closest('article.km'), threshold: .6 });
+    io.observe(tira);
+  }
+}
+
+/* Carruseles de fotos (KM 6): flechas como el prototipo (Smart animate 0,5 s, la última vuelve a la primera),
+   más arrastre y trackpad. Cada foto se corre un poco dentro de su marco (paralaje). */
+function iniciarCarruseles(){
+  $$('[data-carrusel]').forEach(c => {
+    const pista = $('.pista', c), figs = $$('figure', pista), PASO = 1275, n = figs.length;
+    let i = 0, x = 0, base = 0, bloqueo = 0;
+    const EASE = 'cubic-bezier(.22,1,.36,1)';
+    const pintar = (v, ms) => {
+      x = v; const t = ms ? `transform ${ms}ms ${EASE}` : 'none';
+      pista.style.transition = t; pista.style.transform = `translateX(${v}px)`;
+      figs.forEach((f, k) => { const img = $('img', f), rel = (k * PASO + v) / PASO;
+        img.style.transition = t; img.style.transform = `translateX(${Math.max(-1, Math.min(1, rel)) * -50}px)`; });
+    };
+    const ir = (k, vuelta = true) => { i = vuelta ? (k + n) % n : Math.max(0, Math.min(n - 1, k)); pintar(-i * PASO, REDUCIR ? 0 : 500); };
+    $('.fl.sig', c).addEventListener('click', () => ir(i + 1));
+    $('.fl.ant', c).addEventListener('click', () => ir(i - 1));
+    deslizable($('.ventana', c), {
+      mover: (d, inicio) => { if (inicio) { base = x; return; }
+        let v = base + d; if (v > 0) v *= .3; if (v < -(n - 1) * PASO) v = -(n - 1) * PASO + (v + (n - 1) * PASO) * .3; pintar(v, 0); },
+      soltar: (vel, movio) => { if (!movio) return ir(i, false);
+        let k = Math.round(-x / PASO); if (Math.abs(vel) > .35) k = Math.round(-base / PASO) + (vel < 0 ? 1 : -1); ir(k, false); },
+      rueda: dx => { const ahora = performance.now(); if (ahora < bloqueo || Math.abs(dx) < 12) return; bloqueo = ahora + 650; ir(i + (dx > 0 ? 1 : -1), false); }
+    });
+    c.tabIndex = -1;
+    pintar(0, 0);
+  });
+}
+
+/* Carrusel de pantallas de la app (KM 4): ventana de 951 px, una pantalla centrada por vez, con puntos */
+function iniciarCarruselUI(){
+  const v = $('[data-carrusel-ui]'); if (!v) return;
+  const pista = $('.ui-pista', v), items = [...pista.children], puntos = $('[data-puntos]', v);
+  puntos.innerHTML = items.map((_, k) => `<button aria-label="Ver ejemplo ${k + 1}"></button>`).join('');
+  // posición de cada pantalla dentro de la pista (padding 263 + anchos + separación 315)
+  const anchos = items.map(el => parseFloat(el.style.width) || parseFloat(getComputedStyle(el).width));
+  const centros = anchos.map((w, k) => 263 + anchos.slice(0, k).reduce((a, b) => a + b + 315, 0) + w / 2);
+  const destino = k => 475.5 - centros[k] + (k === 0 ? centros[0] - 475.5 : 0);   // la primera queda como en el Figma
+  let i = 0, x = 0, base = 0, bloqueo = 0;
+  const pintar = (val, ms) => { x = val; pista.style.transition = ms ? `transform ${ms}ms cubic-bezier(.22,1,.36,1)` : 'none'; pista.style.transform = `translateX(${val}px)`; };
+  const ir = k => { i = Math.max(0, Math.min(items.length - 1, k)); pintar(destino(i), REDUCIR ? 0 : 600);
+    $$('button', puntos).forEach((b, j) => b.classList.toggle('on', j === i)); };
+  puntos.addEventListener('click', e => { const b = e.target.closest('button'); if (b) ir([...puntos.children].indexOf(b)); });
+  deslizable(v, {
+    mover: (d, inicio) => { if (inicio) { base = x; return; } pintar(base + d, 0); },
+    soltar: (vel, movio) => { if (!movio) return ir(i);
+      const d = x - base; ir(Math.abs(vel) > .35 || Math.abs(d) > 120 ? i + (d < 0 ? 1 : -1) : i); },
+    rueda: dx => { const ahora = performance.now(); if (ahora < bloqueo || Math.abs(dx) < 12) return; bloqueo = ahora + 650; ir(i + (dx > 0 ? 1 : -1)); }
+  });
+  ir(0);
+}
+
+/* Banner de fotografías (KM 6): la foto se mueve más lento que la página */
+function iniciarParalaje(){
+  if (REDUCIR) return;
+  $$('[data-paralaje]').forEach(b => {
+    const img = $('img', b), km = b.closest('article.km');
+    const act = () => { const r = b.getBoundingClientRect(), h = innerHeight;
+      if (r.bottom < 0 || r.top > h) return;
+      const p = (r.top + r.height / 2 - h / 2) / h;                    // -1 … 1
+      img.style.transform = `translateY(${p * -12}%)`; };
+    km.addEventListener('scroll', act, { passive: true }); act();
+  });
+}
+
 function leerHash(){
   const h = location.hash.replace('#', '');
   cerrarMenu(true);
@@ -944,14 +1676,14 @@ function escalar(){
    ARRANQUE
    ===================================================================== */
 escalar(); addEventListener('resize', escalar);
-armarMapa(); armarTitulos(); armarDecos(); armarKM2(); armarKM3(); armarMenu();
+armarMapa(); armarTitulos(); armarKM6(); armarDecos(); armarKM2(); armarKM3(); armarMalas(); armarPies(); armarMenu(); iniciarKM4(); iniciarKM5();
 $$('[data-abrir-menu]').forEach(b => b.addEventListener('click', abrirMenu));
 $$('[data-cerrar-menu]').forEach(b => b.addEventListener('click', () => cerrarMenu()));
 addEventListener('keydown', e => { if (e.key === 'Escape') cerrarMenu(); });
 $$('[data-a]').forEach(b => b.addEventListener('click', () => scrollA(b.closest('article.km').id, b.dataset.a)));
 $$('[data-bajar]').forEach(b => b.addEventListener('click', () => { const k = b.closest('article.km'); irA_Y(k, k.scrollTop + innerHeight * .9); }));
 $$('[data-arriba]').forEach(b => b.addEventListener('click', () => irArriba(b.closest('article.km'))));
-iniciarScrollSuave(); iniciarEntradas(); iniciarStickers();
+iniciarScrollSuave(); iniciarEntradas(); iniciarStickers(); iniciarTira(); iniciarCarruseles(); iniciarCarruselUI(); iniciarParalaje();
 addEventListener('hashchange', leerHash);
 
 if (location.hash && location.hash !== '#inicio') { portada.remove(); portadaFuera = true; leerHash(); }
