@@ -348,3 +348,11 @@ El 10/11/2026 se borró todo lo construido y se empezó de nuevo. Respaldo de la
   - Al llegar, el carrusel queda fijo en el medio de la pantalla y las fotos pasan de costado mientras scrolleás: 700 px de scroll por foto.
   - Cada foto se queda quieta un momento antes de dar paso a la siguiente. Cuando termina, la página sigue normal, y volviendo hacia arriba se recorre al revés.
   - Las flechas del prototipo siguen andando: llevan el scroll hasta la foto anterior o la siguiente, y de la última vuelven a la primera. El paralaje de la foto dentro del marco se mantiene.
+- 11/11/2026 · Mateo · **KM 6 · "Elementos sobre fotografías"** (Figma `483:9862`, después de Usos indebidos y sin divisor, como en el Figma). Se hizo lo que pide el comentario de Franco en el Figma.
+  - Son 2 fotos de 1400 × 788 (`assets/km6/sobre-foto-1.jpg` y `sobre-foto-2.jpg`). Al pasar el mouse, cada una cambia a su versión de la derecha del Figma.
+  - Foto 1: capa negra al 30 %, la frase "En compañía es mejor." y el logo SPOT!.
+  - Foto 2: degradado negro de 0 a 80 % (hasta el 87 % de la altura), el título "Encontrá tu team" en naranja y su texto.
+  - Además aparece el cartel del selector de color de Figma (`panel-color.png` y `panel-degradado.png`, las capturas que puso el equipo al lado de cada foto), con un rebote.
+  - Con teclado también funciona (al hacer foco), y en pantallas táctiles se alterna tocando.
+  - Typos del Figma copiados tal cual: "usar colocar", "princincipiantes".
+- 11/11/2026 · Mateo · **KM 6 · "Efecto puntos" pasó a llamarse "Insignias"** (Figma `448:2449`), con el texto nuevo. Typo del Figma copiado tal cual: "caritaa." y "utilizamos" en minúscula. La grilla de caritas repetida ya no está en el Figma.

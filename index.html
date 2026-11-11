@@ -607,6 +607,25 @@ html.cursor-propio.cursor-visible :is(#cursor,#cursor-mini){opacity:1}
 .pastilla-link img{width:24px;height:24px}
 .siluetas-grande{width:975px;height:462px;border-radius:12px;object-fit:cover}
 
+/* KM 6 · Elementos sobre fotografías (Figma 483:9862): al pasar el mouse, cada foto cambia a su versión de la derecha
+   del Figma (capa negra 30 % o degradado + texto/logo) y aparece el cartel del selector de color de Figma */
+.sobre-fotos{width:1400px;margin-left:260px;display:flex;flex-direction:column;gap:96px}
+.sobre-foto{position:relative;width:1400px;height:788px;outline:none}
+.sobre-foto .marco{position:absolute;inset:0;border-radius:12px;overflow:hidden}
+.sobre-foto .marco > img{position:absolute;left:0;width:1400px;max-width:none;object-fit:cover}
+.sobre-foto .capa{position:absolute;inset:0;opacity:0;transition:opacity .45s var(--ease-in-out)}
+.sobre-foto .encima > *{position:absolute;margin:0;opacity:0;transform:translateY(14px);transition:opacity .4s var(--ease-out),transform .5s cubic-bezier(.22,1,.36,1)}
+.sobre-foto .frase{font:400 48px/1.5 var(--sora);color:var(--crema);white-space:nowrap}
+.sobre-foto .titulo{font:700 32px/1.25 var(--sora);color:var(--naranja)}
+.sobre-foto .bajada-foto{font:400 23px/1.5 var(--reddit);color:var(--crema);width:972px}
+.sobre-foto .cartel{position:absolute;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,.28);opacity:0;transform:translateX(-14px) scale(.9);transform-origin:left center;
+  transition:opacity .3s var(--ease-out),transform .45s cubic-bezier(.34,1.56,.64,1);pointer-events:none;z-index:2}
+.sobre-foto .cartel img{position:absolute;max-width:none}
+.sobre-foto:is(:hover,:focus-visible,.on) .capa{opacity:1}
+.sobre-foto:is(:hover,:focus-visible,.on) .encima > *{opacity:1;transform:none}
+.sobre-foto:is(:hover,:focus-visible,.on) .encima > :nth-child(2){transition-delay:.08s}
+.sobre-foto:is(:hover,:focus-visible,.on) .cartel{opacity:1;transform:none;transition-delay:.15s}
+
 /* ---------- Movimiento al scrollear (referencia: houseofyellow.nl) ----------
    Scroll suave con Lenis (1,2 s, expo-out) y entradas: suben 24 px y aparecen en 0,45 s,
    escalonadas de a 0,15 s, cuando el elemento llega al 90 % de la pantalla. Una sola vez. */
@@ -1124,6 +1143,23 @@ html.cursor-propio.cursor-visible :is(#cursor,#cursor-mini){opacity:1}
     <div class="fila"><h3 class="t">Usos indebidos de fotografías</h3><div class="c txt"><p>Para ilustrar este punto aquí sugerimos algunos ejemplos de usos no permitidos.</p><p>Estas reglas aplican a las tres marcas. En resumen, no apliques edición exagerada a las imágenes, y priorizá siempre una buena calidad de iluminación y tratamiento.</p></div></div>
     <div class="indebidos" data-indebidos></div>
   </section>
+  <section class="sec-foto" id="km6-sobre-fotos">
+    <div class="fila"><h3 class="t">Elementos sobre fotografías</h3><p class="c txt">Si se van a colocar logotipos, tipografía u otros elementos sobre fotografías, es importante diferenciarlos bien del fondo. Recomendamos usar colocar sobre la imagen una capa de negro #000000 a un 20 - 30%. También puede usarse un degradado para textos que solo aparezcan en un área de la imagen.</p></div>
+    <div class="sobre-fotos">
+      <figure class="sobre-foto" tabindex="0" aria-label="Foto con capa negra al 30 %, la frase “En compañía es mejor.” y el logo de SPOT!">
+        <div class="marco"><img src="assets/km6/sobre-foto-1.jpg" alt="Corredores bajo un puente" style="top:0;height:788px" loading="lazy">
+          <div class="capa" style="background:rgba(0,0,0,.3)"></div>
+          <div class="encima"><p class="frase" style="left:429px;top:358px">En compañía es mejor.</p><img src="assets/km6/spot-logo.svg" alt="SPOT!" style="left:616px;top:665px;width:168px;height:56px"></div></div>
+        <div class="cartel" style="left:1309px;top:484px;width:277px;height:91px;border-radius:10px"><img src="assets/km6/panel-color.png" alt="" style="left:0;top:-3.9px;width:277px;height:94.9px"></div>
+      </figure>
+      <figure class="sobre-foto" tabindex="0" aria-label="Foto con degradado negro de 0 a 80 % y un título con texto encima">
+        <div class="marco"><img src="assets/km6/sobre-foto-2.jpg" alt="Ciclistas charlando junto a sus bicis" style="top:-60.2px;height:1399.6px" loading="lazy">
+          <div class="capa" style="background:linear-gradient(to bottom,rgba(0,0,0,0) 0%,rgba(0,0,0,.8) 87%)"></div>
+          <div class="encima"><h4 class="titulo" style="left:76px;top:565px">Encontrá tu team</h4><p class="bajada-foto" style="left:76px;top:614px">Buscá grupos que en base a tus necesidades: Si querés que estén cerca de tu zona, ser princincipiantes como vos, que hagan la actividad en tus horarios o incluso las actividades pre y post que realizan. Todo lo podés filtrar desde la app.</p></div></div>
+        <div class="cartel" style="left:1349px;top:257px;width:277px;height:251px;border-radius:16px"><img src="assets/km6/panel-degradado.png" alt="" style="left:-18.4px;top:-106.9px;width:316.6px;height:379.2px"></div>
+      </figure>
+    </div>
+  </section>
   <div class="divisor"></div>
   <section class="sec" id="km6-ilustraciones">
     <div class="fila"><h2 class="t">Ilustraciones</h2><p class="c txt">Utilizamos dos tipos de elementos gráficos por fuera de los puntos y fotografías: Se tratan de ilustraciones de caritas y un tratamiento de imagen especial, fromado por puntos.</p></div>
@@ -1134,8 +1170,8 @@ html.cursor-propio.cursor-visible :is(#cursor,#cursor-mini){opacity:1}
     <div class="caritas-set" data-caritas></div>
   </section>
   <div class="divisor"></div>
-  <section class="sec-foto" id="km6-efecto">
-    <div class="fila"><h3 class="t">Efecto puntos</h3><p class="c txt">Similar a las caritas, en la app de Spot utilizamos pequeños íconos compuestos de puntos para los logros.</p></div>
+  <section class="sec-foto" id="km6-insignias">
+    <div class="fila"><h3 class="t">Insignias</h3><p class="c txt">Las insignias toman un estilo visual diferenciado de los iconos, y de las caritaa. utilizamos puntos haciendo referencia al nombre de la marca “spot”, además queremos simbolizar como el recorrido hasta llegar a conseguir una de estas insignias requiere pasar por varios puntos</p></div>
     <div class="insignia-card"><img src="assets/km6/insignia-card.svg" alt="Tarjeta de logro de la app: insignia de consistencia, 1 por semana" width="255" height="344"></div>
   </section>
   <div class="divisor"></div>
@@ -1727,7 +1763,7 @@ function iniciarStickers(){
    ENTRADAS AL SCROLLEAR: suben 24 px + aparecen, 0,45 s, escalonadas 0,15 s
    ===================================================================== */
 const ENTRAN = ['.sec .fila > *', '.pilar', '.rasgo', '.card-enf', '.card-tono', '.somos-fila', '.enfoque > h4', '.momentos > h4',
-  '.banda p', '.foto-co p', '.tira', '.variantes', '.tamanos > div', '.submarcas-zona > img.abs', '.submarcas-zona > p', '.foto-rot', '.boton', '.parada', '.volver-arriba', '.diagramas > *', '.mala', '.app-pantallas', '.marca-card', '.piezas', '.signo', '.carrusel', '.uso', '.filtros figure', '.indebido', '.km6-intro > p', '.carita-ej', '.insignia-card', '.siluetas-fila', '.siluetas-grande']
+  '.banda p', '.foto-co p', '.tira', '.variantes', '.tamanos > div', '.submarcas-zona > img.abs', '.submarcas-zona > p', '.foto-rot', '.boton', '.parada', '.volver-arriba', '.diagramas > *', '.mala', '.app-pantallas', '.marca-card', '.piezas', '.signo', '.carrusel', '.uso', '.filtros figure', '.indebido', '.km6-intro > p', '.carita-ej', '.insignia-card', '.sobre-foto', '.siluetas-fila', '.siluetas-grande']
   .join(',');
 function iniciarEntradas(){
   if (REDUCIR || !('IntersectionObserver' in window)) return;
@@ -2363,6 +2399,11 @@ function iniciarPerfil(){
   }, { threshold: [0, .35] }).observe(perfil);
 }
 
+/* KM 6 · Elementos sobre fotografías: con mouse es hover (CSS); en pantallas táctiles se alterna tocando */
+function iniciarSobreFotos(){
+  $$('.sobre-foto').forEach(f => f.addEventListener('click', () => { if (!matchMedia('(hover:hover)').matches) f.classList.toggle('on'); }));
+}
+
 function iniciarBotonMenu(){
   const lum = c => { const m = c.match(/[\d.]+/g); if (!m) return null; const [r, g, b, a = 1] = m.map(Number); if (a < .5) return null; return (.299 * r + .587 * g + .114 * b) / 255; };
   const fondoDebajo = btn => {
@@ -2534,7 +2575,7 @@ addEventListener('keydown', e => { if (e.key === 'Escape') cerrarMenu(); });
 $$('[data-a]').forEach(b => b.addEventListener('click', () => scrollA(b.closest('article.km').id, b.dataset.a)));
 $$('[data-bajar]').forEach(b => b.addEventListener('click', () => { const k = b.closest('article.km'); irA_Y(k, k.scrollTop + innerHeight * .9); }));
 $$('[data-arriba]').forEach(b => b.addEventListener('click', () => irArriba(b.closest('article.km'))));
-iniciarScrollSuave(); iniciarEntradas(); iniciarStickers(); iniciarCursor(); iniciarFavicon(); iniciarBotonMenu(); iniciarRastro(); iniciarPerfil(); iniciarTira(); iniciarCarruseles(); iniciarCarruselUI(); iniciarParalaje(); iniciarViajeKM6(); iniciarMazo(); iniciarMecer(); iniciarRasgos(); iniciarFlotar();
+iniciarScrollSuave(); iniciarEntradas(); iniciarStickers(); iniciarCursor(); iniciarFavicon(); iniciarBotonMenu(); iniciarRastro(); iniciarPerfil(); iniciarSobreFotos(); iniciarTira(); iniciarCarruseles(); iniciarCarruselUI(); iniciarParalaje(); iniciarViajeKM6(); iniciarMazo(); iniciarMecer(); iniciarRasgos(); iniciarFlotar();
 addEventListener('hashchange', leerHash);
 
 if (location.hash && location.hash !== '#inicio') { portada.remove(); portadaFuera = true; leerHash(); }
