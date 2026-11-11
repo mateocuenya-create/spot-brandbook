@@ -72,10 +72,10 @@ a.punto{cursor:pointer} span.punto{cursor:default}
   transition:background-color .3s var(--ease-out)}
 .km .btn-menu.chico.sobre-oscuro{--bm-fg:var(--crema)}
 /* KM 6 · Signos Display: al pasar el mouse al lado de cada pieza se van dejando misceláneas de esa marca */
-#km6-signos{position:relative}
-#km6-signos .fila{position:relative;z-index:1}
-#km6-signos .rastro{position:absolute;inset:0;pointer-events:none;z-index:0}
-#km6-signos .rastro img{position:absolute;left:0;top:0;will-change:transform}
+#km6-signos,#km6-puntos{position:relative}
+#km6-signos > .fila,#km6-puntos > .fila{position:relative;z-index:1}
+.rastro{position:absolute;inset:0;pointer-events:none;z-index:0}
+.rastro img{position:absolute;left:0;top:0;will-change:transform}
 #inicio .logo-centro{position:absolute;left:897px;top:83px;width:127px;height:42px}
 #inicio .submarcas{position:absolute;left:1537px;top:78px;width:263px;display:flex;justify-content:space-between;align-items:center}
 
@@ -1079,13 +1079,13 @@ html.cursor-propio.cursor-visible :is(#cursor,#cursor-mini){opacity:1}
       <div class="c" style="display:flex;flex-direction:column;gap:64px">
         <p class="grande">Los puntos son el elemento más usado en la gráfica de la marca. ¡Pueden decorar lo que sea!</p>
         <p class="txt">En el caso de la marca general Spot, se usan puntos con los colores de la marca y un borde blanco, a veces con sombra paralela aplicada. Utilizamos 3 formas principales para Spot: El punto, la estrella de 7 puntas y la de 12 puntas. Las tres usan el borde blanco y a veces sombra paralela.</p>
-        <div><div class="marca-card" style="--c:var(--amarillo)"><img class="logo" src="assets/km6/spot-logo.svg" alt="SPOT!" style="width:350px;height:116px"></div>
+        <div data-marca="spot"><div class="marca-card" style="--c:var(--amarillo)"><img class="logo" src="assets/km6/spot-logo.svg" alt="SPOT!" style="width:350px;height:116px"></div>
           <div class="piezas" style="--c:var(--amarillo)" data-piezas="spot"></div></div>
         <p class="txt">En el caso de Post, utiliza el punto en variantes diferentes: relleno de verde y el borde por separado, tanto en blanco como verde. Este sistema está pensado para usarse sobre fondo oscuro. Además, las estrellas de 7 y 12 puntas continúan pero con las puntas internas y externas redondeadas.</p>
-        <div><div class="marca-card" style="--c:var(--negro)"><img class="logo" src="assets/km6/post-logo.svg" alt="post." style="width:350px;height:161px"><img class="deco-card" src="assets/km6/post-deco.svg" alt="" style="width:682.707px;top:54.6px"></div>
+        <div data-marca="post"><div class="marca-card" style="--c:var(--negro)"><img class="logo" src="assets/km6/post-logo.svg" alt="post." style="width:350px;height:161px"><img class="deco-card" src="assets/km6/post-deco.svg" alt="" style="width:682.707px;top:54.6px"></div>
           <div class="piezas" style="--c:var(--negro)" data-piezas="post"></div></div>
         <p class="txt">En el caso de Post, utiliza el punto en variantes diferentes: relleno de verde y el borde por separado, tanto en blanco como verde. Este sistema está pensado para usarse sobre fondo oscuro. Además, las estrellas de 7 y 12 puntas continúan pero con las puntas internas y externas redondeadas.</p>
-        <div><div class="marca-card" style="--c:var(--negro)"><img class="logo" src="assets/km6/stop-logo.svg" alt="STOP" style="width:348px;height:160px"><img class="deco-card" src="assets/km6/stop-deco.svg" alt="" style="width:679px"></div>
+        <div data-marca="stop"><div class="marca-card" style="--c:var(--negro)"><img class="logo" src="assets/km6/stop-logo.svg" alt="STOP" style="width:348px;height:160px"><img class="deco-card" src="assets/km6/stop-deco.svg" alt="" style="width:679px"></div>
           <div class="piezas doble" style="--c:var(--negro)"><div class="fila-p" data-piezas="stop1"></div><div class="fila-p" data-piezas="stop2"></div></div></div>
       </div></div>
   </section>
@@ -2379,10 +2379,14 @@ function iniciarBotonMenu(){
    de distintos tamaños, que aparecen con un rebote y después de un rato se achican y se van.
    Solo piezas que se ven sobre el crema (las de contorno crema desaparecerían). */
 function iniciarRastro(){
-  const sec = $('#km6-signos'); if (!sec || REDUCIR || !matchMedia('(hover:hover) and (pointer:fine)').matches) return;
-  const PIEZAS = { post: ['post-p1', 'post-p3', 'post-p4', 'post-p5'], stop: ['stop-f1', 'stop-f2', 'stop-f4', 'stop-f5', 'stop-f6', 'stop-estrella'] };
+  if (REDUCIR || !matchMedia('(hover:hover) and (pointer:fine)').matches) return;
+  const PIEZAS = { spot: Array.from({ length: 16 }, (_, i) => 'intro-' + (i + 1)),
+    post: ['post-p1', 'post-p3', 'post-p4', 'post-p5'], stop: ['stop-f1', 'stop-f2', 'stop-f4', 'stop-f5', 'stop-f6', 'stop-estrella'] };
+  $$('#km6-puntos, #km6-signos').forEach(sec => rastroEn(sec, PIEZAS));
+}
+function rastroEn(sec, PIEZAS){
   const capa = document.createElement('div'); capa.className = 'rastro'; capa.setAttribute('aria-hidden', 'true'); sec.prepend(capa);
-  const signos = $$('.signo[data-marca]', sec), vivas = [];
+  const signos = $$('[data-marca]', sec), vivas = [];
   let ultX = null, ultY = null, ultMarca = null, ultPieza = '';
   const zz = () => parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--z')) || 1;
   sec.addEventListener('mousemove', e => {
