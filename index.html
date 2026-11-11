@@ -76,6 +76,7 @@ a.punto{cursor:pointer} span.punto{cursor:default}
    y sombra 0 4 4 25 % sobre todo el bloque. Se dibuja en SVG porque el trazo de texto del navegador hace picos. */
 .titulo-km svg{display:block;overflow:visible;filter:drop-shadow(0 4px 4px rgba(0,0,0,.25))}
 .titulo-km text{font:600 128px var(--sora);fill:var(--negro);stroke:var(--crema);stroke-width:46px;stroke-linejoin:round;paint-order:stroke fill}
+.titulo-km svg.listo text{stroke:none}   /* el borde pasa a ser la imagen sin huecos (ver bordesSinHuecos) */
 /* borde crema por fuera (stroke OUTSIDE 23 del Figma) */
 .bajada{position:absolute;left:828px;font:600 48px/normal var(--reddit);color:var(--negro);white-space:nowrap}
 .links{position:absolute;left:828px;display:flex;flex-direction:column;gap:16px;align-items:flex-start}
@@ -1304,7 +1305,48 @@ function armarTitulos(){
     const y = (161 - (asc + desc)) / 2 + asc;
     $$('.titulo-km text').forEach(t => t.setAttribute('y', y));
   };
-  ubicar(); if (document.fonts) document.fonts.ready.then(ubicar);
+  ubicar(); if (document.fonts) document.fonts.ready.then(() => { ubicar(); bordesSinHuecos(); });
+}
+
+/* Borde crema de los títulos sin agujeritos.
+   Con el trazo de 23 px quedan huecos chiquitos de fondo donde dos letras o palabras están apenas
+   separadas, o en el centro de la "o". Se dibuja el borde en un canvas, se rellena todo lo que el
+   fondo no alcanza desde afuera (los huecos cerrados) y se usa esa imagen debajo de las letras.
+   El contorno de afuera queda igual. */
+function bordesSinHuecos(){
+  const S = 2, P = 40, CREMA = [237, 232, 219];
+  $$('.titulo-km').forEach(h => {
+    const svg = $('svg', h), t = $('text', h); if (!svg || !t) return;
+    const w = +h.dataset.w, H = 161, W2 = (w + 2 * P) * S, H2 = (H + 2 * P) * S;
+    const cv = document.createElement('canvas'); cv.width = W2; cv.height = H2;
+    const c = cv.getContext('2d', { willReadFrequently: true });
+    c.scale(S, S); c.translate(P, P);
+    c.font = '600 128px Sora'; c.textAlign = t.getAttribute('text-anchor') === 'middle' ? 'center' : 'left'; c.textBaseline = 'alphabetic';
+    c.lineWidth = 46; c.lineJoin = 'round'; c.lineCap = 'round'; c.strokeStyle = c.fillStyle = 'rgb(237,232,219)';
+    const x = +t.getAttribute('x'), y = +t.getAttribute('y');
+    c.strokeText(h.dataset.t, x, y); c.fillText(h.dataset.t, x, y);
+    const img = c.getImageData(0, 0, W2, H2), d = img.data, N = W2 * H2;
+    // relleno desde los bordes del canvas: todo lo transparente que se alcanza desde afuera es "afuera"
+    const afuera = new Uint8Array(N), pila = new Int32Array(N); let n = 0;
+    const meter = i => { if (!afuera[i] && d[i * 4 + 3] < 128) { afuera[i] = 1; pila[n++] = i; } };
+    for (let i = 0; i < W2; i++) { meter(i); meter(N - W2 + i); }
+    for (let j = 0; j < H2; j++) { meter(j * W2); meter(j * W2 + W2 - 1); }
+    while (n) { const i = pila[--n], px = i % W2;
+      if (px > 0) meter(i - 1); if (px < W2 - 1) meter(i + 1); if (i >= W2) meter(i - W2); if (i < N - W2) meter(i + W2); }
+    // lo que no es afuera ni toca afuera (el borde suavizado) pasa a crema lleno: así se tapan los huecos
+    for (let i = 0; i < N; i++) {
+      if (afuera[i] || d[i * 4 + 3] === 255) continue;
+      const px = i % W2;
+      if ((px > 0 && afuera[i - 1]) || (px < W2 - 1 && afuera[i + 1]) || (i >= W2 && afuera[i - W2]) || (i < N - W2 && afuera[i + W2])) continue;
+      d[i * 4] = CREMA[0]; d[i * 4 + 1] = CREMA[1]; d[i * 4 + 2] = CREMA[2]; d[i * 4 + 3] = 255;
+    }
+    c.putImageData(img, 0, 0);
+    let borde = $('image', svg);
+    if (!borde) { borde = document.createElementNS('http://www.w3.org/2000/svg', 'image'); svg.insertBefore(borde, t); }
+    borde.setAttribute('href', cv.toDataURL('image/png'));
+    borde.setAttribute('x', -P); borde.setAttribute('y', -P); borde.setAttribute('width', w + 2 * P); borde.setAttribute('height', H + 2 * P);
+    svg.classList.add('listo');
+  });
 }
 
 /* =====================================================================
