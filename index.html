@@ -522,17 +522,43 @@ a.punto{cursor:pointer} span.punto{cursor:default}
 .var-card .card .ctrl button{pointer-events:auto}
 @media (prefers-reduced-motion:reduce){.flota .mov > img{animation:none}}
 
-/* ---------- Cursores de la marca (idea de bitwip.fr: cursores propios en imagen, con halo para verse en cualquier fondo) ----------
-   flecha: la de siempre, con interior crema · estrella de 7 puntas de SPOT!: todo lo que se puede clickear
-   mano: lo que se arrastra. Solo con mouse; en pantallas táctiles no cambia nada. */
+/* ---------- Cursores de la marca (idea de bitwip.fr) ----------
+   flecha.svg: la flecha de siempre, interior crema · clic.svg: la flecha con rayitos, en todo lo clickeable
+   mano.svg: lo que se arrastra. Solo con mouse; en pantallas táctiles no cambia nada.
+   Con JavaScript se dibuja un cursor propio (#cursor) para poder pasar de uno a otro suave, con una estrellita
+   de SPOT! que lo persigue y una pastilla que a veces explica qué se puede hacer. Estas reglas quedan de respaldo. */
 @media (hover:hover) and (pointer:fine){
-  :root{--cur-flecha:url("assets/cursor/flecha.svg") 5 5, default; --cur-clic:url("assets/cursor/estrella.svg") 16 16, pointer; --cur-mano:url("assets/cursor/mano.svg") 16 16, grab}
+  :root{--cur-flecha:url("assets/cursor/flecha.svg") 5 5, default; --cur-clic:url("assets/cursor/clic.svg") 5 5, pointer; --cur-mano:url("assets/cursor/mano.svg") 16 16, grab}
+  html.cursor-propio, html.cursor-propio *{cursor:none !important}
+  html.cursor-propio :where(input:not([type=button], [type=submit], [type=checkbox], [type=radio]), textarea){cursor:text !important}
   html, html *{cursor:var(--cur-flecha) !important}
   html :where(a[href], a[href] *, button:not(:disabled), button:not(:disabled) *, [role=button], [role=button] *, label, summary, select, .copiar, .copiar *, .glosa, .somos-fila *, .pieza, .pieza *, #portada, #portada *, .submarcas-zona .foto-rot){cursor:var(--cur-clic) !important}
   html :where(.arrastrable, .arrastrable *, .rasgo, .submarcas-zona .foto-rot.frente, .tamanos .tirador){cursor:var(--cur-mano) !important}
   html :where(.arrastrable button, .arrastrable button *){cursor:var(--cur-clic) !important}
   html :where(input:not([type=button], [type=submit], [type=checkbox], [type=radio]), textarea){cursor:text !important}
 }
+#cursor,#cursor-mini,#cursor-pista{position:fixed;left:0;top:0;z-index:2147483000;pointer-events:none;opacity:0;transition:opacity .25s}
+html.cursor-propio.cursor-visible :is(#cursor,#cursor-mini){opacity:1}
+html.cursor-propio.con-pista #cursor-mini{opacity:0}
+#cursor{width:32px;height:32px;will-change:transform}
+#cursor img{position:absolute;left:0;top:0;width:32px;height:32px;opacity:0;transform:scale(.6);transform-origin:5px 5px;
+  transition:opacity .18s var(--ease-out),transform .28s cubic-bezier(.34,1.56,.64,1)}
+#cursor img.mano{transform-origin:16px 16px}
+#cursor[data-modo="flecha"] .flecha,#cursor[data-modo="clic"] .clic,#cursor[data-modo="mano"] .mano{opacity:1;transform:scale(1)}
+#cursor.apretado img{transform:scale(.85)}
+#cursor-mini{width:16px;height:16px;will-change:transform}
+#cursor-mini img{width:100%;height:100%;transition:transform .3s cubic-bezier(.34,1.56,.64,1)}
+#cursor-mini.grande img{transform:scale(1.5)}
+/* pastilla que explica (como la de bitwip, con la estrella de SPOT! y el texto que corre) */
+#cursor-pista{display:flex;align-items:center;gap:10px;height:40px;max-width:250px;padding:0 16px 0 8px;border-radius:40px;background:var(--negro);
+  border:1.5px solid rgba(237,232,219,.35);box-shadow:0 6px 18px rgba(0,0,0,.25);overflow:hidden;
+  transform-origin:0 50%;transition:opacity .25s,scale .3s cubic-bezier(.34,1.56,.64,1);scale:.6}
+#cursor-pista.ver{opacity:1;scale:1}
+#cursor-pista img{width:24px;height:24px;flex:none;animation:girar 6s linear infinite}
+#cursor-pista .cinta{overflow:hidden;-webkit-mask:linear-gradient(90deg,transparent,#000 12px,#000 calc(100% - 12px),transparent);mask:linear-gradient(90deg,transparent,#000 12px,#000 calc(100% - 12px),transparent)}
+#cursor-pista .cinta span{display:inline-block;white-space:nowrap;font:700 14px/1 var(--reddit);letter-spacing:.12em;text-transform:uppercase;color:var(--crema);animation:correr 6s linear infinite}
+@keyframes correr{to{transform:translateX(-50%)}}
+@keyframes girar{to{rotate:360deg}}
 
 /* ---------- Movimiento al scrollear (referencia: houseofyellow.nl) ----------
    Scroll suave con Lenis (1,2 s, expo-out) y entradas: suben 24 px y aparecen en 0,45 s,
@@ -2160,6 +2186,76 @@ function iniciarViajeKM6(){
   act();
 }
 
+/* =====================================================================
+   CURSOR PROPIO (idea de bitwip.fr, adaptada a SPOT!)
+   - flecha normal; sobre lo clickeable pasa suave a la flecha con rayitos; sobre lo que se arrastra, a la mano;
+   - una estrellita de SPOT! lo persigue con un poquito de retraso;
+   - a veces aparece una pastilla negra con la estrella y un texto que corre, explicando qué se puede hacer
+     (cada mensaje se muestra pocas veces, para que no moleste).
+   ===================================================================== */
+const SEL_MANO = '.arrastrable, .arrastrable *, .rasgo, .submarcas-zona .foto-rot.frente, .tamanos .tirador';
+const SEL_CLIC = 'a[href], a[href] *, button:not(:disabled), button:not(:disabled) *, [role=button], [role=button] *, label, summary, select, .copiar, .copiar *, .glosa, .pieza, .pieza *, #portada, #portada *, .submarcas-zona .foto-rot';
+const PISTAS = [
+  ['.rasgo', 'Agarralos y tiralos'], ['.submarcas-zona .foto-rot.frente', 'Tirala a un costado'], ['.submarcas-zona .foto-rot', 'Traela adelante'],
+  ['.carrusel .ventana, .ui-ventana', 'Arrastrá para ver más'], ['.tamanos .tirador', 'Achicá el logo'], ['.copiar', 'Copiá el color'],
+  ['.marcas .logos button', 'Cambiá de marca'], ['[data-alinear] button', 'Probá otra alineación'], ['[data-peso]', 'Mirá el peso'],
+  ['.var-card .flecha, .nav-fondos button, .var-card .paleta button', 'Cambiá el fondo'], ['.jugable', 'Empujala'], ['.somos-fila', 'Tocá para ver el límite']
+];
+function iniciarCursor(){
+  if (!matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+  const html = document.documentElement;
+  const cur = document.createElement('div'); cur.id = 'cursor'; cur.dataset.modo = 'flecha';
+  cur.innerHTML = ['flecha', 'clic', 'mano'].map(n => `<img class="${n}" src="assets/cursor/${n}.svg" alt="">`).join('');
+  const mini = document.createElement('div'); mini.id = 'cursor-mini'; mini.innerHTML = '<img src="assets/cursor/estrella.svg" alt="">';
+  const pista = document.createElement('div'); pista.id = 'cursor-pista';
+  pista.innerHTML = '<img src="assets/cursor/estrella.svg" alt=""><div class="cinta"><span></span></div>';
+  document.body.append(mini, pista, cur);
+  html.classList.add('cursor-propio');
+  let x = -100, y = -100, mx = -100, my = -100, px = -100, py = -100, vistas = {}, textoPista = '', ultimo = null;
+  const ponerPista = txt => {
+    if (txt === textoPista) return;
+    textoPista = txt;
+    html.classList.toggle('con-pista', !!txt);                       // la estrellita pasa a ser la estrella de la pastilla
+    if (!txt) { pista.classList.remove('ver'); return; }
+    const t = `${txt} ✦ `; $('span', pista).textContent = t.repeat(6);        // se repite para que la cinta corra sin cortes
+    pista.classList.add('ver');
+  };
+  const evaluar = el => {
+    if (!el || el === ultimo) return; ultimo = el;
+    cur.dataset.modo = el.closest && (el.matches(SEL_MANO) ? 'mano' : el.matches(SEL_CLIC) ? 'clic' : 'flecha');
+    mini.classList.toggle('grande', cur.dataset.modo !== 'flecha');
+    const p = PISTAS.find(([s]) => el.closest(s));
+    if (!p) return ponerPista('');
+    const clave = p[1];
+    if (textoPista !== clave) {                                     // cada mensaje, como mucho 3 veces por visita
+      vistas[clave] = (vistas[clave] || 0) + 1;
+      if (vistas[clave] > 3) return ponerPista('');
+    }
+    ponerPista(clave);
+  };
+  addEventListener('pointermove', e => {
+    if (e.pointerType && e.pointerType !== 'mouse') return;
+    x = e.clientX; y = e.clientY; html.classList.add('cursor-visible');
+    cur.style.transform = `translate3d(${x - 5}px, ${y - 5}px, 0)`;                // la punta de la flecha es el punto exacto
+    evaluar(document.elementFromPoint(x, y));
+  }, { passive: true });
+  addEventListener('pointerdown', () => cur.classList.add('apretado'));
+  addEventListener('pointerup', () => cur.classList.remove('apretado'));
+  document.addEventListener('mouseleave', () => { html.classList.remove('cursor-visible'); ponerPista(''); });
+  // la estrellita y la pastilla siguen al cursor con retraso (más suave la estrellita)
+  let giro = 0;
+  const seguir = () => {
+    requestAnimationFrame(seguir);
+    const kx = REDUCIR ? 1 : .14;
+    mx += (x + 18 - mx) * kx; my += (y + 20 - my) * kx;
+    px += (x + 26 - px) * .25; py += (y + 26 - py) * .25;
+    giro += Math.hypot(x + 18 - mx, y + 20 - my) * .6;
+    mini.style.transform = `translate3d(${mx - 8}px, ${my - 8}px, 0) rotate(${giro.toFixed(1)}deg)`;
+    pista.style.transform = `translate3d(${px}px, ${py}px, 0)`;
+  };
+  requestAnimationFrame(seguir);
+}
+
 function iniciarParalaje(){
   if (REDUCIR) return;
   $$('[data-paralaje]').forEach(b => {
@@ -2206,7 +2302,7 @@ addEventListener('keydown', e => { if (e.key === 'Escape') cerrarMenu(); });
 $$('[data-a]').forEach(b => b.addEventListener('click', () => scrollA(b.closest('article.km').id, b.dataset.a)));
 $$('[data-bajar]').forEach(b => b.addEventListener('click', () => { const k = b.closest('article.km'); irA_Y(k, k.scrollTop + innerHeight * .9); }));
 $$('[data-arriba]').forEach(b => b.addEventListener('click', () => irArriba(b.closest('article.km'))));
-iniciarScrollSuave(); iniciarEntradas(); iniciarStickers(); iniciarTira(); iniciarCarruseles(); iniciarCarruselUI(); iniciarParalaje(); iniciarViajeKM6(); iniciarMazo(); iniciarMecer(); iniciarRasgos(); iniciarFlotar();
+iniciarScrollSuave(); iniciarEntradas(); iniciarStickers(); iniciarCursor(); iniciarTira(); iniciarCarruseles(); iniciarCarruselUI(); iniciarParalaje(); iniciarViajeKM6(); iniciarMazo(); iniciarMecer(); iniciarRasgos(); iniciarFlotar();
 addEventListener('hashchange', leerHash);
 
 if (location.hash && location.hash !== '#inicio') { portada.remove(); portadaFuera = true; leerHash(); }
