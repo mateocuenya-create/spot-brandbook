@@ -2091,6 +2091,50 @@ function iniciarCarruselUI(){
 }
 
 /* Banner de fotografías (KM 6): la foto se mueve más lento que la página */
+/* KM 6 · las misceláneas de la intro viajan con el scroll hasta la card de SPOT! y se ordenan alrededor del logo.
+   Entran 8 (3 estrellas y 5 puntos) para no recargar la card; las amarillas no, porque la card es amarilla
+   (regla de "Vectores y color"). Las que no entran se achican y desaparecen en el camino. Volviendo hacia arriba se desarma. */
+function iniciarViajeKM6(){
+  const intro = $('.km6-intro'), card = $('#km6-puntos .marca-card'); if (!intro || !card) return;
+  const km = intro.closest('article.km'), piezas = $$('[data-decos="km6intro"] > .deco', intro);
+  // [pieza (intro-N), centro x, centro y dentro de la card (972 × 500), escala]
+  const LUGARES = { 2: [170, 130, .85], 3: [790, 110, .85], 4: [810, 385, .85], 13: [330, 92, 1], 11: [185, 372, 1], 15: [640, 420, 1], 10: [885, 245, 1], 16: [88, 250, 1] };
+  const datos = piezas.map(el => {
+    const n = +(el.querySelector('img').getAttribute('src').match(/intro-(\d+)/) || [])[1];
+    const w = parseFloat(el.style.width), h = parseFloat(el.style.height);
+    return { el, n, w, h, x: parseFloat(el.style.left) + w / 2, y: parseFloat(el.style.top) + h / 2, lugar: LUGARES[n], giro: (Math.random() < .5 ? -1 : 1) * (90 + Math.random() * 120) };
+  });
+  const suave = t => t < 0 ? 0 : t > 1 ? 1 : t * t * (3 - 2 * t);
+  let medidas = null;
+  const medir = () => {
+    const z = zoomActual(), ri = intro.getBoundingClientRect(), rc = card.getBoundingClientRect();
+    medidas = { cx: (rc.left - ri.left) / z, cy: (rc.top - ri.top) / z, desde: ri.top / z + km.scrollTop / z + 160,
+      hasta: rc.top / z + km.scrollTop / z - (innerHeight / z - 500) / 2 };
+  };
+  const act = () => {
+    if (!medidas) medir();
+    const z = zoomActual(), y = km.scrollTop / z, p = (y - medidas.desde) / (medidas.hasta - medidas.desde);
+    datos.forEach((d, i) => {
+      if (d.lugar) {
+        const t = suave((p - i * .015) / .85);                      // salen apenas escalonadas
+        const [lx, ly, esc] = d.lugar, dx = (medidas.cx + lx - d.x) * t, dy = (medidas.cy + ly - d.y) * t;
+        d.el.style.translate = `${dx.toFixed(1)}px ${dy.toFixed(1)}px`;
+        d.el.style.rotate = `${(d.giro * Math.sin(t * Math.PI) * .25).toFixed(1)}deg`;
+        d.el.style.scale = (1 + (esc - 1) * t).toFixed(3);
+      } else {
+        const t = suave(p / .45);                                    // las que no entran se van antes
+        d.el.style.opacity = (1 - t).toFixed(3); d.el.style.scale = (1 - .6 * t).toFixed(3);
+        d.el.style.translate = `0px ${(t * 120).toFixed(1)}px`;
+        d.el.style.visibility = t >= 1 ? 'hidden' : '';
+      }
+    });
+  };
+  km.addEventListener('scroll', act, { passive: true });
+  addEventListener('resize', () => { medidas = null; act(); });
+  if (document.fonts) document.fonts.ready.then(() => { medidas = null; act(); });
+  act();
+}
+
 function iniciarParalaje(){
   if (REDUCIR) return;
   $$('[data-paralaje]').forEach(b => {
@@ -2137,7 +2181,7 @@ addEventListener('keydown', e => { if (e.key === 'Escape') cerrarMenu(); });
 $$('[data-a]').forEach(b => b.addEventListener('click', () => scrollA(b.closest('article.km').id, b.dataset.a)));
 $$('[data-bajar]').forEach(b => b.addEventListener('click', () => { const k = b.closest('article.km'); irA_Y(k, k.scrollTop + innerHeight * .9); }));
 $$('[data-arriba]').forEach(b => b.addEventListener('click', () => irArriba(b.closest('article.km'))));
-iniciarScrollSuave(); iniciarEntradas(); iniciarStickers(); iniciarTira(); iniciarCarruseles(); iniciarCarruselUI(); iniciarParalaje(); iniciarMazo(); iniciarMecer(); iniciarRasgos(); iniciarFlotar();
+iniciarScrollSuave(); iniciarEntradas(); iniciarStickers(); iniciarTira(); iniciarCarruseles(); iniciarCarruselUI(); iniciarParalaje(); iniciarViajeKM6(); iniciarMazo(); iniciarMecer(); iniciarRasgos(); iniciarFlotar();
 addEventListener('hashchange', leerHash);
 
 if (location.hash && location.hash !== '#inicio') { portada.remove(); portadaFuera = true; leerHash(); }
