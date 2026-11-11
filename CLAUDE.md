@@ -333,3 +333,4 @@ El 10/11/2026 se borró todo lo construido y se empezó de nuevo. Respaldo de la
   - Tamaños de 48 a 178 px. Aparecen con un rebote, se van solas a los 2,6 s y como máximo hay 14 a la vez.
   - Solo se usan las piezas que se ven sobre crema: post. `post-p1/p3/p4/p5`; STOP `stop-f1/f2/f4/f5/f6` y `stop-estrella`. Las de contorno crema no se ven sobre ese fondo.
   - Solo funciona con mouse.
+- 11/11/2026 · Mateo · **Botón del menú: sin círculo** (pedido del equipo, reemplaza lo anterior). Queda fijo y del mismo tamaño que en el Figma, y solo cambia de color según el fondo: negro sobre fondos claros, crema sobre fondos oscuros y fotos (fundido de 0,3 s).

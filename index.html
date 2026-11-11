@@ -63,18 +63,13 @@ img{display:block}
 a.punto{cursor:pointer} span.punto{cursor:default}
 .btn-menu{position:absolute;left:64px;top:66px;width:64px;height:64px;z-index:5}
 .btn-menu img{width:100%;height:100%}
-/* KM: el botón del menú queda siempre a la vista. Arriba es igual al Figma; al scrollear se achica y lleva un círculo
-   del color que contrasta con lo que tiene abajo (crema sobre oscuro, negro sobre claro). */
-.km .btn-menu{position:fixed;z-index:30;border-radius:50%;background:transparent;transform-origin:0 0;
-  transition:transform .35s var(--ease-out),background-color .3s var(--ease-out),box-shadow .3s var(--ease-out)}
+/* KM: el botón del menú queda siempre a la vista, del mismo tamaño que en el Figma. Solo cambia de color según lo que
+   tiene abajo: negro sobre fondos claros, crema sobre fondos oscuros y fotos. */
+.km .btn-menu{position:fixed;z-index:30}
 .km .btn-menu img{display:none}
 .km .btn-menu::before{content:"";position:absolute;inset:0;background:var(--bm-fg,var(--negro));-webkit-mask:url(assets/km2/21764.svg) center/100% no-repeat;mask:url(assets/km2/21764.svg) center/100% no-repeat;
-  transition:transform .35s var(--ease-out),background-color .3s var(--ease-out)}
-.km .btn-menu.chico{transform:scale(.8);box-shadow:0 4px 14px rgba(0,0,0,.18)}
-.km .btn-menu.chico::before{transform:scale(.62)}
-.km .btn-menu.chico.sobre-claro{background:var(--negro);--bm-fg:var(--crema)}
-.km .btn-menu.chico.sobre-oscuro{background:var(--crema);--bm-fg:var(--negro)}
-.km .btn-menu.chico:hover{transform:scale(.88)}
+  transition:background-color .3s var(--ease-out)}
+.km .btn-menu.chico.sobre-oscuro{--bm-fg:var(--crema)}
 /* KM 6 · Signos Display: al pasar el mouse al lado de cada pieza se van dejando misceláneas de esa marca */
 #km6-signos{position:relative}
 #km6-signos .fila{position:relative;z-index:1}
