@@ -260,6 +260,23 @@ a.punto{cursor:pointer} span.punto{cursor:default}
 .logo-hover:hover .v2{opacity:1}
 .logo-hover:hover .v1{opacity:0}
 .logo-fijo{margin:48px auto;display:block}
+/* KM 3 · Logos Spot: cada logo entra con su carácter. SPOT! se marca de izquierda a derecha (como el recorrido),
+   post. aparece calmo (desenfoque que se aclara, como el descanso) y STOP explota con un rebote (como el evento). */
+.logo-hover{transition:clip-path 1.1s cubic-bezier(.65,0,.35,1)}
+.logo-hover.espera{clip-path:inset(-10% 100% -10% -10%)}
+.logo-fijo.post{transition:opacity 1.4s var(--ease-out),filter 1.4s var(--ease-out),transform 1.6s cubic-bezier(.22,1,.36,1)}
+.logo-fijo.post.espera{opacity:0;filter:blur(14px);transform:translateY(30px)}
+.logo-fijo.stop{transition:transform .8s cubic-bezier(.34,1.8,.64,1),opacity .25s var(--ease-out)}
+.logo-fijo.stop.espera{opacity:0;transform:scale(.4) rotate(-14deg)}
+/* KM 3 · Construcción, Espacios seguros y Ubicación: los diagramas se dibujan al entrar.
+   Primero aparecen los logos, después se trazan las guías y al final las líneas punteadas. */
+.diag{display:block;align-self:center;max-width:none;height:auto;overflow:visible}
+.diag .relleno{transform-box:fill-box;transform-origin:center;transition:opacity .5s var(--ease-out) var(--d),transform .7s cubic-bezier(.34,1.56,.64,1) var(--d)}
+.diag .trazo{stroke-dasharray:1;stroke-dashoffset:0;transition:stroke-dashoffset .9s cubic-bezier(.65,0,.35,1) var(--d)}
+.diag .punteado{transition:opacity .6s var(--ease-out) var(--d)}
+.diag.espera .relleno{opacity:0;transform:scale(.8)}
+.diag.espera .trazo{stroke-dashoffset:1}
+.diag.espera .punteado{opacity:0}
 /* KM 3 · tira de construcción: ocupa todo el ancho (los logos no se cortan en el margen, como en el Figma); los logos arrancan en el margen de 120 px */
 .tira{position:relative;width:1920px;height:345px;overflow:hidden;margin:120px 0 0 -120px}
 .tira .cota,.tira .lbl{z-index:1}
@@ -968,9 +985,9 @@ html.cursor-propio.cursor-visible :is(#cursor,#cursor-mini){opacity:1}
         <p class="txt">El logotipo de la marca de Spot surge de su propio concepto: es una marca que invita a marcar <b>puntos</b> a lo largo de la trayectoria de alguien que hace deporte. Conoce lugares, gente y experiencias nuevas, los “spots” a lo largo del recorrido. Fue creado a partir de la tipografía <a href="https://fonts.google.com/specimen/Bitcount+Single?preview.script=Latn" target="_blank" rel="noopener" style="font-family:'Bitcount Single',var(--sora);font-weight:700;text-decoration:underline">Bitcount Single Bold</a>.</p>
         <div class="logo-hover" title="Pasá el mouse"><img class="v1" src="assets/logos/spot-hover-default.svg" alt="SPOT!"><img class="v2" src="assets/logos/spot-hover-variant2.svg" alt=""></div>
         <p class="txt">Además, Spot utiliza otros dos logotipos para sus submarcas. Hablamos de Post y Stop. La primera es una experiencia multimedial para el descanso y la relajación, por lo que busca transmitir estos mismos conceptos usando <a href="https://fonts.google.com/specimen/Sora?preview.script=Latn" target="_blank" rel="noopener" style="font-family:var(--sora);font-weight:700;text-decoration:underline">Sora</a> regular en minúsculas.</p>
-        <img class="logo-fijo" src="assets/km3/logo-post.svg" alt="post." style="width:480px;height:221px">
+        <img class="logo-fijo post" src="assets/km3/logo-post.svg" alt="post." style="width:480px;height:221px">
         <p class="txt">El segundo es un evento que combina la actividad física con un after nocturno festivo, por lo que este carácter divertido aparece con <a href="https://fonts.google.com/specimen/Sora?preview.script=Latn" target="_blank" rel="noopener" style="font-weight:700;text-decoration:underline">Sora</a> en mayúsculas y semibold, y el uso de una estrella explosiva.</p>
-        <img class="logo-fijo" src="assets/km3/logo-stop.svg" alt="STOP" style="width:480px;height:220.6px">
+        <img class="logo-fijo stop" src="assets/km3/logo-stop.svg" alt="STOP" style="width:480px;height:220.6px">
       </div></div>
   </section>
   <div class="divisor"></div>
@@ -2715,6 +2732,43 @@ function iniciarReceta(){
 /* KM 3 · Colaboraciones: cada lockup se parte en tres (SPOT!, ×, logo aliado) y se arma cada vez que entra en pantalla.
    Cortes en px dentro de cada imagen (en el medio de los espacios entre logo y ×, según el Figma). */
 const CORTES_LOCKUP = { 'lockup-martinez': [303, 395], 'lockup-integra': [303, 395], 'lockup-hyper': [303, 391], 'lockup-adidas': [303, 395], 'plantilla-colaboracion': [466, 586] };
+/* KM 3 · entradas de Logos Spot, Construcción, Espacios seguros y Ubicación (ver CSS .logo-hover/.logo-fijo y .diag).
+   Los diagramas se pasan de <img> a SVG en la página para poder animar sus partes. Todo se repite al volver a entrar. */
+function entradaRepetida(els, umbral = .35){
+  if (!els.length) return;
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    if (e.isIntersecting && e.intersectionRatio >= umbral) e.target.classList.remove('espera');
+    else if (!e.isIntersecting) e.target.classList.add('espera');
+  }), { threshold: [0, umbral] });
+  els.forEach(el => { el.classList.add('espera'); io.observe(el); });
+}
+async function iniciarKM3Entradas(){
+  if (REDUCIR || !('IntersectionObserver' in window)) return;
+  entradaRepetida($$('#km3 .logo-hover, #km3 .logo-fijo'), .5);
+  const imgs = $$('#km3-construccion > div > img, #km3-espacios .diagramas > img, #km3-ubicacion .diagramas > img');
+  const svgs = await Promise.all(imgs.map(async (img, n) => {
+    try {
+      let t = await (await fetch(img.getAttribute('src'))).text();
+      t = t.replace(/id="([^"]+)"/g, `id="d${n}-$1"`).replace(/url\(#([^)]+)\)/g, `url(#d${n}-$1)`).replace(/href="#([^"]+)"/g, `href="#d${n}-$1"`);
+      const svg = new DOMParser().parseFromString(t, 'image/svg+xml').documentElement;
+      if (svg.nodeName !== 'svg') return null;
+      svg.classList.add('diag'); svg.setAttribute('role', 'img'); svg.setAttribute('aria-label', img.alt);
+      svg.style.cssText = img.getAttribute('style') || '';
+      let r = 0, k = 0;
+      svg.querySelectorAll('path, rect, line, circle, ellipse, polyline, polygon').forEach(el => {
+        if (el.closest('clipPath, defs, mask')) return;
+        const att = a => el.getAttribute(a) || el.closest(`[${a}]`)?.getAttribute(a);
+        const stroke = att('stroke'), dash = att('stroke-dasharray');
+        if (stroke && stroke !== 'none' && dash) { el.classList.add('punteado'); el.style.setProperty('--d', '1.1s'); }
+        else if (stroke && stroke !== 'none') { el.setAttribute('pathLength', '1'); el.classList.add('trazo'); el.style.setProperty('--d', (.35 + Math.min(k++, 24) * .05).toFixed(2) + 's'); }
+        else if ((att('fill') || '#000') !== 'none') { el.classList.add('relleno'); el.style.setProperty('--d', (Math.min(r++, 30) * .025).toFixed(3) + 's'); }
+      });
+      img.replaceWith(svg); return svg;
+    } catch (e) { return null; }
+  }));
+  entradaRepetida(svgs.filter(Boolean));
+}
+
 function iniciarColab(){
   const ms = $$('.colab-muestra'); if (!ms.length) return;
   $$('.colab-muestra img').forEach(img => {
@@ -2980,7 +3034,7 @@ addEventListener('keydown', e => { if (e.key === 'Escape') cerrarMenu(); });
 $$('[data-a]').forEach(b => b.addEventListener('click', () => scrollA(b.closest('article.km').id, b.dataset.a)));
 $$('[data-bajar]').forEach(b => b.addEventListener('click', () => { const k = b.closest('article.km'); irA_Y(k, k.scrollTop + innerHeight * .9); }));
 $$('[data-arriba]').forEach(b => b.addEventListener('click', () => irArriba(b.closest('article.km'))));
-iniciarScrollSuave(); iniciarEntradas(); iniciarStickers(); iniciarCursor(); iniciarFavicon(); iniciarFaviconSec(); iniciarBotonMenu(); iniciarRastro(); iniciarPerfil(); iniciarSobreFotos(); iniciarUnirPuntos(); iniciarCintaIconos(); iniciarReceta(); iniciarColab(); iniciarProporcion(); iniciarTira(); iniciarCarruseles(); iniciarCarruselUI(); iniciarParalaje(); iniciarViajeKM6(); iniciarMazo(); iniciarMecer(); iniciarRasgos(); iniciarFlotar();
+iniciarScrollSuave(); iniciarEntradas(); iniciarStickers(); iniciarCursor(); iniciarFavicon(); iniciarFaviconSec(); iniciarBotonMenu(); iniciarRastro(); iniciarPerfil(); iniciarSobreFotos(); iniciarUnirPuntos(); iniciarCintaIconos(); iniciarReceta(); iniciarColab(); iniciarKM3Entradas(); iniciarProporcion(); iniciarTira(); iniciarCarruseles(); iniciarCarruselUI(); iniciarParalaje(); iniciarViajeKM6(); iniciarMazo(); iniciarMecer(); iniciarRasgos(); iniciarFlotar();
 addEventListener('hashchange', leerHash);
 
 if (location.hash && location.hash !== '#inicio') { portada.remove(); portadaFuera = true; leerHash(); }

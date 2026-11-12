@@ -412,3 +412,7 @@ El 10/11/2026 se borró todo lo construido y se empezó de nuevo. Respaldo de la
   - Al llegar scrolleando, los 12 favicons de Variables saltan de a uno, de izquierda a derecha, girando con un rebote (0,06 s entre cada uno).
   - Después aparecen las 4 animaciones, una tras otra: el favicon mediano crece girando con rebote, la miniatura cae a su lugar y suben el título y el texto.
   - Se repite cada vez que la sección vuelve a entrar en pantalla. El hover sigue igual: la animación de cada favicon solo corre con el mouse encima.
+- 12/11/2026 · Mateo · **KM 3 · animaciones de entrada en Logos Spot, Construcción, Espacios seguros y Ubicación** (pedido del equipo, `iniciarKM3Entradas`). Se repiten cada vez que la parte vuelve a entrar en pantalla.
+  - **Logos Spot:** cada logo entra con el carácter que describe el texto. SPOT! se marca de izquierda a derecha, como un recorrido. post. aparece calmo, con un desenfoque que se aclara. STOP explota con un rebote. El hover de SPOT! sigue igual.
+  - **Diagramas** (Construcción, Espacios seguros y Ubicación): se dibujan solos. Primero aparecen los logos, después se trazan las guías (las líneas azules de la altura de x, las cajas de espacio seguro, los márgenes) y al final aparecen las líneas punteadas.
+  - Para poder animar sus partes, esos SVG ahora se cargan dentro de la página en lugar de como `<img>`. Quietos se ven igual que antes. Los archivos de `assets/km3/` y `assets/km3b/` no cambiaron.
