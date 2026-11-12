@@ -373,4 +373,5 @@ El 10/11/2026 se borró todo lo construido y se empezó de nuevo. Respaldo de la
   - Los puntos y los números se ponen violetas cuando el lápiz pasa por ellos.
   - Arranca cuando el dibujo asoma abajo y termina cuando su centro llega a la mitad de la pantalla. Volviendo hacia arriba se borra al revés.
   - El cursor ya no cambia a lápiz: `lapiz.svg` se usa ahora para el lapicito que dibuja.
+- 11/11/2026 · Equipo · **KM 3 · Botón "Descargar Logos"** (Figma `544:11222`, debajo del título "Logos Spot"): mismo estilo que "Descargar plantilla" (pastilla negra, Reddit Sans SemiBold 20, crema), 207 × 54 px, 109 px debajo del título; acompaña al título mientras se scrollea (sticky). Descarga `assets/descargas/Logos_Spot.zip` (SPOT!, post. y STOP en color y negro, PNG y SVG). Los archivos para descargar van en `assets/descargas/`. Ojo: en el KM 3 del Figma hay otro "Descargar plantilla" (`498:2076`, plantilla de lockup) que todavía no está en la página.
 - 11/11/2026 · Equipo · **KM 6 · La cinta de íconos de puntos va más rápido**: 55 s por vuelta en vez de 75 s (`.pista-iconos`, animación `cinta`). Se sigue pausando con el mouse encima.
