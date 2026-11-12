@@ -260,8 +260,10 @@ a.punto{cursor:pointer} span.punto{cursor:default}
 .logo-hover:hover .v2{opacity:1}
 .logo-hover:hover .v1{opacity:0}
 .logo-fijo{margin:48px auto;display:block}
-.tira{position:relative;width:1680px;height:345px;overflow:hidden;margin-top:120px}
-.tira > img{position:absolute;left:0;top:0;width:3852px;max-width:none}
+/* KM 3 · tira de construcción: ocupa todo el ancho (los logos no se cortan en el margen, como en el Figma); los logos arrancan en el margen de 120 px */
+.tira{position:relative;width:1920px;height:345px;overflow:hidden;margin:120px 0 0 -120px}
+.tira .cota,.tira .lbl{z-index:1}
+.tira > img:not(.cota){position:absolute;left:0;top:0;width:3852px;max-width:none}
 .tira .cota{position:absolute}
 .tira .lbl{position:absolute;font:400 20px/normal var(--reddit);color:var(--negro);white-space:nowrap}
 .variantes{display:flex;gap:161px;align-items:flex-start}
@@ -345,7 +347,7 @@ a.punto{cursor:pointer} span.punto{cursor:default}
 .arrastrable img{-webkit-user-drag:none;user-select:none}
 
 /* KM 3 · tira de construcción: se arrastra de costado para ver los tres logos */
-.tira .pista-tira{position:absolute;left:0;top:0;width:3852px;height:100%;will-change:transform}
+.tira .pista-tira{position:absolute;left:120px;top:0;width:3852px;height:100%;will-change:transform}
 .tira .pista-tira > img:first-child{position:absolute;left:0;top:0;width:3852px;max-width:none}
 
 /* KM 3 · espacios seguros, ubicación y malas prácticas */
@@ -908,16 +910,17 @@ html.cursor-propio.cursor-visible :is(#cursor,#cursor-mini){opacity:1}
     <div class="tira" role="img" aria-label="Construcción de los contornos de los tres logos: se recorre de costado al scrollear">
      <div class="pista-tira">
       <img src="assets/km3/construccion-2.svg" alt="Construcción de los contornos del logo">
-      <div class="cota" style="left:397px;top:45px;width:887px;height:11px;background:var(--naranja);opacity:.6"></div>
-      <div class="cota" style="left:397px;top:56px;width:887px;height:30px;background:var(--rosa);opacity:.6"></div>
-      <img class="cota" src="assets/km3/cota-9.svg" alt="" style="left:257px;top:55px;width:1027px">
-      <img class="cota" src="assets/km3/linea-v2.svg" alt="" style="left:263px;top:25px;height:27px">
-      <img class="cota" src="assets/km3/linea-v1.svg" alt="" style="left:263px;top:62px;height:22px">
-      <img class="cota" src="assets/km3/linea-v3.svg" alt="" style="left:264px;top:95px;height:146px">
-      <span class="lbl" style="left:301px;top:22px">9 px</span>
-      <span class="lbl" style="left:289px;top:64px">24 px</span>
-      <span class="lbl" style="left:282px;top:156px">124 px</span>
      </div>
+     <!-- Cotas fijas (en el Figma están sueltas en la lámina, no dentro de la tira): los logos pasan por debajo para compararlos -->
+     <div class="cota" style="left:517px;top:45px;width:887px;height:11px;background:var(--naranja);opacity:.6"></div>
+     <div class="cota" style="left:517px;top:56px;width:887px;height:30px;background:var(--rosa);opacity:.6"></div>
+     <img class="cota" src="assets/km3/cota-9.svg" alt="" style="left:377px;top:55px;width:1027px">
+     <img class="cota" src="assets/km3/linea-v2.svg" alt="" style="left:383px;top:25px;height:27px">
+     <img class="cota" src="assets/km3/linea-v1.svg" alt="" style="left:383px;top:62px;height:22px">
+     <img class="cota" src="assets/km3/linea-v3.svg" alt="" style="left:384px;top:95px;height:146px">
+     <span class="lbl" style="left:421px;top:22px">9 px</span>
+     <span class="lbl" style="left:409px;top:64px">24 px</span>
+     <span class="lbl" style="left:402px;top:156px">124 px</span>
     </div>
     </div></div>
   </section>
