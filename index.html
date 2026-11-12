@@ -2443,12 +2443,14 @@ function salirDePortada(){
   portada.style.cursor = 'default'; portada.style.pointerEvents = 'none';
   portada.animate([{ backgroundColor: 'rgba(253,206,66,1)' }, { backgroundColor: 'rgba(253,206,66,0)' }], { duration: D, easing: curva, fill: 'forwards' });
   $$('#p-crema, #p-puntos').forEach(e => e.animate([{ opacity: getComputedStyle(e).opacity }, { opacity: 0 }], { duration: D * .4, fill: 'forwards' }));
-  borde.animate([{ stroke: '#252525', strokeWidth: 10 }, { stroke: '#EDE8DB', strokeWidth: 6, offset: .75 }, { stroke: '#EDE8DB', strokeWidth: 6 }], { duration: D, easing: curva, fill: 'forwards' });
-  borde.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 400, delay: D, fill: 'forwards' }).onfinish = () => portada.remove();
-  // la Home entra: el recorrido ya está, los puntos aparecen en orden y después menú, logo y submarcas
-  $('#inicio .mapa').animate([{ opacity: 0 }, { opacity: 1 }], { duration: 400, delay: D * .8, fill: 'backwards' });
+  borde.animate([{ stroke: '#252525', strokeWidth: 10 }, { stroke: '#EDE8DB', strokeWidth: 4, offset: .6 }, { stroke: '#EDE8DB', strokeWidth: 4 }], { duration: D, easing: curva, fill: 'forwards' });
+  // el contorno del logo (con los piquitos de las letras) se funde con el recorrido del mapa, que es más suave:
+  // uno se va mientras el otro aparece, sin quedar los dos a la vez ni pasar por encima de los puntos
+  borde.animate([{ opacity: 1 }, { opacity: 0 }], { duration: D * .4, delay: D * .55, easing: 'ease-in-out', fill: 'forwards' }).onfinish = () => portada.remove();
+  // la Home entra: el recorrido aparece debajo del contorno, y cuando el contorno ya se fue, los puntos en orden; después menú, logo y submarcas
+  $('#inicio .mapa').animate([{ opacity: 0 }, { opacity: 1 }], { duration: D * .45, delay: D * .5, easing: 'ease-in-out', fill: 'backwards' });
   $$('#puntos-mapa .punto').forEach((p, i) => p.animate([{ transform: 'translateY(10px) scale(0)', opacity: 0 }, { transform: 'none', opacity: 1 }],
-    { duration: 500, delay: D * .7 + i * 90, easing: 'cubic-bezier(.34,1.56,.64,1)', fill: 'backwards' }));
+    { duration: 500, delay: D * .95 + i * 80, easing: 'cubic-bezier(.34,1.56,.64,1)', fill: 'backwards' }));
   $$('#inicio .btn-menu, #inicio .logo-centro, #inicio .submarcas').forEach((e, i) => e.animate([{ opacity: 0, transform: 'translateY(-12px)' }, { opacity: 1, transform: 'none' }],
     { duration: 600, delay: D * .9 + i * 120, easing: 'cubic-bezier(.22,1,.36,1)', fill: 'backwards' }));
   $('#inicio .fondo-video').animate([{ transform: 'scale(1.08)' }, { transform: 'scale(1)' }], { duration: D + 900, easing: 'cubic-bezier(.22,1,.36,1)' });
