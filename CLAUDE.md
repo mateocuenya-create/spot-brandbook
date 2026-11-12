@@ -449,3 +449,22 @@ El 10/11/2026 se borró todo lo construido y se empezó de nuevo. Respaldo de la
     - En "Elementos sobre fotografías" el cartel con el control se ve siempre debajo de la foto. Moverlo enciende la foto.
     - Tocar una miscelánea (fuera de los heros) la hace saltar y girar (`iniciarToques`), en lugar del empuje con el mouse.
   - **No van en el celular:** el cursor propio, el rastro de misceláneas de Puntos y estrellas / Signos Display y el empuje con el mouse (necesitan mouse). Tampoco el fondo halftone de "Puntos en siluetas" ni la silueta de "Si Spot fuera una persona" (no entran en la columna).
+- 12/11/2026 · Mateo · **Correcciones de la versión mobile** (pedido del equipo).
+  - **Pixelado y "rastro" en el celular.** Lo más probable es que viniera de la propiedad `zoom`, que Safari (iPhone) dibuja mal en lo que se mueve.
+    - En mobile ya no se usa `zoom`: el lienzo de cada KM se escala con `transform` dentro de `.escala-km`, que guarda el alto real.
+    - La portada y la Home también se escalan así.
+    - Las partes achicadas (tira, carrusel de la app, perfil, lockups, unir los puntos, cinta, receta, caritas, logos del KM 5, fotos con cartel, favicon y títulos) usan `achicarMovil()`: `scale` + una caja `.achicado` del tamaño real.
+    - El botón del menú queda fuera de lo escalado, fijo arriba.
+    - Como `position: sticky` no funciona dentro de un `transform`, en mobile la tira y los carruseles se mantienen fijos con JS (`fijarMovil`).
+    - Regla: en mobile no usar `zoom`; para achicar algo, sumarlo a `ACHICAR_MOVIL`.
+  - **Misceláneas más chicas y ubicadas con criterio.**
+    - Heros: piezas al 60 %, en lugares elegidos a mano alrededor del texto (`HERO_MOVIL`). La carita mide 70 px.
+    - Las que entran por los costados también son más chicas.
+    - Esquivan también el botón del menú.
+    - Submarcas y fotos de post.: al 60 %. Intro del KM 6: al 65 %.
+  - **Lo que era hover ahora pasa al scrollear** (`iniciarActivoScroll`): cuando una pieza cruza la franja del medio de la pantalla se activa.
+    - Pilares, misión/visión, cards de enfoque y de tono, logo SPOT!, malas prácticas, usos indebidos, signos display, filtros, tipografía/vectores, lockups, "xan" y pantallas de la app.
+    - Las animaciones del favicon arrancan solas.
+    - Las fotos de "Elementos sobre fotografías" se encienden.
+    - Tocar sigue funcionando.
+  - **KM 4 · Light / Semi Bold / Regular / Bold:** ahora se tocan. El peso elegido queda puesto en el "Aa" y en la frase (en naranja el elegido), y se saca tocándolo de nuevo. En compu sigue el hover.

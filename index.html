@@ -829,14 +829,15 @@ html.movil .punto .pill{display:none}
 html.movil .hero{height:1000px;display:flex;flex-direction:column;align-items:flex-start;gap:28px;padding:150px 24px 0}
 html.movil .hero > :is(.km-tag,.titulo-km,.bajada,.links,img){position:relative!important;left:auto!important;top:auto!important}
 html.movil .km-tag{font-size:24px;padding:6px 20px;border-width:2px}
-html.movil .titulo-km{height:auto;zoom:var(--ts,1);margin:12px 0}
+html.movil .titulo-km{height:auto;width:max-content}
+html.movil .hero > .achicado{margin:12px 0}
 html.movil #km1 .hero > img{width:300px!important;height:auto!important}
 html.movil .bajada{font-size:30px;white-space:normal;width:432px;line-height:1.2}
 html.movil .links{gap:12px}
 html.movil .links button{font-size:18px}
 html.movil .slide-down{left:216px;top:900px!important}
-html.movil .km .btn-menu{left:16px;top:18px;width:52px;height:52px}
-html.movil .km .btn-menu.chico{transform:scale(.8)}
+html.movil .km > .btn-menu{left:12px;top:14px;width:44px;height:44px}
+html.movil .km > .btn-menu.chico{transform:scale(.8)}
 
 /* ---- Footer ---- */
 html.movil .pie-km{padding:72px 24px;gap:48px}
@@ -898,7 +899,7 @@ html.movil .perfil{width:100%;padding:24px 0 0;gap:48px}
 html.movil .eje{grid-template-columns:1fr 1fr;column-gap:12px;row-gap:10px}
 html.movil .eje > span{grid-row:1;font-size:18px}
 html.movil .eje > span:nth-of-type(2){grid-column:2;text-align:right}
-html.movil .eje .barra{grid-column:1 / 3;grid-row:2;zoom:.432}
+html.movil .eje > .achicado{grid-column:1 / 3;grid-row:2}
 html.movil .eje p{grid-column:1 / 3;grid-row:3;font-size:19px}
 html.movil .somos{width:100%;gap:40px}
 html.movil .somos-fila{flex-direction:column;align-items:stretch;gap:16px}
@@ -917,7 +918,8 @@ html.movil .logo-fijo{width:432px!important;height:auto!important;margin:24px au
 html.movil #km3-construccion > div:not(.fila):not(.pin-tira){padding:40px 0!important}
 html.movil #km3-construccion > div > :is(.diag, img){width:432px!important;margin:0!important;max-width:100%!important;height:auto!important}
 html.movil .pin-tira .fila > .t{display:none}
-html.movil .tira{zoom:.4;width:1200px;margin:72px 0 0 -60px}
+html.movil .tira{width:1200px}
+html.movil .achicado:has(> .tira){margin:72px 0 0 -24px}
 html.movil .tira .pista-tira{left:60px}
 html.movil .tira .lbl{font-size:34px}
 html.movil .variantes{flex-direction:column;gap:24px}
@@ -935,7 +937,6 @@ html.movil .fav-variables{width:432px;flex-wrap:wrap;gap:12px;padding:20px}
 html.movil .fav-variables img{width:52px;height:53px}
 html.movil .fav-animaciones{width:432px;display:grid;grid-template-columns:1fr 1fr;gap:28px 24px;padding:20px}
 html.movil .fav-anim{width:auto}
-html.movil .fav-anim .caja{zoom:.6}
 html.movil .fav-anim h4{font-size:20px;margin-bottom:8px}
 html.movil .fav-anim p{font-size:17px}
 html.movil .tamanos{flex-direction:column;align-items:center;gap:72px}
@@ -943,8 +944,8 @@ html.movil .diagramas{gap:48px}
 html.movil .diagramas > *{max-width:100%!important;height:auto!important}
 html.movil .colab-fila{flex-direction:column;gap:24px}
 html.movil .colab-fila .pautas-c{width:auto}
-html.movil .colab-muestra{zoom:.5;width:864px}
-html.movil .colab-fila:last-child .colab-muestra{zoom:.36;width:1200px}
+html.movil .colab-muestra{width:864px}
+html.movil .colab-fila:last-child .colab-muestra{width:1200px}
 html.movil .malas{gap:48px;margin-top:48px}
 html.movil .malas .fila-malas{flex-direction:column;gap:48px}
 html.movil .mala{width:100%;gap:20px}
@@ -968,7 +969,7 @@ html.movil .tipos .pesos{width:100%;height:auto!important;padding:32px 24px}
 html.movil .tipos .pesos div{height:auto!important;flex-direction:row;flex-wrap:wrap;gap:8px 28px;font-size:34px}
 html.movil .tipos .expl{width:100%;height:auto!important;padding:0 24px 40px}
 html.movil .tipos .expl p{width:auto}
-html.movil .ui-ventana{zoom:.6;width:800px;height:1060px;margin:0}
+html.movil .ui-ventana{position:relative;width:800px;height:1060px;margin:0}
 html.movil .ui-puntos{left:360px}
 html.movil .ui-puntos button{width:30px;height:30px}
 html.movil .tipos .familias{width:100%;height:auto;padding:56px 24px 32px;gap:28px;background:var(--negro)}
@@ -985,7 +986,6 @@ html.movil .app-pantallas img{width:136px;height:296px}
 /* ---- KM 5 ---- */
 html.movil .marcas .foto-marca{height:360px}
 html.movil .marcas .foto-marca .ft{left:0!important;top:0!important;width:100%!important;height:100%!important}
-html.movil .marcas .logos{zoom:.34}
 html.movil .paleta-marca{grid-template-columns:1fr 1fr}
 html.movil .color{height:230px;padding:24px}
 html.movil .color h4{font-size:24px;white-space:normal}
@@ -1003,7 +1003,7 @@ html.movil .prop-sec .fila{padding:0 24px!important}
 html.movil .prop-barras{gap:28px}
 html.movil .prop-barra{width:480px;height:170px}
 html.movil .prop-barra > div > b{left:5px;top:16px;font-size:13px}
-html.movil .prop-barra .logo{left:24px;bottom:20px;zoom:.55}
+html.movil .prop-barra .logo{left:24px;bottom:20px;transform:scale(.55);transform-origin:0 100%}
 html.movil .prop-barra > div:first-child .logo{left:12px} html.movil .prop-barra > div:first-child > b{left:12px}
 html.movil .usos{gap:48px}
 html.movil .usos .fila-usos{display:grid;grid-template-columns:1fr 1fr;gap:32px 24px}
@@ -1016,11 +1016,11 @@ html.movil .uso .muestra .vec{left:12px;top:52px;width:180px;height:130px}
 html.movil .uso p{font-size:16px}
 
 /* ---- KM 6 ---- */
-html.movil .km6-intro{height:auto;padding:72px 24px 330px}
+html.movil .km6-intro{height:auto;padding:72px 24px 300px}
 html.movil .km6-intro p{width:auto;font-size:32px}
 html.movil .marca-card{height:260px}
 html.movil .marca-card .logo{width:220px!important;height:auto!important}
-html.movil .marca-card .deco-card{zoom:.5;left:91px!important;top:60px!important}
+html.movil .marca-card .deco-card{width:341px!important;height:auto;left:45px!important;top:30px!important}
 html.movil .piezas{height:auto;flex-wrap:wrap;gap:20px 28px;padding:24px}
 html.movil .piezas .fila-p{flex-wrap:wrap;justify-content:center;gap:20px 28px}
 html.movil div.signo{width:100%;height:243px}
@@ -1042,19 +1042,19 @@ html.movil .indebido{width:100%;gap:20px}
 html.movil .indebido .caja{height:288px}
 html.movil .sobre-fotos{width:432px;margin-left:24px;gap:56px}
 html.movil .sobre-foto{width:432px;height:auto}
-html.movil .sobre-foto .marco{position:relative;inset:auto;zoom:.3086;width:1400px;height:788px;border-radius:36px}
+html.movil .sobre-foto .marco{position:relative;inset:auto;width:1400px;height:788px;border-radius:36px}
 html.movil .sobre-foto .cartel{position:relative!important;left:auto!important;top:auto!important;width:100%;margin-top:16px;opacity:1;transform:none;pointer-events:auto}
 html.movil .caritas-set{grid-template-columns:repeat(3,1fr);column-gap:12px;row-gap:32px;padding:0 24px}
 html.movil .carita-ej{font-size:16px;gap:10px}
-html.movil .carita-ej .pieza{zoom:.68}
 html.movil .insignias-sec{height:auto;display:flex;flex-direction:column;gap:48px}
 html.movil .insignias-sec > *{position:relative!important;left:auto!important;top:auto!important}
-html.movil .unir-puntos{zoom:.538;margin:24px 0}
+html.movil .achicado:has(> .unir-puntos){margin:24px 0}
 html.movil .boton-plantilla{align-self:flex-start}
-html.movil .cinta-iconos{zoom:.5;width:960px;height:525px;margin-left:-48px}
+html.movil .cinta-iconos{width:960px;height:525px}
+html.movil .achicado:has(> .cinta-iconos){margin-left:-24px}
 html.movil .pautas{width:auto}
 /* receta: en dos renglones (ícono + círculo + sombra / = insignia), a 0,62 */
-html.movil .receta{zoom:.62;width:697px;height:660px}
+html.movil .receta{width:697px;height:660px}
 html.movil .receta > :nth-child(1){left:0!important;top:115px!important}
 html.movil .receta > :nth-child(2){left:100px!important;top:140px!important}
 html.movil .receta > :nth-child(3){left:160px!important;top:56px!important}
@@ -1066,6 +1066,46 @@ html.movil .siluetas .halftone{display:none}
 html.movil .siluetas-fila{flex-direction:column;align-items:flex-start;gap:20px}
 html.movil .siluetas-ej{width:100%;height:auto}
 html.movil .siluetas-grande{width:100%;height:auto}
+
+/* ---- Mobile · escala sin zoom: Safari (iPhone) dibuja pixelado y deja "rastro" en lo que se mueve dentro de un zoom.
+   En el celular la página se escala con transform: el lienzo de 480 se achica a lo ancho de la pantalla
+   (.escala-km guarda el alto real) y las partes que van achicadas usan .achicado (ver achicarMovil) ---- */
+html.movil .km > .escala-km{width:100%;overflow:clip}
+html.movil .km .escala-km > .lienzo{zoom:1;scale:var(--z);transform-origin:0 0}
+html.movil :is(#inicio,#portada) .escenario{zoom:1;scale:var(--zs);transform-origin:0 0;left:calc(-580px * var(--zs));top:calc(var(--dy,0px) * var(--zs))}
+html.movil :is(.pin-tira .pin-sticky, .pin-carrusel > .carrusel){position:relative;top:auto!important}
+html.movil .achicado{position:relative;flex:none}
+html.movil .achicado > *{position:relative!important;left:auto!important;top:auto!important;margin:0!important;transform-origin:0 0}
+
+/* ---- Mobile · misceláneas más chicas (en desktop miden lo mismo pero en una pantalla 4 veces más ancha) ---- */
+html.movil .hero .carita{width:70px;height:70px}
+html.movil .hero .carita span{width:57px;height:57px;border-width:2px}
+
+/* ---- Mobile · lo que en compu pasa con el mouse encima, en el celular pasa al llegar scrolleando (clase .activo) ---- */
+html.movil .pilar.activo{background:var(--c);color:var(--negro)}
+html.movil .pilar.activo .d{color:var(--negro)}
+html.movil .mv-item.activo .et{opacity:1;height:30px;margin-bottom:12px}
+html.movil .mv-item.activo .fr{font-weight:700;color:var(--violeta)}
+html.movil .card-enf.activo{background:var(--crema)}
+html.movil .card-enf.activo ul{max-height:186px;opacity:1;margin-top:16px}
+html.movil .card-tono.activo::before{left:0;top:0;width:100%;height:100%;border-radius:0}
+html.movil .card-tono.activo h5{color:var(--negro)}
+html.movil .card-tono.activo .ej{max-height:140px;opacity:1;margin-top:12px}
+html.movil .logo-hover.activo .v2{opacity:1} html.movil .logo-hover.activo .v1{opacity:0}
+html.movil .mala.activo img{animation:negar .45s var(--ease-in-out)}
+html.movil .indebido.activo .caja{animation:negar .45s var(--ease-in-out)}
+html.movil div.signo.activo img{transform:scale(1.04)}
+html.movil .filtros figure.activo img{transform:translateY(-10px);filter:drop-shadow(0 18px 24px rgba(0,0,0,.18))}
+html.movil .uso.activo .ic{transform:scale(1.15) rotate(-8deg)}
+html.movil .uso.no.activo .ic{animation:negar .45s var(--ease-in-out)}
+html.movil .colab-muestra.armado.activo .lockup img{transition-delay:.9s}
+html.movil .colab-muestra.armado.activo .lockup .p1{transform:translateX(-14px)}
+html.movil .colab-muestra.armado.activo .lockup .p3{transform:translateX(14px)}
+html.movil .colab-muestra.armado.activo .lockup .p2{transform:rotate(90deg) scale(1.12);transition-duration:.6s}
+html.movil .xan.activo{color:var(--amarillo)}
+html.movil .app-pantallas img.activo{transform:translateY(-14px) rotate(-1.5deg)}
+/* KM 4 · pesos: se tocan para elegirlos */
+.tipos .pesos span.elegido{color:var(--naranja)}
 </style>
 </head>
 <body>
@@ -1791,7 +1831,20 @@ const DECOS = {
 const CARITAS = { km1:[1527,414,'naranja'], km2:[1629,414,'violeta','cara-1'], km3:[1642,351,'amarillo','cara-7'], km4:[1629,414,'rosa','cara-2'], km5:[1629,414,'naranja','cara-9'], km6:[1629,414,'azul','cara-3'] };
 
 // mobile: las misceláneas se llevan del cuadro de 1920 al de 480 (los tamaños no cambian)
-function decoMovil(key, d){
+// heros en mobile: lugares elegidos a mano alrededor del texto (arriba, a la derecha del tag y abajo de los links),
+// por índice de HERO(): 0–6 puntos, 7 estrella grande, 8 estrella, 9 insignia (10 = dibujo de la insignia del KM 1)
+const HERO_MOVIL = [[400,64],[302,112],[54,724],[186,100],[338,806],[236,46],[128,866],[96,30],[396,690],[356,120]];
+const ESCALA_DECO_MOVIL = { post: .6, stop: .6, postfotos: .6, km6intro: .65 };
+function decoMovil(key, d, i){
+  const S = ESCALA_DECO_MOVIL[key] || .6;                                      // misceláneas más chicas en el celular
+  const [src0, x0, y0, w0, h0, ins, rot, caja0] = d;
+  const chico = [w0 * S, h0 * S, ins, rot, caja0 ? caja0 * S : caja0].slice(0, d.length - 3);
+  if (!ESCALA_DECO_MOVIL[key]) {                                               // heros
+    if (src0.startsWith('IMG:')) { const [bx, by] = HERO_MOVIL[9]; return [src0, bx + (x0 - 1438.48) * S, by + (y0 - 213.67) * S, ...chico]; }
+    const [hx, hy] = HERO_MOVIL[i] || [x0 / 4, y0 * ALTO_HERO / 1080];
+    return [src0, hx, hy, ...chico];
+  }
+  d = [src0, x0, y0, ...chico];
   const [src, x, y, ...resto] = d, f = 432 / 1920, IMG = src.startsWith('IMG:');
   if (key === 'post' || key === 'stop') {                                       // alrededor del logo de cada submarca (240 × 110, centrado)
     const w = resto[0], h = resto[1];
@@ -1802,14 +1855,14 @@ function decoMovil(key, d){
   }
   const mapa = {
     postfotos: [x * f, (y - 1150) * .35],                                       // alrededor del mazo de fotos
-    km6intro: [24 + x * .33, 400 + (y - 109) * .9]                             // debajo del texto (en desktop van sobre él)
+    km6intro: [24 + x * .33, 390 + (y - 109) * .8]                             // debajo del texto (en desktop van sobre él)
   }[key] || [x / 4, y * ALTO_HERO / 1080];                                      // heros
   return [src, mapa[0], mapa[1], ...resto];
 }
 function armarDecos(){
   $$('[data-decos]').forEach(cont => {
     const key = cont.dataset.decos;
-    (DECOS[key] || []).map(d => MOVIL ? decoMovil(key, d) : d).forEach(([src, x, y, w, h, ins, rot, caja]) => {
+    (DECOS[key] || []).map((d, i) => MOVIL ? decoMovil(key, d, i) : d).forEach(([src, x, y, w, h, ins, rot, caja]) => {
       const img = document.createElement('img'); img.alt = '';
       if (src.startsWith('IMG:')) {
         // dibujo de la insignia: va dentro de la estrella anterior, así se mueven juntas
@@ -1829,7 +1882,7 @@ function armarDecos(){
       mov.appendChild(img); d.appendChild(mov); cont.appendChild(d);
     });
     if (CARITAS[key]) {
-      const [x, y, c] = MOVIL ? [CARITAS[key][0] / 4 - 20, CARITAS[key][1] * ALTO_HERO / 1080, CARITAS[key][2]] : CARITAS[key];
+      const [x, y, c] = MOVIL ? [190, 760, CARITAS[key][2]] : CARITAS[key];
       const k = document.createElement('div'); k.className = 'carita';
       k.style.cssText = `left:${x}px;top:${y}px;--c:var(--${c})`;
       k.innerHTML = `<span><img src="assets/${CARITAS[key][3] ? 'miscelaneas/' + CARITAS[key][3] : 'km1/carita-b'}.png" alt=""></span>`;
@@ -2376,8 +2429,19 @@ function iniciarKM4(){
   const frases = $$('[data-frase]');
   $$('[data-peso]').forEach(s => {
     const aa = $(`[data-aa="${s.dataset.para}"]`), frase = frases[s.dataset.para === 'sora' ? 0 : 1];
-    s.addEventListener('mouseenter', () => { aa.style.fontWeight = s.dataset.peso; frase.style.fontWeight = s.dataset.peso; });
-    s.addEventListener('mouseleave', () => { aa.style.fontWeight = ''; frase.style.fontWeight = ''; });
+    const poner = p => { aa.style.fontWeight = p; frase.style.fontWeight = p; };
+    const elegido = () => $(`[data-para="${s.dataset.para}"].elegido`);
+    s.setAttribute('role', 'button'); s.tabIndex = 0;
+    s.addEventListener('mouseenter', () => poner(s.dataset.peso));
+    s.addEventListener('mouseleave', () => { const e = elegido(); poner(e ? e.dataset.peso : ''); });
+    const tocar = () => {
+      const ya = s.classList.contains('elegido');
+      $$(`[data-para="${s.dataset.para}"]`).forEach(x => x.classList.remove('elegido'));
+      if (!ya) s.classList.add('elegido');
+      poner(ya ? '' : s.dataset.peso);
+    };
+    s.addEventListener('click', tocar);
+    s.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); tocar(); } });
   });
   $$('[data-aa]').forEach(aa => {
     aa.addEventListener('mouseenter', () => aa.style.fontWeight = 600);
@@ -2658,7 +2722,7 @@ function iniciarFlotar(){
       // la carita y la insignia son únicas: si se van, vuelven a entrar por un costado
       const fija = el.classList.contains('carita') || el.querySelectorAll('img').length > 1 || /insignia-/.test(el.innerHTML);
       return nuevoCuerpo(el, parseFloat(el.style.left) + w / 2, parseFloat(el.style.top) + h / 2,
-        el.classList.contains('carita') ? 50 : Math.max(w, h) * .45, Math.cos(a) * v, Math.sin(a) * v, fija);
+        el.classList.contains('carita') ? (MOVIL ? 30 : 50) : Math.max(w, h) * .45, Math.cos(a) * v, Math.sin(a) * v, fija);
     });
     const piezas = PIEZAS_SPOT.filter(p => p[2] !== fondo);
     return { km, hero, fondo, cuerpos, piezas, obst: [], medido: false, max: cuerpos.length + (MOVIL ? 1 : 4), proxima: performance.now() + azar(2500, 5000) };
@@ -2679,7 +2743,7 @@ function iniciarFlotar(){
       o.push({ x1: ox - (me.actualBoundingBoxLeft + BORDE) * e, x2: ox + (me.actualBoundingBoxRight + BORDE) * e,
         y1: oy - (me.actualBoundingBoxAscent + BORDE) * e, y2: oy + (me.actualBoundingBoxDescent + BORDE) * e });
     }
-    $$(MOVIL ? '.km-tag, img[alt="SPOT!"], .bajada, .links' : '.km-tag, img[alt="SPOT!"]', esc.hero).forEach(e => { const r = e.getBoundingClientRect();
+    $$(MOVIL ? '.km-tag, img[alt="SPOT!"], .bajada, .links' : '.km-tag, img[alt="SPOT!"]', esc.hero).concat(MOVIL ? $$(':scope > .btn-menu', esc.km) : []).forEach(e => { const r = e.getBoundingClientRect();
       o.push({ x1: (r.left - hr.left) / z - 6, x2: (r.right - hr.left) / z + 6, y1: (r.top - hr.top) / z - 6, y2: (r.bottom - hr.top) / z + 6 }); });
     esc.obst = o; esc.medido = true;
   };
@@ -2707,9 +2771,9 @@ function iniciarFlotar(){
   const crear = esc => {
     let s = Math.random(), tipo = 'p';
     for (const [t, peso] of MEZCLA) { if (s < peso) { tipo = t; break; } s -= peso; }
-    const caja = tipo === 'c' ? 116 : 0;
+    const caja = tipo === 'c' ? (MOVIL ? 70 : 116) : 0;
     const pieza = tipo === 'c' ? null : elegir(esc.piezas.filter(q => q[3] === tipo));
-    const tam = caja || pieza[1], r = tipo === 'c' ? 50 : tipo === 'e' ? tam * .42 : tam * .45;
+    const tam = caja || pieza[1] * (MOVIL ? .6 : 1), r = tipo === 'c' ? (MOVIL ? 30 : 50) : tipo === 'e' ? tam * .42 : tam * .45;
     const izq = Math.random() < .5, x = izq ? -r - 10 : W + r + 10, y = azar(70, H - 70);
     if (esc.cuerpos.some(q => Math.hypot(q.x - x, q.y - y) < q.r + r + 20)) return;   // hay otra entrando ahí: espera
     const el = document.createElement('div');
@@ -2800,17 +2864,24 @@ function seguirSuave(pintar, tau = .45){
   };
 }
 
+/* Mobile: como la página va escalada con transform, "position: sticky" no funciona; la pieza se mantiene fija
+   corriéndola hacia abajo lo mismo que se scrolleó (desde que llega a "arriba" hasta recorrer "recorrido") */
+function fijarMovil(el, topPin, arriba, recorrido){
+  el.style.translate = `0 ${Math.max(0, Math.min(recorrido, arriba - topPin)).toFixed(1)}px`;
+}
+
 function iniciarTira(){
   const pin = $('.pin-tira'); if (!pin) return;
   const st = $('.pin-sticky', pin), pista = $('.pista-tira', pin), km = pin.closest('article.km'), MAX = 3852 - (MOVIL ? 1080 : 1680), RECORRIDO = MOVIL ? 1400 : 2400;
-  let arriba = 40;
+  let arriba = 40, alto = 560;
   const medir = () => {
-    const z = zoomActual(), h = st.getBoundingClientRect().height / z || 560;
+    const z = zoomActual(), h = (MOVIL ? st.offsetHeight : st.getBoundingClientRect().height / z) || 560; alto = h;
     arriba = Math.max(40, (innerHeight / z - h) / 2);
     st.style.top = arriba + 'px'; pin.style.height = (h + RECORRIDO) + 'px';
   };
   const act = () => {
     const z = zoomActual(), r = pin.getBoundingClientRect();
+    if (MOVIL) fijarMovil(st, r.top / z, arriba, RECORRIDO);
     const p = Math.max(0, Math.min(1, (arriba * z - r.top) / (RECORRIDO * z)));
     mover(-MAX * p);
   };
@@ -2843,6 +2914,7 @@ function iniciarCarruseles(){
     const mover = seguirSuave(pintar);
     const act = () => {
       const z = zoomActual(), r = pin.getBoundingClientRect();
+      if (MOVIL) fijarMovil(c, r.top / z, arriba, RECORRIDO);
       const p = Math.max(0, Math.min(1, (arriba * z - r.top) / (RECORRIDO * z)));
       const t = p * (n - 1), k = Math.min(n - 2, Math.floor(t)), f = suave((t - k - .2) / .6);   // cada foto se queda quieta un rato
       i = Math.round(t); mover(-(k + f) * PASO);
@@ -2912,7 +2984,7 @@ function iniciarViajeKM6(){
     datos.forEach((d, i) => {
       if (d.lugar) {
         const t = suave((p - i * .015) / .85);                      // salen apenas escalonadas
-        const [lx, ly, esc0] = d.lugar, esc = MOVIL ? esc0 * .7 : esc0, dx = (medidas.cx + lx * medidas.fx - d.x) * t, dy = (medidas.cy + ly * medidas.fy - d.y) * t;
+        const [lx, ly, esc] = d.lugar, dx = (medidas.cx + lx * medidas.fx - d.x) * t, dy = (medidas.cy + ly * medidas.fy - d.y) * t;
         d.el.style.translate = `${dx.toFixed(1)}px ${dy.toFixed(1)}px`;
         d.el.style.rotate = `${(d.giro * Math.sin(t * Math.PI) * .25).toFixed(1)}deg`;
         d.el.style.scale = (1 + (esc - 1) * t).toFixed(3);
@@ -3281,6 +3353,7 @@ async function iniciarFaviconSec(){
   vars.innerHTML = FAV_SEC.General.cuadros.map((c, i) => `<img src="${cuadro(c)}" alt="Favicon ${i + 1}">`).join('');
   anims.innerHTML = Object.entries(FAV_SEC).map(([n, d]) => `<div class="fav-anim" data-fav="${n}" tabindex="0" aria-label="Favicon animado ${n}: pasá el mouse para verlo">
     <div class="caja"><img class="mediano" alt=""><img class="mini" alt=""></div><h4>${n}</h4><p>${d.txt}</p></div>`).join('');
+  if (MOVIL) $$('.fav-anim .caja', anims).forEach(c => achicarMovil(c, .6));
   $$('.fav-anim', anims).forEach(el => {
     const urls = FAV_SEC[el.dataset.fav].cuadros.map(cuadro), imgs = $$('img', el);
     let i = 0, reloj = null;
@@ -3354,11 +3427,58 @@ function cerrarMenu(){ menu.classList.remove('abierto'); veloMenu.classList.remo
    así la zona de submarcas puede ir en columna */
 function prepararMovil(){
   if (!MOVIL) return;
+  // cada KM: el lienzo se escala con transform dentro de .escala-km, que toma el alto escalado (el transform no lo cambia)
+  $$('article.km').forEach(km => {
+    const lienzo = $('.lienzo', km), caja = document.createElement('div'); caja.className = 'escala-km';
+    km.insertBefore(caja, lienzo); caja.appendChild(lienzo);
+    const medir = () => { caja.style.height = (lienzo.offsetHeight * zoomActual()).toFixed(1) + 'px'; };
+    new ResizeObserver(medir).observe(lienzo); addEventListener('resize', medir); medir();
+    const btn = $('.hero .btn-menu', km); if (btn) km.appendChild(btn);      // fijo arriba, fuera de lo escalado
+  });
   const zona = $('.submarcas-zona'); if (!zona) return;
   const mazo = document.createElement('div'); mazo.className = 'mazo-movil';
   $('.boton', zona).after(mazo);
   $$('.foto-rot', zona).forEach(f => mazo.appendChild(f));
   const pf = $('[data-decos="postfotos"]', zona); if (pf) mazo.appendChild(pf);
+}
+
+/* Mobile: achica un elemento con transform (scale) y le pone alrededor una caja (.achicado) con el tamaño achicado,
+   para que ocupe su lugar real en la página. Reemplaza a "zoom", que en Safari se ve pixelado y deja rastro. */
+function achicarMovil(el, s){
+  if (!el || el.parentElement.classList.contains('achicado')) return;
+  const caja = document.createElement('div'); caja.className = 'achicado';
+  el.before(caja); caja.appendChild(el); el.style.scale = s;
+  const medir = () => { caja.style.width = (el.offsetWidth * s).toFixed(1) + 'px'; caja.style.height = (el.offsetHeight * s).toFixed(1) + 'px'; };
+  new ResizeObserver(medir).observe(el); medir();
+}
+const ACHICAR_MOVIL = [['.tira', .4], ['.ui-ventana', .6], ['#perfil .barra', .432], ['.colab-muestra', .5], ['.unir-puntos', .538], ['.cinta-iconos', .5],
+  ['.receta', .62], ['.carita-ej .pieza', .68], ['.marcas .logos', .34], ['.sobre-foto .marco', .3086]];
+function achicarTodo(){
+  if (!MOVIL) return;
+  ACHICAR_MOVIL.forEach(([sel, s]) => $$(sel).forEach(el => achicarMovil(el, el.closest('.colab-fila:last-child') ? .36 : s)));
+  $$('.titulo-km').forEach(h => achicarMovil(h, +h.style.getPropertyValue('--ts') || 1));
+}
+
+/* Mobile: lo que en compu pasa con el mouse encima, en el celular pasa al llegar scrolleando: cuando la pieza cruza
+   la franja del medio de la pantalla recibe .activo (y los eventos del mouse, para lo que se maneja con JS) */
+const ACTIVA_SCROLL = '.pilar, .mv-item, .card-enf, .card-tono, .fav-anim, .sobre-foto, .logo-hover, .mala, .indebido, div.signo, .filtros figure, .uso, .colab-muestra, .xan, .app-pantallas img';
+function iniciarActivoScroll(){
+  if (!MOVIL) return;
+  $$('article.km').forEach(km => {
+    let pend = false;
+    const mirar = () => {
+      pend = false; if (!km.classList.contains('activa')) return;
+      const h = innerHeight, a = h * .4, b = h * .6;
+      $$(ACTIVA_SCROLL, km).forEach(el => {
+        const r = el.getBoundingClientRect(), on = r.bottom > a && r.top < b;
+        if (on === el.classList.contains('activo')) return;
+        el.classList.toggle('activo', on);
+        if (el.classList.contains('sobre-foto')) el.classList.toggle('on', on);
+        el.dispatchEvent(new MouseEvent(on ? 'mouseenter' : 'mouseleave'));
+      });
+    };
+    km.addEventListener('scroll', () => { if (!pend) { pend = true; requestAnimationFrame(mirar); } }, { passive: true });
+  });
 }
 
 /* Escala: las páginas se diseñaron a 1920 px (480 px en mobile) */
@@ -3387,7 +3507,7 @@ addEventListener('keydown', e => { if (e.key === 'Escape') cerrarMenu(); });
 $$('[data-a]').forEach(b => b.addEventListener('click', () => scrollA(b.closest('article.km').id, b.dataset.a)));
 $$('[data-bajar]').forEach(b => b.addEventListener('click', () => { const k = b.closest('article.km'); irA_Y(k, k.scrollTop + innerHeight * .9); }));
 $$('[data-arriba]').forEach(b => b.addEventListener('click', () => irArriba(b.closest('article.km'))));
-iniciarScrollSuave(); iniciarEntradas(); iniciarStickers(); iniciarToques(); iniciarCursor(); iniciarFavicon(); iniciarFaviconSec(); iniciarBotonMenu(); iniciarRastro(); iniciarPerfil(); iniciarSobreFotos(); iniciarUnirPuntos(); iniciarCintaIconos(); iniciarReceta(); iniciarColab(); iniciarKM3Entradas(); iniciarProporcion(); iniciarTira(); iniciarCarruseles(); iniciarCarruselUI(); iniciarParalaje(); iniciarViajeKM6(); iniciarMazo(); iniciarMecer(); iniciarRasgos(); iniciarFlotar();
+iniciarScrollSuave(); iniciarEntradas(); iniciarStickers(); iniciarToques(); iniciarCursor(); iniciarFavicon(); iniciarFaviconSec(); iniciarBotonMenu(); iniciarRastro(); iniciarPerfil(); iniciarSobreFotos(); iniciarUnirPuntos(); iniciarCintaIconos(); iniciarReceta(); iniciarColab(); iniciarKM3Entradas(); iniciarProporcion(); iniciarTira(); iniciarCarruseles(); iniciarCarruselUI(); iniciarParalaje(); iniciarViajeKM6(); iniciarMazo(); iniciarMecer(); iniciarRasgos(); iniciarFlotar(); achicarTodo(); iniciarActivoScroll();
 addEventListener('hashchange', leerHash);
 
 if (location.hash && location.hash !== '#inicio') { portada.remove(); portadaFuera = true; leerHash(); }
