@@ -416,3 +416,6 @@ El 10/11/2026 se borró todo lo construido y se empezó de nuevo. Respaldo de la
   - **Logos Spot:** cada logo entra con el carácter que describe el texto. SPOT! se marca de izquierda a derecha, como un recorrido. post. aparece calmo, con un desenfoque que se aclara. STOP explota con un rebote. El hover de SPOT! sigue igual.
   - **Diagramas** (Construcción, Espacios seguros y Ubicación): se dibujan solos. Primero aparecen los logos, después se trazan las guías (las líneas azules de la altura de x, las cajas de espacio seguro, los márgenes) y al final aparecen las líneas punteadas.
   - Para poder animar sus partes, esos SVG ahora se cargan dentro de la página en lugar de como `<img>`. Quietos se ven igual que antes. Los archivos de `assets/km3/` y `assets/km3b/` no cambiaron.
+- 12/11/2026 · Mateo · **Arreglo: el logo SPOT! de "Logos Spot" no aparecía.** La caja estaba recortada del todo mientras esperaba, y el navegador no avisaba que había entrado en pantalla. Ahora el recorrido de izquierda a derecha recorta las imágenes de adentro, no la caja.
+  - Además, las entradas del KM 3 (logos y diagramas) ya no usan IntersectionObserver: miran el scroll de cada KM (`entradaRepetida`).
+  - Regla: no ocultar con `clip-path` el mismo elemento que se usa para detectar si entró en pantalla.
