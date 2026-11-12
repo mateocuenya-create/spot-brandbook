@@ -574,7 +574,8 @@ html.cursor-propio.cursor-visible :is(#cursor,#cursor-mini){opacity:1}
 #cursor img{position:absolute;left:0;top:0;width:32px;height:32px;opacity:0;transform:scale(.6);transform-origin:5px 5px;
   transition:opacity .18s var(--ease-out),transform .28s cubic-bezier(.34,1.56,.64,1)}
 #cursor img.mano{transform-origin:16px 16px}
-#cursor[data-modo="flecha"] .flecha,#cursor[data-modo="clic"] .clic,#cursor[data-modo="mano"] .mano{opacity:1;transform:scale(1)}
+#cursor img.lapiz{left:2.4px;top:-24.4px;transform-origin:2.6px 29.4px}
+#cursor[data-modo="flecha"] .flecha,#cursor[data-modo="clic"] .clic,#cursor[data-modo="mano"] .mano,#cursor[data-modo="lapiz"] .lapiz{opacity:1;transform:scale(1)}
 #cursor.apretado img{transform:scale(.85)}
 #cursor-mini{width:20px;height:20px;will-change:transform}
 #cursor-mini img{width:100%;height:100%;transition:transform .45s cubic-bezier(.34,1.56,.64,1)}
@@ -642,6 +643,51 @@ html.cursor-propio.cursor-visible :is(#cursor,#cursor-mini){opacity:1}
 .sobre-foto:is(:hover,:focus-within,.on) .encima > *{opacity:1;transform:none}
 .sobre-foto:is(:hover,:focus-within,.on) .encima > :nth-child(2){transition-delay:.08s}
 .sobre-foto:is(:hover,:focus-within,.on) .cartel{opacity:1;transform:none;transition-delay:.15s;pointer-events:auto}
+
+/* KM 6 · Insignias (Figma 448:2449): unir los puntos de SPOT, cinta de íconos de puntos, plantilla y receta de la insignia */
+.insignias-sec{position:relative;height:2247px}
+.insignias-sec .c b{font-weight:700}
+.unir-puntos{position:absolute;left:559px;top:334px;width:803px;height:491px;touch-action:none;user-select:none}
+.unir-puntos svg{position:absolute;left:0;top:0;width:803px;height:491px;overflow:visible}
+.unir-puntos .trazo{stroke:var(--violeta);stroke-width:3.71;stroke-linecap:round;fill:none}
+.unir-puntos .trazo.nuevo{animation:trazar .25s var(--ease-out)}
+@keyframes trazar{from{stroke-dashoffset:var(--l)}to{stroke-dashoffset:0}}
+.unir-puntos .guia{stroke:var(--violeta);stroke-width:3.71;stroke-linecap:round;stroke-dasharray:2 8;opacity:.8}
+.unir-puntos .pto{fill:var(--negro);transition:r .2s cubic-bezier(.34,1.56,.64,1),fill .2s}
+.unir-puntos .pto.cerca,.unir-puntos .pto.usado{fill:var(--violeta)}
+.unir-puntos .pto.cerca{r:7px}
+.unir-puntos text{font:400 13.36px var(--reddit);fill:var(--negro);pointer-events:none}
+.boton-plantilla{position:absolute;left:120px;top:867px;height:54px;padding:0 28px;display:flex;align-items:center;border-radius:100px;background:var(--negro);color:var(--crema);
+  font:600 20px/1.3 var(--reddit);z-index:2;transition:transform .2s var(--ease-out)}
+.boton-plantilla:hover{transform:scale(1.05)}
+.cinta-iconos{position:absolute;left:0;top:921px;width:1920px;height:525px;overflow:hidden}
+.cinta-iconos .pista-iconos{display:flex;gap:60px;padding:60px 0 0 120px;width:max-content;animation:cinta 75s linear infinite}
+.cinta-iconos:hover .pista-iconos{animation-play-state:paused}
+@keyframes cinta{to{transform:translateX(-4650px)}}
+.icono-tile{position:relative;width:405px;height:405px;flex:none}
+.icono-tile img{position:absolute}
+.icono-tile .grilla{position:absolute;inset:0;opacity:0;transition:opacity .3s var(--ease-out);
+  background-image:linear-gradient(90deg,rgba(247,158,224,.35) 1px,transparent 1px),linear-gradient(rgba(247,158,224,.35) 1px,transparent 1px);background-size:15px 15px}
+.icono-tile:hover .grilla{opacity:1}
+.pautas{position:absolute;left:120px;top:1542px;width:405px;display:flex;flex-direction:column;gap:16px}
+.pautas h4{font:600 24px/1.3 var(--reddit);color:var(--negro)}
+.pautas p{font:400 20px/1.5 var(--reddit);color:var(--negro)}
+.pautas p + p{margin-top:30px}
+.pautas b{font-weight:700;color:var(--violeta)}
+.receta{position:absolute;left:686px;top:1542px;width:1115px;height:309px}
+.receta .paso{position:absolute;opacity:var(--o,1);transform:translateY(calc((1 - var(--o,1)) * 16px))}
+.receta .signo{width:30px;height:30px}
+.receta .signo::before,.receta .signo::after{content:"";position:absolute;background:var(--negro);border-radius:1px}
+.receta .mas::before{left:0;top:13px;width:30px;height:4.2px}.receta .mas::after{left:13px;top:0;width:4.2px;height:30px}
+.receta .igual::before{left:0;top:13px;width:30px;height:4.2px}.receta .igual::after{left:0;top:28px;width:30px;height:4.2px}
+.receta .circulo-logro{width:197px;height:197px;border-radius:50%;background:var(--violeta);border:14.24px solid var(--crema);box-shadow:0 9.5px 9.5px rgba(0,0,0,.25)}
+.sombra-card{width:198px;padding:16px 16px 14px;border-radius:16px;background:var(--negro);color:var(--crema);border:2px solid var(--crema);box-shadow:0 10px 26px rgba(0,0,0,.25);
+  display:flex;flex-direction:column;gap:9px;font:400 14px/1.2 var(--reddit)}
+.sombra-card .et{font:600 11px/1 var(--reddit);letter-spacing:.08em;text-transform:uppercase;color:var(--crema-60)}
+.sombra-card .fila-s{display:flex;justify-content:space-between;align-items:center}
+.sombra-card .fila-s span{color:var(--crema-60)}
+.sombra-card .fila-s b{font:600 15px/1 var(--sora)}
+.sombra-card .fila-s i{display:inline-block;width:12px;height:12px;border-radius:50%;background:#000;border:1.5px solid var(--crema);vertical-align:-1px;margin-right:5px}
 
 /* ---------- Movimiento al scrollear (referencia: houseofyellow.nl) ----------
    Scroll suave con Lenis (1,2 s, expo-out) y entradas: suben 24 px y aparecen en 0,45 s,
@@ -1198,9 +1244,25 @@ html.cursor-propio.cursor-visible :is(#cursor,#cursor-mini){opacity:1}
     <div class="caritas-set" data-caritas></div>
   </section>
   <div class="divisor"></div>
-  <section class="sec-foto" id="km6-insignias">
-    <div class="fila"><h3 class="t">Insignias</h3><p class="c txt">Las insignias toman un estilo visual diferenciado de los iconos, y de las caritaa. utilizamos puntos haciendo referencia al nombre de la marca “spot”, además queremos simbolizar como el recorrido hasta llegar a conseguir una de estas insignias requiere pasar por varios puntos</p></div>
-    <div class="insignia-card"><img src="assets/km6/insignia-card.svg" alt="Tarjeta de logro de la app: insignia de consistencia, 1 por semana" width="255" height="344"></div>
+  <section class="sec insignias-sec" id="km6-insignias">
+    <div class="fila"><h3 class="t">Insignias</h3><p class="c txt">Las insignias toman un estilo visual diferenciado de los iconos, y de las caritaa. utilizamos puntos haciendo referencia al nombre de la marca “spot”, además queremos simbolizar como el recorrido hasta llegar a conseguir una de estas insignias requiere pasar por varios <b>puntos</b></p></div>
+    <div class="unir-puntos" data-unir role="img" aria-label="Unir los puntos: los números forman la palabra SPOT. Arrastrá de un punto a otro para unirlos."></div>
+    <a class="boton-plantilla" href="assets/km6/plantilla-insignia.svg" download="Spot - Plantilla de insignia.svg">Descargar plantilla</a>
+    <div class="cinta-iconos" aria-label="Íconos de puntos de las insignias"><div class="pista-iconos" data-cinta></div></div>
+    <div class="pautas"><h4>¿Cómo crear una insignia?</h4>
+      <div><p>Al seleccionar el ícono, tenemos en cuenta que las insignias no se eligen al azar: cada <b>una guarda un vínculo, aunque sea mínimo, con el logro que representa</b>. No hace falta que ese vínculo se entienda a simple vista; es una manera de ordenar un sistema que se expande al mismo tiempo que la marca.</p>
+      <p>Por ejemplo, elegimos que <b>la mariposa</b> represente todo lo que tiene que ver con <b>nuevos comienzos</b>, como el logro <b>Noobie</b>. Está relacionada con el crecimiento personal: representa el paso del esfuerzo y la paciencia, y es un símbolo universal de transformación. Quien gana la insignia no piensa en ese significado al instante, pero el sistema mantiene su coherencia.</p></div></div>
+    <div class="receta" data-receta aria-label="Ícono de puntos, más círculo de color, más sombra paralela, igual a la insignia Noobie">
+      <img class="paso" src="assets/km6/icono-mariposa.svg" alt="Ícono de la mariposa" style="left:0;top:115px;width:80px;height:80px">
+      <i class="paso signo mas" style="left:134px;top:140px"></i>
+      <i class="paso circulo-logro" style="left:217px;top:56px"></i>
+      <i class="paso signo mas" style="left:468px;top:140px"></i>
+      <div class="paso sombra-card" style="left:551px;top:61px"><span class="et">Sombra paralela</span>
+        <div class="fila-s"><span>Posición</span><b>X 0 · Y 4</b></div><div class="fila-s"><span>Desenfoque</span><b>4</b></div>
+        <div class="fila-s"><span>Expansión</span><b>0</b></div><div class="fila-s"><span><i></i>#000000</span><b>25 %</b></div></div>
+      <i class="paso signo igual" style="left:803px;top:132px"></i>
+      <img class="paso" src="assets/km6/insignia-noobie.svg" alt="Insignia Noobie: ¡Completaste tu primera actividad en Spot! +30 p." style="left:886px;top:0;width:230px;height:310px">
+    </div>
   </section>
   <div class="divisor"></div>
   <section class="sec-foto siluetas" id="km6-siluetas">
@@ -2438,6 +2500,79 @@ function iniciarSobreFotos(){
   });
 }
 
+/* KM 6 · Insignias */
+// puntos del "unir los puntos" (Figma Group 81, 803 × 491): [x, y] de cada punto (esquina, 8,9 px) y los números [texto, x, y]
+const PUNTOS_UNIR = [[7.4,62.3],[326.5,54.9],[207.8,129.1],[141,114.3],[89,136.5],[74.2,188.5],[103.9,233],[163.2,255.3],[207.8,292.4],[200.3,344.3],[148.4,366.6],[66.8,351.7],
+  [771.7,62.3],[0,270.1],[267.1,366.6],[267.1,114.3],[341.3,114.3],[385.8,143.9],[393.3,195.9],[356.2,233],[267.1,236.7],[415.5,433.3],[549.8,482.3],[367.3,382.9],[504.6,54.9],
+  [634.4,4.5],[167.7,0],[474.9,114.3],[534.2,114.3],[571.3,166.2],[571.3,314.6],[534.2,366.6],[474.9,366.6],[437.8,314.6],[437.8,166.2],[779.1,270.1],[371,292.4],[615.9,114.3],
+  [678.9,114.3],[742,114.3],[678.9,366.6],[29.7,433.3],[244.9,418.5],[638.1,440.8],[793.9,403.7]];
+const NUMEROS_UNIR = [[1,218.9,136.5],[2,152.1,121.7],[3,100.2,143.9],[4,85.3,195.9],[5,115,240.4],[6,174.4,262.7],[7,218.9,299.8],[8,211.5,351.7],[9,159.5,374],[10,77.9,359.1],
+  [11,278.3,374],[12,278.3,121.7],[13,352.5,121.7],[14,397,151.4],[15,404.4,203.3],[16,367.3,240.4],[17,278.3,244.1],[18,486,121.7],[19,545.4,121.7],[20,582.5,173.6],[21,582.5,322],
+  [22,545.4,374],[23,486,374],[24,448.9,322],[25,448.9,173.6],[26,627,121.7],[27,690.1,121.7],[28,753.1,121.7],[29,690.1,374]];
+// íconos de puntos (Figma "Íconos de puntos · 405 px · grilla"): [archivo, x, y del grupo dentro del cuadro de 405]
+const ICONOS_PUNTOS = [['tulipan',105,75],['rayo',105,75],['llama',105,60],['gota',105,60],['rama',90,45],['mariposa',75,75],['reloj',75,75],['candado',90,60],['cafe',75,75],['cubiertos',105,60]];
+
+/* Unir los puntos: con el lápiz se arrastra de un punto a otro y queda la línea violeta (como en el Figma).
+   Se puede encadenar sin soltar, o tocar un punto y después otro. Doble click: se borra todo. */
+function iniciarUnirPuntos(){
+  const caja = $('[data-unir]'); if (!caja) return;
+  const NS = 'http://www.w3.org/2000/svg', svg = document.createElementNS(NS, 'svg');
+  svg.setAttribute('viewBox', '0 0 803 491'); caja.appendChild(svg);
+  const gL = document.createElementNS(NS, 'g'), gP = document.createElementNS(NS, 'g'); svg.append(gL, gP);
+  const guia = document.createElementNS(NS, 'line'); guia.setAttribute('class', 'guia'); guia.style.display = 'none'; gL.appendChild(guia);
+  const P = PUNTOS_UNIR.map(([x, y]) => { const c = document.createElementNS(NS, 'circle'); const cx = x + 4.45, cy = y + 4.45;
+    c.setAttribute('cx', cx); c.setAttribute('cy', cy); c.setAttribute('r', 4.45); c.setAttribute('class', 'pto'); gP.appendChild(c); return { x: cx, y: cy, el: c }; });
+  NUMEROS_UNIR.forEach(([n, x, y]) => { const t = document.createElementNS(NS, 'text'); t.setAttribute('x', x); t.setAttribute('y', y + 13); t.textContent = n; gP.appendChild(t); });
+  const hechos = new Set();
+  const local = e => { const r = caja.getBoundingClientRect(), k = r.width / 803; return { x: (e.clientX - r.left) / k, y: (e.clientY - r.top) / k }; };
+  const cercano = (q, rad = 16) => { let m = null, dm = rad; P.forEach(p => { const d = Math.hypot(p.x - q.x, p.y - q.y); if (d < dm) { dm = d; m = p; } }); return m; };
+  const unir = (a, b) => {
+    const clave = [P.indexOf(a), P.indexOf(b)].sort((m, n) => m - n).join('-'); if (a === b || hechos.has(clave)) return; hechos.add(clave);
+    const l = document.createElementNS(NS, 'line'), largo = Math.hypot(b.x - a.x, b.y - a.y);
+    l.setAttribute('x1', a.x); l.setAttribute('y1', a.y); l.setAttribute('x2', b.x); l.setAttribute('y2', b.y); l.setAttribute('class', 'trazo nuevo');
+    l.style.strokeDasharray = largo; l.style.setProperty('--l', largo); gL.insertBefore(l, guia);
+    a.el.classList.add('usado'); b.el.classList.add('usado');
+  };
+  let desde = null, apretado = false, sobre = null;
+  const marcar = p => { if (sobre === p) return; if (sobre) sobre.el.classList.remove('cerca'); sobre = p; if (p) p.el.classList.add('cerca'); };
+  caja.addEventListener('pointerdown', e => {
+    const q = local(e), p = cercano(q);
+    if (!p) { desde = null; guia.style.display = 'none'; return; }
+    if (desde && desde !== p) unir(desde, p);
+    desde = p; apretado = true; caja.setPointerCapture(e.pointerId);
+  });
+  caja.addEventListener('pointermove', e => {
+    const q = local(e), p = cercano(q); marcar(p);
+    if (!desde) return;
+    guia.style.display = ''; guia.setAttribute('x1', desde.x); guia.setAttribute('y1', desde.y); guia.setAttribute('x2', q.x); guia.setAttribute('y2', q.y);
+    if (apretado && p && p !== desde) { unir(desde, p); desde = p; }
+  });
+  const soltar = () => { apretado = false; };
+  caja.addEventListener('pointerup', soltar); caja.addEventListener('pointercancel', soltar);
+  caja.addEventListener('pointerleave', () => { marcar(null); if (!apretado) { desde = null; guia.style.display = 'none'; } });
+  caja.addEventListener('dblclick', () => { hechos.clear(); $$('.trazo', gL).forEach(l => l.remove()); P.forEach(p => p.el.classList.remove('usado')); desde = null; guia.style.display = 'none'; });
+}
+
+/* Cinta de íconos de puntos: pasa sola y se repite (velocidad media); la grilla rosa de 15 px aparece al pasar el mouse por un ícono */
+function iniciarCintaIconos(){
+  const pista = $('[data-cinta]'); if (!pista) return;
+  const tile = ([n, x, y]) => `<div class="icono-tile"><i class="grilla"></i><img src="assets/km6/icono-${n}.svg" alt="" style="left:${x}px;top:${y}px"></div>`;
+  pista.innerHTML = ICONOS_PUNTOS.map(tile).join('') + ICONOS_PUNTOS.map(tile).join('');
+  if (REDUCIR) pista.style.animation = 'none';
+}
+
+/* "¿Cómo crear una insignia?": a medida que scrolleás hasta acá, cada paso de la receta gana opacidad, uno detrás del otro */
+function iniciarReceta(){
+  const r = $('[data-receta]'); if (!r) return;
+  const km = r.closest('article.km'), pasos = $$('.paso', r), n = pasos.length;
+  const act = () => {
+    const b = r.getBoundingClientRect(), vh = innerHeight;
+    const p = Math.max(0, Math.min(1, (vh - b.top) / (vh * .6)));       // 0 cuando asoma abajo, 1 cuando llega al 40 % de la pantalla
+    pasos.forEach((el, i) => el.style.setProperty('--o', Math.max(0, Math.min(1, p * n - i)).toFixed(3)));
+  };
+  km.addEventListener('scroll', act, { passive: true }); addEventListener('resize', act); act();
+}
+
 function iniciarBotonMenu(){
   const lum = c => { const m = c.match(/[\d.]+/g); if (!m) return null; const [r, g, b, a = 1] = m.map(Number); if (a < .5) return null; return (.299 * r + .587 * g + .114 * b) / 255; };
   const fondoDebajo = btn => {
@@ -2526,14 +2661,14 @@ function iniciarCursor(){
   if (!matchMedia('(hover: hover) and (pointer: fine)').matches) return;
   const html = document.documentElement;
   const cur = document.createElement('div'); cur.id = 'cursor'; cur.dataset.modo = 'flecha';
-  cur.innerHTML = ['flecha', 'clic', 'mano'].map(n => `<img class="${n}" src="assets/cursor/${n}.svg" alt="">`).join('');
+  cur.innerHTML = ['flecha', 'clic', 'mano', 'lapiz'].map(n => `<img class="${n}" src="assets/cursor/${n}.svg" alt="">`).join('');
   const mini = document.createElement('div'); mini.id = 'cursor-mini'; mini.innerHTML = '<img src="assets/km2/319f2.svg" alt="">';   // estrella de 12 puntas azul de SPOT!
   document.body.append(mini, cur);
   html.classList.add('cursor-propio');
   let x = -100, y = -100, mx = -100, my = -100, ultimo = null, t0 = performance.now();
   const evaluar = el => {
     if (!el || el === ultimo) return; ultimo = el;
-    cur.dataset.modo = el.matches(SEL_MANO) ? 'mano' : el.matches(SEL_CLIC) ? 'clic' : 'flecha';
+    cur.dataset.modo = el.closest('.unir-puntos') ? 'lapiz' : el.matches(SEL_MANO) ? 'mano' : el.matches(SEL_CLIC) ? 'clic' : 'flecha';
     mini.classList.toggle('grande', cur.dataset.modo !== 'flecha');
   };
   addEventListener('pointermove', e => {
@@ -2619,7 +2754,7 @@ addEventListener('keydown', e => { if (e.key === 'Escape') cerrarMenu(); });
 $$('[data-a]').forEach(b => b.addEventListener('click', () => scrollA(b.closest('article.km').id, b.dataset.a)));
 $$('[data-bajar]').forEach(b => b.addEventListener('click', () => { const k = b.closest('article.km'); irA_Y(k, k.scrollTop + innerHeight * .9); }));
 $$('[data-arriba]').forEach(b => b.addEventListener('click', () => irArriba(b.closest('article.km'))));
-iniciarScrollSuave(); iniciarEntradas(); iniciarStickers(); iniciarCursor(); iniciarFavicon(); iniciarBotonMenu(); iniciarRastro(); iniciarPerfil(); iniciarSobreFotos(); iniciarTira(); iniciarCarruseles(); iniciarCarruselUI(); iniciarParalaje(); iniciarViajeKM6(); iniciarMazo(); iniciarMecer(); iniciarRasgos(); iniciarFlotar();
+iniciarScrollSuave(); iniciarEntradas(); iniciarStickers(); iniciarCursor(); iniciarFavicon(); iniciarBotonMenu(); iniciarRastro(); iniciarPerfil(); iniciarSobreFotos(); iniciarUnirPuntos(); iniciarCintaIconos(); iniciarReceta(); iniciarTira(); iniciarCarruseles(); iniciarCarruselUI(); iniciarParalaje(); iniciarViajeKM6(); iniciarMazo(); iniciarMecer(); iniciarRasgos(); iniciarFlotar();
 addEventListener('hashchange', leerHash);
 
 if (location.hash && location.hash !== '#inicio') { portada.remove(); portadaFuera = true; leerHash(); }
