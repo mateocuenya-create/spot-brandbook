@@ -878,13 +878,12 @@ svg.esquema .nivel .raya{fill:var(--naranja);transform:translateY(var(--y,0))}
 .hitos.espera .hito{transform:scale(.55);border-radius:50%;opacity:0}
 .hitos:not(.espera) .hito:is(:hover,.activo) img{animation:respirar 2.4s ease-in-out infinite}
 @keyframes respirar{0%,100%{scale:1}50%{scale:1.045}}
-.pantallas-post{position:relative;width:1255px;aspect-ratio:1100/712;flex:none;background:var(--negro)}
-.pantallas-post i{position:absolute;inset:0;background:url(assets/km10/fachada-post.png) 0 0/100% 100% no-repeat}
-.pantallas-post .s1{clip-path:inset(0 0 66.5% 0)}
-.pantallas-post .s2{clip-path:inset(33.6% 0 33.2% 0);--d:.35s}
-.pantallas-post .s3{clip-path:inset(67.2% 0 0 0);--d:.7s}
-.pantallas-post:not(.espera) i{animation:prender 1s steps(1,end) var(--d,0s) backwards}
-.pantallas-post.espera i{filter:brightness(0)}
+.pantallas-post{width:1255px;flex:none;display:flex;flex-direction:column;gap:8px;background:var(--negro)}
+.pantallas-post video{display:block;width:100%;height:auto;background:#1c1c1c}
+.pantallas-post .s2{--d:.35s}
+.pantallas-post .s3{--d:.7s}
+.pantallas-post:not(.espera) video{animation:prender 1s steps(1,end) var(--d,0s) backwards}
+.pantallas-post.espera video{filter:brightness(0)}
 @keyframes prender{0%{filter:brightness(0)}12%{filter:brightness(1.6)}20%{filter:brightness(.15)}34%{filter:brightness(1.3)}44%{filter:brightness(.5)}60%{filter:brightness(1.15)}100%{filter:none}}
 
 /* =====================================================================
@@ -1906,7 +1905,10 @@ html.movil .frente .m3{transform:translate(calc((1 - var(--p)) * 60px), calc((1 
       <div class="hitos" data-hitos><figure class="hito"><img src="assets/km10/inflables.jpg" alt="Copa, estrella y carita inflables de STOP iluminadas de noche frente a un edificio." loading="lazy"></figure>
         <figure class="hito"><img src="assets/km10/parada-foto.jpg" alt="Parada fotográfica: una carita inflable con anteojos, un espejo y señales con frases como “Pará, tomá aire.”." loading="lazy"></figure></div></div>
     <div class="senal-fila"><div class="pauta"><h4>La pantalla también es arquitectura</h4><p>En post., la fachada de pantallas cumple el mismo rol que un cartel: deja reconocer la instalación desde afuera, anuncia lo que está por empezar y suma movimiento con las animaciones de la marca.</p></div>
-      <div class="pantallas-post" data-pantallas role="img" aria-label="Fachada de pantallas de post.: el logo con puntos, siluetas de corredores y ciclistas en verde, y la frase “Tomemos un break.”."><i class="s1"></i><i class="s2"></i><i class="s3"></i></div></div>
+      <div class="pantallas-post" data-pantallas>
+        <video class="s1" src="assets/km10/post-respirar.mp4" muted loop playsinline preload="none" style="aspect-ratio:2366/820" aria-label="Pantalla de la entrada de post.: animación respirar"></video>
+        <video class="s2" src="assets/km10/post-running.mp4" muted loop playsinline preload="none" style="aspect-ratio:3240/1080" aria-label="Pantalla del frente de post.: animación running"></video>
+        <video class="s3" src="assets/km10/post-insignia.mp4" muted loop playsinline preload="none" style="aspect-ratio:4096/1484" aria-label="Pantalla de atrás de post.: animación insignia"></video></div></div>
   </section>
   <footer class="pie-km" data-ant="|KM9|Íconos" data-sig="inicio|KM0|Volver al inicio"></footer>
  </div>
@@ -3771,10 +3773,26 @@ function iniciarFrente(){
     f.style.setProperty('--p', (1 - Math.pow(1 - p, 3)).toFixed(3)); };
   km.addEventListener('scroll', act, { passive: true }); addEventListener('resize', act); act();
 }
+/* Pantallas de post.: los 3 videos (respirar, running, insignia) se cargan recién al acercarse y solo se reproducen
+   mientras están en pantalla, para no gastar datos ni batería */
+function iniciarPantallas(){
+  const caja = $('[data-pantallas]'); if (!caja) return;
+  const vids = $$('video', caja), km = caja.closest('article.km');
+  if (REDUCIR) { vids.forEach(v => { v.preload = 'metadata'; v.controls = true; }); return; }
+  const act = () => {
+    const r = caja.getBoundingClientRect(), h = innerHeight;
+    const cerca = r.bottom > -h * .5 && r.top < h * 1.5, ve = r.bottom > 0 && r.top < h;
+    vids.forEach(v => {
+      if (cerca && v.preload === 'none') v.preload = 'auto';
+      if (ve && km.classList.contains('activa')) { if (v.paused) v.play().catch(() => {}); } else if (!v.paused) v.pause();
+    });
+  };
+  km.addEventListener('scroll', act, { passive: true }); new MutationObserver(act).observe(km, { attributes: true, attributeFilter: ['class'] }); act();
+}
 let km10Listo = false;
 async function iniciarKM10(){
   if (km10Listo) return; km10Listo = true;
-  iniciarFrente();
+  iniciarFrente(); iniciarPantallas();
   const extras = $$('#km10 .principios, #km10 [data-vestir], #km10 [data-hitos], #km10 [data-pantallas]');
   if (REDUCIR) return;
   entradaRepetida(extras, .4);
