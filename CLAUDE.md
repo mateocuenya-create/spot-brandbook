@@ -403,3 +403,8 @@ El 10/11/2026 se borró todo lo construido y se empezó de nuevo. Respaldo de la
   - Ya no saltan al lugar que marca el scroll: lo siguen con suavidad, en unos 0,45 s (`seguirSuave`).
   - **Tira:** necesita más scroll para recorrerse, 2400 px en vez de 1500.
   - **Carruseles:** 1000 px de scroll por foto en vez de 700, cada foto se queda quieta más tiempo y el paralaje dentro del marco es más leve (30 px en vez de 50).
+- 12/11/2026 · Mateo · **Colaboraciones con animación de armado** (pedido del equipo; reemplaza el barrido de izquierda a derecha).
+  - Cada lockup y la plantilla se parten en tres: SPOT!, el × y el logo aliado (o el recuadro). Los cortes van en el medio de los espacios, según el Figma (`CORTES_LOCKUP`).
+  - Al entrar en pantalla se arman: SPOT! llega desde la izquierda, el logo aliado desde la derecha y el × aparece girando con un rebote. En "A pedido de la marca" el segundo lockup se arma un poco después.
+  - Al salir del todo de la pantalla se desarman, así se vuelve a ver la animación al pasar otra vez.
+  - Al pasar el mouse por un ejemplo, los dos logos se separan un poco y el × gira, para mostrar que el espacio a cada lado del × es el mismo.
