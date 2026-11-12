@@ -408,3 +408,7 @@ El 10/11/2026 se borró todo lo construido y se empezó de nuevo. Respaldo de la
   - Al entrar en pantalla se arman: SPOT! llega desde la izquierda, el logo aliado desde la derecha y el × aparece girando con un rebote. En "A pedido de la marca" el segundo lockup se arma un poco después.
   - Al salir del todo de la pantalla se desarman, así se vuelve a ver la animación al pasar otra vez.
   - Al pasar el mouse por un ejemplo, los dos logos se separan un poco y el × gira, para mostrar que el espacio a cada lado del × es el mismo.
+- 12/11/2026 · Mateo · **KM 3 · Favicon con animación de entrada** (pedido del equipo, `entradaFavicon`).
+  - Al llegar scrolleando, los 12 favicons de Variables saltan de a uno, de izquierda a derecha, girando con un rebote (0,06 s entre cada uno).
+  - Después aparecen las 4 animaciones, una tras otra: el favicon mediano crece girando con rebote, la miniatura cae a su lugar y suben el título y el texto.
+  - Se repite cada vez que la sección vuelve a entrar en pantalla. El hover sigue igual: la animación de cada favicon solo corre con el mouse encima.
