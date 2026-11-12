@@ -1023,9 +1023,9 @@ html.movil .col-descarga{gap:28px}
 html.movil .col-descarga > h2{font-size:36px}
 html.movil .logo-hover{width:432px;height:143px;margin:24px auto}
 html.movil .logo-fijo{width:432px!important;height:auto!important;margin:24px auto}
-html.movil #km3-construccion > div:not(.fila):not(.pin-tira){padding:40px 0!important}
-html.movil #km3-construccion > div > :is(.diag, img){width:432px!important;margin:0!important;max-width:100%!important;height:auto!important}
-html.movil .pin-tira .fila > .t{display:none}
+html.movil #km3-construccion .constr-logos{padding:40px 0!important}
+html.movil #km3-construccion .constr-logos > :is(.diag, img){width:432px!important;margin:0!important;max-width:100%!important;height:auto!important}
+html.movil .pin-tira .fila > span.t{display:none}
 html.movil .tira{width:1200px}
 html.movil .achicado:has(> .tira){margin:72px 0 0 -24px}
 html.movil .tira .pista-tira{left:60px}
@@ -1437,9 +1437,10 @@ html.movil .frente .m3{transform:translate(calc((1 - var(--p)) * 60px), calc((1 
   </section>
   <div class="divisor"></div>
   <section class="sec" id="km3-construccion">
-    <div class="fila"><h2 class="t">Construcción</h2><p class="c txt">Los 3 logos comparten una misma altura de X que permite construirlos.</p></div>
-    <div style="padding:120px 0;display:flex;justify-content:center"><img src="assets/km3/construccion-1.svg" alt="Los tres logos sobre la misma altura de x" style="width:1680px;max-width:none;margin:0 -215px"></div>
+    <!-- el título y los tres logos van dentro de lo que queda fijo: siguen a la vista mientras la tira se desliza -->
     <div class="pin-tira"><div class="pin-sticky">
+    <div class="fila"><h2 class="t">Construcción</h2><p class="c txt">Los 3 logos comparten una misma altura de X que permite construirlos.</p></div>
+    <div class="constr-logos" style="padding:120px 0;display:flex;justify-content:center"><img src="assets/km3/construccion-1.svg" alt="Los tres logos sobre la misma altura de x" style="width:1680px;max-width:none;margin:0 -215px"></div>
     <div class="fila"><span class="t" aria-hidden="true"></span><p class="c txt">Siendo esta altura 124px, el primer límite se define desplazando el trazado base 24px. Para crear el segundo contorno, son 9px más de desplazamiento.</p></div>
     <div class="tira" role="img" aria-label="Construcción de los contornos de los tres logos: se recorre de costado al scrollear">
      <div class="pista-tira">
@@ -3087,7 +3088,11 @@ function iniciarTira(){
   let arriba = 40, alto = 560;
   const medir = () => {
     const z = zoomActual(), h = (MOVIL ? st.offsetHeight : st.getBoundingClientRect().height / z) || 560; alto = h;
-    arriba = Math.max(40, (innerHeight / z - h) / 2);
+    // lo fijo incluye el título "Construcción" y los tres logos: queda arriba de todo mientras la tira se desliza.
+    // Si la pantalla es baja y no entra entero, sube lo justo para que la tira se vea completa abajo
+    const vh = innerHeight / z;
+    const tope = MOVIL ? 84 : 40;                                    // en el celular, debajo del botón del menú
+    arriba = h + tope + 24 <= vh ? tope : vh - h - 24;
     st.style.top = arriba + 'px'; pin.style.height = (h + RECORRIDO) + 'px';
   };
   const act = () => {
@@ -3363,7 +3368,7 @@ function entradaRepetida(els, umbral = .35){
 async function iniciarKM3Entradas(){
   if (REDUCIR || !('IntersectionObserver' in window)) return;
   entradaRepetida($$('#km3 .logo-hover, #km3 .logo-fijo'), .5);
-  const imgs = $$('#km3-construccion > div > img, #km3-espacios .diagramas > img, #km3-ubicacion .diagramas > img');
+  const imgs = $$('#km3-construccion .constr-logos > img, #km3-espacios .diagramas > img, #km3-ubicacion .diagramas > img');
   const svgs = await Promise.all(imgs.map(async (img, n) => {
     try {
       let t = await (await fetch(img.getAttribute('src'))).text();
