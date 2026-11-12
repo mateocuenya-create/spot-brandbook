@@ -574,8 +574,7 @@ html.cursor-propio.cursor-visible :is(#cursor,#cursor-mini){opacity:1}
 #cursor img{position:absolute;left:0;top:0;width:32px;height:32px;opacity:0;transform:scale(.6);transform-origin:5px 5px;
   transition:opacity .18s var(--ease-out),transform .28s cubic-bezier(.34,1.56,.64,1)}
 #cursor img.mano{transform-origin:16px 16px}
-#cursor img.lapiz{left:2.4px;top:-24.4px;transform-origin:2.6px 29.4px}
-#cursor[data-modo="flecha"] .flecha,#cursor[data-modo="clic"] .clic,#cursor[data-modo="mano"] .mano,#cursor[data-modo="lapiz"] .lapiz{opacity:1;transform:scale(1)}
+#cursor[data-modo="flecha"] .flecha,#cursor[data-modo="clic"] .clic,#cursor[data-modo="mano"] .mano{opacity:1;transform:scale(1)}
 #cursor.apretado img{transform:scale(.85)}
 #cursor-mini{width:20px;height:20px;will-change:transform}
 #cursor-mini img{width:100%;height:100%;transition:transform .45s cubic-bezier(.34,1.56,.64,1)}
@@ -647,16 +646,16 @@ html.cursor-propio.cursor-visible :is(#cursor,#cursor-mini){opacity:1}
 /* KM 6 · Insignias (Figma 448:2449): unir los puntos de SPOT, cinta de íconos de puntos, plantilla y receta de la insignia */
 .insignias-sec{position:relative;height:2247px}
 .insignias-sec .c b{font-weight:700}
-.unir-puntos{position:absolute;left:559px;top:334px;width:803px;height:491px;touch-action:none;user-select:none}
+.unir-puntos{position:absolute;left:559px;top:334px;width:803px;height:491px;user-select:none}
 .unir-puntos svg{position:absolute;left:0;top:0;width:803px;height:491px;overflow:visible}
 .unir-puntos .trazo{stroke:var(--violeta);stroke-width:3.71;stroke-linecap:round;fill:none}
-.unir-puntos .trazo.nuevo{animation:trazar .25s var(--ease-out)}
-@keyframes trazar{from{stroke-dashoffset:var(--l)}to{stroke-dashoffset:0}}
-.unir-puntos .guia{stroke:var(--violeta);stroke-width:3.71;stroke-linecap:round;stroke-dasharray:2 8;opacity:.8}
-.unir-puntos .pto{fill:var(--negro);transition:r .2s cubic-bezier(.34,1.56,.64,1),fill .2s}
-.unir-puntos .pto.cerca,.unir-puntos .pto.usado{fill:var(--violeta)}
-.unir-puntos .pto.cerca{r:7px}
-.unir-puntos text{font:400 13.36px var(--reddit);fill:var(--negro);pointer-events:none}
+.unir-puntos .trazo{stroke-linejoin:round}
+.unir-puntos .pto{fill:var(--negro);transition:fill .25s,r .3s cubic-bezier(.34,1.56,.64,1)}
+.unir-puntos .pto.usado{fill:var(--violeta)}
+.unir-puntos .pto.punta{r:7px}
+.unir-puntos text{font:400 13.36px var(--reddit);fill:var(--negro);transition:fill .25s,font-weight .25s}
+.unir-puntos text.usado{fill:var(--violeta);font-weight:700}
+.unir-puntos .lapiz-viaje{position:absolute;left:0;top:0;width:34px;height:34px;pointer-events:none;opacity:0;transition:opacity .3s;will-change:transform}
 .boton-plantilla{position:absolute;left:120px;top:867px;height:54px;padding:0 28px;display:flex;align-items:center;border-radius:100px;background:var(--negro);color:var(--crema);
   font:600 20px/1.3 var(--reddit);z-index:2;transition:transform .2s var(--ease-out)}
 .boton-plantilla:hover{transform:scale(1.05)}
@@ -1246,7 +1245,7 @@ html.cursor-propio.cursor-visible :is(#cursor,#cursor-mini){opacity:1}
   <div class="divisor"></div>
   <section class="sec insignias-sec" id="km6-insignias">
     <div class="fila"><h3 class="t">Insignias</h3><p class="c txt">Las insignias toman un estilo visual diferenciado de los iconos, y de las caritaa. utilizamos puntos haciendo referencia al nombre de la marca “spot”, además queremos simbolizar como el recorrido hasta llegar a conseguir una de estas insignias requiere pasar por varios <b>puntos</b></p></div>
-    <div class="unir-puntos" data-unir role="img" aria-label="Unir los puntos: los números forman la palabra SPOT. Arrastrá de un punto a otro para unirlos."></div>
+    <div class="unir-puntos" data-unir role="img" aria-label="Unir los puntos: al bajar, una línea violeta une los puntos del 1 al 29 y se forma la palabra SPOT."></div>
     <a class="boton-plantilla" href="assets/km6/plantilla-insignia.svg" download="Spot - Plantilla de insignia.svg">Descargar plantilla</a>
     <div class="cinta-iconos" aria-label="Íconos de puntos de las insignias"><div class="pista-iconos" data-cinta></div></div>
     <div class="pautas"><h4>¿Cómo crear una insignia?</h4>
@@ -2512,45 +2511,51 @@ const NUMEROS_UNIR = [[1,218.9,136.5],[2,152.1,121.7],[3,100.2,143.9],[4,85.3,19
 // íconos de puntos (Figma "Íconos de puntos · 405 px · grilla"): [archivo, x, y del grupo dentro del cuadro de 405]
 const ICONOS_PUNTOS = [['tulipan',105,75],['rayo',105,75],['llama',105,60],['gota',105,60],['rama',90,45],['mariposa',75,75],['reloj',75,75],['candado',90,60],['cafe',75,75],['cubiertos',105,60]];
 
-/* Unir los puntos: con el lápiz se arrastra de un punto a otro y queda la línea violeta (como en el Figma).
-   Se puede encadenar sin soltar, o tocar un punto y después otro. Doble click: se borra todo. */
+/* Unir los puntos: no se dibuja a mano. Mientras scrolleás por la sección, un lapicito va uniendo los puntos en orden
+   (del 1 al 29) con la línea violeta y se forma SPOT: S (1–10), P (11–17), O (18–25 y vuelve al 18), T (26–28 y 27–29).
+   Los puntos y números se encienden al pasar. Volviendo hacia arriba se borra al revés. */
 function iniciarUnirPuntos(){
   const caja = $('[data-unir]'); if (!caja) return;
-  const NS = 'http://www.w3.org/2000/svg', svg = document.createElementNS(NS, 'svg');
+  const km = caja.closest('article.km'), NS = 'http://www.w3.org/2000/svg', svg = document.createElementNS(NS, 'svg');
   svg.setAttribute('viewBox', '0 0 803 491'); caja.appendChild(svg);
   const gL = document.createElementNS(NS, 'g'), gP = document.createElementNS(NS, 'g'); svg.append(gL, gP);
-  const guia = document.createElementNS(NS, 'line'); guia.setAttribute('class', 'guia'); guia.style.display = 'none'; gL.appendChild(guia);
   const P = PUNTOS_UNIR.map(([x, y]) => { const c = document.createElementNS(NS, 'circle'); const cx = x + 4.45, cy = y + 4.45;
     c.setAttribute('cx', cx); c.setAttribute('cy', cy); c.setAttribute('r', 4.45); c.setAttribute('class', 'pto'); gP.appendChild(c); return { x: cx, y: cy, el: c }; });
-  NUMEROS_UNIR.forEach(([n, x, y]) => { const t = document.createElementNS(NS, 'text'); t.setAttribute('x', x); t.setAttribute('y', y + 13); t.textContent = n; gP.appendChild(t); });
-  const hechos = new Set();
-  const local = e => { const r = caja.getBoundingClientRect(), k = r.width / 803; return { x: (e.clientX - r.left) / k, y: (e.clientY - r.top) / k }; };
-  const cercano = (q, rad = 16) => { let m = null, dm = rad; P.forEach(p => { const d = Math.hypot(p.x - q.x, p.y - q.y); if (d < dm) { dm = d; m = p; } }); return m; };
-  const unir = (a, b) => {
-    const clave = [P.indexOf(a), P.indexOf(b)].sort((m, n) => m - n).join('-'); if (a === b || hechos.has(clave)) return; hechos.add(clave);
-    const l = document.createElementNS(NS, 'line'), largo = Math.hypot(b.x - a.x, b.y - a.y);
-    l.setAttribute('x1', a.x); l.setAttribute('y1', a.y); l.setAttribute('x2', b.x); l.setAttribute('y2', b.y); l.setAttribute('class', 'trazo nuevo');
-    l.style.strokeDasharray = largo; l.style.setProperty('--l', largo); gL.insertBefore(l, guia);
-    a.el.classList.add('usado'); b.el.classList.add('usado');
+  // cada número va con el punto que tiene arriba a la izquierda (así está en el Figma)
+  const N = {};
+  NUMEROS_UNIR.forEach(([n, x, y]) => {
+    const t = document.createElementNS(NS, 'text'); t.setAttribute('x', x); t.setAttribute('y', y + 13); t.textContent = n; gP.appendChild(t);
+    let m = null, dm = 1e9; P.forEach(p => { const d = Math.hypot(p.x - (x - 6.7), p.y - (y - 3)); if (d < dm) { dm = d; m = p; } });
+    N[n] = { p: m, t };
+  });
+  const TRAZOS = [[1,2,3,4,5,6,7,8,9,10], [11,12,13,14,15,16,17], [18,19,20,21,22,23,24,25,18], [26,27,28], [27,29]];
+  let total = 0;
+  const trazos = TRAZOS.map(nums => {
+    const pts = nums.map(n => N[n].p), path = document.createElementNS(NS, 'path');
+    path.setAttribute('d', 'M' + pts.map(q => q.x + ' ' + q.y).join('L')); path.setAttribute('class', 'trazo'); gL.appendChild(path);
+    const largo = path.getTotalLength(); path.style.strokeDasharray = largo; path.style.strokeDashoffset = largo;
+    let acum = 0; const marcas = nums.map((n, i) => { if (i) acum += Math.hypot(pts[i].x - pts[i - 1].x, pts[i].y - pts[i - 1].y); return [n, total + acum]; });
+    const t = { path, desde: total, largo, marcas }; total += largo; return t;
+  });
+  const lapiz = new Image(); lapiz.src = 'assets/cursor/lapiz.svg'; lapiz.alt = ''; lapiz.className = 'lapiz-viaje'; caja.appendChild(lapiz);
+  const act = () => {
+    const r = caja.getBoundingClientRect(), vh = innerHeight;
+    // arranca cuando el dibujo asoma por abajo y termina cuando su centro llega al medio de la pantalla
+    const p = Math.max(0, Math.min(1, (vh - r.top) / (vh * .5 + r.height * .5)));
+    const hecho = p * total; let punta = null;
+    trazos.forEach(t => {
+      const d = Math.max(0, Math.min(t.largo, hecho - t.desde));
+      t.path.style.strokeDashoffset = t.largo - d;
+      if (d > 0 && d < t.largo) punta = t.path.getPointAtLength(d);
+      t.marcas.forEach(([n, en]) => { const on = hecho >= en - .5 && hecho > 0; N[n].p.el.classList.toggle('usado', on); N[n].t.classList.toggle('usado', on); });
+    });
+    P.forEach(q => q.el.classList.remove('punta'));
+    if (punta) {
+      const k = r.width / 803; lapiz.style.opacity = 1;
+      lapiz.style.transform = `translate(${punta.x - 2.6 * 34 / 32}px, ${punta.y - 29.4 * 34 / 32}px)`;   // la punta del lápiz en la punta de la línea
+    } else lapiz.style.opacity = 0;
   };
-  let desde = null, apretado = false, sobre = null;
-  const marcar = p => { if (sobre === p) return; if (sobre) sobre.el.classList.remove('cerca'); sobre = p; if (p) p.el.classList.add('cerca'); };
-  caja.addEventListener('pointerdown', e => {
-    const q = local(e), p = cercano(q);
-    if (!p) { desde = null; guia.style.display = 'none'; return; }
-    if (desde && desde !== p) unir(desde, p);
-    desde = p; apretado = true; caja.setPointerCapture(e.pointerId);
-  });
-  caja.addEventListener('pointermove', e => {
-    const q = local(e), p = cercano(q); marcar(p);
-    if (!desde) return;
-    guia.style.display = ''; guia.setAttribute('x1', desde.x); guia.setAttribute('y1', desde.y); guia.setAttribute('x2', q.x); guia.setAttribute('y2', q.y);
-    if (apretado && p && p !== desde) { unir(desde, p); desde = p; }
-  });
-  const soltar = () => { apretado = false; };
-  caja.addEventListener('pointerup', soltar); caja.addEventListener('pointercancel', soltar);
-  caja.addEventListener('pointerleave', () => { marcar(null); if (!apretado) { desde = null; guia.style.display = 'none'; } });
-  caja.addEventListener('dblclick', () => { hechos.clear(); $$('.trazo', gL).forEach(l => l.remove()); P.forEach(p => p.el.classList.remove('usado')); desde = null; guia.style.display = 'none'; });
+  km.addEventListener('scroll', act, { passive: true }); addEventListener('resize', act); act();
 }
 
 /* Cinta de íconos de puntos: pasa sola y se repite (velocidad media); la grilla rosa de 15 px aparece al pasar el mouse por un ícono */
@@ -2661,14 +2666,14 @@ function iniciarCursor(){
   if (!matchMedia('(hover: hover) and (pointer: fine)').matches) return;
   const html = document.documentElement;
   const cur = document.createElement('div'); cur.id = 'cursor'; cur.dataset.modo = 'flecha';
-  cur.innerHTML = ['flecha', 'clic', 'mano', 'lapiz'].map(n => `<img class="${n}" src="assets/cursor/${n}.svg" alt="">`).join('');
+  cur.innerHTML = ['flecha', 'clic', 'mano'].map(n => `<img class="${n}" src="assets/cursor/${n}.svg" alt="">`).join('');
   const mini = document.createElement('div'); mini.id = 'cursor-mini'; mini.innerHTML = '<img src="assets/km2/319f2.svg" alt="">';   // estrella de 12 puntas azul de SPOT!
   document.body.append(mini, cur);
   html.classList.add('cursor-propio');
   let x = -100, y = -100, mx = -100, my = -100, ultimo = null, t0 = performance.now();
   const evaluar = el => {
     if (!el || el === ultimo) return; ultimo = el;
-    cur.dataset.modo = el.closest('.unir-puntos') ? 'lapiz' : el.matches(SEL_MANO) ? 'mano' : el.matches(SEL_CLIC) ? 'clic' : 'flecha';
+    cur.dataset.modo = el.matches(SEL_MANO) ? 'mano' : el.matches(SEL_CLIC) ? 'clic' : 'flecha';
     mini.classList.toggle('grande', cur.dataset.modo !== 'flecha');
   };
   addEventListener('pointermove', e => {

@@ -368,3 +368,8 @@ El 10/11/2026 se borró todo lo construido y se empezó de nuevo. Respaldo de la
   - **¿Cómo crear una insignia?**: el texto tiene las partes en violeta del Figma. La receta (mariposa + círculo violeta con borde crema + sombra paralela = insignia Noobie) gana opacidad paso a paso mientras scrolleás hasta ahí (`iniciarReceta`).
   - La captura del panel "Drop shadow" de Figma se cambió por una tarjeta propia de la marca con los mismos valores: X 0, Y 4, desenfoque 4, expansión 0, #000000 al 25 %.
   - La insignia Noobie se exportó del Figma (`insignia-noobie.svg`). Se borró `insignia-card.svg` porque la tarjeta de consistencia ya no está en el Figma.
+- 11/11/2026 · Mateo · **Insignias · "unir los puntos" ahora es guiado** (pedido del equipo: dibujar a mano era poco intuitivo; reemplaza el lápiz libre).
+  - Mientras scrolleás por la sección, un lapicito une solo los puntos en orden con la línea violeta y se forma SPOT: S 1–10, P 11–17, O 18–25 y vuelve al 18, T 26–28 y 27–29.
+  - Los puntos y los números se ponen violetas cuando el lápiz pasa por ellos.
+  - Arranca cuando el dibujo asoma abajo y termina cuando su centro llega a la mitad de la pantalla. Volviendo hacia arriba se borra al revés.
+  - El cursor ya no cambia a lápiz: `lapiz.svg` se usa ahora para el lapicito que dibuja.
