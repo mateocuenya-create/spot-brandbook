@@ -880,8 +880,8 @@ svg.esquema .nivel .raya{fill:var(--naranja);transform:translateY(var(--y,0))}
 @keyframes respirar{0%,100%{scale:1}50%{scale:1.045}}
 /* juego: las insignias de SPOT! caen en la columna de al lado de las pantallas y se agarran y tiran (ver iniciarJuegoInsignias) */
 .col-izq{width:405px;flex:none;align-self:stretch;display:flex;flex-direction:column;gap:32px}
-.juego-insignias{position:relative;flex:1;min-height:480px;overflow:hidden;border-radius:28px;background:rgba(37,37,37,.045)}
-.juego-insignias .pista{position:absolute;left:0;right:0;top:22px;text-align:center;font:600 16px/1.3 var(--reddit);color:var(--negro-60);letter-spacing:.02em;pointer-events:none;transition:opacity .4s var(--ease-out)}
+.juego-insignias{position:relative;flex:1;min-height:480px;overflow:hidden;border-radius:28px;background:var(--negro)}   /* las de post. van sobre oscuro */
+.juego-insignias .pista{position:absolute;left:0;right:0;top:22px;text-align:center;font:600 16px/1.3 var(--reddit);color:var(--crema-60);letter-spacing:.02em;pointer-events:none;transition:opacity .4s var(--ease-out)}
 .juego-insignias.usado .pista{opacity:0}
 .juego-insignias .ins{position:absolute;left:0;top:0;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none;will-change:transform}
 .juego-insignias .ins img{width:100%;height:100%;pointer-events:none;-webkit-user-drag:none;filter:drop-shadow(0 4px 4px rgba(0,0,0,.18));transition:scale .25s cubic-bezier(.34,1.56,.64,1)}
@@ -1916,7 +1916,7 @@ html.movil .frente .m3{transform:translate(calc((1 - var(--p)) * 60px), calc((1 
       <div class="hitos" data-hitos><figure class="hito"><img src="assets/km10/inflables.jpg" alt="Copa, estrella y carita inflables de STOP iluminadas de noche frente a un edificio." loading="lazy"></figure>
         <figure class="hito"><img src="assets/km10/parada-foto.jpg" alt="Parada fotográfica: una carita inflable con anteojos, un espejo y señales con frases como “Pará, tomá aire.”." loading="lazy"></figure></div></div>
     <div class="senal-fila"><div class="col-izq"><div class="pauta"><h4>La pantalla también es arquitectura</h4><p>En post., la fachada de pantallas cumple el mismo rol que un cartel: deja reconocer la instalación desde afuera, anuncia lo que está por empezar y suma movimiento con las animaciones de la marca.</p></div>
-        <div class="juego-insignias" data-juego aria-label="Juego: las misceláneas de Spot (puntos y estrellas) caen y se pueden agarrar y tirar"><p class="pista">Agarrá un punto o una estrella y tiralo</p></div></div>
+        <div class="juego-insignias" data-juego aria-label="Juego: las misceláneas de post. (puntos y estrellas) caen y se pueden agarrar y tirar"><p class="pista">Agarrá un punto o una estrella y tiralo</p></div></div>
       <div class="pantallas-post" data-pantallas>
         <video class="s1" src="assets/km10/post-respirar.mp4" muted loop playsinline preload="none" style="aspect-ratio:2366/820" aria-label="Pantalla de la entrada de post.: animación respirar"></video>
         <video class="s2" src="assets/km10/post-running.mp4" muted loop playsinline preload="none" style="aspect-ratio:3240/1080" aria-label="Pantalla del frente de post.: animación running"></video>
@@ -3806,8 +3806,13 @@ function iniciarPantallas(){
 function iniciarJuegoInsignias(){
   const caja = $('[data-juego]'); if (!caja) return;
   const km = caja.closest('article.km'), E = MOVIL ? .82 : 1.12;
-  // misceláneas de SPOT!: puntos y estrellas de 7 y 12 puntas, en los 5 colores (en el celular, una de cada dos)
-  const lista = PIEZAS_SPOT.filter(q => q[3] === 'p' || q[3] === 'e').filter((q, i) => !MOVIL || i % 2 === 0);
+  // misceláneas de post. (las de "Puntos y estrellas" del KM 6): punto verde, aro crema, aro verde y las estrellas de 7 y 12
+  // puntas redondeadas, pensadas para fondo oscuro. Varias de cada una, en distintos tamaños (en el celular, la mitad)
+  const lista = [];
+  for (let k = 0; k < (MOVIL ? 2 : 4); k++) PIEZAS.post.forEach(([a, w]) => {
+    const estrella = w > 70, esc = estrella ? [.8, 1, 1.2][k % 3] : [.7, 1.4, 1, .55][k % 4];
+    lista.push(['km6/' + a + '.svg', w * esc, '', estrella ? 'e' : 'p']);
+  });
   const G = 2400, REBOTE = .42, azar = (a, b) => a + Math.random() * (b - a);
   const cuerpos = lista.map(([src, tam, , tipo]) => {
     const w = tam * E, el = document.createElement('div'); el.className = 'ins';
