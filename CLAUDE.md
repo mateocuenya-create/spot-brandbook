@@ -15,6 +15,10 @@
   3. Anotar en "Registro de decisiones" lo que se decidió.
   4. Respetar la sección "Lo aprendido": no inventar, el Figma es el modelo, cada marca usa solo sus misceláneas.
   5. Para probar en la compu: abrir `index.html` con doble clic (no moverlo de la carpeta, necesita `assets/`).
+  6. **Todo lo nuevo se hace también para el celular.** La página tiene versión mobile: hasta 760 px de ancho se diseña a 480 px y va en una columna (ver "Versión mobile" en el Registro de decisiones).
+     - Cada sección nueva o cambio va con sus estilos mobile en el bloque "VERSIÓN MOBILE" del CSS (reglas con `html.movil`), en el mismo cambio.
+     - Las interacciones se mantienen siempre que se pueda; lo que en compu es hover, en el celular es tocar.
+     - Antes de dar el link, probarlo en los dos tamaños: compu y celular (375 px de ancho).
 
 **Entrega: el viernes (fecha exacta a confirmar por el equipo).** Presentación oral el mismo día en clase.
 Idioma de todo el proyecto: español rioplatense (Buenos Aires). Contexto: tesis grupal de Multimedia (UADE), tema deportes. Equipo de 4 personas, cada una con su propia cuenta de Claude. **No trabajan al mismo tiempo**: antes de empezar, hacer *Fetch/Pull* en GitHub Desktop; al terminar, *Commit* + *Push*.
@@ -419,3 +423,29 @@ El 10/11/2026 se borró todo lo construido y se empezó de nuevo. Respaldo de la
 - 12/11/2026 · Mateo · **Arreglo: el logo SPOT! de "Logos Spot" no aparecía.** La caja estaba recortada del todo mientras esperaba, y el navegador no avisaba que había entrado en pantalla. Ahora el recorrido de izquierda a derecha recorta las imágenes de adentro, no la caja.
   - Además, las entradas del KM 3 (logos y diagramas) ya no usan IntersectionObserver: miran el scroll de cada KM (`entradaRepetida`).
   - Regla: no ocultar con `clip-path` el mismo elemento que se usa para detectar si entró en pantalla.
+- 12/11/2026 · Mateo · **Versión mobile (responsive)**, pedido del equipo: que se mantengan todas las animaciones e interacciones que se puedan.
+  - **Cómo funciona.** Si la pantalla mide hasta 760 px de ancho, un script en el `<head>` pone la clase `movil` en `<html>`. Entonces los KM se diseñan a **480 px** en vez de 1920 (`--z` = ancho / 480). Todo va en una columna con márgenes de 24 px. Si se cruza el corte (girar el celular, achicar la ventana), la página se recarga.
+    - Los estilos están todos juntos al final del CSS, en el bloque "VERSIÓN MOBILE", con `html.movil`.
+    - En JS, las constantes `MOVIL`, `ANCHO` y `ALTO_HERO`.
+    - La versión de compu no cambió.
+    - Las tablets (más de 760 px) siguen viendo la versión de compu.
+  - **Portada y Home.** Se ve la franja central del escenario, con el mapa entero y todo el alto de la pantalla. El menú, el logo, post./STOP y "Última actualización" se reubican arriba y abajo. La pastilla de los puntos no aparece: tocar un punto lleva directo al KM.
+  - **Heros.**
+    - Tag, título, bajada y links van uno debajo del otro.
+    - Los títulos largos se parten en dos renglones (`renglones()`) y se achican para entrar en 432 px. El borde crema sin huecos también funciona con dos renglones.
+    - Las misceláneas con física siguen andando, en un cuadro de 480 × 1000. Esquivan el título, la bajada y los links, y entra 1 nueva como máximo.
+  - **Lo que se reacomoda en columna:**
+    - zona de submarcas del KM 1: el mazo de fotos va en su propia caja debajo del botón de post., con sus misceláneas;
+    - pilares, cards, perfil de tono y "Somos… pero no…" del KM 2;
+    - variantes, favicon, tamaños, diagramas, colaboraciones y malas prácticas del KM 3;
+    - todo el KM 4: los bloques de Sora y Reddit Sans, las frases, los pesos y "xan";
+    - paleta (2 columnas), crema/negro, filtros, proporción y tipografía/vectores (2 columnas) del KM 5;
+    - intro, cards, piezas, fotos, sobre fotos, caritas (3 columnas), insignias y siluetas del KM 6;
+    - el footer.
+  - **Lo que se achica entero** (es muy visual y no se puede reacomodar): la tira de construcción (zoom 0,4, se sigue recorriendo con el scroll), el carrusel de la app del KM 4, los lockups, unir los puntos, la cinta de íconos y la receta de la insignia (en dos renglones).
+  - **Interacciones en el celular:**
+    - Se mantienen: animaciones de entrada, misceláneas de los heros, viaje de las misceláneas a la card de SPOT!, perfil de tono, tira y carruseles con el scroll, mazo de fotos (se tira con el dedo), rasgos (se arrastran), tamaños (se arrastran los extremos), variantes de color, copiar HEX, fondos de los tonos, proporción, lockups que se arman, favicon y unir los puntos.
+    - Lo que en compu es hover pasa a ser **tocar**: pilares, misión/visión, cards de enfoque y de tono, favicon y sobre fotos.
+    - En "Elementos sobre fotografías" el cartel con el control se ve siempre debajo de la foto. Moverlo enciende la foto.
+    - Tocar una miscelánea (fuera de los heros) la hace saltar y girar (`iniciarToques`), en lugar del empuje con el mouse.
+  - **No van en el celular:** el cursor propio, el rastro de misceláneas de Puntos y estrellas / Signos Display y el empuje con el mouse (necesitan mouse). Tampoco el fondo halftone de "Puntos en siluetas" ni la silueta de "Si Spot fuera una persona" (no entran en la columna).

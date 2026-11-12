@@ -11,6 +11,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Reddit+Sans:ital,wght@0,200..900;1,200..900&family=Sora:wght@100..800&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Bitcount+Single:wght@700&display=swap" rel="stylesheet">
+<script>
+/* Versión mobile: en pantallas de hasta 760 px la página se diseña a 480 px de ancho (en vez de 1920) y se reacomoda en columna */
+if (matchMedia('(max-width: 760px)').matches) document.documentElement.classList.add('movil');
+</script>
 <style>
 /* =====================================================================
    SPOT! · Sistema de diseño
@@ -794,6 +798,274 @@ html.cursor-propio.cursor-visible :is(#cursor,#cursor-mini){opacity:1}
   *,*::before,*::after{transition-duration:.01ms!important;animation:none!important}
   .rv{opacity:1}
 }
+
+/* =====================================================================
+   VERSIÓN MOBILE (hasta 760 px de ancho): la clase .movil la pone un script en el <head>.
+   Las páginas KM se diseñan a 480 px (se escalan con --z = ancho / 480) y todo va en una columna
+   con márgenes de 24 px (contenido de 432). Lo que es muy visual y no se puede reacomodar
+   (tira de construcción, carrusel de la app, lockups, receta, unir los puntos) se achica entero con zoom.
+   Los !important pisan posiciones que en desktop vienen escritas en el HTML (style="left/top…").
+   ===================================================================== */
+html.movil .lienzo{width:480px}
+html.movil .sec{width:480px;padding:72px 24px;height:auto!important}
+html.movil .fila{flex-direction:column;gap:28px}
+html.movil .fila > .t{width:auto;font-size:36px}
+html.movil .fila > .c{width:100%}
+html.movil .fila > *{width:auto!important;max-width:100%}
+html.movil .grande{font-size:30px!important}
+html.movil .divisor{width:432px}
+html.movil .sticky{position:static}
+html.movil .glosa .def{width:300px;padding:20px}
+
+/* ---- Portada y Home: se ve la franja central del escenario (el mapa entero) y se usa todo el alto ---- */
+html.movil :is(#inicio,#portada) .escenario{position:absolute;left:-580px;top:var(--dy,0px)}
+html.movil #inicio .btn-menu{left:604px;top:calc(36px - var(--dy,0px));width:92px;height:92px}
+html.movil #inicio .logo-centro{left:865px;top:calc(48px - var(--dy,0px));width:190px;height:63px}
+html.movil #inicio .submarcas{left:829px;top:calc(1080px + var(--dy,0px) - 230px);transform:scale(1.45);transform-origin:center top}
+html.movil #inicio .actualizado{left:610px;width:700px;text-align:center;top:calc(1080px + var(--dy,0px) - 110px);font-size:30px}
+html.movil .punto .pill{display:none}
+
+/* ---- Heros: todo en columna (tag, título, bajada, links) ---- */
+html.movil .hero{height:1000px;display:flex;flex-direction:column;align-items:flex-start;gap:28px;padding:150px 24px 0}
+html.movil .hero > :is(.km-tag,.titulo-km,.bajada,.links,img){position:relative!important;left:auto!important;top:auto!important}
+html.movil .km-tag{font-size:24px;padding:6px 20px;border-width:2px}
+html.movil .titulo-km{height:auto;zoom:var(--ts,1);margin:12px 0}
+html.movil #km1 .hero > img{width:300px!important;height:auto!important}
+html.movil .bajada{font-size:30px;white-space:normal;width:432px;line-height:1.2}
+html.movil .links{gap:12px}
+html.movil .links button{font-size:18px}
+html.movil .slide-down{left:216px;top:900px!important}
+html.movil .km .btn-menu{left:16px;top:18px;width:52px;height:52px}
+html.movil .km .btn-menu.chico{transform:scale(.8)}
+
+/* ---- Footer ---- */
+html.movil .pie-km{padding:72px 24px;gap:48px}
+html.movil .pie-km .paradas{flex-direction:column;gap:28px;align-items:stretch}
+html.movil .parada{gap:16px}
+html.movil .parada .info .tx{width:200px}
+html.movil .pie-km .copy{text-align:center}
+
+/* ---- KM 1 ---- */
+html.movil .mv{gap:48px}
+html.movil .mv-item .fr{font-size:30px}
+html.movil .mv-item:is(:focus,:focus-within) .et{opacity:1;height:30px;margin-bottom:12px}
+html.movil .mv-item:is(:focus,:focus-within) .fr{font-weight:700;color:var(--violeta)}
+html.movil .foto-co{height:620px}
+html.movil .foto-co p{font-size:56px}
+html.movil .foto-co p:nth-of-type(1){left:24px!important;top:130px!important}
+html.movil .foto-co p:nth-of-type(2){left:56px!important;top:230px!important}
+html.movil .foto-co p:nth-of-type(3){left:24px!important;top:330px!important}
+html.movil .foto-co p:nth-of-type(4){left:110px!important;top:430px!important}
+html.movil .foto-co .linea{display:none}
+html.movil .submarcas-zona{height:auto;display:flex;flex-direction:column;align-items:center;gap:40px;padding:96px 24px 48px}
+html.movil .submarcas-zona > :is(.abs,.boton,.parada,.volver-arriba){position:relative!important;left:auto!important;top:auto!important}
+html.movil .submarcas-zona > img.abs{width:240px!important;height:auto!important}
+html.movil .submarcas-zona .txt{width:432px}
+html.movil .submarcas-zona .boton{transform:none}
+html.movil .submarcas-zona .boton:hover{transform:scale(1.04)}
+html.movil .submarcas-zona > .decos:not(.flota){position:relative;width:432px;height:0;z-index:2;margin-bottom:-40px}
+html.movil .mazo-movil{position:relative;width:432px;height:250px;margin-bottom:150px}
+html.movil .submarcas-zona .parada{align-self:stretch;justify-content:space-between}
+html.movil .submarcas-zona > p.abs:last-child{white-space:normal!important;text-align:center}
+
+/* ---- KM 2 ---- */
+html.movil .pilares{flex-direction:column}
+/* pilares: en el celular la descripción se ve siempre (no hay hover); tocar uno lo pinta de su color */
+html.movil .pilar{width:100%;height:auto;padding:36px 24px 40px;display:flex;flex-direction:column;gap:14px}
+html.movil .pilar > *{position:static;width:auto}
+html.movil .pilar h3{font-size:40px;width:auto}
+html.movil .pilar .d{opacity:1;color:var(--crema);transition:color .3s var(--ease-out)}
+html.movil .pilar .as{margin-top:14px}
+html.movil .pilar:is(:hover,:focus,:focus-within) .d{color:var(--negro)}
+html.movil .pilar:is(:focus,:focus-within){background:var(--c);color:var(--negro)}
+html.movil .pilar:is(:focus,:focus-within) .d{opacity:1}
+html.movil .banda{padding:72px 24px}
+html.movil .banda p{width:auto;font-size:28px}
+html.movil .silueta{display:none}
+html.movil .rasgos{width:432px;height:560px}
+html.movil .rasgo{font-size:22px;padding:12px 26px;border-width:3px}
+html.movil .cards{width:100%;flex-direction:column}
+html.movil .card-enf{height:auto;min-height:180px}
+html.movil .card-enf:is(:focus,:focus-within){background:var(--crema)}
+html.movil .card-enf:is(:focus,:focus-within) ul{max-height:186px;opacity:1;margin-top:16px}
+html.movil .cards-tono{flex-direction:column;gap:16px}
+html.movil .card-tono{width:100%;height:320px}
+html.movil .card-tono:is(:focus,:focus-within)::before{left:0;top:0;width:100%;height:100%;border-radius:0}
+html.movil .card-tono:is(:focus,:focus-within) h5{color:var(--negro)}
+html.movil .card-tono:is(:focus,:focus-within) .ej{max-height:140px;opacity:1;margin-top:12px}
+html.movil .perfil-sec{height:auto}
+html.movil .perfil{width:100%;padding:24px 0 0;gap:48px}
+html.movil .eje{grid-template-columns:1fr 1fr;column-gap:12px;row-gap:10px}
+html.movil .eje > span{grid-row:1;font-size:18px}
+html.movil .eje > span:nth-of-type(2){grid-column:2;text-align:right}
+html.movil .eje .barra{grid-column:1 / 3;grid-row:2;zoom:.432}
+html.movil .eje p{grid-column:1 / 3;grid-row:3;font-size:19px}
+html.movil .somos{width:100%;gap:40px}
+html.movil .somos-fila{flex-direction:column;align-items:stretch;gap:16px}
+html.movil .toggle{width:100%;height:64px}
+html.movil .toggle::before{width:calc(50% - 6px);height:56px}
+html.movil .somos-fila.no .toggle::before{left:calc(50% + 2px)}
+html.movil .toggle span{font-size:18px}
+html.movil .ejemplo p{white-space:normal;font-size:19px}
+html.movil .tabla .cab div,html.movil .tabla .r{font-size:18px}
+
+/* ---- KM 3 ---- */
+html.movil .col-descarga{gap:28px}
+html.movil .col-descarga > h2{font-size:36px}
+html.movil .logo-hover{width:432px;height:143px;margin:24px auto}
+html.movil .logo-fijo{width:432px!important;height:auto!important;margin:24px auto}
+html.movil #km3-construccion > div:not(.fila):not(.pin-tira){padding:40px 0!important}
+html.movil #km3-construccion > div > :is(.diag, img){width:432px!important;margin:0!important;max-width:100%!important;height:auto!important}
+html.movil .pin-tira .fila > .t{display:none}
+html.movil .tira{zoom:.4;width:1200px;margin:72px 0 0 -60px}
+html.movil .tira .pista-tira{left:60px}
+html.movil .tira .lbl{font-size:34px}
+html.movil .variantes{flex-direction:column;gap:24px}
+html.movil .nav-fondos{width:100%;position:static;flex-direction:row;flex-wrap:wrap;align-items:flex-start;gap:6px 18px;border-right:0;border-bottom:1px solid #000;padding:0 0 12px}
+html.movil .nav-fondos button{font-size:18px}
+html.movil .var-card{width:100%}
+html.movil .var-card .card{height:270px}
+html.movil .var-card .card .logo{width:210px}
+html.movil .var-card .flecha{top:111px}
+html.movil .var-card .flecha.ant{left:12px} html.movil .var-card .flecha.sig{left:372px}
+html.movil .var-card .ind{top:246px}
+html.movil .var-card .paleta{left:24px;top:68px}
+html.movil .var-card .txt{margin-top:24px}
+html.movil .fav-variables{width:432px;flex-wrap:wrap;gap:12px;padding:20px}
+html.movil .fav-variables img{width:52px;height:53px}
+html.movil .fav-animaciones{width:432px;display:grid;grid-template-columns:1fr 1fr;gap:28px 24px;padding:20px}
+html.movil .fav-anim{width:auto}
+html.movil .fav-anim .caja{zoom:.6}
+html.movil .fav-anim h4{font-size:20px;margin-bottom:8px}
+html.movil .fav-anim p{font-size:17px}
+html.movil .tamanos{flex-direction:column;align-items:center;gap:72px}
+html.movil .diagramas{gap:48px}
+html.movil .diagramas > *{max-width:100%!important;height:auto!important}
+html.movil .colab-fila{flex-direction:column;gap:24px}
+html.movil .colab-fila .pautas-c{width:auto}
+html.movil .colab-muestra{zoom:.5;width:864px}
+html.movil .colab-fila:last-child .colab-muestra{zoom:.36;width:1200px}
+html.movil .malas{gap:48px;margin-top:48px}
+html.movil .malas .fila-malas{flex-direction:column;gap:48px}
+html.movil .mala{width:100%;gap:20px}
+html.movil .mala img{width:100%;height:auto}
+
+/* ---- KM 4 · Tipografías: los bloques del Figma (posiciones fijas) pasan a ir uno debajo del otro ---- */
+html.movil .km4-intro .t-grande{width:auto;font-size:32px}
+html.movil .km4-intro .t-grande b{font-size:30px}
+html.movil .km4-intro .col{width:auto;gap:24px}
+html.movil .tipos{height:auto;display:flex;flex-direction:column}
+html.movil .tipos > *{position:relative!important;left:auto!important;top:auto!important}
+html.movil .tipos > .bloque, html.movil .tipos > div:not([class]), html.movil .tipos > .lh, html.movil .tipos > .lv{height:0!important;width:0!important;border:0!important;overflow:hidden}
+html.movil .tipos .etq{padding:56px 24px 0;font-size:40px!important}
+html.movil #km4-sora + .etq, html.movil #km4-sora + .etq + .aa{background:var(--naranja)}
+html.movil #km4-reddit + .etq, html.movil #km4-reddit + .etq + .aa{background:var(--rosa)}
+html.movil .tipos .aa{width:100%;font-size:280px;padding:0 24px 24px;line-height:1.05}
+html.movil .tipos .frase-caja{width:100%;height:auto;padding:40px 24px;flex-direction:column;align-items:stretch;gap:24px}
+html.movil .tipos .frase-caja p{font-size:32px;width:auto!important}
+html.movil .alinear{flex-direction:row;width:auto;height:auto;align-items:center;justify-content:flex-start;gap:14px}
+html.movil .tipos .pesos{width:100%;height:auto!important;padding:32px 24px}
+html.movil .tipos .pesos div{height:auto!important;flex-direction:row;flex-wrap:wrap;gap:8px 28px;font-size:34px}
+html.movil .tipos .expl{width:100%;height:auto!important;padding:0 24px 40px}
+html.movil .tipos .expl p{width:auto}
+html.movil .ui-ventana{zoom:.6;width:800px;height:1060px;margin:0}
+html.movil .ui-puntos{left:360px}
+html.movil .ui-puntos button{width:30px;height:30px}
+html.movil .tipos .familias{width:100%;height:auto;padding:56px 24px 32px;gap:28px;background:var(--negro)}
+html.movil .tipos .familias .t{width:auto;font-size:34px}
+html.movil .tipos .familias .dos{flex-direction:column;gap:20px}
+html.movil .tipos .familias .dos p{width:auto}
+html.movil .tipos .familias .nombres{position:static;gap:24px}
+html.movil .tipos .familias .nombres span{width:auto}
+html.movil .tipos .xan{width:100%;background:var(--negro);font-size:150px!important;padding:0 24px}
+html.movil .tipos .xan.reddit{padding-bottom:24px}
+html.movil .app-pantallas{gap:12px}
+html.movil .app-pantallas img{width:136px;height:296px}
+
+/* ---- KM 5 ---- */
+html.movil .marcas .foto-marca{height:360px}
+html.movil .marcas .foto-marca .ft{left:0!important;top:0!important;width:100%!important;height:100%!important}
+html.movil .marcas .logos{zoom:.34}
+html.movil .paleta-marca{grid-template-columns:1fr 1fr}
+html.movil .color{height:230px;padding:24px}
+html.movil .color h4{font-size:24px;white-space:normal}
+html.movil .color .copiado,html.movil .crema-negro .copiado{font-size:26px;padding:12px 24px}
+html.movil .crema-negro{flex-direction:column;height:auto}
+html.movil .crema-negro .base{width:100%;padding:32px 24px}
+html.movil .crema-negro .fondos{position:static;margin-top:28px;flex-wrap:wrap}
+html.movil .crema-negro .tonos{flex:none;height:150px}
+html.movil .crema-negro .tonos div{padding:20px 10px;font-size:16px}
+html.movil .filtros{padding:0 24px;gap:24px;margin-top:0}
+html.movil .filtros figure{width:204px;gap:16px}
+html.movil .filtros img{width:204px;height:395px}
+html.movil .filtros figcaption{font-size:30px}
+html.movil .prop-sec .fila{padding:0 24px!important}
+html.movil .prop-barras{gap:28px}
+html.movil .prop-barra{width:480px;height:170px}
+html.movil .prop-barra > div > b{left:5px;top:16px;font-size:13px}
+html.movil .prop-barra .logo{left:24px;bottom:20px;zoom:.55}
+html.movil .prop-barra > div:first-child .logo{left:12px} html.movil .prop-barra > div:first-child > b{left:12px}
+html.movil .usos{gap:48px}
+html.movil .usos .fila-usos{display:grid;grid-template-columns:1fr 1fr;gap:32px 24px}
+html.movil .uso{width:auto;gap:14px}
+html.movil .uso .muestra{height:230px}
+html.movil .uso .muestra.chica{height:200px}
+html.movil .uso .muestra .ic{left:16px;top:16px;width:32px;height:32px}
+html.movil .uso .muestra h5{left:16px;bottom:18px;width:180px;font-size:26px}
+html.movil .uso .muestra .vec{left:12px;top:52px;width:180px;height:130px}
+html.movil .uso p{font-size:16px}
+
+/* ---- KM 6 ---- */
+html.movil .km6-intro{height:auto;padding:72px 24px 330px}
+html.movil .km6-intro p{width:auto;font-size:32px}
+html.movil .marca-card{height:260px}
+html.movil .marca-card .logo{width:220px!important;height:auto!important}
+html.movil .marca-card .deco-card{zoom:.5;left:91px!important;top:60px!important}
+html.movil .piezas{height:auto;flex-wrap:wrap;gap:20px 28px;padding:24px}
+html.movil .piezas .fila-p{flex-wrap:wrap;justify-content:center;gap:20px 28px}
+html.movil div.signo{width:100%;height:243px}
+html.movil .foto-banner{height:auto;padding:72px 24px}
+html.movil .sec-foto{padding:72px 0;gap:48px}
+html.movil .sec-foto .fila{padding:0 24px}
+html.movil .sec-foto .fila > .t{font-size:30px}
+html.movil .carrusel{height:420px}
+html.movil .carrusel .ventana{left:24px;width:456px;height:420px}
+html.movil .carrusel figure{width:432px;gap:16px}
+html.movil .carrusel .marco{width:432px;height:243px}
+html.movil .carrusel figcaption{width:432px}
+html.movil .carrusel .fl{top:97px;width:64px;height:64px}
+html.movil .carrusel .fl.ant{left:20px} html.movil .carrusel .fl.sig{left:396px}
+html.movil .carrusel .fl img{width:32px}
+html.movil .indebidos{padding:0 24px;gap:48px}
+html.movil .indebidos .fila-ind{flex-direction:column;gap:48px}
+html.movil .indebido{width:100%;gap:20px}
+html.movil .indebido .caja{height:288px}
+html.movil .sobre-fotos{width:432px;margin-left:24px;gap:56px}
+html.movil .sobre-foto{width:432px;height:auto}
+html.movil .sobre-foto .marco{position:relative;inset:auto;zoom:.3086;width:1400px;height:788px;border-radius:36px}
+html.movil .sobre-foto .cartel{position:relative!important;left:auto!important;top:auto!important;width:100%;margin-top:16px;opacity:1;transform:none;pointer-events:auto}
+html.movil .caritas-set{grid-template-columns:repeat(3,1fr);column-gap:12px;row-gap:32px;padding:0 24px}
+html.movil .carita-ej{font-size:16px;gap:10px}
+html.movil .carita-ej .pieza{zoom:.68}
+html.movil .insignias-sec{height:auto;display:flex;flex-direction:column;gap:48px}
+html.movil .insignias-sec > *{position:relative!important;left:auto!important;top:auto!important}
+html.movil .unir-puntos{zoom:.538;margin:24px 0}
+html.movil .boton-plantilla{align-self:flex-start}
+html.movil .cinta-iconos{zoom:.5;width:960px;height:525px;margin-left:-48px}
+html.movil .pautas{width:auto}
+/* receta: en dos renglones (ícono + círculo + sombra / = insignia), a 0,62 */
+html.movil .receta{zoom:.62;width:697px;height:660px}
+html.movil .receta > :nth-child(1){left:0!important;top:115px!important}
+html.movil .receta > :nth-child(2){left:100px!important;top:140px!important}
+html.movil .receta > :nth-child(3){left:160px!important;top:56px!important}
+html.movil .receta > :nth-child(4){left:400px!important;top:140px!important}
+html.movil .receta > :nth-child(5){left:466px!important;top:61px!important}
+html.movil .receta > :nth-child(6){left:200px!important;top:487px!important}
+html.movil .receta > :nth-child(7){left:300px!important;top:350px!important}
+html.movil .siluetas .halftone{display:none}
+html.movil .siluetas-fila{flex-direction:column;align-items:flex-start;gap:20px}
+html.movil .siluetas-ej{width:100%;height:auto}
+html.movil .siluetas-grande{width:100%;height:auto}
 </style>
 </head>
 <body>
@@ -1437,6 +1709,9 @@ html.cursor-propio.cursor-visible :is(#cursor,#cursor-mini){opacity:1}
    DATOS DEL FIGMA
    ===================================================================== */
 const REDUCIR = matchMedia('(prefers-reduced-motion: reduce)').matches;
+// Mobile: ancho de diseño de 480 px (ver CSS "VERSIÓN MOBILE"). Si se cruza el corte (girar el celular, achicar la ventana) se recarga.
+const MOVIL = document.documentElement.classList.contains('movil'), ANCHO = MOVIL ? 480 : 1920, ALTO_HERO = MOVIL ? 1000 : 1080;
+matchMedia('(max-width: 760px)').addEventListener('change', () => location.reload());
 const EASE_OUT = 'cubic-bezier(0,0,.58,1)';
 const dur = ms => REDUCIR ? 1 : ms;
 const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -1515,10 +1790,26 @@ const DECOS = {
 // carita inicial de cada hero: [x, y, color, cara]. KM 1 queda como en el Figma; las demás cambian de cara y de color
 const CARITAS = { km1:[1527,414,'naranja'], km2:[1629,414,'violeta','cara-1'], km3:[1642,351,'amarillo','cara-7'], km4:[1629,414,'rosa','cara-2'], km5:[1629,414,'naranja','cara-9'], km6:[1629,414,'azul','cara-3'] };
 
+// mobile: las misceláneas se llevan del cuadro de 1920 al de 480 (los tamaños no cambian)
+function decoMovil(key, d){
+  const [src, x, y, ...resto] = d, f = 432 / 1920, IMG = src.startsWith('IMG:');
+  if (key === 'post' || key === 'stop') {                                       // alrededor del logo de cada submarca (240 × 110, centrado)
+    const w = resto[0], h = resto[1];
+    let nx = 216 + (x + w / 2 - 960) * .3 - w / 2, ny = (y - (key === 'post' ? 232 : 2329)) * .57;
+    ny = Math.min(ny, 116 - h);                                                 // ni sobre el texto de abajo
+    if (nx + w > 86 && nx < 346 && ny + h > -10) ny = Math.min(ny, -h - 12);   // nunca encima del logo: suben
+    return [src, nx, ny, ...resto];
+  }
+  const mapa = {
+    postfotos: [x * f, (y - 1150) * .35],                                       // alrededor del mazo de fotos
+    km6intro: [24 + x * .33, 400 + (y - 109) * .9]                             // debajo del texto (en desktop van sobre él)
+  }[key] || [x / 4, y * ALTO_HERO / 1080];                                      // heros
+  return [src, mapa[0], mapa[1], ...resto];
+}
 function armarDecos(){
   $$('[data-decos]').forEach(cont => {
     const key = cont.dataset.decos;
-    (DECOS[key] || []).forEach(([src, x, y, w, h, ins, rot, caja]) => {
+    (DECOS[key] || []).map(d => MOVIL ? decoMovil(key, d) : d).forEach(([src, x, y, w, h, ins, rot, caja]) => {
       const img = document.createElement('img'); img.alt = '';
       if (src.startsWith('IMG:')) {
         // dibujo de la insignia: va dentro de la estrella anterior, así se mueven juntas
@@ -1538,7 +1829,7 @@ function armarDecos(){
       mov.appendChild(img); d.appendChild(mov); cont.appendChild(d);
     });
     if (CARITAS[key]) {
-      const [x, y, c] = CARITAS[key];
+      const [x, y, c] = MOVIL ? [CARITAS[key][0] / 4 - 20, CARITAS[key][1] * ALTO_HERO / 1080, CARITAS[key][2]] : CARITAS[key];
       const k = document.createElement('div'); k.className = 'carita';
       k.style.cssText = `left:${x}px;top:${y}px;--c:var(--${c})`;
       k.innerHTML = `<span><img src="assets/${CARITAS[key][3] ? 'miscelaneas/' + CARITAS[key][3] : 'km1/carita-b'}.png" alt=""></span>`;
@@ -1617,7 +1908,8 @@ const GUIA = [
 function armarKM2(){
   $('#pilares').innerHTML = PILARES.map(([n, t, c, d, q]) =>
     `<article class="pilar" style="--c:var(--${c})" tabindex="0"><span class="n">${n}</span><h3>${t}</h3><p class="d">${d}</p><span class="as">ASÍ SUENA</span><p class="q">${q}</p></article>`).join('');
-  $('#rasgos').innerHTML = RASGOS.map(([t, c, x, y, r]) => `<span class="rasgo" style="left:${x}px;top:${y}px;--c:var(--${c});--r:${r}deg">${t}</span>`).join('');
+  $('#rasgos').innerHTML = RASGOS.map(([t, c, x, y, r], i) => { if (MOVIL) { x = i % 2 ? 150 : 0; y = i * 64; }
+    return `<span class="rasgo" style="left:${x}px;top:${y}px;--c:var(--${c});--r:${r}deg">${t}</span>`; }).join('');
   $('#enfoque').innerHTML = ENFOQUE.map(([t, c, l]) => `<article class="card-enf" style="--c:var(--${c})" tabindex="0"><h5>${t}</h5><ul>${l.map(x => `<li>${x}</li>`).join('')}</ul></article>`).join('');
   $('#tono').innerHTML = TONO.map(([m, c, w, t, ej]) => `<article class="card-tono" style="--c:var(--${c});--w:${w}px" tabindex="0"><span class="mom">${m}</span><div><h5>${t}</h5><div class="ej"><small>ASÍ SUENA</small><p>${ej}</p></div></div></article>`).join('');
   $('#perfil').innerHTML = PERFIL.map(([a, b, c, pos, velo, d]) => { const der = pos > 500;
@@ -1792,18 +2084,31 @@ function armarMapa(){
 }
 
 /* Títulos de los KM en SVG (ver CSS .titulo-km) */
+// mobile: los títulos largos se parten en dos renglones parejos; data-w pasa a ser el ancho del renglón más largo
+const RENGLON = 141;
+function renglones(h){
+  const t = h.dataset.t, w = +h.dataset.w;
+  if (!MOVIL || w < 900 || !t.includes(' ')) return [t];
+  const pal = t.split(' '); let mejor = null;
+  for (let k = 1; k < pal.length; k++) { const a = pal.slice(0, k).join(' '), b = pal.slice(k).join(' '), m = Math.max(a.length, b.length);
+    if (!mejor || m < mejor[2]) mejor = [a, b, m]; }
+  h.dataset.w = Math.ceil(w * mejor[2] / t.length + 40);
+  return mejor.slice(0, 2);
+}
 function armarTitulos(){
   $$('.titulo-km').forEach(h => {
-    const w = +h.dataset.w, centro = 'centro' in h.dataset;
+    const centro = 'centro' in h.dataset, lineas = renglones(h);
+    const w = +h.dataset.w, H = 161 + (lineas.length - 1) * RENGLON;
     h.setAttribute('aria-label', h.dataset.t);
-    h.innerHTML = `<svg width="${w}" height="161" viewBox="0 0 ${w} 161" aria-hidden="true"><text x="${centro ? w / 2 : 0}" text-anchor="${centro ? 'middle' : 'start'}">${h.dataset.t}</text></svg>`;
+    h.innerHTML = `<svg width="${w}" height="${H}" viewBox="0 0 ${w} ${H}" aria-hidden="true">${lineas.map(l => `<text x="${centro ? w / 2 : 0}" text-anchor="${centro ? 'middle' : 'start'}">${l}</text>`).join('')}</svg>`;
+    if (MOVIL) h.style.setProperty('--ts', Math.min(1, 432 / w).toFixed(3));
   });
   // línea de base igual a la del texto HTML ("line-height: normal" de Sora 128)
   const ubicar = () => {
     const c = document.createElement('canvas').getContext('2d'); c.font = '600 128px Sora';
     const m = c.measureText('Acerca'), asc = m.fontBoundingBoxAscent || 120, desc = m.fontBoundingBoxDescent || 32;
     const y = (161 - (asc + desc)) / 2 + asc;
-    $$('.titulo-km text').forEach(t => t.setAttribute('y', y));
+    $$('.titulo-km').forEach(h => $$('text', h).forEach((t, k) => t.setAttribute('y', y + k * RENGLON)));
   };
   ubicar(); if (document.fonts) document.fonts.ready.then(() => { ubicar(); bordesSinHuecos(); });
 }
@@ -1816,15 +2121,15 @@ function armarTitulos(){
 function bordesSinHuecos(){
   const S = 2, P = 40, CREMA = [237, 232, 219];
   $$('.titulo-km').forEach(h => {
-    const svg = $('svg', h), t = $('text', h); if (!svg || !t) return;
-    const w = +h.dataset.w, H = 161, W2 = (w + 2 * P) * S, H2 = (H + 2 * P) * S;
+    const svg = $('svg', h), ts = $$('text', h), t = ts[0]; if (!svg || !t) return;
+    const w = +h.dataset.w, H = +svg.getAttribute('height'), W2 = (w + 2 * P) * S, H2 = (H + 2 * P) * S;
     const cv = document.createElement('canvas'); cv.width = W2; cv.height = H2;
     const c = cv.getContext('2d', { willReadFrequently: true });
     c.scale(S, S); c.translate(P, P);
     c.font = '600 128px Sora'; c.textAlign = t.getAttribute('text-anchor') === 'middle' ? 'center' : 'left'; c.textBaseline = 'alphabetic';
     c.lineWidth = 46; c.lineJoin = 'round'; c.lineCap = 'round'; c.strokeStyle = c.fillStyle = 'rgb(237,232,219)';
-    const x = +t.getAttribute('x'), y = +t.getAttribute('y');
-    c.strokeText(h.dataset.t, x, y); c.fillText(h.dataset.t, x, y);
+    ts.forEach(tx => { const x = +tx.getAttribute('x'), y = +tx.getAttribute('y');
+      c.strokeText(tx.textContent, x, y); c.fillText(tx.textContent, x, y); });
     const img = c.getImageData(0, 0, W2, H2), d = img.data, N = W2 * H2;
     // relleno desde los bordes del canvas: todo lo transparente que se alcanza desde afuera es "afuera"
     const afuera = new Uint8Array(N), pila = new Int32Array(N); let n = 0;
@@ -1842,7 +2147,7 @@ function bordesSinHuecos(){
     }
     c.putImageData(img, 0, 0);
     let borde = $('image', svg);
-    if (!borde) { borde = document.createElementNS('http://www.w3.org/2000/svg', 'image'); svg.insertBefore(borde, t); }
+    if (!borde) { borde = document.createElementNS('http://www.w3.org/2000/svg', 'image'); svg.insertBefore(borde, svg.firstChild); }
     borde.setAttribute('href', cv.toDataURL('image/png'));
     borde.setAttribute('x', -P); borde.setAttribute('y', -P); borde.setAttribute('width', w + 2 * P); borde.setAttribute('height', H + 2 * P);
     svg.classList.add('listo');
@@ -1977,6 +2282,21 @@ function iniciarStickers(){
         y: { velocity: limXY(velY * EMPUJE) / k, end: 0 },
         rotation: { velocity: limGiro(torque * GIRO), end: 0 },
         resistance: RESISTENCIA } });
+    });
+  });
+}
+
+/* Pantallas táctiles: no hay mouse que empuje las misceláneas, así que al tocarlas saltan y giran con un rebote */
+function iniciarToques(){
+  if (REDUCIR || matchMedia('(hover: hover) and (pointer: fine)').matches || !window.gsap) return;
+  $$('.deco, .carita, .pieza').forEach(el => {
+    if (el.closest('.hero')) return;                             // las de los heros tienen su propia física
+    const pieza = el.querySelector('.mov') || el.firstElementChild; if (!pieza) return;
+    el.classList.add('jugable');
+    el.addEventListener('pointerdown', () => {
+      const lado = Math.random() < .5 ? -1 : 1;
+      gsap.timeline().to(pieza, { y: -26, rotation: lado * 24, duration: .22, ease: 'power2.out', overwrite: true })
+        .to(pieza, { y: 0, rotation: 0, duration: .9, ease: 'elastic.out(1,.35)' });
     });
   });
 }
@@ -2205,7 +2525,11 @@ function deslizable(zona, { mover, soltar, rueda }){
    a un costado; las de atrás pasan adelante con un click. Vuelven a los lugares del Figma. */
 function iniciarMazo(){
   const fotos = $$('.submarcas-zona .foto-rot'); if (fotos.length !== 3 || !window.gsap) return;
-  const SLOT = {
+  const SLOT = MOVIL ? {
+    izq:    { left: 0,   top: 46, width: 280, height: 158, rotation: -6, z: 1 },
+    der:    { left: 152, top: 52, width: 280, height: 158, rotation: 6,  z: 2 },
+    centro: { left: 46,  top: 22, width: 340, height: 191, rotation: 0,  z: 3 }
+  } : {
     izq:    { left: 133.9, top: 1271.9, width: 806.071, height: 453.805, rotation: -4.31, z: 1 },
     der:    { left: 964.6, top: 1282.3, width: 821.493, height: 462.324, rotation: 4.43,  z: 2 },
     centro: { left: 403,   top: 1183,   width: 1114,    height: 627,     rotation: 0,     z: 3 }
@@ -2241,7 +2565,7 @@ function iniciarMazo(){
       if (!activo) return; activo = false;
       if (pos[k] !== 'centro') { if (!movio) traer(k); return; }
       const dx = gsap.getProperty(f, 'x');
-      if (Math.abs(dx) > 160 || Math.abs(vel) > .6) tirar((dx || vel) < 0 ? 'izq' : 'der'); else acomodar();
+      if (Math.abs(dx) > (MOVIL ? 70 : 160) || Math.abs(vel) > .6) tirar((dx || vel) < 0 ? 'izq' : 'der'); else acomodar();
     };
     f.addEventListener('pointerup', fin); f.addEventListener('pointercancel', fin);
     f.addEventListener('mouseenter', () => { if (pos[k] !== 'centro') gsap.to(f, { y: -16, rotation: SLOT[pos[k]].rotation * 1.8, duration: .3, ease: 'power2.out' }); });
@@ -2280,7 +2604,8 @@ function iniciarRasgos(){
       if (!activo) return; activo = false; el.classList.remove('agarrado');
       const z = zoomActual(), r = el.getBoundingClientRect(), w = r.width / z, h = r.height / z;
       const L = parseFloat(el.style.left), T = parseFloat(el.style.top);
-      gsap.to(el, { inertia: { x: { velocity: vx, min: -L, max: 1680 - L - w }, y: { velocity: vy, min: -T - 120, max: 420 - T - h }, resistance: 260 } });
+      const AW = MOVIL ? 432 : 1680, AH = MOVIL ? 560 : 420;
+      gsap.to(el, { inertia: { x: { velocity: vx, min: -L, max: AW - L - w }, y: { velocity: vy, min: -T - 120, max: AH - T - h }, resistance: 260 } });
       gsap.to(el, { rotation: 0, duration: 1.2, ease: 'elastic.out(1,.35)' });
     };
     el.addEventListener('pointerup', fin); el.addEventListener('pointercancel', fin);
@@ -2321,7 +2646,7 @@ const MEZCLA = [['p', .5], ['c', .18], ['i', .17], ['e', .15]];
 
 function iniciarFlotar(){
   if (REDUCIR) return;
-  const W = 1920, H = 1080, BORDE = 23, COLCHON = 22, lim = (v, a) => Math.max(-a, Math.min(a, v)), azar = (a, b) => a + Math.random() * (b - a);
+  const W = ANCHO, H = ALTO_HERO, BORDE = 23, COLCHON = 22, lim = (v, a) => Math.max(-a, Math.min(a, v)), azar = (a, b) => a + Math.random() * (b - a);
   const nuevoCuerpo = (el, cx, cy, r, vx, vy, fija) => ({ el, x0: cx, y0: cy, x: cx, y: cy, r, m: r * r, vx, vy,
     crucero: Math.hypot(vx, vy) || azar(10, 20), ang: 0, giro: 0, adentro: false, fija, fuera: 0 });
   const escenas = $$('article.km').map(km => {
@@ -2336,22 +2661,25 @@ function iniciarFlotar(){
         el.classList.contains('carita') ? 50 : Math.max(w, h) * .45, Math.cos(a) * v, Math.sin(a) * v, fija);
     });
     const piezas = PIEZAS_SPOT.filter(p => p[2] !== fondo);
-    return { km, hero, fondo, cuerpos, piezas, obst: [], medido: false, max: cuerpos.length + 4, proxima: performance.now() + azar(2500, 5000) };
+    return { km, hero, fondo, cuerpos, piezas, obst: [], medido: false, max: cuerpos.length + (MOVIL ? 1 : 4), proxima: performance.now() + azar(2500, 5000) };
   }).filter(Boolean);
 
   const medir = esc => {
     const z = zoomActual(), hr = esc.hero.getBoundingClientRect(), o = [];
     const tit = $('.titulo-km', esc.hero);
-    if (tit) {
-      const t = $('text', tit), sr = $('svg', tit).getBoundingClientRect();
+    if (tit && $$('text', tit).length > 1) {            // título en dos renglones (mobile): la caja entera
+      const r = $('svg', tit).getBoundingClientRect();
+      o.push({ x1: (r.left - hr.left) / z - 8, x2: (r.right - hr.left) / z + 8, y1: (r.top - hr.top) / z - 8, y2: (r.bottom - hr.top) / z + 8 });
+    } else if (tit) {
+      const t = $('text', tit), svg = $('svg', tit), sr = svg.getBoundingClientRect(), e = sr.width / z / (+svg.getAttribute('width') || 1);
       const c = document.createElement('canvas').getContext('2d'); c.font = '600 128px Sora';
       c.textAlign = t.getAttribute('text-anchor') === 'middle' ? 'center' : 'left';
       const me = c.measureText(tit.dataset.t);
-      const ox = (sr.left - hr.left) / z + (+t.getAttribute('x')), oy = (sr.top - hr.top) / z + (+t.getAttribute('y'));
-      o.push({ x1: ox - me.actualBoundingBoxLeft - BORDE, x2: ox + me.actualBoundingBoxRight + BORDE,
-        y1: oy - me.actualBoundingBoxAscent - BORDE, y2: oy + me.actualBoundingBoxDescent + BORDE });
+      const ox = (sr.left - hr.left) / z + (+t.getAttribute('x')) * e, oy = (sr.top - hr.top) / z + (+t.getAttribute('y')) * e;
+      o.push({ x1: ox - (me.actualBoundingBoxLeft + BORDE) * e, x2: ox + (me.actualBoundingBoxRight + BORDE) * e,
+        y1: oy - (me.actualBoundingBoxAscent + BORDE) * e, y2: oy + (me.actualBoundingBoxDescent + BORDE) * e });
     }
-    $$('.km-tag, img[alt="SPOT!"]', esc.hero).forEach(e => { const r = e.getBoundingClientRect();
+    $$(MOVIL ? '.km-tag, img[alt="SPOT!"], .bajada, .links' : '.km-tag, img[alt="SPOT!"]', esc.hero).forEach(e => { const r = e.getBoundingClientRect();
       o.push({ x1: (r.left - hr.left) / z - 6, x2: (r.right - hr.left) / z + 6, y1: (r.top - hr.top) / z - 6, y2: (r.bottom - hr.top) / z + 6 }); });
     esc.obst = o; esc.medido = true;
   };
@@ -2474,7 +2802,7 @@ function seguirSuave(pintar, tau = .45){
 
 function iniciarTira(){
   const pin = $('.pin-tira'); if (!pin) return;
-  const st = $('.pin-sticky', pin), pista = $('.pista-tira', pin), km = pin.closest('article.km'), MAX = 3852 - 1680, RECORRIDO = 2400;
+  const st = $('.pin-sticky', pin), pista = $('.pista-tira', pin), km = pin.closest('article.km'), MAX = 3852 - (MOVIL ? 1080 : 1680), RECORRIDO = MOVIL ? 1400 : 2400;
   let arriba = 40;
   const medir = () => {
     const z = zoomActual(), h = st.getBoundingClientRect().height / z || 560;
@@ -2497,8 +2825,8 @@ function iniciarTira(){
    prototipo siguen: llevan el scroll hasta la foto anterior o siguiente. Cada foto se corre un poco dentro de su marco (paralaje). */
 function iniciarCarruseles(){
   $$('[data-carrusel]').forEach(c => {
-    const pista = $('.pista', c), figs = $$('figure', pista), PASO = 1275, n = figs.length, km = c.closest('article.km');
-    const POR_FOTO = 1000, RECORRIDO = POR_FOTO * (n - 1), ALTO = 786;
+    const pista = $('.pista', c), figs = $$('figure', pista), PASO = MOVIL ? 452 : 1275, n = figs.length, km = c.closest('article.km');
+    const POR_FOTO = MOVIL ? 600 : 1000, RECORRIDO = POR_FOTO * (n - 1), ALTO = MOVIL ? 420 : 786;
     const pin = document.createElement('div'); pin.className = 'pin-carrusel';
     c.parentNode.insertBefore(pin, c); pin.appendChild(c);
     let arriba = 40, i = 0;
@@ -2541,7 +2869,8 @@ function iniciarCarruselUI(){
   // posición de cada pantalla dentro de la pista (padding 263 + anchos + separación 315)
   const anchos = items.map(el => parseFloat(el.style.width) || parseFloat(getComputedStyle(el).width));
   const centros = anchos.map((w, k) => 263 + anchos.slice(0, k).reduce((a, b) => a + b + 315, 0) + w / 2);
-  const destino = k => 475.5 - centros[k] + (k === 0 ? centros[0] - 475.5 : 0);   // la primera queda como en el Figma
+  const MEDIO = MOVIL ? 400 : 475.5;                                              // mobile: la ventana mide 800
+  const destino = k => MEDIO - centros[k] + (k === 0 && !MOVIL ? centros[0] - MEDIO : 0);   // la primera queda como en el Figma
   let i = 0, x = 0, base = 0, bloqueo = 0;
   const pintar = (val, ms) => { x = val; pista.style.transition = ms ? `transform ${ms}ms cubic-bezier(.22,1,.36,1)` : 'none'; pista.style.transform = `translateX(${val}px)`; };
   const ir = k => { i = Math.max(0, Math.min(items.length - 1, k)); pintar(destino(i), REDUCIR ? 0 : 600);
@@ -2575,7 +2904,7 @@ function iniciarViajeKM6(){
   const medir = () => {
     const z = zoomActual(), ri = intro.getBoundingClientRect(), rc = card.getBoundingClientRect();
     medidas = { cx: (rc.left - ri.left) / z, cy: (rc.top - ri.top) / z, desde: ri.top / z + km.scrollTop / z + 160,
-      hasta: rc.top / z + km.scrollTop / z - (innerHeight / z - 500) / 2 };
+      hasta: rc.top / z + km.scrollTop / z - (innerHeight / z - rc.height / z) / 2, fx: rc.width / z / 972, fy: rc.height / z / 500 };
   };
   const act = () => {
     if (!medidas) medir();
@@ -2583,7 +2912,7 @@ function iniciarViajeKM6(){
     datos.forEach((d, i) => {
       if (d.lugar) {
         const t = suave((p - i * .015) / .85);                      // salen apenas escalonadas
-        const [lx, ly, esc] = d.lugar, dx = (medidas.cx + lx - d.x) * t, dy = (medidas.cy + ly - d.y) * t;
+        const [lx, ly, esc0] = d.lugar, esc = MOVIL ? esc0 * .7 : esc0, dx = (medidas.cx + lx * medidas.fx - d.x) * t, dy = (medidas.cy + ly * medidas.fy - d.y) * t;
         d.el.style.translate = `${dx.toFixed(1)}px ${dy.toFixed(1)}px`;
         d.el.style.rotate = `${(d.giro * Math.sin(t * Math.PI) * .25).toFixed(1)}deg`;
         d.el.style.scale = (1 + (esc - 1) * t).toFixed(3);
@@ -2647,7 +2976,7 @@ function iniciarSobreFotos(){
     const r = $('input[data-op]', f), val = $('[data-valor]', f), deg = $('[data-fondo-deg]', f); if (!r) return;
     const pintar = () => { const v = +r.value; f.style.setProperty('--op', v / 100); val.textContent = v + ' %';
       if (deg) deg.style.background = `linear-gradient(90deg,rgba(0,0,0,0),rgba(0,0,0,${v / 100})),repeating-conic-gradient(#5a5a5a 0 25%,#3a3a3a 0 50%) 0 0/12px 12px`; };
-    r.addEventListener('input', pintar); pintar();
+    r.addEventListener('input', () => { pintar(); if (!matchMedia('(hover:hover)').matches) f.classList.add('on'); }); pintar();
   });
 }
 
@@ -3021,26 +3350,44 @@ function abrirMenu(){
 }
 function cerrarMenu(){ menu.classList.remove('abierto'); veloMenu.classList.remove('abierto'); menu.setAttribute('aria-hidden','true'); }
 
-/* Escala: las páginas se diseñaron a 1920 px */
+/* Mobile: las fotos de post. (el mazo) y sus misceláneas pasan a una caja propia debajo del botón de post.,
+   así la zona de submarcas puede ir en columna */
+function prepararMovil(){
+  if (!MOVIL) return;
+  const zona = $('.submarcas-zona'); if (!zona) return;
+  const mazo = document.createElement('div'); mazo.className = 'mazo-movil';
+  $('.boton', zona).after(mazo);
+  $$('.foto-rot', zona).forEach(f => mazo.appendChild(f));
+  const pf = $('[data-decos="postfotos"]', zona); if (pf) mazo.appendChild(pf);
+}
+
+/* Escala: las páginas se diseñaron a 1920 px (480 px en mobile) */
 function escalar(){
   const r = document.documentElement.style;
-  r.setProperty('--z', innerWidth / 1920);
-  r.setProperty('--zs', Math.min(innerWidth / 1920, innerHeight / 1080));
-  r.setProperty('--zm', Math.min(1, Math.max(.55, innerHeight / 1080)));
+  r.setProperty('--z', innerWidth / ANCHO);
+  if (MOVIL) {
+    // portada y Home: se ve la franja central de 760 px del escenario (el mapa entero) y se usa todo el alto de la pantalla
+    const zs = innerWidth / 760;
+    r.setProperty('--zs', zs); r.setProperty('--dy', ((innerHeight / zs - 1080) / 2).toFixed(1) + 'px');
+    r.setProperty('--zm', innerWidth / 578);
+  } else {
+    r.setProperty('--zs', Math.min(innerWidth / 1920, innerHeight / 1080));
+    r.setProperty('--zm', Math.min(1, Math.max(.55, innerHeight / 1080)));
+  }
 }
 
 /* =====================================================================
    ARRANQUE
    ===================================================================== */
 escalar(); addEventListener('resize', escalar);
-armarMapa(); armarTitulos(); armarKM6(); armarDecos(); armarKM2(); armarKM3(); armarMalas(); armarPies(); armarMenu(); iniciarKM4(); iniciarKM5();
+prepararMovil(); armarMapa(); armarTitulos(); armarKM6(); armarDecos(); armarKM2(); armarKM3(); armarMalas(); armarPies(); armarMenu(); iniciarKM4(); iniciarKM5();
 $$('[data-abrir-menu]').forEach(b => b.addEventListener('click', abrirMenu));
 $$('[data-cerrar-menu]').forEach(b => b.addEventListener('click', () => cerrarMenu()));
 addEventListener('keydown', e => { if (e.key === 'Escape') cerrarMenu(); });
 $$('[data-a]').forEach(b => b.addEventListener('click', () => scrollA(b.closest('article.km').id, b.dataset.a)));
 $$('[data-bajar]').forEach(b => b.addEventListener('click', () => { const k = b.closest('article.km'); irA_Y(k, k.scrollTop + innerHeight * .9); }));
 $$('[data-arriba]').forEach(b => b.addEventListener('click', () => irArriba(b.closest('article.km'))));
-iniciarScrollSuave(); iniciarEntradas(); iniciarStickers(); iniciarCursor(); iniciarFavicon(); iniciarFaviconSec(); iniciarBotonMenu(); iniciarRastro(); iniciarPerfil(); iniciarSobreFotos(); iniciarUnirPuntos(); iniciarCintaIconos(); iniciarReceta(); iniciarColab(); iniciarKM3Entradas(); iniciarProporcion(); iniciarTira(); iniciarCarruseles(); iniciarCarruselUI(); iniciarParalaje(); iniciarViajeKM6(); iniciarMazo(); iniciarMecer(); iniciarRasgos(); iniciarFlotar();
+iniciarScrollSuave(); iniciarEntradas(); iniciarStickers(); iniciarToques(); iniciarCursor(); iniciarFavicon(); iniciarFaviconSec(); iniciarBotonMenu(); iniciarRastro(); iniciarPerfil(); iniciarSobreFotos(); iniciarUnirPuntos(); iniciarCintaIconos(); iniciarReceta(); iniciarColab(); iniciarKM3Entradas(); iniciarProporcion(); iniciarTira(); iniciarCarruseles(); iniciarCarruselUI(); iniciarParalaje(); iniciarViajeKM6(); iniciarMazo(); iniciarMecer(); iniciarRasgos(); iniciarFlotar();
 addEventListener('hashchange', leerHash);
 
 if (location.hash && location.hash !== '#inicio') { portada.remove(); portadaFuera = true; leerHash(); }
