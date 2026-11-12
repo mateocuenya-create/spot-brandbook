@@ -694,6 +694,35 @@ html.cursor-propio.cursor-visible :is(#cursor,#cursor-mini){opacity:1}
 .sombra-card .fila-s b{font:600 15px/1 var(--sora)}
 .sombra-card .fila-s i{display:inline-block;width:12px;height:12px;border-radius:50%;background:#000;border:1.5px solid var(--crema);vertical-align:-1px;margin-right:5px}
 
+/* KM 3 · Favicon (Figma 549:2362): las 12 variantes y las 4 animaciones (General, Spot, Post, Stop).
+   Cada animación está quieta en su primer cuadro y solo corre mientras el mouse está encima (comentario del Figma). */
+.favicon-sec{display:flex;flex-direction:column;gap:96px}
+.favicon-sec .c b{font-weight:700;color:var(--azul)}
+.fav-variables{width:1680px;padding:48px;display:flex;gap:24px;background:rgba(37,37,37,.08)}
+.fav-variables img{width:110px;height:111px;transition:transform .3s cubic-bezier(.34,1.56,.64,1)}
+.fav-variables img:hover{transform:scale(1.12) rotate(-6deg)}
+.fav-animaciones{width:1680px;padding:48px;display:flex;gap:48px;background:rgba(37,37,37,.08)}
+.fav-anim{width:360px;display:flex;flex-direction:column}
+.fav-anim .caja{position:relative;width:296px;height:243px;margin-bottom:24px}
+.fav-anim .mediano{position:absolute;left:0;top:0;width:240px;height:243px}
+.fav-anim .mini{position:absolute;left:264px;top:211px;width:32px;height:32px}
+.fav-anim h4{font:600 24px/1.3 var(--reddit);color:var(--negro);margin-bottom:24px}
+.fav-anim p{font:400 20px/1.5 var(--reddit);color:var(--negro)}
+
+/* KM 3 · Colaboraciones (Figma 495:2064): pautas a la izquierda (405 px) y muestra a la derecha (1255 px) */
+.colab-sec{display:flex;flex-direction:column;gap:96px}
+.colab-fila{display:flex;gap:20px;align-items:flex-start}
+.colab-fila .pautas-c{width:405px;flex:none;display:flex;flex-direction:column;gap:16px}
+.colab-fila .pautas-c h4{font:600 24px/1.3 var(--reddit);color:var(--negro)}
+.colab-fila .pautas-c p{font:400 20px/1.5 var(--reddit);color:var(--negro)}
+.colab-fila .pautas-c p + p{margin-top:14px}
+.colab-fila .pautas-c .boton-descarga{margin-top:16px;align-self:flex-start}
+.colab-muestra{width:1255px;flex:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:96px}
+.colab-muestra.oscura{background:var(--negro)}
+.colab-muestra img{display:block;clip-path:inset(0 100% 0 0);transition:clip-path 1s cubic-bezier(.65,0,.35,1)}
+.colab-muestra.visto img{clip-path:inset(0 0 0 0)}
+.colab-muestra img + img{transition-delay:.2s}
+
 /* ---------- Movimiento al scrollear (referencia: houseofyellow.nl) ----------
    Scroll suave con Lenis (1,2 s, expo-out) y entradas: suben 24 px y aparecen en 0,45 s,
    escalonadas de a 0,15 s, cuando el elemento llega al 90 % de la pantalla. Una sola vez. */
@@ -930,6 +959,12 @@ html.cursor-propio.cursor-visible :is(#cursor,#cursor-mini){opacity:1}
     <div id="variantes" style="display:flex;flex-direction:column;gap:96px"></div>
   </section>
   <div class="divisor"></div>
+  <section class="sec favicon-sec" id="km3-favicon">
+    <div class="fila"><h2 class="t">Favicon</h2><div class="c txt"><p>Para el favicon tomamos la <b>O de cada logo</b>: la de SPOT!, la de Post y la estrella de STOP. Cada una aparece con los <b>colores de su marca</b>, y entre un color y otro siempre pasan el negro y el crema, que funcionan como transición.</p><p>Elegimos que el favicon sea animado: el general recorre las tres marcas y cada una tiene además su propia versión. Funciona igual de bien en un tamaño mediano que en miniatura, como en la pestaña del navegador.</p></div></div>
+    <div class="fav-variables" data-fav-variables></div>
+    <div class="fav-animaciones" data-fav-animaciones></div>
+  </section>
+  <div class="divisor"></div>
   <section class="sec" id="km3-tamanos">
     <div class="fila"><h2 class="t sticky">Tamaños pequeños de uso</h2>
       <div class="c"><div class="txt"><p>Para que se entienda el logotipo y mantenga su impacto visual no recomendamos achicarlo más allá del tamaño mínimo de 70 px de ancho o 25 mm en su defecto. Tampoco recomendamos usar los logos a color en tamaños demasiado pequeños por una cuestión de contraste y de legibilidad, siendo que puede “empastarse” el color tanto en tinta para impresión como en pantalla. Esto aplica a los logos de las 3 marcas.</p></div>
@@ -960,6 +995,19 @@ html.cursor-propio.cursor-visible :is(#cursor,#cursor-mini){opacity:1}
         <img src="assets/km3b/ubicacion-2.svg" alt="El logo ubicado en una esquina respetando el margen" style="width:537px">
         <img src="assets/km3b/ubicacion-3.svg" alt="Posiciones posibles del logo en una pieza: esquinas y centro de los bordes" style="width:752px">
       </div></div>
+  </section>
+  <div class="divisor"></div>
+  <section class="sec colab-sec" id="km3-colaboraciones">
+    <div class="fila"><h2 class="t">Colaboraciones</h2><div class="c txt"><p>Cuando Spot se suma con otra marca, los dos logos conviven en un mismo lockup. Estas pautas sirven para que las dos identidades se lean con el mismo peso y para que todas las colaboraciones compartan la misma composición.</p><p>Todos los lockups van en Blanco Spot sobre Negro Spot.</p></div></div>
+    <div class="colab-fila"><div class="pautas-c"><h4>Composición del lockup</h4><div><p>Usá siempre el mismo espacio entre los logos y el signo ×, así todas las colaboraciones tienen la misma composición.</p><p>El logo de Spot va primero, salvo que la marca aliada pida lo contrario.</p><p>El logo aliado nunca es más alto que el de Spot.</p></div></div>
+      <div class="colab-muestra oscura" style="height:560px"><img src="assets/km3/lockup-martinez.svg" alt="Lockup SPOT! × Café Martínez" width="754" height="107"></div></div>
+    <div class="colab-fila"><div class="pautas-c"><h4>Jerarquía visual</h4><div><p>Los dos logos tienen el mismo peso visual: ninguno opaca al otro.</p><p>Aunque el logo aliado tenga sus propios colores o un fondo propio, en el lockup va en Blanco Spot, sin caja, sobre Negro Spot.</p></div></div>
+      <div class="colab-muestra oscura" style="height:560px"><img src="assets/km3/lockup-integra.svg" alt="Lockup SPOT! × Íntegra" width="792" height="108"></div></div>
+    <div class="colab-fila"><div class="pautas-c"><h4>A pedido de la marca</h4><div><p>Si una marca aliada exige usar su logo a color, o una variante que no aplica a nuestras reglas generales, esta la única excepción y se aplica solo a pedido de esa marca.</p></div></div>
+      <div class="colab-muestra oscura" style="height:720px"><img src="assets/km3/lockup-hyper.svg" alt="Lockup SPOT! × Hyper Night 10K" width="638" height="96"><img src="assets/km3/lockup-adidas.svg" alt="Lockup SPOT! × adidas Hyper Night 10K" width="744" height="110"></div></div>
+    <div class="colab-fila"><div class="pautas-c"><h4>Plantilla</h4><div><p>Esta plantilla es la guía general para armar cualquier lockup con una marca aliada.</p><p>El logo aliado entra en el recuadro de la derecha, sin superar su alto, y los márgenes se mantienen iguales en todos los lados.</p></div>
+        <a class="boton-descarga" href="assets/km3/plantilla-colaboracion.svg" download="Spot - Plantilla de colaboración.svg">Descargar plantilla</a></div>
+      <div class="colab-muestra" style="height:440px"><img src="assets/km3/plantilla-colaboracion.svg" alt="Plantilla del lockup: logo SPOT!, signo × y recuadro para el logo aliado, con las guías de márgenes" width="1139" height="271"></div></div>
   </section>
   <div class="divisor"></div>
   <section class="sec" id="km3-malas">
@@ -1860,7 +1908,7 @@ function iniciarStickers(){
    ENTRADAS AL SCROLLEAR: suben 24 px + aparecen, 0,45 s, escalonadas 0,15 s
    ===================================================================== */
 const ENTRAN = ['.sec .fila > *', '.pilar', '.rasgo', '.card-enf', '.card-tono', '.somos-fila', '.enfoque > h4', '.momentos > h4',
-  '.banda p', '.foto-co p', '.tira', '.variantes', '.tamanos > div', '.submarcas-zona > img.abs', '.submarcas-zona > p', '.foto-rot', '.boton', '.parada', '.volver-arriba', '.diagramas > *', '.mala', '.app-pantallas', '.marca-card', '.piezas', '.signo', '.carrusel', '.uso', '.filtros figure', '.indebido', '.km6-intro > p', '.carita-ej', '.insignia-card', '.sobre-foto', '.siluetas-fila', '.siluetas-grande']
+  '.banda p', '.foto-co p', '.tira', '.variantes', '.tamanos > div', '.submarcas-zona > img.abs', '.submarcas-zona > p', '.foto-rot', '.boton', '.parada', '.volver-arriba', '.diagramas > *', '.mala', '.app-pantallas', '.marca-card', '.piezas', '.signo', '.carrusel', '.uso', '.filtros figure', '.indebido', '.km6-intro > p', '.carita-ej', '.insignia-card', '.fav-variables', '.fav-animaciones', '.sobre-foto', '.siluetas-fila', '.siluetas-grande']
   .join(',');
 function iniciarEntradas(){
   if (REDUCIR || !('IntersectionObserver' in window)) return;
@@ -2586,6 +2634,14 @@ function iniciarReceta(){
   km.addEventListener('scroll', act, { passive: true }); addEventListener('resize', act); act();
 }
 
+/* KM 3 · Colaboraciones: cada lockup aparece de izquierda a derecha (como si se armara) la primera vez que entra en pantalla */
+function iniciarColab(){
+  const ms = $$('.colab-muestra'); if (!ms.length) return;
+  if (REDUCIR || !('IntersectionObserver' in window)) { ms.forEach(m => m.classList.add('visto')); return; }
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visto'); io.unobserve(e.target); } }), { threshold: .45 });
+  ms.forEach(m => io.observe(m));
+}
+
 function iniciarBotonMenu(){
   const lum = c => { const m = c.match(/[\d.]+/g); if (!m) return null; const [r, g, b, a = 1] = m.map(Number); if (a < .5) return null; return (.299 * r + .587 * g + .114 * b) / 255; };
   const fondoDebajo = btn => {
@@ -2712,6 +2768,40 @@ function iniciarCursor(){
 
 /* Favicon animado (componente "Favicon animado" del Figma): 12 cuadros, cada uno 0,625 s, corte seco y vuelve al primero.
    Los cuadros se cargan una vez y se pasan como datos, así el cambio no parpadea. */
+/* Secuencias de los componentes "Favicon animado · … · mediano + miniatura" del Figma: [forma, fondo, figura], 0,625 s cada cuadro */
+const FAV_C = { amarillo: '#FDCE42', naranja: '#FF7640', rosa: '#F79EE1', violeta: '#AB8AE5', azul: '#7AA1FF', verde: '#49B867', negro: '#252525', crema: '#EDE8DB' };
+const FAV_SEC = {
+  General: { txt: 'Recorre las tres marcas.', cuadros: [['spot','amarillo','negro'],['spot','crema','negro'],['spot','negro','crema'],['spot','naranja','crema'],['post','violeta','negro'],['post','crema','negro'],
+    ['post','negro','crema'],['post','verde','crema'],['stop','rosa','negro'],['stop','crema','negro'],['stop','negro','crema'],['stop','azul','crema']] },
+  Spot: { txt: 'Todos los colores de Spot.', cuadros: [['spot','amarillo','negro'],['spot','crema','negro'],['spot','negro','crema'],['spot','naranja','crema'],['spot','crema','negro'],['spot','negro','crema'],
+    ['spot','rosa','negro'],['spot','crema','negro'],['spot','negro','crema'],['spot','violeta','negro'],['spot','crema','negro'],['spot','negro','crema'],['spot','azul','crema'],['spot','crema','negro'],['spot','negro','crema']] },
+  Post: { txt: 'Violeta y verde de post.', cuadros: [['post','violeta','negro'],['post','crema','negro'],['post','negro','crema'],['post','verde','crema']] },
+  Stop: { txt: 'Rosa y azul de Stop.', cuadros: [['stop','rosa','negro'],['stop','crema','negro'],['stop','negro','crema'],['stop','azul','crema']] }
+};
+// arma cada cuadro a partir de las formas del favicon (f01 = O de SPOT!, f05 = O de post., f09 = estrella de STOP) cambiando los colores
+async function iniciarFaviconSec(){
+  const vars = $('[data-fav-variables]'), anims = $('[data-fav-animaciones]'); if (!vars || !anims) return;
+  const base = {};
+  await Promise.all([['spot','f01'],['post','f05'],['stop','f09']].map(([k, f]) => fetch(`assets/favicon/${f}.svg`).then(r => r.text()).then(t => { base[k] = t; }))).catch(() => {});
+  if (!base.spot) return;
+  const cuadro = ([forma, bg, fg]) => 'data:image/svg+xml,' + encodeURIComponent(base[forma]
+    .replace(/(<rect[^>]*rx="[\d.]+"[^>]*fill=")#[0-9A-Fa-f]{6}/, '$1@@FONDO@@').replace(/#252525/g, '@@FIGURA@@')
+    .replace('@@FONDO@@', FAV_C[bg]).replace(/@@FIGURA@@/g, FAV_C[fg]));
+  vars.innerHTML = FAV_SEC.General.cuadros.map((c, i) => `<img src="${cuadro(c)}" alt="Favicon ${i + 1}">`).join('');
+  anims.innerHTML = Object.entries(FAV_SEC).map(([n, d]) => `<div class="fav-anim" data-fav="${n}" tabindex="0" aria-label="Favicon animado ${n}: pasá el mouse para verlo">
+    <div class="caja"><img class="mediano" alt=""><img class="mini" alt=""></div><h4>${n}</h4><p>${d.txt}</p></div>`).join('');
+  $$('.fav-anim', anims).forEach(el => {
+    const urls = FAV_SEC[el.dataset.fav].cuadros.map(cuadro), imgs = $$('img', el);
+    let i = 0, reloj = null;
+    const poner = k => imgs.forEach(im => { im.src = urls[k]; });
+    const arrancar = () => { if (reloj || REDUCIR) return; reloj = setInterval(() => { i = (i + 1) % urls.length; poner(i); }, 625); };
+    const parar = () => { clearInterval(reloj); reloj = null; i = 0; poner(0); };
+    poner(0);
+    el.addEventListener('mouseenter', arrancar); el.addEventListener('mouseleave', parar);
+    el.addEventListener('focus', arrancar); el.addEventListener('blur', parar);
+  });
+}
+
 async function iniciarFavicon(){
   const link = $('link[rel="icon"]'); if (!link) return;
   const cuadros = await Promise.all(Array.from({ length: 12 }, (_, i) =>
@@ -2767,7 +2857,7 @@ addEventListener('keydown', e => { if (e.key === 'Escape') cerrarMenu(); });
 $$('[data-a]').forEach(b => b.addEventListener('click', () => scrollA(b.closest('article.km').id, b.dataset.a)));
 $$('[data-bajar]').forEach(b => b.addEventListener('click', () => { const k = b.closest('article.km'); irA_Y(k, k.scrollTop + innerHeight * .9); }));
 $$('[data-arriba]').forEach(b => b.addEventListener('click', () => irArriba(b.closest('article.km'))));
-iniciarScrollSuave(); iniciarEntradas(); iniciarStickers(); iniciarCursor(); iniciarFavicon(); iniciarBotonMenu(); iniciarRastro(); iniciarPerfil(); iniciarSobreFotos(); iniciarUnirPuntos(); iniciarCintaIconos(); iniciarReceta(); iniciarTira(); iniciarCarruseles(); iniciarCarruselUI(); iniciarParalaje(); iniciarViajeKM6(); iniciarMazo(); iniciarMecer(); iniciarRasgos(); iniciarFlotar();
+iniciarScrollSuave(); iniciarEntradas(); iniciarStickers(); iniciarCursor(); iniciarFavicon(); iniciarFaviconSec(); iniciarBotonMenu(); iniciarRastro(); iniciarPerfil(); iniciarSobreFotos(); iniciarUnirPuntos(); iniciarCintaIconos(); iniciarReceta(); iniciarColab(); iniciarTira(); iniciarCarruseles(); iniciarCarruselUI(); iniciarParalaje(); iniciarViajeKM6(); iniciarMazo(); iniciarMecer(); iniciarRasgos(); iniciarFlotar();
 addEventListener('hashchange', leerHash);
 
 if (location.hash && location.hash !== '#inicio') { portada.remove(); portadaFuera = true; leerHash(); }

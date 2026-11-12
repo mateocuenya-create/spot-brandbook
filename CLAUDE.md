@@ -376,3 +376,19 @@ El 10/11/2026 se borró todo lo construido y se empezó de nuevo. Respaldo de la
 - 11/11/2026 · Equipo · **KM 3 · Botón "Descargar Logos"** (Figma `544:11222`, debajo del título "Logos Spot"): mismo estilo que "Descargar plantilla" (pastilla negra, Reddit Sans SemiBold 20, crema), 207 × 54 px, 109 px debajo del título; acompaña al título mientras se scrollea (sticky). Descarga `assets/descargas/Logos_Spot.zip` (SPOT!, post. y STOP en color y negro, PNG y SVG). Los archivos para descargar van en `assets/descargas/`. Ojo: en el KM 3 del Figma hay otro "Descargar plantilla" (`498:2076`, plantilla de lockup) que todavía no está en la página.
 - 11/11/2026 · Equipo · **KM 3 · tira de construcción: cotas fijas y logos hasta el borde** (pedido con capturas). En el Figma las franjas naranja/rosa, la línea punteada, las flechas y los textos 9/24/124 px están sueltos en la lámina (x 377–1404), no dentro de la tira; por eso ahora quedan quietos y los tres logos pasan por debajo para compararlos. La tira ocupa los 1920 px (ya no se corta en el margen de 120 px); arranca y termina en el margen como antes. Arreglado de paso: las flechas verticales de las cotas no se veían (una regla las estiraba).
 - 11/11/2026 · Equipo · **KM 6 · La cinta de íconos de puntos va más rápido**: 55 s por vuelta en vez de 75 s (`.pista-iconos`, animación `cinta`). Se sigue pausando con el mouse encima.
+- 12/11/2026 · Mateo · **KM 3 · sección Favicon** (Figma `549:2362`, entre Variantes de color y Tamaños pequeños, con divisor antes y después).
+  - Tiene el texto con "O de cada logo" y "colores de su marca" en azul y negrita, como en el Figma.
+  - Variables: los 12 favicons del favicon general.
+  - Animaciones: General (12 cuadros), Spot (15), Post (4) y Stop (4), cada una en tamaño mediano (240) y miniatura (32). Las secuencias son las de los componentes "Favicon animado · … · mediano + miniatura", a 0,625 s cada cuadro.
+  - Según el comentario de Estefanía, **cada animación solo corre mientras el mouse está encima**. Al sacar el mouse vuelve al primer cuadro. Con teclado funciona al hacer foco.
+  - Los cuadros se arman en el momento con las formas de `assets/favicon/f01` (O de SPOT!), `f05` (O de post.) y `f09` (estrella de STOP), cambiando los colores (`iniciarFaviconSec`).
+- 12/11/2026 · Mateo · **KM 3 · sección Colaboraciones** (Figma `495:2064`, entre Ubicación y Malas prácticas, con divisor antes y después).
+  - Tiene el encabezado y 4 bloques con las pautas a la izquierda y la muestra a la derecha:
+    - **Composición del lockup**: Spot × Café Martínez, sobre negro.
+    - **Jerarquía visual**: Spot × Íntegra, sobre negro.
+    - **A pedido de la marca**: Spot × Hyper Night 10K y Spot × adidas, sobre negro.
+    - **Plantilla**: el logo, el signo ×, el recuadro para el logo aliado y las guías.
+  - Los lockups y la plantilla se exportaron del Figma: `assets/km3/lockup-*.svg` y `plantilla-colaboracion.svg`.
+  - El botón **"Descargar plantilla"** baja `plantilla-colaboracion.svg`.
+  - Cada lockup aparece de izquierda a derecha, como si se armara, la primera vez que entra en pantalla (`iniciarColab`).
+  - Typo del Figma copiado tal cual: "esta la única excepción" (sin tilde y sin "es").
