@@ -1916,7 +1916,7 @@ html.movil .frente .m3{transform:translate(calc((1 - var(--p)) * 60px), calc((1 
       <div class="hitos" data-hitos><figure class="hito"><img src="assets/km10/inflables.jpg" alt="Copa, estrella y carita inflables de STOP iluminadas de noche frente a un edificio." loading="lazy"></figure>
         <figure class="hito"><img src="assets/km10/parada-foto.jpg" alt="Parada fotográfica: una carita inflable con anteojos, un espejo y señales con frases como “Pará, tomá aire.”." loading="lazy"></figure></div></div>
     <div class="senal-fila"><div class="col-izq"><div class="pauta"><h4>La pantalla también es arquitectura</h4><p>En post., la fachada de pantallas cumple el mismo rol que un cartel: deja reconocer la instalación desde afuera, anuncia lo que está por empezar y suma movimiento con las animaciones de la marca.</p></div>
-        <div class="juego-insignias" data-juego aria-label="Juego: las insignias de Spot caen y se pueden agarrar y tirar"><p class="pista">Agarrá una insignia y tirala</p></div></div>
+        <div class="juego-insignias" data-juego aria-label="Juego: las misceláneas de Spot (puntos y estrellas) caen y se pueden agarrar y tirar"><p class="pista">Agarrá un punto o una estrella y tiralo</p></div></div>
       <div class="pantallas-post" data-pantallas>
         <video class="s1" src="assets/km10/post-respirar.mp4" muted loop playsinline preload="none" style="aspect-ratio:2366/820" aria-label="Pantalla de la entrada de post.: animación respirar"></video>
         <video class="s2" src="assets/km10/post-running.mp4" muted loop playsinline preload="none" style="aspect-ratio:3240/1080" aria-label="Pantalla del frente de post.: animación running"></video>
@@ -3806,20 +3806,21 @@ function iniciarPantallas(){
 function iniciarJuegoInsignias(){
   const caja = $('[data-juego]'); if (!caja) return;
   const km = caja.closest('article.km'), E = MOVIL ? .82 : 1.12;
-  const lista = PIEZAS_SPOT.filter(q => q[3] === 'i');
+  // misceláneas de SPOT!: puntos y estrellas de 7 y 12 puntas, en los 5 colores (en el celular, una de cada dos)
+  const lista = PIEZAS_SPOT.filter(q => q[3] === 'p' || q[3] === 'e').filter((q, i) => !MOVIL || i % 2 === 0);
   const G = 2400, REBOTE = .42, azar = (a, b) => a + Math.random() * (b - a);
-  const cuerpos = lista.map(([src, tam]) => {
+  const cuerpos = lista.map(([src, tam, , tipo]) => {
     const w = tam * E, el = document.createElement('div'); el.className = 'ins';
     el.style.width = el.style.height = w + 'px';
     el.innerHTML = `<img src="assets/${src}" alt="" draggable="false">`; caja.appendChild(el);
-    return { el, w, r: w * .46, x: 0, y: 0, vx: 0, vy: 0, ang: 0, giro: 0, mano: null };
+    return { el, w, r: w * (tipo === 'e' ? .4 : .46), x: 0, y: 0, vx: 0, vy: 0, ang: 0, giro: 0, mano: null };
   });
   let W = 0, H = 0, jugando = false, visto = false, t0 = 0;
   const medir = () => { W = caja.offsetWidth; H = caja.offsetHeight; };
   const pintar = c => { c.el.style.transform = `translate(${(c.x - c.w / 2).toFixed(1)}px, ${(c.y - c.w / 2).toFixed(1)}px) rotate(${c.ang.toFixed(1)}deg)`; };
   const soltar = () => {                                             // caen desde arriba, de a una
     medir();
-    cuerpos.forEach((c, i) => { c.x = azar(c.r, W - c.r); c.y = -c.r - i * 150 - azar(0, 60); c.vx = azar(-80, 80); c.vy = 0; c.ang = azar(-30, 30); c.giro = azar(-120, 120); pintar(c); });
+    cuerpos.forEach((c, i) => { c.x = azar(c.r, W - c.r); c.y = -c.r - i * 45 - azar(0, 40); c.vx = azar(-80, 80); c.vy = 0; c.ang = azar(-30, 30); c.giro = azar(-120, 120); pintar(c); });
   };
   if (REDUCIR) {                                                     // sin movimiento: quedan apoyadas en fila
     medir(); let x = 0, y = H;
