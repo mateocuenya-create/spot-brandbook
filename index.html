@@ -2410,9 +2410,26 @@ function iniciarFlotar(){
 
 /* KM 3 · tira de construcción: se queda quieta en pantalla y, mientras scrolleás hacia abajo,
    se corre sola de costado hasta mostrar los tres logos. Después sigue el scroll normal. */
+/* Movimiento atado al scroll, pero sutil: el valor no salta al que marca el scroll sino que lo sigue con suavidad
+   (~0,45 s para acomodarse, igual en cualquier pantalla). pintar(v) se llama en cada cuadro mientras se mueve. */
+function seguirSuave(pintar, tau = .45){
+  let actual = null, meta = 0, t0 = 0, corriendo = false;
+  const paso = t => {
+    const dt = Math.min(.05, (t - t0) / 1000); t0 = t;
+    actual += (meta - actual) * (1 - Math.exp(-dt / tau));
+    if (Math.abs(meta - actual) < .1) { actual = meta; corriendo = false; } else requestAnimationFrame(paso);
+    pintar(actual);
+  };
+  return v => {
+    meta = v;
+    if (actual === null || REDUCIR) { actual = v; pintar(v); return; }
+    if (!corriendo) { corriendo = true; t0 = performance.now(); requestAnimationFrame(paso); }
+  };
+}
+
 function iniciarTira(){
   const pin = $('.pin-tira'); if (!pin) return;
-  const st = $('.pin-sticky', pin), pista = $('.pista-tira', pin), km = pin.closest('article.km'), MAX = 3852 - 1680, RECORRIDO = 1500;
+  const st = $('.pin-sticky', pin), pista = $('.pista-tira', pin), km = pin.closest('article.km'), MAX = 3852 - 1680, RECORRIDO = 2400;
   let arriba = 40;
   const medir = () => {
     const z = zoomActual(), h = st.getBoundingClientRect().height / z || 560;
@@ -2422,8 +2439,9 @@ function iniciarTira(){
   const act = () => {
     const z = zoomActual(), r = pin.getBoundingClientRect();
     const p = Math.max(0, Math.min(1, (arriba * z - r.top) / (RECORRIDO * z)));
-    pista.style.transform = `translateX(${(-MAX * p).toFixed(1)}px)`;
+    mover(-MAX * p);
   };
+  const mover = seguirSuave(v => { pista.style.transform = `translateX(${v.toFixed(1)}px)`; });
   medir(); act();
   addEventListener('resize', () => { medir(); act(); });
   km.addEventListener('scroll', act, { passive: true });
@@ -2435,13 +2453,13 @@ function iniciarTira(){
 function iniciarCarruseles(){
   $$('[data-carrusel]').forEach(c => {
     const pista = $('.pista', c), figs = $$('figure', pista), PASO = 1275, n = figs.length, km = c.closest('article.km');
-    const POR_FOTO = 700, RECORRIDO = POR_FOTO * (n - 1), ALTO = 786;
+    const POR_FOTO = 1000, RECORRIDO = POR_FOTO * (n - 1), ALTO = 786;
     const pin = document.createElement('div'); pin.className = 'pin-carrusel';
     c.parentNode.insertBefore(pin, c); pin.appendChild(c);
     let arriba = 40, i = 0;
     const pintar = v => {
       pista.style.transform = `translateX(${v.toFixed(1)}px)`;
-      figs.forEach((f, k) => { const rel = (k * PASO + v) / PASO; $('img', f).style.transform = `translateX(${Math.max(-1, Math.min(1, rel)) * -50}px)`; });
+      figs.forEach((f, k) => { const rel = (k * PASO + v) / PASO; $('img', f).style.transform = `translateX(${(Math.max(-1, Math.min(1, rel)) * -30).toFixed(1)}px)`; });
     };
     const medir = () => {
       const z = zoomActual();
@@ -2449,11 +2467,12 @@ function iniciarCarruseles(){
       c.style.top = arriba + 'px'; pin.style.height = (ALTO + RECORRIDO) + 'px';
     };
     const suave = t => t <= 0 ? 0 : t >= 1 ? 1 : t * t * (3 - 2 * t);
+    const mover = seguirSuave(pintar);
     const act = () => {
       const z = zoomActual(), r = pin.getBoundingClientRect();
       const p = Math.max(0, Math.min(1, (arriba * z - r.top) / (RECORRIDO * z)));
-      const t = p * (n - 1), k = Math.min(n - 2, Math.floor(t)), f = suave((t - k - .15) / .7);   // cada foto se queda quieta un rato
-      i = Math.round(t); pintar(-(k + f) * PASO);
+      const t = p * (n - 1), k = Math.min(n - 2, Math.floor(t)), f = suave((t - k - .2) / .6);   // cada foto se queda quieta un rato
+      i = Math.round(t); mover(-(k + f) * PASO);
     };
     // flechas: llevan el scroll hasta la foto pedida (de la última vuelve a la primera, como el prototipo)
     const ir = j => {

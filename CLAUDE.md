@@ -399,3 +399,7 @@ El 10/11/2026 se borró todo lo construido y se empezó de nuevo. Respaldo de la
     - **Stop:** negro 45 %, rosa 25 %, azul 15 %, crema 15 %.
   - El logo de cada marca va en el primer tramo (`assets/km5/prop-logo-*.svg`, exportados del Figma).
   - Al entrar en pantalla, cada barra se llena color por color de izquierda a derecha. Al pasar el mouse por un color, ese tramo se ensancha (`iniciarProporcion`).
+- 12/11/2026 · Mateo · **Movimientos con scroll más sutiles** (pedido del equipo): la tira de construcción del KM 3 y los carruseles de fotos del KM 6.
+  - Ya no saltan al lugar que marca el scroll: lo siguen con suavidad, en unos 0,45 s (`seguirSuave`).
+  - **Tira:** necesita más scroll para recorrerse, 2400 px en vez de 1500.
+  - **Carruseles:** 1000 px de scroll por foto en vez de 700, cada foto se queda quieta más tiempo y el paralaje dentro del marco es más leve (30 px en vez de 50).
