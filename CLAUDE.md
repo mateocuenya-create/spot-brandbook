@@ -320,8 +320,8 @@ El 10/11/2026 se borró todo lo construido y se empezó de nuevo. Respaldo de la
 - 11/11/2026 · Mateo · **KM 2 · "Somos… pero no…" completo.** Los ejemplos de "pero no" sí estaban en el Figma: cada instancia de "Fila Somos / Pero no" guarda sus textos en las propiedades "Ejemplo sí" y "Ejemplo no" (por eso en el prototipo andaba). Se cargaron las 8 filas en `SOMOS`. Ya no aparece "Falta el ejemplo…". Tip: para leer textos de instancias, mirar `componentProperties`, no solo las capas de texto visibles.
 - 11/11/2026 · Mateo · **Sincronización con el Figma actualizado (2.ª ronda).**
   - Inicio: "Última actualización Nov 2026" abajo a la derecha (Sora Light, crema 60 %).
-  - Menú y mapa: KM 7 Design System, KM 8 Animaciones, KM 9 Íconos, KM 10 Arquigrafía. Todavía sin página, así que no son links.
-  - KM 1: la parada anterior es KM10 · Arquigrafía (sin link).
+  - Menú y mapa: KM 7 Design System, KM 8 Animaciones, KM 9 Íconos, KM 10 Arquigrafía. Todavía sin página, así que no son links (KM 10 ya tiene página desde el 12/11).
+  - KM 1: la parada anterior es KM10 · Arquigrafía (ahora es link, desde el 12/11).
   - Subtítulos de los heros: KM 3 "Nuestra firma en todo lugar" (con links a Construcción / Variantes / Malas prácticas), KM 4 "Incluso el texto lleva nuestra impronta", KM 5 "La clave de nuestra expresión visual", KM 6 "Nuestra expresión visual potenciada".
   - KM 5 · Tipografía y color: queda un solo párrafo, como en el Figma.
   - KM 6 · Usos indebidos: texto nuevo y 9 fotos reales en 3 filas (`assets/km6/indebido-1..9.jpg`), con la cruz de 1 px; al pasar el mouse la foto hace "que no".
@@ -468,3 +468,20 @@ El 10/11/2026 se borró todo lo construido y se empezó de nuevo. Respaldo de la
     - Las fotos de "Elementos sobre fotografías" se encienden.
     - Tocar sigue funcionando.
   - **KM 4 · Light / Semi Bold / Regular / Bold:** ahora se tocan. El peso elegido queda puesto en el "Aa" y en la frase (en naranja el elegido), y se saca tocándolo de nuevo. En compu sigue el hover.
+- 12/11/2026 · Mateo · **KM 10 · Arquigrafía y señalética** (Figma "Slide 16:9 - 10 · Arquigrafía y señalética", `577:2572`, en Brand guidelines TP5). Textos, orden y medidas iguales al Figma.
+  - Secciones: Wayfinding (6 principios), Tipos de señales (direccionales, locativas, orientativas, complementarias), Iconografía, Medidas y alturas, Arquigrafía (un solo frente, lo existente con identidad, hitos a gran escala, la pantalla también es arquitectura). Footer: anterior KM 9 · Íconos (sin link, no existe todavía), siguiente "Volver al inicio".
+  - Ahora es link en el menú (con sus 5 subsecciones), en el mapa de la Home y en la "parada anterior" del KM 1.
+  - **Hueco del Figma (avisar al equipo):** el hero de esta página dice "KM 9" y "Parada anterior: Animaciones · KM8", pero el menú del Figma (y la página) la tienen como **KM 10** (KM 9 es Íconos). Se usó KM 10 para que coincida con el menú y el mapa.
+  - Archivos en `assets/km10/`: los esquemas son SVG exportados del Figma (`direccionales`, `locativas`, `orientativas`, `complementarias`, `iconos`, `medidas`); fotos `parada.jpg`, `inflables.jpg`, `parada-foto.jpg`; `stand.png` y `fachada-post.png` (imágenes del Figma).
+  - Hero naranja con las misceláneas de los otros KM (insignia "consistencia", carita violeta en el lugar del Figma, fuera del título).
+  - **Animaciones** (se repiten cada vez que se vuelve a pasar):
+    - Principios: la línea de arriba de cada uno se dibuja y aparece el texto, de a uno.
+    - Señales: los SVG se pasan a la página la primera vez que se abre el KM (`iniciarKM10`, pesan). Las líneas de la regla se dibujan, las cotas aparecen de 0 m a 3 m, la persona entra caminando y cada señal "se instala": lo que apoya en el piso crece desde el suelo y lo que va colgado baja a su lugar, de izquierda a derecha.
+    - Íconos: cada familia se da vuelta como un cartel de partidas, ícono por ícono. Con el mouse encima, el ícono salta.
+    - Medidas: un nivel naranja sube por la regla al scrollear (0,75 → 1,50–1,70 → 2,25 → 3 m) y marca esa altura en el texto. Con el mouse (o tocando) sobre una altura, el nivel va a esa.
+    - Un solo frente: los tres módulos del stand llegan separados e inclinados y se juntan en una sola fachada a medida que se scrollea.
+    - Lo existente, con identidad: una franja rosa (como la de la parada) cruza la foto y la descubre.
+    - Hitos: las dos fotos "se inflan" (de redondas y chicas a su tamaño, con rebote). Con el mouse encima (en el celular, al pasar por el medio) respiran.
+    - Pantallas de post.: las tres pantallas se prenden una por una, con parpadeo.
+  - Regla técnica: a una pieza de SVG del Figma que ya trae `transform` (rotada o movida) no se le anima el transform directo, porque lo pisa: se la mete en un `<g>` y se anima ese.
+  - **Mobile:** una columna; los esquemas van de borde a borde achicados con transform (`ACHICAR_MOVIL`), las alturas en 2 × 2, las fotos a todo el ancho. El nivel de alturas avanza al scrollear igual que en compu; los íconos y los hitos se activan al pasar por el medio de la pantalla.

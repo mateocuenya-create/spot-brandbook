@@ -799,6 +799,84 @@ html.cursor-propio.cursor-visible :is(#cursor,#cursor-mini){opacity:1}
   .rv{opacity:1}
 }
 
+
+/* ===== KM 10 · Arquigrafía y señalética ===== */
+.links.dos{display:grid;grid-template-columns:305px auto;grid-template-rows:repeat(4,auto);grid-auto-flow:column;gap:16px 0}
+.km10-sec{display:flex;flex-direction:column;gap:96px}
+.km10-sec .az{font-weight:700;color:var(--azul)}
+.principios{display:flex;flex-wrap:wrap;gap:64px 40px;width:1680px}
+.principio{position:relative;width:533px;padding-top:24px;display:flex;flex-direction:column;gap:16px;color:var(--negro)}
+.principio::before{content:'';position:absolute;left:0;top:0;width:100%;height:2px;background:var(--negro);transform-origin:left;transition:transform .9s cubic-bezier(.65,0,.35,1) var(--d,0s)}
+.principio > *{transition:opacity .5s var(--ease-out) calc(var(--d,0s) + .25s),translate .6s cubic-bezier(.22,1,.36,1) calc(var(--d,0s) + .25s)}
+.principio .n{font:600 20px/normal var(--reddit);color:var(--naranja)}
+.principio h3{font:700 32px/normal var(--reddit)}
+.principio p{font:400 20px/1.5 var(--reddit)}
+.principio:nth-child(2){--d:.12s} .principio:nth-child(3){--d:.24s} .principio:nth-child(4){--d:.3s} .principio:nth-child(5){--d:.42s} .principio:nth-child(6){--d:.54s}
+.principios.espera .principio::before{transform:scaleX(0)}
+.principios.espera .principio > *{opacity:0;translate:0 16px}
+.senal-fila{display:flex;gap:20px;align-items:flex-start;width:1680px}
+.pauta{width:405px;flex:none;display:flex;flex-direction:column;gap:16px;color:var(--negro)}
+.pauta h4{font:600 24px/normal var(--reddit)}
+.pauta p{font:400 20px/1.5 var(--reddit)}
+.pauta p + p{margin-top:14px}
+.esquema{display:block;width:1255px;height:auto;flex:none;overflow:hidden}
+.esquema.medidas{width:1680px}
+/* esquemas animados (ver prepararEsquema) */
+svg.esquema :is(.e-guia,.e-cota,.e-persona,.e-sube,.e-cuelga,.e-rotulo,.ico){transform-box:fill-box}
+svg.esquema .e-guia{transform-origin:0 50%;transition:transform 1s cubic-bezier(.65,0,.35,1) var(--d)}
+svg.esquema .e-cota,svg.esquema .e-rotulo{transition:opacity .5s var(--ease-out) var(--d),transform .5s var(--ease-out) var(--d)}
+svg.esquema .e-persona{transition:opacity .4s var(--ease-out) var(--d),transform 1.1s cubic-bezier(.22,1,.36,1) var(--d)}
+svg.esquema .e-sube{transform-origin:50% 100%;transition:transform .7s cubic-bezier(.34,1.56,.64,1) var(--d),opacity .2s linear var(--d)}
+svg.esquema .e-cuelga{transform-origin:50% 0;transition:transform .65s cubic-bezier(.34,1.56,.64,1) var(--d),opacity .35s var(--ease-out) var(--d)}
+svg.esquema.espera .e-guia{transform:scaleX(0)}
+svg.esquema.espera :is(.e-cota,.e-rotulo){opacity:0;transform:translateY(6px)}
+svg.esquema.espera .e-persona{opacity:0;transform:translateX(-90px)}
+svg.esquema.espera .e-sube{transform:scaleY(0);opacity:0}
+svg.esquema.espera .e-cuelga{transform:translateY(-36px) scale(.92);opacity:0}
+/* íconos: se dan vuelta como un cartel de partidas */
+svg.esquema .ico{transform-origin:50% 50%;transition:transform .55s cubic-bezier(.34,1.56,.64,1) var(--d),opacity .2s linear var(--d);cursor:default}
+svg.esquema.espera .ico{transform:scaleY(0);opacity:0}
+svg.esquema:not(.espera) .ico:is(:hover,.activo){animation:ico-salta .6s cubic-bezier(.34,1.56,.64,1)}
+@keyframes ico-salta{0%{transform:none}35%{transform:translateY(-6px) rotate(-8deg) scale(1.12)}70%{transform:translateY(0) rotate(4deg) scale(.98)}100%{transform:none}}
+/* medidas: nivel que sube por la regla */
+.alturas{display:flex;gap:40px;width:1680px}
+.altura{width:390px;flex:none;display:flex;flex-direction:column;gap:12px;text-align:left;color:var(--negro);cursor:pointer}
+.altura b{font:600 32px/normal var(--sora);transition:color .3s var(--ease-out),translate .3s var(--ease-out)}
+.altura span{font:400 20px/1.5 var(--reddit)}
+.altura.on b{color:var(--naranja);translate:6px 0}
+svg.esquema .nivel{opacity:0;transition:opacity .4s var(--ease-out);pointer-events:none}
+svg.esquema .nivel.ver{opacity:1}
+svg.esquema .nivel rect{transform-box:view-box;transform-origin:0 0;transition:transform .7s cubic-bezier(.65,0,.35,1)}
+svg.esquema .nivel .banda{fill:var(--naranja);opacity:.2;transform:translateY(var(--y,0)) scaleY(var(--h,1))}
+svg.esquema .nivel .raya{fill:var(--naranja);transform:translateY(var(--y,0))}
+/* arquigrafía: el stand se arma, la parada se viste, los hitos se inflan y las pantallas se prenden */
+.frente{position:relative;width:1255px;aspect-ratio:1760/535;flex:none;--p:1}
+.frente i{position:absolute;inset:0;background:url(assets/km10/stand.png) 0 0/100% 100% no-repeat;will-change:transform}
+.frente .m1{clip-path:inset(0 78% 0 0);transform:translate(calc((1 - var(--p)) * -180px), calc((1 - var(--p)) * 40px)) rotate(calc((1 - var(--p)) * -6deg));opacity:calc(.2 + var(--p) * .8)}
+.frente .m2{clip-path:inset(0 23.2% 0 22%);transform:translateY(calc((1 - var(--p)) * 70px))}
+.frente .m3{clip-path:inset(0 0 0 76.8%);transform:translate(calc((1 - var(--p)) * 180px), calc((1 - var(--p)) * 40px)) rotate(calc((1 - var(--p)) * 6deg));opacity:calc(.2 + var(--p) * .8)}
+.vestir{position:relative;width:1255px;aspect-ratio:16/9;flex:none;overflow:hidden}
+.vestir img{width:100%;height:100%;object-fit:cover;display:block;transition:opacity 0s linear .6s,scale 1.8s cubic-bezier(.22,1,.36,1) .6s}
+.vestir::after{content:'';position:absolute;inset:0;background:var(--rosa);transform:scaleX(0)}
+.vestir.espera img{opacity:0;scale:1.12}
+.vestir:not(.espera)::after{animation:franja 1.3s cubic-bezier(.65,0,.35,1)}
+@keyframes franja{0%{transform-origin:left;transform:scaleX(0)}45%{transform-origin:left;transform:scaleX(1)}55%{transform-origin:right;transform:scaleX(1)}100%{transform-origin:right;transform:scaleX(0)}}
+.hitos{display:flex;gap:20px;width:1255px;flex:none}
+.hito{width:617.5px;aspect-ratio:16/9;overflow:hidden;transition:transform .9s cubic-bezier(.34,1.56,.64,1) var(--d,0s),border-radius .9s cubic-bezier(.34,1.56,.64,1) var(--d,0s),opacity .3s var(--ease-out) var(--d,0s)}
+.hito:nth-child(2){--d:.15s}
+.hito img{width:100%;height:100%;object-fit:cover;display:block}
+.hitos.espera .hito{transform:scale(.55);border-radius:50%;opacity:0}
+.hitos:not(.espera) .hito:is(:hover,.activo) img{animation:respirar 2.4s ease-in-out infinite}
+@keyframes respirar{0%,100%{scale:1}50%{scale:1.045}}
+.pantallas-post{position:relative;width:1255px;aspect-ratio:1100/712;flex:none;background:var(--negro)}
+.pantallas-post i{position:absolute;inset:0;background:url(assets/km10/fachada-post.png) 0 0/100% 100% no-repeat}
+.pantallas-post .s1{clip-path:inset(0 0 66.5% 0)}
+.pantallas-post .s2{clip-path:inset(33.6% 0 33.2% 0);--d:.35s}
+.pantallas-post .s3{clip-path:inset(67.2% 0 0 0);--d:.7s}
+.pantallas-post:not(.espera) i{animation:prender 1s steps(1,end) var(--d,0s) backwards}
+.pantallas-post.espera i{filter:brightness(0)}
+@keyframes prender{0%{filter:brightness(0)}12%{filter:brightness(1.6)}20%{filter:brightness(.15)}34%{filter:brightness(1.3)}44%{filter:brightness(.5)}60%{filter:brightness(1.15)}100%{filter:none}}
+
 /* =====================================================================
    VERSIÓN MOBILE (hasta 760 px de ancho): la clase .movil la pone un script en el <head>.
    Las páginas KM se diseñan a 480 px (se escalan con --z = ancho / 480) y todo va en una columna
@@ -1106,6 +1184,28 @@ html.movil .xan.activo{color:var(--amarillo)}
 html.movil .app-pantallas img.activo{transform:translateY(-14px) rotate(-1.5deg)}
 /* KM 4 · pesos: se tocan para elegirlos */
 .tipos .pesos span.elegido{color:var(--naranja)}
+
+/* KM 10 · Arquigrafía y señalética: una columna; los esquemas van de borde a borde, achicados con transform */
+html.movil .links.dos{grid-template-columns:auto;grid-template-rows:none;grid-auto-flow:row;gap:12px}
+html.movil .km10-sec{gap:48px}
+html.movil :is(.principios,.senal-fila,.alturas,.hitos){width:100%}
+html.movil .principios{flex-direction:column;gap:40px}
+html.movil .principio{width:100%}
+html.movil .principio h3{font-size:26px}
+html.movil .senal-fila{flex-direction:column;gap:24px}
+html.movil .pauta{width:100%}
+html.movil .senal-fila > .achicado{margin-left:-24px}
+html.movil #km10-medidas > .achicado{margin-left:-24px}
+html.movil .alturas{display:grid;grid-template-columns:1fr 1fr;gap:28px 20px}
+html.movil .altura{width:auto}
+html.movil .altura b{font-size:24px}
+html.movil .altura span{font-size:17px}
+html.movil :is(.frente,.vestir,.pantallas-post){width:480px;margin-left:-24px}
+html.movil .hitos{flex-direction:column;gap:12px;width:480px;margin-left:-24px}
+html.movil .hito{width:100%}
+html.movil .frente .m1{transform:translate(calc((1 - var(--p)) * -60px), calc((1 - var(--p)) * 14px)) rotate(calc((1 - var(--p)) * -6deg))}
+html.movil .frente .m2{transform:translateY(calc((1 - var(--p)) * 24px))}
+html.movil .frente .m3{transform:translate(calc((1 - var(--p)) * 60px), calc((1 - var(--p)) * 14px)) rotate(calc((1 - var(--p)) * 6deg))}
 </style>
 </head>
 <body>
@@ -1193,10 +1293,10 @@ html.movil .app-pantallas img.activo{transform:translateY(-14px) rotate(-1.5deg)
     <img class="abs" src="assets/km1/stop-logo-comp3.svg" alt="STOP" style="left:751px;top:2329px;width:419px;height:193px">
     <p class="abs txt" style="top:2813px">Stop es el evento anual de Spot: una parada en el camino para celebrar lo recorrido. Alrededor de una carrera nocturna, propone una experiencia <b style="color:var(--rosa)">social, lúdica y reflexiva</b> donde corredores y acompañantes se encuentran, se divierten y se toman un momento para valorar todo el esfuerzo que los trajo hasta ahí. Si Spot acompaña el camino y Post cuida el después, Stop es la pausa que les da sentido a los dos.</p>
     <a class="boton" href="#inicio" style="left:945.5px;top:3063px;background:var(--rosa)">Conocé más sobre STOP <img src="assets/km1/flecha-der.svg" alt=""></a>
-    <span class="parada" style="left:262px;top:3356px;cursor:default">
+    <a class="parada" href="#km10" style="left:262px;top:3356px">
       <span class="circ"><img src="assets/km1/flecha-izq-32.svg" alt=""></span>
       <span class="info" style="border-right:2px solid var(--crema);padding-right:20px"><span class="chip">KM10</span><span class="tx" style="text-align:right;align-items:flex-end"><small>Parada anterior</small><span>Arquigrafía</span></span></span>
-    </span>
+    </a>
     <a class="parada" href="#km2" style="left:1112px;top:3356px">
       <span class="info" style="border-left:2px solid var(--crema);padding-left:20px"><span class="tx"><small>Siguiente parada</small><span>Manual de Voz y Tono</span></span><span class="chip">KM2</span></span>
       <span class="circ"><img src="assets/km1/flecha-der-32.svg" alt=""></span>
@@ -1730,6 +1830,78 @@ html.movil .app-pantallas img.activo{transform:translateY(-14px) rotate(-1.5deg)
  </div>
 </article>
 
+<!-- ======================= KM 10 · Arquigrafía y señalética (Figma "Slide 16:9 - 10") ======================= -->
+<article id="km10" class="pantalla km" aria-label="KM 10: Arquigrafía y señalética">
+ <div class="lienzo">
+  <section class="hero" style="--c:var(--naranja)">
+    <button class="btn-menu" data-abrir-menu aria-label="Abrir índice"><img src="assets/km2/21764.svg" alt=""></button>
+    <span class="km-tag">KM 10</span>
+    <h1 class="titulo-km" data-t="Arquigrafía y señalética" data-w="1549" style="left:120px">Arquigrafía y señalética</h1>
+    <p class="bajada" style="top:612px">La marca en el espacio</p>
+    <nav class="links dos" style="top:724px"><button data-a="km10-principios">Principios ↗</button><button data-a="km10-tipos">Tipos de señales ↗</button><button data-a="km10-iconos">Iconografía ↗</button><button data-a="km10-medidas">Medidas ↗</button><button data-a="km10-arqui">Arquigrafía ↗</button></nav>
+    <button class="slide-down" style="top:969px" data-bajar aria-label="Bajar"><img src="assets/km2/95fa8.svg" alt=""></button>
+    <div class="decos" data-decos="km10"></div>
+  </section>
+
+  <section class="sec km10-sec" id="km10-principios">
+    <div class="fila"><h2 class="t">Wayfinding</h2>
+      <div class="c txt"><p>Spot también vive fuera de la pantalla: en eventos, stands y espacios que comparte con otras marcas. Ahí la identidad se vuelve arquigrafía, la marca construida en el lugar, y señalética, el sistema que le dice a cada persona dónde está y hacia dónde ir.</p>
+        <p>Las reglas son las mismas para Spot, post. y Stop. Para mostrarlas usamos como caso el evento anual, donde el sistema se pone a prueba en una plaza abierta y en un edificio de nueve pisos.</p></div></div>
+    <div class="principios">
+      <article class="principio"><span class="n">01 · Ubicación</span><h3>Señalar donde se decide</h3><p>En los ingresos, cruces, escaleras y ascensores: los puntos donde la persona elige hacia dónde ir. Lejos del destino, direccionales; al llegar, locativas.</p></article>
+      <article class="principio"><span class="n">02 · Contenido</span><h3>Nombrar por lo que pasa</h3><p>Cada espacio se nombra por su función y su horario, como “Piso 2 · Recuperación”, y no solo por un número. Así se entiende qué hay, además de dónde.</p></article>
+      <article class="principio"><span class="n">03 · Lectura</span><h3>Leer cansado</h3><p>Quien busca un cartel suele venir de correr. Pictograma grande, flecha y una palabra; la bajada es opcional y siempre corta.</p></article>
+      <article class="principio"><span class="n">04 · Color</span><h3>Un color por función</h3><p>Cada tipo de señal tiene un color fijo de la paleta de la marca que firma el espacio. En el evento, las direccionales van en rosa y las locativas en azul, siempre sobre negro o crema.</p></article>
+      <article class="principio"><span class="n">05 · Altura</span><h3>A la altura de la vista</h3><p>Las placas sobre pared van entre 1,50 y 1,70 m. Lo que tiene que verse por encima de la gente arranca en 2,25 m.</p></article>
+      <article class="principio"><span class="n">06 · Hitos</span><h3>Piezas que orientan</h3><p>Las piezas grandes, como portales, paradas o inflables, se ven de lejos: funcionan como referencia, punto de encuentro y fondo para la foto.</p></article>
+    </div>
+  </section>
+  <div class="divisor"></div>
+  <section class="sec km10-sec" id="km10-tipos">
+    <div class="fila"><h2 class="t">Tipos de señales</h2><p class="c txt">El sistema se arma con <b class="az">cuatro tipos de piezas</b>. Cada una responde a una pregunta distinta de quien se mueve por el espacio, y todas comparten flecha, pictograma y nombre.</p></div>
+    <div class="senal-fila"><div class="pauta"><h4>Direccionales</h4><p>¿Cómo llego? Flecha, pictograma y destino. Con un solo destino alcanza un pictograma grande; con dos o más, los destinos se apilan en placas horizontales.</p><p>Al aire libre van en postes autoportantes; adentro, sobre la pared, para no ocupar los pasillos.</p></div>
+      <img class="esquema" src="assets/km10/direccionales.svg" width="1255" height="445" loading="lazy" alt="Direccionales sobre la regla de alturas, con una persona como referencia: parada de bus, un destino, dos destinos y cuatro destinos sobre pared."></div>
+    <div class="senal-fila"><div class="pauta"><h4>Locativas</h4><p>¿Llegué? Nombran el lugar y sirven de referencia para encontrarse. Un stand lleva su cartel elevado; una sala, una placa junto a la puerta con nombre, piso y el color del mapa; un punto numerado, una pieza autoportante que se ve de lejos.</p></div>
+      <img class="esquema" src="assets/km10/locativas.svg" width="1255" height="445" loading="lazy" alt="Locativas sobre la regla de alturas: cartel de hamburguesería, cartel de sala y locativa 10."></div>
+    <div class="senal-fila"><div class="pauta"><h4>Orientativas</h4><p>¿Qué hay acá? El directorio de cada piso: número y nombre, y la lista de espacios con una línea sobre lo que se hace en cada uno. Va junto a escaleras y ascensores, lo primero que se ve al llegar.</p></div>
+      <img class="esquema" src="assets/km10/orientativas.svg" width="1255" height="445" loading="lazy" alt="Orientativa: directorio del piso 2, Recuperación, junto a una persona como referencia."></div>
+    <div class="senal-fila"><div class="pauta"><h4>Complementarias</h4><p>Resuelven dudas puntuales para que nadie tenga que preguntar: dónde pedir y dónde retirar, cómo conectarse al wi-fi, dónde está la tienda o dónde apoyar el celular para la foto grupal.</p></div>
+      <img class="esquema" src="assets/km10/complementarias.svg" width="1255" height="416" loading="lazy" alt="Complementarias: placa wi-fi, soporte para la foto grupal, aviso de merch y carteles de pedí y retirá."></div>
+  </section>
+  <div class="divisor"></div>
+  <section class="sec km10-sec" id="km10-iconos">
+    <div class="fila"><h2 class="t">Iconografía</h2><p class="c txt">Los pictogramas salen de Phosphor Icons en peso Bold, dentro de un cuadrado de esquinas redondeadas. Se agrupan en cuatro familias: orientación y traslado, servicios e información, comida y pausa, y recuperación y actividades.</p></div>
+    <div class="senal-fila"><div class="pauta"><h4>Peso y color</h4><p>El relleno agrupa: las familias de servicios van en línea y las de comida y recuperación, sobre un color de la paleta.</p><p>Cuando el ícono va en color sobre fondo oscuro, el trazo se afina un poco para que se perciba con el mismo peso que el resto.</p></div>
+      <img class="esquema iconos" src="assets/km10/iconos.svg" width="1255" height="486" loading="lazy" alt="Los pictogramas de la señalética en cuatro familias: orientación y traslado, servicios e información, comida, bebida y pausa, y recuperación y actividades."></div>
+  </section>
+  <div class="divisor"></div>
+  <section class="sec km10-sec" id="km10-medidas">
+    <div class="fila"><h2 class="t">Medidas y alturas</h2><p class="c txt">Todas las piezas se dibujan sobre la misma regla de alturas, con una persona como referencia. Así cada señal se decide por dónde se lee y no solo por el espacio disponible.</p></div>
+    <div class="alturas" data-alturas>
+      <button class="altura"><b>0,75 m</b><span>Base de las piezas de piso, como los atriles de pedí y retirá.</span></button>
+      <button class="altura"><b>1,50 – 1,70 m</b><span>Altura de la vista: placas sobre pared, carteles de sala y directorios.</span></button>
+      <button class="altura"><b>2,25 m</b><span>Desde acá, lo que tiene que verse por encima de la gente.</span></button>
+      <button class="altura"><b>3 m o más</b><span>Coronamientos de stands y portales, visibles desde lejos.</span></button>
+    </div>
+    <img class="esquema medidas" src="assets/km10/medidas.svg" width="1680" height="582" loading="lazy" alt="Direccionales sobre pared, directorio de piso, cartel de sala y placas de baños, cambiadores y lockers sobre la misma regla de alturas.">
+  </section>
+  <div class="divisor"></div>
+  <section class="sec km10-sec" id="km10-arqui">
+    <div class="fila"><h2 class="t">Arquigrafía</h2><p class="c txt">La arquigrafía lleva la identidad a <b class="az">la escala del cuerpo y del edificio</b>. No inventa piezas nuevas: toma los elementos gráficos de la marca, como estrellas, puntos y caritas, y los vuelve estructura, volumen y color.</p></div>
+    <div class="senal-fila"><div class="pauta"><h4>Un solo frente</h4><p>Los módulos de un stand se arman juntos, uno al lado del otro, y forman una sola fachada. Quien se acerca <b class="az">encuentra en un mismo lugar</b> todo lo que la marca ofrece.</p></div>
+      <div class="frente" data-frente role="img" aria-label="Stand de STOP: un tótem, el mostrador con el frente “A SPOT TO STOP.” y un perchero de merch, armados como una sola fachada."><i class="m1"></i><i class="m2"></i><i class="m3"></i></div></div>
+    <div class="senal-fila"><div class="pauta"><h4>Lo existente, con identidad</h4><p>Cuando el espacio ya tiene su mobiliario, se lo viste en lugar de reemplazarlo. La parada de micro suma una franja de color con el nombre, los elementos gráficos y una direccional al lado, y pasa a ser un punto de reencuentro.</p></div>
+      <figure class="vestir" data-vestir><img src="assets/km10/parada.jpg" alt="Parada de micro en una plaza, vestida con una franja rosa que dice BUS STOP, los elementos gráficos de STOP y una direccional al lado." loading="lazy"></figure></div>
+    <div class="senal-fila"><div class="pauta"><h4>Hitos a gran escala</h4><p>Los elementos gráficos crecen hasta volverse objetos: una copa, una estrella y una carita inflables marcan la llegada y se ven desde lejos. La parada fotográfica suma un espejo y señales con frases que invitan a frenar.</p></div>
+      <div class="hitos" data-hitos><figure class="hito"><img src="assets/km10/inflables.jpg" alt="Copa, estrella y carita inflables de STOP iluminadas de noche frente a un edificio." loading="lazy"></figure>
+        <figure class="hito"><img src="assets/km10/parada-foto.jpg" alt="Parada fotográfica: una carita inflable con anteojos, un espejo y señales con frases como “Pará, tomá aire.”." loading="lazy"></figure></div></div>
+    <div class="senal-fila"><div class="pauta"><h4>La pantalla también es arquitectura</h4><p>En post., la fachada de pantallas cumple el mismo rol que un cartel: deja reconocer la instalación desde afuera, anuncia lo que está por empezar y suma movimiento con las animaciones de la marca.</p></div>
+      <div class="pantallas-post" data-pantallas role="img" aria-label="Fachada de pantallas de post.: el logo con puntos, siluetas de corredores y ciclistas en verde, y la frase “Tomemos un break.”."><i class="s1"></i><i class="s2"></i><i class="s3"></i></div></div>
+  </section>
+  <footer class="pie-km" data-ant="|KM9|Íconos" data-sig="inicio|KM0|Volver al inicio"></footer>
+ </div>
+</article>
+
 <!-- ======================= MENÚ (Slide 3) ======================= -->
 <div id="velo-menu" data-cerrar-menu></div>
 <nav id="menu" aria-label="Índice" aria-hidden="true">
@@ -1760,7 +1932,7 @@ const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [..
 const PUNTOS_MAPA = [
   [1009,407,'amarillo','km1','SPOT!'],[1171,407,'naranja','km2','Manual de voz y tono'],[1275,474,'rosa','km3','Logotipos'],
   [1264,610,'violeta','km4','Tipografías'],[1081,598,'azul','km5','Colores'],[908,577,'amarillo','km6','Elementos gráficos'],
-  [753,619,'naranja',null,'Design System'],[597,577,'rosa',null,'Animaciones'],[597,461,'violeta',null,'Íconos'],[721,407,'azul',null,'Arquigrafía']
+  [753,619,'naranja',null,'Design System'],[597,577,'rosa',null,'Animaciones'],[597,461,'violeta',null,'Íconos'],[721,407,'azul','km10','Arquigrafía']
 ];
 
 /* Decoraciones (Componentes "Punto", insignia y carita). [archivo, x, y, w, h, inset%(t,r,b,l), rotación, caja] */
@@ -1796,7 +1968,7 @@ const DECOS = {
   km1: HERO('km1/', ['punto3.svg','punto4.svg','punto5.svg','punto6.svg','punto7.svg','punto8.svg','punto9.svg','star8.svg','star10.svg','star9-insignia.svg','insignia-img.png']),
   // KM 2–6: misma ubicación que el Figma, pero cada KM arranca con sus propias piezas (colores, estrella e insignia)
   km2: variarHero(2, 'naranja', 'grupo'), km3: variarHero(3, 'rosa', 'consistencia'), km4: variarHero(4, 'violeta', 'asistencia'),
-  km5: variarHero(5, 'azul', 'repetido'), km6: variarHero(6, 'amarillo', 'asociado'),
+  km5: variarHero(5, 'azul', 'repetido'), km6: variarHero(6, 'amarillo', 'asociado'), km10: variarHero(10, 'naranja', 'consistencia'),
   // KM 6: puntos y estrellas sueltos sobre el texto de introducción (relativos a la sección, y − 1080)
   km6intro: [[1,332,230,113],[2,544,160,113],[3,948,235,113],[4,327.4,109.5,112.3],[5,801.4,314.5,112.3],[6,195,298,71],[7,697.8,219,46.4],[8,696.8,330,46.4],
     [9,219.8,190,46.4],[10,959,148,71],[11,1151,292,71],[12,123,132,71],[13,791,131,71],[14,1088.8,133,46.4],[15,439,347,71],[16,588.8,304,46.4]].map(([n, x, y, w]) => ['km6/intro-' + n + '.svg', x, y, w, w, [0,0,0,0]]),
@@ -1828,7 +2000,7 @@ const DECOS = {
   ]
 };
 // carita inicial de cada hero: [x, y, color, cara]. KM 1 queda como en el Figma; las demás cambian de cara y de color
-const CARITAS = { km1:[1527,414,'naranja'], km2:[1629,414,'violeta','cara-1'], km3:[1642,351,'amarillo','cara-7'], km4:[1629,414,'rosa','cara-2'], km5:[1629,414,'naranja','cara-9'], km6:[1629,414,'azul','cara-3'] };
+const CARITAS = { km1:[1527,414,'naranja'], km2:[1629,414,'violeta','cara-1'], km3:[1642,351,'amarillo','cara-7'], km4:[1629,414,'rosa','cara-2'], km5:[1629,414,'naranja','cara-9'], km6:[1629,414,'azul','cara-3'], km10:[1770,470,'violeta','cara-4'] };   // KM 10: en el lugar del Figma, fuera del título largo
 
 // mobile: las misceláneas se llevan del cuadro de 1920 al de 480 (los tamaños no cambian)
 // heros en mobile: lugares elegidos a mano alrededor del texto (arriba, a la derecha del tag y abajo de los links),
@@ -2113,7 +2285,8 @@ const INDICE = [
   ['Tipografías','km4',[]],
   ['Colores','km5',[['Usos correctos e incorrectos','km5-usos']]],
   ['Elementos gráficos','km6',[['Misceláneas','km6-puntos'],['Fotografías','km6-fotos'],['Espacios seguros',null]]],
-  ['Design System',null,[]], ['Animaciones',null,[]], ['Íconos',null,[]], ['Arquigrafía',null,[]]
+  ['Design System',null,[]], ['Animaciones',null,[]], ['Íconos',null,[]],
+  ['Arquigrafía','km10',[['Principios','km10-principios'],['Tipos de señales','km10-tipos'],['Iconografía','km10-iconos'],['Medidas y alturas','km10-medidas'],['Arquigrafía','km10-arqui']]]
 ];
 function armarMenu(){
   $('#indice').innerHTML = INDICE.map(([t, km, subs], n) => `<li><button class="num" data-toggle aria-label="Abrir o cerrar ${t}">${n + 1}</button><div class="cuerpo">
@@ -2261,7 +2434,7 @@ function salirDePortada(){
    NAVEGACIÓN (prototipo): KM entra desde la derecha 0,3 s · Volver al Inicio sale a la izquierda 0,3 s
    ===================================================================== */
 let actual = 'inicio';
-const KMS = ['km1','km2','km3','km4','km5','km6'];
+const KMS = ['km1','km2','km3','km4','km5','km6','km10'];
 function irA(destino, ancla){
   const de = actual;
   if (destino === de) { if (ancla) scrollA(destino, ancla); return; }
@@ -2358,7 +2531,7 @@ function iniciarToques(){
    ENTRADAS AL SCROLLEAR: suben 24 px + aparecen, 0,45 s, escalonadas 0,15 s
    ===================================================================== */
 const ENTRAN = ['.sec .fila > *', '.pilar', '.rasgo', '.card-enf', '.card-tono', '.somos-fila', '.enfoque > h4', '.momentos > h4',
-  '.banda p', '.foto-co p', '.tira', '.variantes', '.tamanos > div', '.submarcas-zona > img.abs', '.submarcas-zona > p', '.foto-rot', '.boton', '.parada', '.volver-arriba', '.diagramas > *', '.mala', '.app-pantallas', '.marca-card', '.piezas', '.signo', '.carrusel', '.uso', '.filtros figure', '.indebido', '.km6-intro > p', '.carita-ej', '.insignia-card', '.sobre-foto', '.siluetas-fila', '.siluetas-grande']
+  '.banda p', '.foto-co p', '.tira', '.variantes', '.tamanos > div', '.submarcas-zona > img.abs', '.submarcas-zona > p', '.foto-rot', '.boton', '.parada', '.volver-arriba', '.diagramas > *', '.mala', '.app-pantallas', '.pauta', '.alturas', '.marca-card', '.piezas', '.signo', '.carrusel', '.uso', '.filtros figure', '.indebido', '.km6-intro > p', '.carita-ej', '.insignia-card', '.sobre-foto', '.siluetas-fila', '.siluetas-grande']
   .join(',');
 function iniciarEntradas(){
   if (REDUCIR || !('IntersectionObserver' in window)) return;
@@ -3408,6 +3581,147 @@ function iniciarParalaje(){
   });
 }
 
+
+/* =====================================================================
+   KM 10 · Arquigrafía y señalética
+   Los esquemas del Figma (señales sobre la regla de alturas e íconos) se pasan de <img> a SVG en la página la
+   primera vez que se abre el KM, para animar sus partes. Todo se repite al volver a pasar (entradaRepetida).
+   ===================================================================== */
+async function svgEnLinea(img, pre){
+  let t = await (await fetch(img.getAttribute('src'))).text();
+  t = t.replace(/id="([^"]+)"/g, `id="${pre}-$1"`).replace(/url\(#([^)]+)\)/g, `url(#${pre}-$1)`).replace(/href="#([^"]+)"/g, `href="#${pre}-$1"`);
+  const svg = new DOMParser().parseFromString(t, 'image/svg+xml').documentElement;
+  if (svg.nodeName !== 'svg') throw new Error('svg');
+  svg.setAttribute('class', img.className); svg.setAttribute('role', 'img'); svg.setAttribute('aria-label', img.alt);
+  svg.style.cssText = img.style.cssText;
+  img.replaceWith(svg);
+  const caja = svg.parentElement;                                   // mobile: la caja de achicarMovil se mide con el SVG (no tiene offsetWidth)
+  if (caja.classList.contains('achicado')) {
+    const s = +svg.style.scale || 1, vb = svg.viewBox.baseVal, w = parseFloat(getComputedStyle(svg).width);
+    caja.style.width = (w * s).toFixed(1) + 'px'; caja.style.height = (w * vb.height / vb.width * s).toFixed(1) + 'px';
+  }
+  return svg;
+}
+// baja por los grupos del Figma (Slide › Contenido › …) hasta el que tiene las piezas sueltas
+function raizEsquema(svg){
+  let r = svg;
+  for (;;) {
+    const hijos = [...r.children].filter(c => !['defs', 'clipPath', 'mask'].includes(c.tagName));
+    const gs = hijos.filter(c => c.tagName === 'g');
+    if (gs.length === 1 && hijos.every(c => c === gs[0] || c.tagName === 'rect')) r = gs[0]; else return r;
+  }
+}
+/* Señales: las líneas de la regla se dibujan, las cotas aparecen de abajo hacia arriba, la persona entra caminando
+   y cada señal "se instala": lo que apoya en el piso crece desde el suelo y lo que va colgado baja a su lugar. */
+function prepararEsquema(svg){
+  const W = svg.viewBox.baseVal.width, raiz = raizEsquema(svg);
+  // los grupos que traen la regla adentro (líneas punteadas y cotas) se abren, para animar cada línea por separado
+  const sueltos = [...raiz.children].flatMap(c => c.tagName === 'g' && c.querySelector('[stroke-dasharray]') ? [...c.children] : [c]);
+  // lo que ya trae un transform del Figma (rotado, trasladado) va dentro de un <g>: el transform de la animación lo pisaría
+  const envolver = el => { if (!el.hasAttribute('transform')) return el;
+    const g = document.createElementNS('http://www.w3.org/2000/svg', 'g'); el.before(g); g.appendChild(el); return g; };
+  const items = sueltos.filter(c => !['defs', 'clipPath', 'mask', 'title'].includes(c.tagName)).map(envolver)
+    .map(el => { try { return { el, b: el.getBBox() }; } catch (e) { return null; } }).filter(Boolean);
+  const oscuro = hex => { const m = /^#?([0-9a-f]{6})$/i.exec(hex || ''); if (!m) return false; const n = parseInt(m[1], 16); return ((n >> 16) + (n >> 8 & 255) + (n & 255)) / 3 < 70; };
+  const att = (el, a) => el.getAttribute(a) || el.querySelector(`[${a}]`)?.getAttribute(a);
+  const guias = items.filter(({ el, b }) => b.height < 2 && b.width > W * .5 && att(el, 'stroke-dasharray'));
+  const suelo = guias.length ? Math.max(...guias.map(g => g.b.y)) : Math.max(...items.map(i => i.b.y + i.b.height));
+  guias.sort((a, b) => b.b.y - a.b.y).forEach((g, k) => { g.el.classList.add('e-guia'); g.el.style.setProperty('--d', (k * .07).toFixed(2) + 's'); });
+  const resto = items.filter(i => !guias.includes(i) && !(i.b.width > W * .8 && i.b.height > 100));   // sin el fondo
+  const cotas = resto.filter(({ b }) => b.x > W - 80 && b.height < 30).sort((a, b) => b.b.y - a.b.y);
+  cotas.forEach((c, k) => { c.el.classList.add('e-cota'); c.el.style.setProperty('--d', (.3 + k * .08).toFixed(2) + 's'); });
+  const piezas = resto.filter(i => !cotas.includes(i));
+  const persona = piezas.find(({ el, b }) => el.tagName === 'path' && b.height > 120 && b.width > 25 && b.width < 90 && oscuro(att(el, 'fill')));
+  if (persona) { persona.el.classList.add('e-persona'); persona.el.style.setProperty('--d', '.15s'); }
+  // columnas: piezas que se superponen en x forman una sola señal
+  const col = piezas.filter(i => i !== persona).sort((a, b) => a.b.x - b.b.x), grupos = [];
+  col.forEach(i => { const g = grupos.find(g => i.b.x < g.x2 - 2 && i.b.x + i.b.width > g.x1 + 2);
+    if (g) { g.l.push(i); g.x1 = Math.min(g.x1, i.b.x); g.x2 = Math.max(g.x2, i.b.x + i.b.width); } else grupos.push({ x1: i.b.x, x2: i.b.x + i.b.width, l: [i] }); });
+  grupos.sort((a, b) => a.x1 - b.x1).forEach((g, n) => {
+    let k = 0;
+    g.l.sort((a, b) => (b.b.y + b.b.height) - (a.b.y + a.b.height)).forEach(({ el, b }) => {   // de abajo hacia arriba
+      const rotulo = b.y > suelo + 2, apoyada = Math.abs(b.y + b.height - suelo) < 14;
+      el.classList.add(rotulo ? 'e-rotulo' : apoyada ? 'e-sube' : 'e-cuelga');
+      el.style.setProperty('--d', (rotulo ? .9 + n * .16 : .45 + n * .16 + Math.min(k++, 12) * .045).toFixed(3) + 's');
+    });
+  });
+  return svg;
+}
+/* Íconos: cada familia se da vuelta como un cartel de partidas, ícono por ícono; con el mouse encima, el ícono salta */
+function prepararIconos(svg){
+  const raiz = raizEsquema(svg);
+  let fam = -1, i = 0;
+  [...raiz.children].forEach(el => {
+    if (el.tagName === 'g' && el.querySelectorAll(':scope > rect').length >= 2) {
+      el.classList.add('ico'); el.style.setProperty('--d', (.15 + fam * .3 + i++ * .045).toFixed(3) + 's');
+    } else if (el.tagName === 'path') {
+      if (el.previousElementSibling?.classList.contains('ico')) { el.classList.add('e-rotulo'); el.style.setProperty('--d', (.35 + fam * .3 + (i - 1) * .045).toFixed(3) + 's'); }
+      else { fam++; i = 0; el.classList.add('e-cota'); el.style.setProperty('--d', (.05 + fam * .3).toFixed(2) + 's'); }
+    }
+  });
+  return svg;
+}
+/* Medidas: un nivel naranja sube por la regla al scrollear (0,75 → 1,50–1,70 → 2,25 → 3 m) y marca la altura en el texto.
+   Con el mouse (o tocando) sobre una altura, el nivel va a esa. */
+function prepararMedidas(svg){
+  prepararEsquema(svg);
+  const raiz = raizEsquema(svg), ys = $$('.e-guia', raiz).map(g => g.getBBox().y).sort((a, b) => b - a);   // 0, 0,75, 1,5, 1,7, 2,25, 3 m
+  if (ys.length < 6) return;
+  const W = svg.viewBox.baseVal.width, NS = 'http://www.w3.org/2000/svg';
+  const NIVELES = [[ys[1] - 3, ys[1] + 3], [ys[3], ys[2]], [ys[4] - 3, ys[4] + 3], [Math.max(0, ys[5] - 60), ys[5]]];
+  const g = document.createElementNS(NS, 'g'); g.setAttribute('class', 'nivel');
+  g.innerHTML = `<rect class="banda" x="0" y="0" width="${W}" height="1"/><rect class="raya" x="0" y="-1.5" width="${W}" height="3"/>`;
+  $$('.e-guia', raiz).pop().after(g);                                             // detrás de las señales
+  const cols = $$('#km10 .altura'), km = $('#km10');
+  let fijo = -1, paso = -1;
+  const poner = n => { if (n === paso) return; paso = n;
+    const [a, b] = NIVELES[n]; g.style.setProperty('--y', a + 'px'); g.style.setProperty('--h', (b - a) + 'px'); g.classList.add('ver');
+    cols.forEach((c, k) => c.classList.toggle('on', k === n)); };
+  const mirar = () => { if (fijo >= 0) return poner(fijo);
+    // el nivel avanza mientras el bloque (alturas + esquema) cruza el 70 % de la pantalla
+    const arriba = cols[0].getBoundingClientRect().top, abajo = svg.getBoundingClientRect().bottom, h = innerHeight;
+    const p = Math.max(0, Math.min(.999, (h * .7 - arriba) / (abajo - arriba)));
+    poner(Math.floor(p * 4)); };
+  cols.forEach((c, k) => {
+    c.addEventListener('mouseenter', () => { fijo = k; mirar(); });
+    c.addEventListener('mouseleave', () => { fijo = -1; mirar(); });
+    c.addEventListener('click', () => { fijo = fijo === k ? -1 : k; mirar(); });
+  });
+  km.addEventListener('scroll', mirar, { passive: true }); mirar();
+}
+/* Stand: los tres módulos llegan separados y se juntan en una sola fachada a medida que se scrollea */
+function iniciarFrente(){
+  const f = $('[data-frente]'); if (!f) return;
+  const km = f.closest('article.km');
+  const act = () => { const r = f.getBoundingClientRect(), h = innerHeight;
+    if (r.bottom < -200 || r.top > h + 200) return;
+    const p = REDUCIR ? 1 : Math.max(0, Math.min(1, (h - r.top) / (h * .62)));
+    f.style.setProperty('--p', (1 - Math.pow(1 - p, 3)).toFixed(3)); };
+  km.addEventListener('scroll', act, { passive: true }); addEventListener('resize', act); act();
+}
+let km10Listo = false;
+async function iniciarKM10(){
+  if (km10Listo) return; km10Listo = true;
+  iniciarFrente();
+  const extras = $$('#km10 .principios, #km10 [data-vestir], #km10 [data-hitos], #km10 [data-pantallas]');
+  if (REDUCIR) return;
+  entradaRepetida(extras, .4);
+  const imgs = $$('#km10 img.esquema');
+  const svgs = await Promise.all(imgs.map(async (img, n) => {
+    try {
+      const svg = await svgEnLinea(img, 'k' + n);
+      return svg.classList.contains('iconos') ? prepararIconos(svg) : svg.classList.contains('medidas') ? (prepararMedidas(svg), svg) : prepararEsquema(svg);
+    } catch (e) { return null; }
+  }));
+  entradaRepetida(svgs.filter(Boolean), .45);
+}
+// se arma la primera vez que se abre el KM (los SVG pesan y hay que medirlos visibles)
+function vigilarKM10(){
+  const km = $('#km10'); if (!km) return;
+  const ver = () => { if (km.classList.contains('activa')) setTimeout(iniciarKM10, 50); };
+  new MutationObserver(ver).observe(km, { attributes: true, attributeFilter: ['class'] }); ver();
+}
+
 function leerHash(){
   const h = location.hash.replace('#', '');
   cerrarMenu(true);
@@ -3448,11 +3762,12 @@ function achicarMovil(el, s){
   if (!el || el.parentElement.classList.contains('achicado')) return;
   const caja = document.createElement('div'); caja.className = 'achicado';
   el.before(caja); caja.appendChild(el); el.style.scale = s;
-  const medir = () => { caja.style.width = (el.offsetWidth * s).toFixed(1) + 'px'; caja.style.height = (el.offsetHeight * s).toFixed(1) + 'px'; };
+  const medir = () => { if (!el.isConnected) return;                    // reemplazado (ej. <img> que pasó a SVG)
+    caja.style.width = (el.offsetWidth * s).toFixed(1) + 'px'; caja.style.height = (el.offsetHeight * s).toFixed(1) + 'px'; };
   new ResizeObserver(medir).observe(el); medir();
 }
 const ACHICAR_MOVIL = [['.tira', .4], ['.ui-ventana', .6], ['#perfil .barra', .432], ['.colab-muestra', .5], ['.unir-puntos', .538], ['.cinta-iconos', .5],
-  ['.receta', .62], ['.carita-ej .pieza', .68], ['.marcas .logos', .34], ['.sobre-foto .marco', .3086]];
+  ['.receta', .62], ['#km10 .esquema:not(.medidas)', .3825], ['#km10 .esquema.medidas', .2857], ['.carita-ej .pieza', .68], ['.marcas .logos', .34], ['.sobre-foto .marco', .3086]];
 function achicarTodo(){
   if (!MOVIL) return;
   ACHICAR_MOVIL.forEach(([sel, s]) => $$(sel).forEach(el => achicarMovil(el, el.closest('.colab-fila:last-child') ? .36 : s)));
@@ -3461,7 +3776,7 @@ function achicarTodo(){
 
 /* Mobile: lo que en compu pasa con el mouse encima, en el celular pasa al llegar scrolleando: cuando la pieza cruza
    la franja del medio de la pantalla recibe .activo (y los eventos del mouse, para lo que se maneja con JS) */
-const ACTIVA_SCROLL = '.pilar, .mv-item, .card-enf, .card-tono, .fav-anim, .sobre-foto, .logo-hover, .mala, .indebido, div.signo, .filtros figure, .uso, .colab-muestra, .xan, .app-pantallas img';
+const ACTIVA_SCROLL = '.hito, #km10 .ico, .pilar, .mv-item, .card-enf, .card-tono, .fav-anim, .sobre-foto, .logo-hover, .mala, .indebido, div.signo, .filtros figure, .uso, .colab-muestra, .xan, .app-pantallas img';
 function iniciarActivoScroll(){
   if (!MOVIL) return;
   $$('article.km').forEach(km => {
@@ -3507,7 +3822,7 @@ addEventListener('keydown', e => { if (e.key === 'Escape') cerrarMenu(); });
 $$('[data-a]').forEach(b => b.addEventListener('click', () => scrollA(b.closest('article.km').id, b.dataset.a)));
 $$('[data-bajar]').forEach(b => b.addEventListener('click', () => { const k = b.closest('article.km'); irA_Y(k, k.scrollTop + innerHeight * .9); }));
 $$('[data-arriba]').forEach(b => b.addEventListener('click', () => irArriba(b.closest('article.km'))));
-iniciarScrollSuave(); iniciarEntradas(); iniciarStickers(); iniciarToques(); iniciarCursor(); iniciarFavicon(); iniciarFaviconSec(); iniciarBotonMenu(); iniciarRastro(); iniciarPerfil(); iniciarSobreFotos(); iniciarUnirPuntos(); iniciarCintaIconos(); iniciarReceta(); iniciarColab(); iniciarKM3Entradas(); iniciarProporcion(); iniciarTira(); iniciarCarruseles(); iniciarCarruselUI(); iniciarParalaje(); iniciarViajeKM6(); iniciarMazo(); iniciarMecer(); iniciarRasgos(); iniciarFlotar(); achicarTodo(); iniciarActivoScroll();
+iniciarScrollSuave(); iniciarEntradas(); iniciarStickers(); iniciarToques(); iniciarCursor(); iniciarFavicon(); iniciarFaviconSec(); iniciarBotonMenu(); iniciarRastro(); iniciarPerfil(); iniciarSobreFotos(); iniciarUnirPuntos(); iniciarCintaIconos(); iniciarReceta(); iniciarColab(); iniciarKM3Entradas(); iniciarProporcion(); iniciarTira(); iniciarCarruseles(); iniciarCarruselUI(); iniciarParalaje(); iniciarViajeKM6(); iniciarMazo(); iniciarMecer(); iniciarRasgos(); iniciarFlotar(); achicarTodo(); iniciarActivoScroll(); vigilarKM10();
 addEventListener('hashchange', leerHash);
 
 if (location.hash && location.hash !== '#inicio') { portada.remove(); portadaFuera = true; leerHash(); }
