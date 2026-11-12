@@ -392,3 +392,10 @@ El 10/11/2026 se borró todo lo construido y se empezó de nuevo. Respaldo de la
   - El botón **"Descargar plantilla"** baja `plantilla-colaboracion.svg`.
   - Cada lockup aparece de izquierda a derecha, como si se armara, la primera vez que entra en pantalla (`iniciarColab`).
   - Typo del Figma copiado tal cual: "esta la única excepción" (sin tilde y sin "es").
+- 12/11/2026 · Mateo · **KM 5 · sección Proporción** (Figma `372:1525`, después de las hojas de filtros y antes de Tipografía y color, con divisor después).
+  - Tiene el texto del Figma y una barra por marca de borde a borde (1920 × 240), con los anchos exactos del Figma:
+    - **Spot:** crema 20 % (con borde negro), amarillo, naranja, rosa, violeta y azul 15 % cada uno, negro 5 %.
+    - **post.:** negro 50 %, verde 25 %, crema 15 %, violeta 10 %.
+    - **Stop:** negro 45 %, rosa 25 %, azul 15 %, crema 15 %.
+  - El logo de cada marca va en el primer tramo (`assets/km5/prop-logo-*.svg`, exportados del Figma).
+  - Al entrar en pantalla, cada barra se llena color por color de izquierda a derecha. Al pasar el mouse por un color, ese tramo se ensancha (`iniciarProporcion`).

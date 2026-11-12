@@ -723,6 +723,22 @@ html.cursor-propio.cursor-visible :is(#cursor,#cursor-mini){opacity:1}
 .colab-muestra.visto img{clip-path:inset(0 0 0 0)}
 .colab-muestra img + img{transition-delay:.2s}
 
+/* KM 5 · Proporción (Figma 372:1525): una barra por marca, de borde a borde, con el ancho de cada color según su porcentaje.
+   Al entrar en pantalla cada barra se llena de izquierda a derecha; al pasar el mouse un color se ensancha. */
+.prop-sec{display:flex;flex-direction:column;gap:96px;padding-bottom:148px}
+.prop-barras{display:flex;flex-direction:column;gap:50px}
+.prop-barra{display:flex;width:1920px;height:240px}
+.prop-barra > div{position:relative;flex:var(--p) 1 0;min-width:0;background:var(--c);font:700 18px/1.3 var(--sora);color:var(--t,var(--negro));
+  transition:flex-grow .45s var(--ease-in-out);overflow:hidden}
+.prop-barra > div > b{position:absolute;left:24px;top:32px;font:inherit;white-space:nowrap;transition:opacity .3s}
+.prop-barra > div.borde{box-shadow:inset 0 0 0 2px var(--negro)}
+.prop-barra > div:first-child > b{left:120px}
+.prop-barra > div:hover{flex-grow:calc(var(--p) * 1.35)}
+.prop-barra .logo{position:absolute;left:120px;bottom:32px}
+.prop-barra.espera > div{flex-grow:0}
+.prop-barra.espera > div > b{opacity:0}
+.prop-barra.espera > div .logo{opacity:0}
+
 /* ---------- Movimiento al scrollear (referencia: houseofyellow.nl) ----------
    Scroll suave con Lenis (1,2 s, expo-out) y entradas: suben 24 px y aparecen en 0,45 s,
    escalonadas de a 0,15 s, cuando el elemento llega al 90 % de la pantalla. Una sola vez. */
@@ -1177,6 +1193,22 @@ html.cursor-propio.cursor-visible :is(#cursor,#cursor-mini){opacity:1}
     <figure><img src="assets/km5/filtros-1.png" alt="Hoja de filtros de la app con los porcentajes de negro bien jerarquizados"><figcaption>1</figcaption></figure>
     <figure><img src="assets/km5/filtros-2.png" alt="Hoja de filtros de la app con todo el negro al mismo nivel"><figcaption>2</figcaption></figure>
   </div>
+  <section class="sec prop-sec" id="km5-proporcion" style="padding-left:0;padding-right:0">
+    <div class="fila" style="padding:0 120px"><h2 class="t">Proporción</h2><div class="c txt"><p>El equilibrio entre los colores sostiene una identidad coherente. Cada marca tiene su propia proporción: Spot se apoya en el crema y reparte el color en partes iguales, mientras que post. y Stop parten del negro y suman pocos colores con más protagonismo.</p><p>Cuando uses la paleta en cualquier pieza, tomá como referencia estas proporciones.</p></div></div>
+    <div class="prop-barras">
+      <div class="prop-barra" aria-label="Proporción de Spot: crema 20 %, amarillo, naranja, rosa, violeta y azul 15 % cada uno, negro 5 %">
+        <div class="borde" style="--p:20;--c:var(--crema)"><b>20%</b><img class="logo" src="assets/km5/prop-logo-spot.svg" alt="SPOT!" width="130" height="43"></div>
+        <div style="--p:15;--c:var(--amarillo)"><b>15%</b></div><div style="--p:15;--c:var(--naranja)"><b>15%</b></div><div style="--p:15;--c:var(--rosa)"><b>15%</b></div>
+        <div style="--p:15;--c:var(--violeta)"><b>15%</b></div><div style="--p:15;--c:var(--azul)"><b>15%</b></div><div style="--p:5;--c:var(--negro);--t:var(--crema)"><b>5%</b></div></div>
+      <div class="prop-barra" aria-label="Proporción de post.: negro 50 %, verde 25 %, crema 15 %, violeta 10 %">
+        <div style="--p:50;--c:var(--negro);--t:var(--crema)"><b>50%</b><img class="logo" src="assets/km5/prop-logo-post.svg" alt="post." width="124" height="57"></div>
+        <div style="--p:25;--c:var(--verde)"><b>25%</b></div><div class="borde" style="--p:15;--c:var(--crema)"><b>15%</b></div><div style="--p:10;--c:var(--violeta)"><b>10%</b></div></div>
+      <div class="prop-barra" aria-label="Proporción de STOP: negro 45 %, rosa 25 %, azul 15 %, crema 15 %">
+        <div style="--p:45;--c:var(--negro);--t:var(--crema)"><b>45%</b><img class="logo" src="assets/km5/prop-logo-stop.svg" alt="STOP" width="108" height="50"></div>
+        <div style="--p:25;--c:var(--rosa)"><b>25%</b></div><div style="--p:15;--c:var(--azul)"><b>15%</b></div><div class="borde" style="--p:15;--c:var(--crema)"><b>15%</b></div></div>
+    </div>
+  </section>
+  <div class="divisor"></div>
   <section class="sec usos" id="km5-usos" style="margin-top:34px">
     <div class="fila"><h2 class="t">Tipografía y color</h2>
       <div class="c txt"><p>La tipografía puede ir en color, pero solo cuando el fondo es negro o crema. Sobre un fondo de color, el texto va siempre en negro o crema: en Spot los colores nunca se tocan entre sí, siempre hay uno neutro de por medio. Estas combinaciones valen para títulos, destacados y textos de lectura, aplican también a Post y Stop.</p></div></div>
@@ -2642,6 +2674,16 @@ function iniciarColab(){
   ms.forEach(m => io.observe(m));
 }
 
+/* KM 5 · Proporción: cada barra se llena de izquierda a derecha (color por color) la primera vez que entra en pantalla */
+function iniciarProporcion(){
+  const bs = $$('.prop-barra'); if (!bs.length || REDUCIR || !('IntersectionObserver' in window)) return;
+  bs.forEach(b => { b.classList.add('espera'); [...b.children].forEach((d, i) => { d.style.transitionDelay = (i * .07) + 's'; }); });
+  const io = new IntersectionObserver(es => es.forEach(e => { if (!e.isIntersecting) return; const b = e.target; io.unobserve(b);
+    requestAnimationFrame(() => b.classList.remove('espera'));
+    setTimeout(() => [...b.children].forEach(d => { d.style.transitionDelay = ''; }), 1200); }), { threshold: .4 });
+  bs.forEach(b => io.observe(b));
+}
+
 function iniciarBotonMenu(){
   const lum = c => { const m = c.match(/[\d.]+/g); if (!m) return null; const [r, g, b, a = 1] = m.map(Number); if (a < .5) return null; return (.299 * r + .587 * g + .114 * b) / 255; };
   const fondoDebajo = btn => {
@@ -2857,7 +2899,7 @@ addEventListener('keydown', e => { if (e.key === 'Escape') cerrarMenu(); });
 $$('[data-a]').forEach(b => b.addEventListener('click', () => scrollA(b.closest('article.km').id, b.dataset.a)));
 $$('[data-bajar]').forEach(b => b.addEventListener('click', () => { const k = b.closest('article.km'); irA_Y(k, k.scrollTop + innerHeight * .9); }));
 $$('[data-arriba]').forEach(b => b.addEventListener('click', () => irArriba(b.closest('article.km'))));
-iniciarScrollSuave(); iniciarEntradas(); iniciarStickers(); iniciarCursor(); iniciarFavicon(); iniciarFaviconSec(); iniciarBotonMenu(); iniciarRastro(); iniciarPerfil(); iniciarSobreFotos(); iniciarUnirPuntos(); iniciarCintaIconos(); iniciarReceta(); iniciarColab(); iniciarTira(); iniciarCarruseles(); iniciarCarruselUI(); iniciarParalaje(); iniciarViajeKM6(); iniciarMazo(); iniciarMecer(); iniciarRasgos(); iniciarFlotar();
+iniciarScrollSuave(); iniciarEntradas(); iniciarStickers(); iniciarCursor(); iniciarFavicon(); iniciarFaviconSec(); iniciarBotonMenu(); iniciarRastro(); iniciarPerfil(); iniciarSobreFotos(); iniciarUnirPuntos(); iniciarCintaIconos(); iniciarReceta(); iniciarColab(); iniciarProporcion(); iniciarTira(); iniciarCarruseles(); iniciarCarruselUI(); iniciarParalaje(); iniciarViajeKM6(); iniciarMazo(); iniciarMecer(); iniciarRasgos(); iniciarFlotar();
 addEventListener('hashchange', leerHash);
 
 if (location.hash && location.hash !== '#inicio') { portada.remove(); portadaFuera = true; leerHash(); }
