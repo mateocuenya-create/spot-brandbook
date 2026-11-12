@@ -253,8 +253,20 @@ a.punto{cursor:pointer} span.punto{cursor:default}
 .tabla .cab div{flex:1;display:flex;gap:12px;align-items:center;font:700 22px/normal var(--reddit)}
 .tabla .cab div:last-child{color:#6b6b6b}
 .tabla .cab img{width:22px;height:22px}
-.tabla .r{display:flex;gap:20px;padding:18px 0;border-top:2px dashed var(--negro-80);font:italic 400 22px/1.4 var(--reddit)}
+.tabla .r{position:relative;display:flex;gap:20px;padding:18px 0;font:italic 400 22px/1.4 var(--reddit)}
+.tabla .r::before{content:'';position:absolute;left:0;right:0;top:0;border-top:2px dashed var(--negro-80);transform-origin:left;transition:transform .7s cubic-bezier(.65,0,.35,1) var(--retraso,0s)}
 .tabla .r p{flex:1} .tabla .r p:last-child{color:#6b6b6b}
+/* Guía de estilo: al scrollear, cada fila entra de a una; primero el "Así sí" (asiente: baja y rebota)
+   y después el "Así no" (niega: se sacude de costado). Se repite al volver a pasar (ver iniciarGuia). */
+.tabla .espera::before{transform:scaleX(0)}
+.tabla :is(.r,.cab).espera > *{opacity:0}
+.tabla :is(.r,.cab):not(.espera) > :first-child{animation:asiente .75s cubic-bezier(.34,1.56,.64,1) calc(var(--retraso,0s) + .15s) backwards}
+.tabla :is(.r,.cab):not(.espera) > :last-child{animation:niega .85s ease-out calc(var(--retraso,0s) + .8s) backwards}
+.tabla .cab:not(.espera) img{animation:aparece-ico .5s cubic-bezier(.34,1.56,.64,1) calc(var(--retraso,0s) + .2s) backwards}
+.tabla .cab:not(.espera) > :last-child img{animation-delay:calc(var(--retraso,0s) + .85s)}
+@keyframes asiente{0%{opacity:0;translate:0 -16px}50%{opacity:1;translate:0 5px}75%{translate:0 -2px}100%{translate:0 0}}
+@keyframes niega{0%{opacity:0;translate:18px 0}25%{opacity:1;translate:-9px 0}45%{translate:7px 0}65%{translate:-4px 0}82%{translate:2px 0}100%{translate:0 0}}
+@keyframes aparece-ico{0%{scale:0}100%{scale:1}}
 
 /* ---------- KM 3 ---------- */
 .sticky{position:sticky;top:40px;align-self:flex-start}
@@ -3896,6 +3908,24 @@ function iniciarJuegoInsignias(){
   new MutationObserver(mirar).observe(km, { attributes: true, attributeFilter: ['class'] });
   medir(); cuerpos.forEach(c => { c.x = W / 2; c.y = -200; pintar(c); }); mirar();
 }
+/* KM 2 · Guía de estilo: las filas de "Así sí / Así no" entran al llegar al 92 % de la pantalla, de a una
+   (si aparecen varias juntas, se escalonan); se rearman cuando salen del todo */
+function iniciarGuia(){
+  const filas = $$('#guia .tabla .cab, #guia .tabla .r'); if (!filas.length || REDUCIR) return;
+  const km = filas[0].closest('article.km');
+  filas.forEach(f => f.classList.add('espera'));
+  const revisar = () => {
+    const h = innerHeight; let n = 0;
+    filas.forEach(f => {
+      const r = f.getBoundingClientRect();
+      if (f.classList.contains('espera')) {
+        if (km.classList.contains('activa') && r.bottom > 0 && r.bottom < h * .92) { f.style.setProperty('--retraso', (n++ * .95).toFixed(2) + 's'); /* cada fila termina (sí, después no) antes de la siguiente */ f.classList.remove('espera'); }
+      } else if (r.top > h || r.bottom < 0) f.classList.add('espera');
+    });
+  };
+  km.addEventListener('scroll', revisar, { passive: true }); addEventListener('resize', revisar);
+  new MutationObserver(revisar).observe(km, { attributes: true, attributeFilter: ['class'] }); revisar();
+}
 let km10Listo = false;
 async function iniciarKM10(){
   if (km10Listo) return; km10Listo = true;
@@ -4019,7 +4049,7 @@ addEventListener('keydown', e => { if (e.key === 'Escape') cerrarMenu(); });
 $$('[data-a]').forEach(b => b.addEventListener('click', () => scrollA(b.closest('article.km').id, b.dataset.a)));
 $$('[data-bajar]').forEach(b => b.addEventListener('click', () => { const k = b.closest('article.km'); irA_Y(k, k.scrollTop + innerHeight * .9); }));
 $$('[data-arriba]').forEach(b => b.addEventListener('click', () => irArriba(b.closest('article.km'))));
-iniciarScrollSuave(); iniciarEntradas(); iniciarStickers(); iniciarToques(); iniciarCursor(); iniciarFavicon(); iniciarFaviconSec(); iniciarBotonMenu(); iniciarRastro(); iniciarPerfil(); iniciarSobreFotos(); iniciarUnirPuntos(); iniciarCintaIconos(); iniciarReceta(); iniciarColab(); iniciarKM3Entradas(); iniciarProporcion(); iniciarTira(); iniciarCarruseles(); iniciarCarruselUI(); iniciarParalaje(); iniciarViajeKM6(); iniciarMazo(); iniciarMecer(); iniciarRasgos(); iniciarFlotar(); achicarTodo(); iniciarActivoScroll(); vigilarKM10();
+iniciarScrollSuave(); iniciarEntradas(); iniciarStickers(); iniciarToques(); iniciarCursor(); iniciarFavicon(); iniciarFaviconSec(); iniciarBotonMenu(); iniciarRastro(); iniciarPerfil(); iniciarSobreFotos(); iniciarUnirPuntos(); iniciarCintaIconos(); iniciarReceta(); iniciarColab(); iniciarKM3Entradas(); iniciarProporcion(); iniciarTira(); iniciarCarruseles(); iniciarCarruselUI(); iniciarParalaje(); iniciarViajeKM6(); iniciarMazo(); iniciarMecer(); iniciarRasgos(); iniciarFlotar(); achicarTodo(); iniciarActivoScroll(); vigilarKM10(); iniciarGuia();
 addEventListener('hashchange', leerHash);
 
 if (location.hash && location.hash !== '#inicio') { portada.remove(); portadaFuera = true; leerHash(); }
