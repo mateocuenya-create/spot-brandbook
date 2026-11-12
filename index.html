@@ -838,6 +838,16 @@ svg.esquema .ico{transform-origin:50% 50%;transition:transform .55s cubic-bezier
 svg.esquema.espera .ico{transform:scaleY(0);opacity:0}
 svg.esquema:not(.espera) .ico:is(:hover,.activo){animation:ico-salta .6s cubic-bezier(.34,1.56,.64,1)}
 @keyframes ico-salta{0%{transform:none}35%{transform:translateY(-6px) rotate(-8deg) scale(1.12)}70%{transform:translateY(0) rotate(4deg) scale(.98)}100%{transform:none}}
+/* lupa: la señal agrandada encima del esquema (ver armarLupa) */
+.esq-caja{position:relative;flex:none}
+svg.esquema .hit{fill:transparent;cursor:zoom-in}
+svg.esquema.espera .hit{pointer-events:none}
+.esq-caja > :is(svg,.achicado){transition:opacity .3s var(--ease-out)}
+.esq-caja.con-lupa > :is(svg,.achicado){opacity:.45}
+.lupa{position:absolute;z-index:6;display:none;border-radius:18px;overflow:hidden;pointer-events:none;transform-origin:0 0;
+  background:#F3F1EA;box-shadow:0 0 0 3px var(--negro),0 22px 50px rgba(37,37,37,.3)}
+.lupa.ver{display:block}
+.lupa-svg{display:block;width:100%;height:100%}
 /* medidas: nivel que sube por la regla */
 .alturas{display:flex;gap:40px;width:1680px}
 .altura{width:390px;flex:none;display:flex;flex-direction:column;gap:12px;text-align:left;color:var(--negro);cursor:pointer}
@@ -1194,8 +1204,8 @@ html.movil .principio{width:100%}
 html.movil .principio h3{font-size:26px}
 html.movil .senal-fila{flex-direction:column;gap:24px}
 html.movil .pauta{width:100%}
-html.movil .senal-fila > .achicado{margin-left:-24px}
-html.movil #km10-medidas > .achicado{margin-left:-24px}
+html.movil :is(.senal-fila,#km10-medidas) > :is(.achicado,.esq-caja){margin-left:-24px}
+html.movil .lupa{border-radius:14px}
 html.movil .alturas{display:grid;grid-template-columns:1fr 1fr;gap:28px 20px}
 html.movil .altura{width:auto}
 html.movil .altura b{font-size:24px}
@@ -3638,6 +3648,7 @@ function prepararEsquema(svg){
   col.forEach(i => { const g = grupos.find(g => i.b.x < g.x2 - 2 && i.b.x + i.b.width > g.x1 + 2);
     if (g) { g.l.push(i); g.x1 = Math.min(g.x1, i.b.x); g.x2 = Math.max(g.x2, i.b.x + i.b.width); } else grupos.push({ x1: i.b.x, x2: i.b.x + i.b.width, l: [i] }); });
   grupos.sort((a, b) => a.x1 - b.x1).forEach((g, n) => {
+    g.y1 = Math.min(...g.l.map(i => i.b.y)); g.y2 = Math.max(...g.l.map(i => i.b.y + i.b.height));
     let k = 0;
     g.l.sort((a, b) => (b.b.y + b.b.height) - (a.b.y + a.b.height)).forEach(({ el, b }) => {   // de abajo hacia arriba
       const rotulo = b.y > suelo + 2, apoyada = Math.abs(b.y + b.height - suelo) < 14;
@@ -3645,7 +3656,68 @@ function prepararEsquema(svg){
       el.style.setProperty('--d', (rotulo ? .9 + n * .16 : .45 + n * .16 + Math.min(k++, 12) * .045).toFixed(3) + 's');
     });
   });
+  armarLupa(svg, raiz, grupos.filter(g => g.l.some(i => !i.el.classList.contains('e-rotulo'))));
   return svg;
+}
+/* Lupa: con el mouse encima de una señal (en el celular, tocándola) aparece agrandada encima del esquema, saliendo
+   desde donde está, para leerla mejor. Es una copia del SVG que muestra solo esa señal (con la regla de alturas detrás). */
+function armarLupa(svg, raiz, cols){
+  if (!cols.length) return;
+  const NS = 'http://www.w3.org/2000/svg', vb = svg.viewBox.baseVal, P = 18;
+  const caja = document.createElement('div'); caja.className = 'esq-caja';
+  const ancla = svg.closest('.achicado') || svg; ancla.before(caja); caja.appendChild(ancla);
+  cols.forEach((c, n) => {
+    c.l.forEach(i => i.el.dataset.col = n);
+    const r = document.createElementNS(NS, 'rect');
+    [['x', c.x1 - P], ['y', c.y1 - P], ['width', c.x2 - c.x1 + 2 * P], ['height', c.y2 - c.y1 + 2 * P], ['class', 'hit'], ['data-n', n]].forEach(([k, v]) => r.setAttribute(k, v));
+    raiz.appendChild(r);
+  });
+  let copia = null, lupa = null, abierta = -1;
+  const armar = () => {
+    copia = svg.cloneNode(true);
+    ['class', 'style', 'role', 'aria-label', 'width', 'height'].forEach(a => copia.removeAttribute(a));
+    copia.querySelectorAll('[id]').forEach(e => e.removeAttribute('id'));        // los url(#…) siguen apuntando al original
+    copia.querySelectorAll('.hit, .nivel').forEach(e => e.remove());
+    copia.setAttribute('class', 'lupa-svg'); copia.setAttribute('aria-hidden', 'true'); copia.setAttribute('preserveAspectRatio', 'xMidYMid meet');
+    lupa = document.createElement('div'); lupa.className = 'lupa'; lupa.appendChild(copia); caja.appendChild(lupa);
+  };
+  const abrir = n => {
+    if (n === abierta || svg.classList.contains('espera')) return;
+    if (!copia) armar();
+    abierta = n; const c = cols[n];
+    copia.querySelectorAll('[data-col]').forEach(e => e.style.visibility = +e.dataset.col === n ? '' : 'hidden');
+    const x = c.x1 - P, y = c.y1 - P, w = c.x2 - c.x1 + 2 * P, h = c.y2 - c.y1 + 2 * P;
+    copia.setAttribute('viewBox', `${x} ${y} ${w} ${h}`);
+    // medidas en px de la caja (sin la escala de la página)
+    const sr = svg.getBoundingClientRect(), cr = caja.getBoundingClientRect(), k = cr.width / caja.offsetWidth || 1;
+    const su = sr.width / vb.width / k, pl = (sr.left - cr.left) / k, pt = (sr.top - cr.top) / k, pw = sr.width / k, ph = sr.height / k;
+    const S = MOVIL ? Math.min(380 / h, 456 / w) : Math.min(ph * 1.3 / h, 760 / w, 2.4);   // px por unidad dentro de la lupa
+    const lw = w * S, lh = h * S;
+    const left = Math.max(pl + (MOVIL ? 12 : 0), Math.min(pl + pw - lw - (MOVIL ? 12 : 0), pl + (x + w / 2) * su - lw / 2)), top = pt + ph / 2 - lh / 2;
+    Object.assign(lupa.style, { left: left + 'px', top: top + 'px', width: lw + 'px', height: lh + 'px' });
+    lupa.classList.add('ver'); caja.classList.add('con-lupa');
+    lupa.getAnimations().forEach(a => a.cancel());
+    lupa.animate([{ transform: `translate(${pl + x * su - left}px, ${pt + y * su - top}px) scale(${su / S})`, opacity: .4 }, { transform: 'none', opacity: 1 }],
+      { duration: dur(560), easing: 'cubic-bezier(.34,1.45,.64,1)' });
+  };
+  const cerrar = () => {
+    if (abierta < 0) return; abierta = -1; caja.classList.remove('con-lupa');
+    lupa.getAnimations().forEach(a => a.cancel());
+    lupa.animate([{ opacity: 1, transform: 'none' }, { opacity: 0, transform: 'translateY(10px) scale(.94)' }], { duration: dur(180), easing: 'ease-in', fill: 'forwards' });
+    setTimeout(() => { if (abierta < 0) lupa.classList.remove('ver'); }, dur(180) + 30);
+  };
+  const toque = MOVIL || matchMedia('(hover: none)').matches;
+  $$('.hit', raiz).forEach(r => {
+    const n = +r.dataset.n;
+    if (toque) r.addEventListener('click', e => { e.stopPropagation(); abierta === n ? cerrar() : abrir(n); });
+    else r.addEventListener('mouseenter', () => abrir(n));
+  });
+  if (toque) {
+    document.addEventListener('click', e => { if (!caja.contains(e.target)) cerrar(); });
+    const km = svg.closest('article.km');
+    km.addEventListener('scroll', () => { if (abierta < 0) return; const r = caja.getBoundingClientRect(); if (r.bottom < 0 || r.top > innerHeight) cerrar(); }, { passive: true });
+  } else svg.addEventListener('mouseleave', cerrar);
+  addEventListener('keydown', e => { if (e.key === 'Escape') cerrar(); });
 }
 /* Íconos: cada familia se da vuelta como un cartel de partidas, ícono por ícono; con el mouse encima, el ícono salta */
 function prepararIconos(svg){

@@ -485,3 +485,5 @@ El 10/11/2026 se borró todo lo construido y se empezó de nuevo. Respaldo de la
     - Pantallas de post.: las tres pantallas se prenden una por una, con parpadeo.
   - Regla técnica: a una pieza de SVG del Figma que ya trae `transform` (rotada o movida) no se le anima el transform directo, porque lo pisa: se la mete en un `<g>` y se anima ese.
   - **Mobile:** una columna; los esquemas van de borde a borde achicados con transform (`ACHICAR_MOVIL`), las alturas en 2 × 2, las fotos a todo el ancho. El nivel de alturas avanza al scrollear igual que en compu; los íconos y los hitos se activan al pasar por el medio de la pantalla.
+- 12/11/2026 · Mateo · **KM 10 · lupa sobre las señales.** En "Tipos de señales" y en "Medidas y alturas", al pasar el mouse sobre una señal aparece agrandada encima del esquema (sale desde donde está, con rebote, y el resto del esquema se apaga un poco), para verla y leerla mejor. Muestra solo esa señal con la regla de alturas detrás. Se cierra al sacar el mouse o con Escape (`armarLupa`).
+  - Mobile: se toca la señal para agrandarla; se cierra tocándola de nuevo, tocando afuera o scrolleando lejos.
