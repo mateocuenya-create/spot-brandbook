@@ -2482,7 +2482,17 @@ function rastroEn(sec, PIEZAS, op){
   const signos = $$('[data-marca]', sec), vivas = [];
   let ultX = null, ultY = null, ultMarca = null, ultPieza = '';
   const zz = () => parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--z')) || 1;
-  sec.addEventListener('mousemove', e => {
+  // también al scrollear con el mouse quieto: la página se mueve debajo del cursor y eso cuenta como recorrido
+  const km = sec.closest('article.km');
+  let mx = null, my = null;
+  addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; }, { passive: true });
+  if (km) km.addEventListener('scroll', () => {
+    if (mx === null) return;
+    const rs = sec.getBoundingClientRect();
+    if (mx >= rs.left && mx <= rs.right && my >= rs.top && my <= rs.bottom) dejar({ clientX: mx, clientY: my });
+  }, { passive: true });
+  sec.addEventListener('mousemove', e => dejar(e));
+  function dejar(e){
     const k = zz(), rs = sec.getBoundingClientRect();
     const x = (e.clientX - rs.left) / k, y = (e.clientY - rs.top) / k;
     // ¿al lado de qué pieza está el mouse? (a su izquierda, a la altura de la imagen)
@@ -2509,7 +2519,7 @@ function rastroEn(sec, PIEZAS, op){
         { duration: 350, easing: 'cubic-bezier(.55,0,1,.45)', fill: 'forwards' }).onfinish = () => img.remove(); };
     setTimeout(irse, 2600);
     while (vivas.length > op.cupo) { const v = vivas.shift(); v.dataset.yendo = 1; v.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 250, fill: 'forwards' }).onfinish = () => v.remove(); }
-  });
+  }
 }
 
 function iniciarCursor(){

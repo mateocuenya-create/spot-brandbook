@@ -360,3 +360,4 @@ El 10/11/2026 se borró todo lo construido y se empezó de nuevo. Respaldo de la
   - Foto 1, "Capa sobre la foto": muestra #000000 y el porcentaje. Tiene una regla con el rango recomendado 20–30 % marcado con línea punteada naranja. Al mover el control (de 0 a 60 %) cambia la capa de la foto de verdad.
   - Foto 2, "Degradado lineal": muestra #000000 al 80 % y dónde está cada parada (0 % arriba, 80 % al 87 % de la altura). Al mover el control cambia lo oscuro del final del degradado.
   - El cartel aparece con el hover y se puede usar sin que se cierre.
+- 11/11/2026 · Mateo · **Rastro de misceláneas también al scrollear con el mouse quieto** (Puntos y estrellas y Signos Display). La página que pasa debajo del cursor cuenta como recorrido: si el cursor está al lado de una tarjeta, se van dejando piezas de esa marca, y cambian de marca cuando pasás de una tarjeta a la otra.
