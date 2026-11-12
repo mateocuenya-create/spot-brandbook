@@ -878,6 +878,15 @@ svg.esquema .nivel .raya{fill:var(--naranja);transform:translateY(var(--y,0))}
 .hitos.espera .hito{transform:scale(.55);border-radius:50%;opacity:0}
 .hitos:not(.espera) .hito:is(:hover,.activo) img{animation:respirar 2.4s ease-in-out infinite}
 @keyframes respirar{0%,100%{scale:1}50%{scale:1.045}}
+/* juego: las insignias de SPOT! caen en la columna de al lado de las pantallas y se agarran y tiran (ver iniciarJuegoInsignias) */
+.col-izq{width:405px;flex:none;align-self:stretch;display:flex;flex-direction:column;gap:32px}
+.juego-insignias{position:relative;flex:1;min-height:480px;overflow:hidden;border-radius:28px;background:rgba(37,37,37,.045)}
+.juego-insignias .pista{position:absolute;left:0;right:0;top:22px;text-align:center;font:600 16px/1.3 var(--reddit);color:var(--negro-60);letter-spacing:.02em;pointer-events:none;transition:opacity .4s var(--ease-out)}
+.juego-insignias.usado .pista{opacity:0}
+.juego-insignias .ins{position:absolute;left:0;top:0;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none;will-change:transform}
+.juego-insignias .ins img{width:100%;height:100%;pointer-events:none;-webkit-user-drag:none;filter:drop-shadow(0 4px 4px rgba(0,0,0,.18));transition:scale .25s cubic-bezier(.34,1.56,.64,1)}
+.juego-insignias .ins.agarrada{cursor:grabbing;z-index:2}
+.juego-insignias .ins.agarrada img{scale:1.12;filter:drop-shadow(0 12px 10px rgba(0,0,0,.25))}
 .pantallas-post{width:1255px;flex:none;display:flex;flex-direction:column;gap:8px;background:var(--negro)}
 .pantallas-post video{display:block;width:100%;height:auto;background:#1c1c1c}
 .pantallas-post .s2{--d:.35s}
@@ -1212,6 +1221,8 @@ html.movil .altura span{font-size:17px}
 html.movil :is(.frente,.vestir,.pantallas-post){width:480px;margin-left:-24px}
 html.movil .hitos{flex-direction:column;gap:12px;width:480px;margin-left:-24px}
 html.movil .hito{width:100%}
+html.movil .col-izq{width:100%;gap:20px}
+html.movil .juego-insignias{flex:none;height:360px;min-height:0;border-radius:22px}
 html.movil .frente .m1{transform:translate(calc((1 - var(--p)) * -60px), calc((1 - var(--p)) * 14px)) rotate(calc((1 - var(--p)) * -6deg))}
 html.movil .frente .m2{transform:translateY(calc((1 - var(--p)) * 24px))}
 html.movil .frente .m3{transform:translate(calc((1 - var(--p)) * 60px), calc((1 - var(--p)) * 14px)) rotate(calc((1 - var(--p)) * 6deg))}
@@ -1904,7 +1915,8 @@ html.movil .frente .m3{transform:translate(calc((1 - var(--p)) * 60px), calc((1 
     <div class="senal-fila"><div class="pauta"><h4>Hitos a gran escala</h4><p>Los elementos gráficos crecen hasta volverse objetos: una copa, una estrella y una carita inflables marcan la llegada y se ven desde lejos. La parada fotográfica suma un espejo y señales con frases que invitan a frenar.</p></div>
       <div class="hitos" data-hitos><figure class="hito"><img src="assets/km10/inflables.jpg" alt="Copa, estrella y carita inflables de STOP iluminadas de noche frente a un edificio." loading="lazy"></figure>
         <figure class="hito"><img src="assets/km10/parada-foto.jpg" alt="Parada fotográfica: una carita inflable con anteojos, un espejo y señales con frases como “Pará, tomá aire.”." loading="lazy"></figure></div></div>
-    <div class="senal-fila"><div class="pauta"><h4>La pantalla también es arquitectura</h4><p>En post., la fachada de pantallas cumple el mismo rol que un cartel: deja reconocer la instalación desde afuera, anuncia lo que está por empezar y suma movimiento con las animaciones de la marca.</p></div>
+    <div class="senal-fila"><div class="col-izq"><div class="pauta"><h4>La pantalla también es arquitectura</h4><p>En post., la fachada de pantallas cumple el mismo rol que un cartel: deja reconocer la instalación desde afuera, anuncia lo que está por empezar y suma movimiento con las animaciones de la marca.</p></div>
+        <div class="juego-insignias" data-juego aria-label="Juego: las insignias de Spot caen y se pueden agarrar y tirar"><p class="pista">Agarrá una insignia y tirala</p></div></div>
       <div class="pantallas-post" data-pantallas>
         <video class="s1" src="assets/km10/post-respirar.mp4" muted loop playsinline preload="none" style="aspect-ratio:2366/820" aria-label="Pantalla de la entrada de post.: animación respirar"></video>
         <video class="s2" src="assets/km10/post-running.mp4" muted loop playsinline preload="none" style="aspect-ratio:3240/1080" aria-label="Pantalla del frente de post.: animación running"></video>
@@ -3789,10 +3801,97 @@ function iniciarPantallas(){
   };
   km.addEventListener('scroll', act, { passive: true }); new MutationObserver(act).observe(km, { attributes: true, attributeFilter: ['class'] }); act();
 }
+/* Juego con las 7 insignias de logros de SPOT!: caen al llegar, rebotan y se apilan; se agarran y se tiran (mouse o dedo),
+   y tocándolas saltan. Al volver a pasar por la sección, caen de nuevo. */
+function iniciarJuegoInsignias(){
+  const caja = $('[data-juego]'); if (!caja) return;
+  const km = caja.closest('article.km'), E = MOVIL ? .82 : 1.12;
+  const lista = PIEZAS_SPOT.filter(q => q[3] === 'i');
+  const G = 2400, REBOTE = .42, azar = (a, b) => a + Math.random() * (b - a);
+  const cuerpos = lista.map(([src, tam]) => {
+    const w = tam * E, el = document.createElement('div'); el.className = 'ins';
+    el.style.width = el.style.height = w + 'px';
+    el.innerHTML = `<img src="assets/${src}" alt="" draggable="false">`; caja.appendChild(el);
+    return { el, w, r: w * .46, x: 0, y: 0, vx: 0, vy: 0, ang: 0, giro: 0, mano: null };
+  });
+  let W = 0, H = 0, jugando = false, visto = false, t0 = 0;
+  const medir = () => { W = caja.offsetWidth; H = caja.offsetHeight; };
+  const pintar = c => { c.el.style.transform = `translate(${(c.x - c.w / 2).toFixed(1)}px, ${(c.y - c.w / 2).toFixed(1)}px) rotate(${c.ang.toFixed(1)}deg)`; };
+  const soltar = () => {                                             // caen desde arriba, de a una
+    medir();
+    cuerpos.forEach((c, i) => { c.x = azar(c.r, W - c.r); c.y = -c.r - i * 150 - azar(0, 60); c.vx = azar(-80, 80); c.vy = 0; c.ang = azar(-30, 30); c.giro = azar(-120, 120); pintar(c); });
+  };
+  if (REDUCIR) {                                                     // sin movimiento: quedan apoyadas en fila
+    medir(); let x = 0, y = H;
+    cuerpos.forEach(c => { if (x + c.w > W) { x = 0; y -= 130 * E; } c.x = x + c.w / 2; c.y = y - c.w / 2; x += c.w; pintar(c); });
+    return;
+  }
+  const paso = dt => {
+    cuerpos.forEach(c => {
+      if (c.mano) return;
+      c.vy += G * dt; c.x += c.vx * dt; c.y += c.vy * dt; c.ang += c.giro * dt;
+      if (c.y > H - c.r) { c.y = H - c.r; if (c.vy > 0) c.vy = -c.vy * REBOTE; if (Math.abs(c.vy) < 40) c.vy = 0;
+        c.vx *= Math.pow(.2, dt); c.giro = c.vx / c.r * 57.3; }                 // en el piso rueda
+      else c.giro *= Math.pow(.6, dt);
+      if (c.x < c.r) { c.x = c.r; c.vx = Math.abs(c.vx) * REBOTE; } if (c.x > W - c.r) { c.x = W - c.r; c.vx = -Math.abs(c.vx) * REBOTE; }
+      if (c.y < c.r && c.vy < 0 && c.y > -c.r) { c.y = c.r; c.vy = -c.vy * REBOTE; }     // techo (las que caen al principio entran desde arriba)
+    });
+    for (let k = 0; k < 3; k++) for (let i = 0; i < cuerpos.length; i++) for (let j = i + 1; j < cuerpos.length; j++) {
+      const a = cuerpos[i], b = cuerpos[j], dx = b.x - a.x, dy = b.y - a.y, d = Math.hypot(dx, dy) || .01, min = a.r + b.r;
+      if (d >= min) continue;
+      const nx = dx / d, ny = dy / d, hund = min - d, fa = a.mano ? 0 : b.mano ? 1 : .5, fb = 1 - fa;
+      a.x -= nx * hund * fa; a.y -= ny * hund * fa; b.x += nx * hund * fb; b.y += ny * hund * fb;
+      const vr = (b.vx - a.vx) * nx + (b.vy - a.vy) * ny;
+      if (vr < 0) { const imp = -(1 + REBOTE) * vr / 2;
+        if (!a.mano) { a.vx -= imp * nx; a.vy -= imp * ny; } if (!b.mano) { b.vx += imp * nx; b.vy += imp * ny; } }
+    }
+    cuerpos.forEach(c => { if (!c.mano) { c.y = Math.min(c.y, H - c.r); c.x = Math.max(c.r, Math.min(W - c.r, c.x)); } pintar(c); });
+  };
+  const ciclo = t => {
+    if (!jugando) return;
+    const dt = Math.min(.033, (t - t0) / 1000); t0 = t;
+    paso(dt / 2); paso(dt / 2);
+    requestAnimationFrame(ciclo);
+  };
+  const mirar = () => {
+    const r = caja.getBoundingClientRect(), h = innerHeight, ve = km.classList.contains('activa') && r.bottom > 0 && r.top < h;
+    if (ve && !visto && r.top < h * .8) { visto = true; caja.classList.remove('usado'); soltar(); }
+    if (r.bottom < -h * .3 || r.top > h * 1.3) visto = false;             // al volver a pasar, caen de nuevo
+    if (ve && !jugando) { jugando = true; t0 = performance.now(); requestAnimationFrame(ciclo); }
+    else if (!ve && jugando) jugando = false;
+  };
+  // agarrar y tirar (mouse o dedo); un toque sin arrastrar la hace saltar
+  const local = e => { const r = caja.getBoundingClientRect(), k = r.width / caja.offsetWidth || 1; return [(e.clientX - r.left) / k, (e.clientY - r.top) / k]; };
+  cuerpos.forEach(c => {
+    c.el.addEventListener('pointerdown', e => {
+      e.preventDefault(); try { c.el.setPointerCapture(e.pointerId); } catch (er) {} caja.classList.add('usado');
+      const [x, y] = local(e); c.mano = { dx: c.x - x, dy: c.y - y, t: performance.now(), x0: x, y0: y, mov: false, hist: [[x, y, performance.now()]] };
+      c.el.classList.add('agarrada'); c.vx = c.vy = 0;
+    });
+    c.el.addEventListener('pointermove', e => {
+      if (!c.mano) return; const [x, y] = local(e), m = c.mano, t = performance.now();
+      if (Math.hypot(x - m.x0, y - m.y0) > 6) m.mov = true;
+      const nx = Math.max(c.r, Math.min(W - c.r, x + m.dx)), ny = Math.min(H - c.r, y + m.dy);
+      c.giro = (nx - c.x) * 8; c.ang += (nx - c.x) * .4; c.x = nx; c.y = ny;
+      m.hist.push([x, y, t]); while (m.hist.length > 2 && t - m.hist[0][2] > 90) m.hist.shift();
+    });
+    const fin = () => {
+      if (!c.mano) return; const m = c.mano; c.mano = null; c.el.classList.remove('agarrada');
+      if (!m.mov) { c.vy = -azar(800, 1100); c.vx = azar(-200, 200); c.giro = azar(-500, 500); return; }   // toque: salta
+      const [a, b] = [m.hist[0], m.hist[m.hist.length - 1]], dt = Math.max(16, b[2] - a[2]) / 1000, lim = 2600;
+      c.vx = Math.max(-lim, Math.min(lim, (b[0] - a[0]) / dt)); c.vy = Math.max(-lim, Math.min(lim, (b[1] - a[1]) / dt));
+      c.giro = c.vx * .5;
+    };
+    c.el.addEventListener('pointerup', fin); c.el.addEventListener('pointercancel', fin);
+  });
+  km.addEventListener('scroll', mirar, { passive: true }); addEventListener('resize', () => { medir(); mirar(); });
+  new MutationObserver(mirar).observe(km, { attributes: true, attributeFilter: ['class'] });
+  medir(); cuerpos.forEach(c => { c.x = W / 2; c.y = -200; pintar(c); }); mirar();
+}
 let km10Listo = false;
 async function iniciarKM10(){
   if (km10Listo) return; km10Listo = true;
-  iniciarFrente(); iniciarPantallas();
+  iniciarFrente(); iniciarPantallas(); iniciarJuegoInsignias();
   const extras = $$('#km10 .principios, #km10 [data-vestir], #km10 [data-hitos], #km10 [data-pantallas]');
   if (REDUCIR) return;
   entradaRepetida(extras, .4);
