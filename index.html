@@ -9,7 +9,7 @@
 <link rel="icon" type="image/svg+xml" href="assets/favicon/f01.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Reddit+Sans:ital,wght@0,200..900;1,200..900&family=Sora:wght@100..800&family=JetBrains+Mono:wght@200..800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Reddit+Sans:ital,wght@0,200..900;1,200..900&family=Sora:wght@100..800&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Bitcount+Single:wght@700&display=swap" rel="stylesheet">
 <script>
 /* Versión mobile: en pantallas de hasta 760 px la página se diseña a 480 px de ancho (en vez de 1920) y se reacomoda en columna */
@@ -81,9 +81,6 @@ a.punto{cursor:pointer} span.punto{cursor:default}
 .rastro{position:absolute;inset:0;pointer-events:none;z-index:0}
 .rastro img{position:absolute;left:0;top:0;will-change:transform}
 #inicio .logo-centro{position:absolute;left:897px;top:83px;width:127px;height:42px}
-#inicio .submarcas .a-post{display:block;transition:scale .3s cubic-bezier(.34,1.56,.64,1),filter .3s}
-#inicio .submarcas .a-post:hover{scale:1.12;filter:drop-shadow(0 0 12px rgba(73,184,103,.7))}
-#inicio .submarcas{position:absolute;left:1537px;top:78px;width:263px;display:flex;justify-content:space-between;align-items:center}
 
 /* ---------- PÁGINAS KM ---------- */
 .km{background:var(--crema);overflow-y:auto;overflow-x:hidden;visibility:hidden;z-index:10;overscroll-behavior:contain}
@@ -1143,7 +1140,7 @@ html.cursor-propio.cursor-visible :is(#cursor,#cursor-mini){opacity:1}
 .escena[data-paso="3"] .frase-ds.fin{opacity:1;transform:none;transition:opacity .5s 1.4s,transform .5s 1.4s var(--ease-out)}
 @keyframes pop-ds{40%{transform:scale(1.04)}100%{transform:scale(1)}}
 
-/* ===== KM 10 · Arquigrafía y señalética ===== */
+/* ===== KM 8 · Arquigrafía y señalética ===== */
 .links.dos{display:grid;grid-template-columns:305px auto;grid-template-rows:repeat(4,auto);grid-auto-flow:column;gap:18px 0}
 .km10-sec{display:flex;flex-direction:column;gap:96px}
 .km10-sec .az{font-weight:700;color:var(--azul)}
@@ -1249,235 +1246,6 @@ div.frente{position:relative;width:1255px;aspect-ratio:1760/535;flex:none;--p:1}
 @keyframes prender{0%{filter:brightness(0)}12%{filter:brightness(1.6)}20%{filter:brightness(.15)}34%{filter:brightness(1.3)}44%{filter:brightness(.5)}60%{filter:brightness(1.15)}100%{filter:none}}
 
 /* =====================================================================
-   PÁGINA post. (sale del logo de post. en la Home). Estilo gráfico de post. (informe TP3, Figma 1:18433):
-   fondo Negro Spot, verde #49B867, crema y violeta de acento; bajadas en JetBrains Mono; texto en Reddit Sans
-   ===================================================================== */
-#post{background:var(--negro);color:var(--crema);--mono:'JetBrains Mono',ui-monospace,monospace}
-#post .btn-menu:not(.sobre-claro){--bm-fg:var(--crema)}
-#post b{font-weight:700}
-.mono-k{font:500 24px/1.2 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--verde)}
-.mono-k.tinta{color:var(--negro)}
-.mono-e{display:block;font:500 16px/1.3 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--verde)}
-.mono-n{font:200 20px/1 var(--mono);letter-spacing:.1em;color:var(--crema)}
-/* hero */
-.post-hero{position:relative;height:1080px;overflow:hidden;background:
-  radial-gradient(900px 620px at 24% 46%,rgba(73,184,103,.38),transparent 70%),
-  radial-gradient(820px 560px at 82% 62%,rgba(171,138,229,.32),transparent 70%),var(--negro)}
-.ph-misc{position:absolute;inset:0;pointer-events:none}
-.ph-misc img{position:absolute;left:0;top:0;will-change:transform}
-.ph-kicker{position:absolute;left:120px;top:84px;right:120px;display:flex;justify-content:flex-end;gap:48px;font:200 20px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--crema)}
-.ph-centro{position:absolute;left:50%;top:430px;translate:-50% -50%;width:760px;height:350px;display:grid;place-items:center}
-.ph-logo{position:relative;width:760px;height:auto;animation:ph-entra 1.4s cubic-bezier(.34,1.3,.64,1) both}
-@keyframes ph-entra{from{opacity:0;scale:.86;filter:blur(14px)}}
-.respira{position:absolute;left:50%;top:50%;width:640px;height:640px;translate:-50% -50%;pointer-events:none}
-.respira span{position:absolute;inset:0;border-radius:50%;animation:respirar 10s cubic-bezier(.45,0,.55,1) infinite}
-.respira .r1{background:rgba(73,184,103,.14);border:3px solid rgba(73,184,103,.55)}
-.respira .r2{inset:16%;background:rgba(73,184,103,.22);border:3px solid var(--verde);animation-delay:.25s}
-/* inhalar 4 s, exhalar 6 s (Figma, recorrido en pantalla) */
-@keyframes respirar{0%,100%{scale:.62}40%{scale:1}}
-.respira-et{position:absolute;left:50%;top:calc(100% + 150px);translate:-50% 0;font:500 22px/1 var(--mono);letter-spacing:.3em;text-transform:uppercase;color:var(--verde);height:1em;width:300px;text-align:center}
-.respira-et span{position:absolute;inset:0;animation:et-in 10s linear infinite}
-.respira-et .ex{animation-name:et-ex}
-@keyframes et-in{0%,38%{opacity:1}42%,96%{opacity:0}100%{opacity:1}}
-@keyframes et-ex{0%,38%{opacity:0}42%,96%{opacity:1}100%{opacity:0}}
-.ph-bajada{position:absolute;left:0;right:0;top:720px;text-align:center;font:400 44px/1.2 var(--sora);color:var(--crema)}
-.ph-bajada b{font-weight:600;color:var(--verde)}
-.ph-links{position:absolute;left:120px;right:120px;top:840px;display:flex;flex-wrap:wrap;justify-content:center;gap:14px 40px}
-.ph-links button{font:500 18px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:rgba(237,232,219,.6);transition:color .2s var(--ease-out)}
-.ph-links button:hover{color:var(--verde)}
-.ph-pie{position:absolute;left:120px;right:120px;bottom:40px;display:flex;justify-content:space-between;padding-top:16px;border-top:1px solid rgba(237,232,219,.25);font:200 16px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:rgba(237,232,219,.6)}
-/* 01 · introducción: de Spot a post. */
-.ps-meta{position:relative}
-.meta-spot{background:var(--amarillo);color:var(--negro);padding:148px 120px 120px;display:flex;flex-direction:column;gap:40px}
-.meta-logo{width:230px;height:auto}
-.meta-txt{width:1150px;font:400 34px/1.36 var(--reddit)}
-.meta-preg{width:1500px;font:600 84px/1.08 var(--sora)}
-.meta-preg span{display:inline-block;transition:opacity .5s var(--ease-out),translate .6s cubic-bezier(.34,1.4,.64,1);transition-delay:calc(var(--i) * 70ms)}
-.ps-meta.espera .meta-preg span{opacity:0;translate:0 30px}
-.linea-meta{position:relative;height:72px;background:var(--crema);overflow:hidden}
-.linea-meta .cuadros{position:absolute;inset:0;background:repeating-conic-gradient(var(--negro) 0 25%,var(--crema) 0 50%) 0 0/36px 36px;transform-origin:0 50%;transition:scale 1.4s cubic-bezier(.65,0,.35,1) .3s}
-.linea-meta .et{position:absolute;right:120px;top:50%;translate:0 -50%;background:var(--negro);color:var(--crema);font:500 22px/1 var(--mono);letter-spacing:.3em;text-transform:uppercase;padding:10px 20px;transition:opacity .4s 1.5s}
-.ps-meta.espera .linea-meta .cuadros{scale:0 1}
-.ps-meta.espera .linea-meta .et{opacity:0;transition-delay:0s}
-.meta-post{padding:120px 120px 148px;display:flex;flex-direction:column;gap:56px}
-.meta-post .meta-txt{color:var(--crema)}
-.meta-post .meta-txt b{color:var(--verde)}
-.meta-nacio{display:flex;align-items:center;gap:36px;font:600 84px/1 var(--sora)}
-.meta-nacio img{height:150px;width:auto;transition:opacity .8s var(--ease-out) 1.6s,scale 1s cubic-bezier(.34,1.4,.64,1) 1.6s}
-.ps-meta.espera .meta-nacio img{opacity:0;scale:.7;transition-delay:0s}
-/* secciones */
-.ps{padding:148px 120px;display:flex;flex-direction:column;gap:48px;border-top:1px solid rgba(237,232,219,.14)}
-.ps-t{font:600 72px/1.08 var(--sora);color:var(--crema);width:1500px;margin-top:-16px}
-.ps-t.enorme{font-size:104px}
-.ps-txt{width:1240px;font:400 30px/1.36 var(--reddit);color:rgba(237,232,219,.88)}
-.ps-txt b{color:var(--crema)} .ps-txt b.v{color:var(--verde)}
-.mono-k.sep{margin-top:64px}
-.ps .rv-p{transition:opacity .6s var(--ease-out),translate .7s cubic-bezier(.22,1,.36,1)}
-.ps .rv-p.espera{opacity:0;translate:0 40px}
-/* 02 · origen */
-.tp1{display:flex;gap:80px;align-items:flex-start;padding:40px 0;border-top:1px solid rgba(237,232,219,.25);border-bottom:1px solid rgba(237,232,219,.25)}
-.tp1 > p{width:720px;font:400 28px/1.36 var(--reddit)}
-.tp1 dl{display:flex;flex-direction:column;gap:18px}
-.tp1 dl div{display:flex;gap:24px;align-items:baseline}
-.tp1 dt{width:150px;font:500 18px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--verde)}
-.tp1 dd{font:600 30px/1.1 var(--sora)}
-.ideas{display:grid;grid-template-columns:repeat(3,1fr);gap:48px}
-.idea{display:flex;flex-direction:column;gap:20px;padding-top:24px;border-top:3px solid var(--verde)}
-.idea p{font:400 26px/1.4 var(--reddit);color:rgba(237,232,219,.88)}
-.idea b{color:var(--verde)}
-.fotos-post{display:flex;gap:32px;justify-content:center;padding:40px 0}
-.fotos-post figure{width:390px;background:var(--crema);padding:14px 14px 0;border-radius:6px;box-shadow:0 18px 40px rgba(0,0,0,.4);rotate:var(--r);transition:rotate .5s cubic-bezier(.34,1.5,.64,1),translate .5s cubic-bezier(.34,1.5,.64,1),opacity .6s;transition-delay:calc(var(--i,0) * 110ms)}
-.fotos-post img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:3px}
-.fotos-post figcaption{font:500 16px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--negro);padding:16px 2px 18px}
-.fotos-post figure:hover{rotate:0deg;translate:0 -14px;transition-delay:0s}
-.fotos-post.espera figure{opacity:0;translate:0 120px;rotate:calc(var(--r) * 4)}
-.encuestas{display:flex;flex-direction:column;gap:40px;padding:56px;border:3px solid var(--verde);border-radius:40px}
-.datos-enc{display:grid;grid-template-columns:repeat(4,1fr);gap:40px}
-.datos-enc > div{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px}
-.datos-enc b{font:700 96px/1 var(--sora);color:var(--verde)}
-.datos-enc span{font:600 48px/1 var(--sora);color:var(--verde)}
-.datos-enc p{width:100%;margin-top:12px;font:400 22px/1.36 var(--reddit);color:rgba(237,232,219,.85)}
-.pregunta{font:600 40px/1.25 var(--sora);color:var(--crema);padding-left:32px;border-left:6px solid var(--violeta)}
-/* 03 · qué es */
-.ficha{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid rgba(237,232,219,.25);border-bottom:1px solid rgba(237,232,219,.25)}
-.ficha > div{padding:32px 32px 32px 0;display:flex;flex-direction:column;gap:14px}
-.ficha > div + div{padding-left:32px;border-left:1px solid rgba(237,232,219,.25)}
-.ficha dt{font:500 16px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--verde)}
-.ficha dd{font:600 34px/1.15 var(--sora)}
-.ficha dd b{font-size:64px;color:var(--verde)}
-.fachada-videos{display:flex;flex-direction:column;gap:20px}
-.fv{display:flex;gap:40px;align-items:center}
-.fv .mono-e{width:240px;flex:none;color:rgba(237,232,219,.7)}
-.fv video{width:1100px;display:block;background:#1c1c1c;border-radius:6px}
-.fachada-videos .fv{transition:opacity .6s,translate .7s cubic-bezier(.22,1,.36,1);transition-delay:calc(var(--i) * 180ms)}
-.fachada-videos.espera .fv{opacity:0;translate:-60px 0}
-/* 04 · dinámica: juego de la pose */
-.dina{display:flex;gap:80px;align-items:flex-start}
-.dina-txt{width:700px;flex:none;display:flex;flex-direction:column;gap:48px}
-.dina-txt .ps-txt{width:auto}
-.hole{display:flex;gap:28px;align-items:flex-start}
-.hole img{width:250px;border-radius:8px;flex:none}
-.hole figcaption{font:400 22px/1.4 var(--reddit);color:rgba(237,232,219,.75)}
-.pose-caja{position:relative;width:900px;flex:none;border-radius:32px;overflow:hidden;background:radial-gradient(600px 500px at 50% 40%,#303030,#1d1d1d);box-shadow:inset 0 0 0 2px rgba(237,232,219,.12)}
-.pose-caja canvas{display:block;width:100%;height:auto;touch-action:none;cursor:crosshair}
-.pose-barra{position:absolute;left:40px;right:40px;top:28px;height:10px;border-radius:10px;background:rgba(237,232,219,.15);overflow:hidden}
-.pose-barra span{position:absolute;inset:0;background:var(--crema);border-radius:inherit;transform-origin:0 50%}
-.precision{position:absolute;right:28px;top:60px;width:120px;height:120px;display:grid;place-items:center}
-.precision svg{position:absolute;inset:0;rotate:-90deg}
-.precision circle{fill:rgba(37,37,37,.6);stroke:rgba(237,232,219,.18);stroke-width:8}
-.precision .arco{fill:none;stroke:var(--verde);stroke-linecap:round;stroke-dasharray:326.7;stroke-dashoffset:calc(326.7 * (1 - var(--p,0)));transition:stroke-dashoffset .3s}
-.precision b{position:relative;font:700 30px/1 var(--sora);color:var(--crema)}
-.pastilla{position:absolute;left:50%;top:84px;translate:-50% 0;padding:12px 26px;border-radius:40px;border:4px solid var(--crema);background:var(--verde);font:700 28px/1 var(--sora);color:var(--crema);opacity:0;scale:.4;pointer-events:none}
-.pastilla.vi{background:var(--violeta)}
-.pastilla.ver{animation:pastilla 1.3s cubic-bezier(.34,1.56,.64,1) forwards}
-@keyframes pastilla{0%{opacity:0;scale:.4;rotate:-8deg}25%{opacity:1;scale:1;rotate:3deg}80%{opacity:1;scale:1;rotate:0deg}100%{opacity:0;scale:.9;translate:-50% -20px}}
-.pose-pista{position:relative;padding:4px 240px 26px 28px;font:400 18px/1.35 var(--reddit);color:rgba(237,232,219,.7)}
-.pose-pista .mono-e{margin-bottom:6px}
-.pose-pista i{font-style:normal}
-.pose-otra{position:absolute;right:28px;bottom:26px;padding:12px 22px;border-radius:40px;border:2px solid var(--verde);font:500 16px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--crema);transition:background .2s}
-.pose-otra:hover{background:var(--verde)}
-/* 05 · recorrido */
-.reco{display:flex;gap:80px;align-items:flex-start}
-.reco-pin{position:sticky;top:120px;width:960px;flex:none}
-.reco-pantalla{position:relative;width:960px;aspect-ratio:16/9;border-radius:24px;overflow:hidden;background:#1c1c1c;box-shadow:0 0 0 2px rgba(237,232,219,.12),0 30px 80px rgba(0,0,0,.45)}
-.reco-pantalla .v{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;scale:1.04;transition:opacity .6s var(--ease-out),scale .8s var(--ease-out)}
-.reco-pantalla .marca{position:absolute;left:24px;bottom:20px;width:90px;height:auto;z-index:2}
-.reco-pantalla[data-paso="1"] .v1,.reco-pantalla[data-paso="2"] .v2,.reco-pantalla[data-paso="3"] .v3,.reco-pantalla[data-paso="4"] .v4,
-.reco-pantalla[data-paso="5"] .v5,.reco-pantalla[data-paso="6"] .v6,.reco-pantalla[data-paso="7"] .v7,.reco-pantalla[data-paso="8"] .v8{opacity:1;scale:1}
-.v2{display:grid;place-items:center}
-.v2 svg{width:300px;height:300px;rotate:-90deg}
-.v2 circle{fill:none;stroke:rgba(237,232,219,.18);stroke-width:8}
-.v2 .arco{stroke:var(--verde);stroke-linecap:round;stroke-dasharray:502.7;stroke-dashoffset:502.7}
-.reco-pantalla[data-paso="2"] .v2 .arco{animation:completar 2.4s .3s var(--ease-in-out) forwards}
-@keyframes completar{to{stroke-dashoffset:0}}
-.huellas{position:absolute;left:50%;top:50%;translate:-50% -50%;display:flex;gap:26px}
-.huellas i{width:40px;height:92px;border-radius:50% 50% 45% 45%/60% 60% 40% 40%;background:var(--crema);opacity:.85}
-.v4{display:grid;place-items:center}
-.v4 .respira{width:360px;height:360px;top:46%}
-.v4 .respira-et{top:auto;bottom:40px}
-.v5 img{width:100%;height:100%;object-fit:cover}
-.v5 .barra{position:absolute;left:5%;right:5%;top:20px;height:8px;border-radius:8px;background:rgba(237,232,219,.18);overflow:hidden}
-.v5 .barra i{position:absolute;inset:0;background:var(--crema);transform-origin:0 50%}
-.reco-pantalla[data-paso="5"] .v5 .barra i{animation:vaciar 10s linear infinite}
-@keyframes vaciar{from{scale:1 1}to{scale:0 1}}
-.pastilla-f{position:absolute;left:50%;top:60px;translate:-50% 0;padding:8px 18px;border-radius:30px;border:3px solid var(--crema);background:var(--verde);font:700 20px/1 var(--sora);color:var(--crema)}
-.reco-pantalla[data-paso="5"] .pastilla-f{animation:pastilla-f 2.5s 1s cubic-bezier(.34,1.56,.64,1) infinite both}
-@keyframes pastilla-f{0%{opacity:0;scale:.4}15%,70%{opacity:1;scale:1}85%,100%{opacity:0;scale:.9}}
-.v6{display:flex;gap:10px;align-items:center;justify-content:center;padding:70px}
-.v6 i{flex:1;height:100%;border-radius:10px;background:linear-gradient(160deg,#2f2f2f,#202020);box-shadow:inset 0 0 0 2px rgba(73,184,103,.5);transition:margin 1s cubic-bezier(.65,0,.35,1) .4s,border-radius 1s .4s}
-.reco-pantalla[data-paso="6"] .v6 i{margin:0 -5px;border-radius:0}
-.reco-pantalla[data-paso="6"] .v6 i:first-child{border-radius:10px 0 0 10px} .reco-pantalla[data-paso="6"] .v6 i:last-child{border-radius:0 10px 10px 0}
-.reco-pasos{list-style:none;display:flex;flex-direction:column;width:560px;padding:20vh 0 30vh}
-.reco-pasos li{padding:40px 0 40px 28px;border-left:3px solid rgba(237,232,219,.15);opacity:.35;transition:opacity .4s,border-color .4s}
-.reco-pasos li.on{opacity:1;border-color:var(--verde)}
-.reco-pasos p{margin-top:12px;font:400 28px/1.36 var(--reddit)}
-/* 06 · dedicatorias */
-.dedica-fotos{display:flex;gap:28px;justify-content:center}
-.dedica-fotos img{width:300px;aspect-ratio:9/19;object-fit:cover;border-radius:36px;border:6px solid #111;box-shadow:0 20px 50px rgba(0,0,0,.45);transition:translate .7s cubic-bezier(.34,1.3,.64,1),opacity .6s,rotate .7s;transition-delay:calc(var(--i) * 120ms)}
-.dedica-fotos img:nth-child(odd){translate:0 40px}
-.dedica-fotos.espera img{opacity:0;translate:0 160px;rotate:6deg}
-.fachada{display:flex;gap:40px;align-items:stretch}
-.fachada-pantalla{position:relative;flex:1;height:560px;border-radius:12px;overflow:hidden;background:
-  radial-gradient(520px 420px at 30% 40%,rgba(73,184,103,.55),transparent 72%),radial-gradient(520px 420px at 82% 60%,rgba(171,138,229,.45),transparent 72%),#1b1b1b}
-.fachada-misc img{position:absolute;opacity:.9;animation:mecer 7s ease-in-out infinite alternate}
-@keyframes mecer{from{translate:0 -8px;rotate:-6deg}to{translate:0 8px;rotate:6deg}}
-.fachada-logo{position:absolute;left:50%;top:50%;translate:-50% -50%;width:340px;height:auto}
-.notas{position:absolute;inset:0}
-.nota{position:absolute;width:var(--w,290px);padding:26px 24px 24px;background:color-mix(in srgb,var(--c) 80%,transparent);color:var(--negro);rotate:var(--r);
-  animation:nota-entra .7s cubic-bezier(.34,1.56,.64,1) both;box-shadow:0 10px 24px rgba(0,0,0,.3)}
-.nota::before{content:"";position:absolute;left:0;right:0;bottom:100%;height:14px;background:inherit;
-  -webkit-mask:url(assets/post/nota-borde-1.svg) 0 100%/100% 100% no-repeat;mask:url(assets/post/nota-borde-1.svg) 0 100%/100% 100% no-repeat}
-.nota b{display:block;font:800 18px/1.2 var(--mono);margin-bottom:10px}
-.nota p{font:400 19px/1.35 var(--reddit)}
-.nota.M{--w:330px} .nota.L{--w:370px} .nota.XL{--w:410px}
-.nota.sale{animation:nota-sale .6s ease-in forwards}
-@keyframes nota-entra{from{opacity:0;scale:.3;rotate:calc(var(--r) - 20deg)}}
-@keyframes nota-sale{to{opacity:0;scale:.6;translate:0 30px}}
-.nota-form{width:440px;flex:none;display:flex;flex-direction:column;gap:18px;padding:32px;border-radius:24px;background:#1d1d1d;box-shadow:inset 0 0 0 2px rgba(237,232,219,.12)}
-.nota-form label{display:flex;gap:12px;align-items:center;font:800 18px/1 var(--mono);color:var(--crema)}
-.nota-form input,.nota-form textarea{flex:1;width:100%;padding:14px 16px;border-radius:12px;border:2px solid rgba(237,232,219,.25);background:transparent;color:var(--crema);font:400 20px/1.3 var(--reddit);resize:none}
-.nota-form input:focus,.nota-form textarea:focus{outline:none;border-color:var(--verde)}
-.nota-ayuda{font:400 16px/1.3 var(--reddit);color:rgba(237,232,219,.55)}
-.nota-form button{margin-top:auto;padding:16px;border-radius:40px;background:var(--verde);font:700 20px/1 var(--sora);color:var(--crema);border:3px solid var(--crema);transition:scale .2s}
-.nota-form button:hover{scale:1.03}
-/* 07 · contexto */
-.render{display:flex;flex-direction:column;gap:16px}
-.render-marco{width:1680px;height:900px;overflow:hidden;border-radius:16px}
-.render-marco img{width:100%;height:100%;object-fit:cover;scale:var(--s,1.15);transform-origin:50% 60%}
-.render figcaption{color:rgba(237,232,219,.7)}
-.carreras{display:grid;grid-template-columns:1fr 1fr;gap:40px}
-.carrera{padding:36px;border-radius:24px;border:2px solid rgba(237,232,219,.25);display:flex;flex-direction:column;gap:16px;transition:border-color .3s,translate .3s}
-.carrera:hover{border-color:var(--verde);translate:0 -6px}
-.carrera h3{font:600 40px/1.1 var(--sora)}
-.carrera p{font:400 20px/1.4 var(--reddit);color:rgba(237,232,219,.7)}
-/* 08 · prototipo */
-.chip-m{display:inline-block;padding:4px 14px;border-radius:30px;border:2px solid var(--verde);font:500 22px/1.3 var(--mono);color:var(--crema)}
-.iters{display:grid;grid-template-columns:repeat(4,1fr);gap:32px}
-.iter{display:flex;flex-direction:column;gap:16px;padding:28px;border-radius:24px;background:#1d1d1d}
-.iter > :first-child{height:260px;width:100%;border-radius:16px;background:#151515;position:relative;overflow:hidden}
-.iter canvas{display:block;width:100%;height:260px;object-fit:contain}
-.iter p{font:400 22px/1.36 var(--reddit);color:rgba(237,232,219,.85)}
-.mini-barra i{position:absolute;left:24px;right:24px;top:40px;height:10px;border-radius:10px;background:var(--crema);transform-origin:0 50%;animation:vaciar 6s linear infinite}
-.mini-barra::before{content:"";position:absolute;left:24px;right:24px;top:40px;height:10px;border-radius:10px;background:rgba(237,232,219,.15)}
-.respira.chica{position:relative;left:auto;top:auto;translate:none;width:100%;height:260px}
-.respira.chica span{inset:auto;left:50%;top:50%;width:200px;height:200px;margin:-100px 0 0 -100px}
-.respira.chica .r2{width:136px;height:136px;margin:-68px 0 0 -68px}
-.mini-reco{display:flex;align-items:center;justify-content:center;gap:12px}
-.mini-reco::before{content:"";position:absolute;left:30px;right:30px;top:50%;height:3px;background:rgba(237,232,219,.18)}
-.mini-reco i{position:relative;width:18px;height:18px;border-radius:50%;border:3px solid var(--crema);background:var(--negro);animation:paso-reco 8s infinite;animation-delay:calc(var(--i) * 1s)}
-@keyframes paso-reco{0%,10%{background:var(--verde);scale:1.4}20%,100%{background:var(--negro);scale:1}}
-.ui-post{display:flex;align-items:center;gap:60px;flex-wrap:wrap;padding-top:24px}
-.precision.enorme{position:relative;right:auto;top:auto;width:220px;height:220px}
-.precision.enorme b{font-size:56px}
-.pastillas{display:flex;gap:24px;flex-wrap:wrap}
-.pastillas span{padding:14px 30px;border-radius:40px;border:4px solid var(--crema);background:var(--verde);font:700 30px/1 var(--sora);transition:scale .6s cubic-bezier(.34,1.56,.64,1),rotate .6s cubic-bezier(.34,1.56,.64,1),opacity .4s;transition-delay:calc(.6s + var(--i) * 150ms)}
-.pastillas span.vi{background:var(--violeta)}
-.pastillas span:hover{rotate:-4deg;scale:1.08;transition-delay:0s}
-.ui-post.espera .pastillas span{opacity:0;scale:.3;rotate:-15deg}
-.ui-post .mono-e{width:100%;color:rgba(237,232,219,.6)}
-#post .pie-km{border-top:1px solid rgba(237,232,219,.14)}
-
-/* =====================================================================
    VERSIÓN MOBILE (hasta 760 px de ancho): la clase .movil la pone un script en el <head>.
    Las páginas KM se diseñan a 480 px (se escalan con --z = ancho / 480) y todo va en una columna
    con márgenes de 24 px (contenido de 432). Lo que es muy visual y no se puede reacomodar
@@ -1499,7 +1267,6 @@ html.movil .glosa .def{width:300px;padding:20px}
 html.movil :is(#inicio,#portada) .escenario{position:absolute;left:-580px;top:var(--dy,0px)}
 html.movil #inicio .btn-menu{left:604px;top:calc(36px - var(--dy,0px));width:92px;height:92px}
 html.movil #inicio .logo-centro{left:865px;top:calc(48px - var(--dy,0px));width:190px;height:63px}
-html.movil #inicio .submarcas{left:829px;top:calc(1080px + var(--dy,0px) - 230px);transform:scale(1.45);transform-origin:center top}
 html.movil #inicio .actualizado{left:610px;width:700px;text-align:center;top:calc(1080px + var(--dy,0px) - 110px);font-size:30px}
 html.movil .punto .pill{display:none}
 
@@ -1799,7 +1566,7 @@ html.movil .app-pantallas img.activo{transform:translateY(-14px) rotate(-1.5deg)
 /* KM 4 · pesos: se tocan para elegirlos */
 .tipos .pesos span.elegido{color:var(--naranja)}
 
-/* KM 10 · Arquigrafía y señalética: una columna; los esquemas van de borde a borde, achicados con transform */
+/* KM 8 · Arquigrafía y señalética: una columna; los esquemas van de borde a borde, achicados con transform */
 html.movil .links.dos{grid-template-columns:auto;grid-template-rows:none;grid-auto-flow:row;gap:12px}
 html.movil .km10-sec{gap:48px}
 /* KM 7 · escena "De átomos a botones": se diseña en un cuadro de 1080 × 940 (achicado a 0,4 con ACHICAR_MOVIL),
@@ -1865,114 +1632,6 @@ html.movil .finder{margin-top:40px;padding:32px 18px 28px;border-radius:0 20px 2
 html.movil .finder-tab{width:200px;height:35px;top:-34.5px}
 html.movil .carpeta{width:100%}
 html.movil .carpeta p{font-size:16px;word-break:break-all}
-/* ---- post. en mobile: una columna de 480 ---- */
-html.movil .post-hero{height:1000px}
-html.movil .ph-kicker{left:24px;right:24px;top:96px;flex-direction:column;align-items:flex-end;gap:10px;font-size:14px}
-html.movil .ph-centro{top:400px;width:400px;height:184px}
-html.movil .ph-logo{width:400px}
-html.movil .respira{width:380px;height:380px}
-html.movil .respira-et{top:calc(100% + 120px);font-size:16px}
-html.movil .ph-bajada{top:640px;padding:0 24px;font-size:28px}
-html.movil .ph-links{left:24px;right:24px;top:740px;gap:12px 20px}
-html.movil .ph-links button{font-size:13px}
-html.movil .ph-pie{left:24px;right:24px;bottom:24px;font-size:11px;gap:16px}
-html.movil .mono-k{font-size:16px}
-html.movil .mono-e{font-size:13px}
-html.movil .meta-spot{padding:72px 24px;gap:28px}
-html.movil .meta-logo{width:150px}
-html.movil .meta-txt{width:auto;font-size:20px}
-html.movil .meta-preg{width:auto;font-size:40px}
-html.movil .linea-meta{height:44px}
-html.movil .linea-meta .cuadros{background-size:22px 22px}
-html.movil .linea-meta .et{right:24px;font-size:14px;padding:6px 12px}
-html.movil .meta-post{padding:64px 24px 80px;gap:32px}
-html.movil .meta-nacio{font-size:40px;gap:16px;flex-wrap:wrap}
-html.movil .meta-nacio img{height:80px}
-html.movil .ps{padding:80px 24px;gap:32px}
-html.movil .ps-t{width:auto;font-size:36px;margin-top:-8px}
-html.movil .ps-t.enorme{font-size:44px}
-html.movil .ps-txt{width:auto;font-size:19px}
-html.movil .mono-k.sep{margin-top:32px}
-html.movil .tp1{flex-direction:column;gap:28px;padding:28px 0}
-html.movil .tp1 > p{width:auto;font-size:19px}
-html.movil .tp1 dt{width:96px;font-size:13px}
-html.movil .tp1 dd{font-size:20px}
-html.movil .ideas{grid-template-columns:1fr;gap:32px}
-html.movil .idea p{font-size:18px}
-html.movil .fotos-post{flex-wrap:wrap;gap:16px;padding:16px 0}
-html.movil .fotos-post figure{width:200px;padding:8px 8px 0}
-html.movil .fotos-post figcaption{font-size:11px;padding:10px 0 12px}
-html.movil .encuestas{padding:28px 22px;border-radius:24px;gap:28px}
-html.movil .datos-enc{grid-template-columns:1fr 1fr;gap:24px}
-html.movil .datos-enc b{font-size:52px} html.movil .datos-enc span{font-size:28px}
-html.movil .datos-enc p{font-size:15px}
-html.movil .pregunta{font-size:22px;padding-left:16px;border-left-width:4px}
-html.movil .ficha{grid-template-columns:1fr 1fr}
-html.movil .ficha > div{padding:20px 12px 20px 0}
-html.movil .ficha > div + div{padding-left:12px}
-html.movil .ficha > div:nth-child(3){padding-left:0;border-left:0;border-top:1px solid rgba(237,232,219,.25)}
-html.movil .ficha > div:nth-child(4){border-top:1px solid rgba(237,232,219,.25)}
-html.movil .ficha dt{font-size:12px}
-html.movil .ficha dd{font-size:20px} html.movil .ficha dd b{font-size:40px}
-html.movil .fv{flex-direction:column;align-items:flex-start;gap:8px}
-html.movil .fv .mono-e{width:auto}
-html.movil .fv video{width:432px}
-html.movil .dina{flex-direction:column;gap:32px}
-html.movil .dina-txt{width:auto;gap:28px}
-html.movil .hole img{width:150px}
-html.movil .hole figcaption{font-size:16px}
-html.movil .pose-caja{width:432px;border-radius:20px}
-html.movil .pose-barra{left:18px;right:18px;top:14px;height:6px}
-html.movil .precision{right:12px;top:30px;width:72px;height:72px}
-html.movil .precision b{font-size:18px}
-html.movil .pastilla{top:40px;font-size:16px;padding:8px 14px;border-width:3px}
-html.movil .pose-pista{position:relative;left:auto;bottom:auto;width:auto;padding:14px 18px 0;font-size:15px}
-html.movil .pose-otra{position:relative;right:auto;bottom:auto;margin:12px 18px 18px;font-size:13px}
-html.movil .reco{flex-direction:column;gap:0}
-html.movil .reco-pin{position:relative;top:auto;width:432px;z-index:2}
-html.movil .reco-pin::before{content:"";position:absolute;left:-24px;right:-24px;top:-90px;bottom:-16px;background:var(--negro);z-index:-1}
-html.movil .reco-pantalla{width:432px;border-radius:14px}
-html.movil .reco-pantalla .marca{width:54px;left:12px;bottom:10px}
-html.movil .v2 svg{width:140px;height:140px}
-html.movil .huellas{gap:12px} html.movil .huellas i{width:20px;height:46px}
-html.movil .v4 .respira{width:170px;height:170px}
-html.movil .v4 .respira-et{top:auto;bottom:14px;font-size:12px}
-html.movil .pastilla-f{top:28px;font-size:13px;padding:5px 10px;border-width:2px}
-html.movil .v5 .barra{top:10px;height:5px}
-html.movil .v6{padding:30px}
-html.movil .reco-pasos{width:auto;padding:24px 0 40vh}
-html.movil .reco-pasos li{padding:24px 0 24px 18px}
-html.movil .reco-pasos p{font-size:18px}
-html.movil .dedica-fotos{flex-wrap:wrap;gap:16px}
-html.movil .dedica-fotos img{width:200px;border-radius:24px;border-width:4px}
-html.movil .dedica-fotos img:nth-child(odd){translate:0 0}
-html.movil .fachada{flex-direction:column;gap:20px}
-html.movil .fachada-pantalla{flex:none;height:420px}
-html.movil .fachada-logo{width:200px}
-html.movil .nota{--w:170px;padding:16px 12px 12px}
-html.movil .nota.M{--w:190px} html.movil .nota.L,html.movil .nota.XL{--w:210px}
-html.movil .nota b{font-size:11px} html.movil .nota p,html.movil .nota.L p,html.movil .nota.XL p{font-size:12px}
-html.movil .nota-form{width:auto;padding:22px}
-html.movil .render-marco{width:432px;height:300px;border-radius:12px}
-html.movil .carreras{grid-template-columns:1fr;gap:20px}
-html.movil .carrera{padding:24px}
-html.movil .carrera h3{font-size:26px} html.movil .carrera p{font-size:16px}
-html.movil .chip-m{font-size:15px}
-html.movil .iters{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
-html.movil .iter{min-width:0}
-html.movil .iter{padding:14px;gap:10px;border-radius:16px}
-html.movil .iter > :first-child,html.movil .iter canvas,html.movil .respira.chica{height:150px}
-html.movil .respira.chica span{width:120px;height:120px;margin:-60px 0 0 -60px}
-html.movil .respira.chica .r2{width:82px;height:82px;margin:-41px 0 0 -41px}
-html.movil .mini-reco{gap:4px} html.movil .mini-reco i{width:12px;height:12px;border-width:2px}
-html.movil .mini-reco::before{left:12px;right:12px}
-html.movil .mini-barra i,html.movil .mini-barra::before{left:12px;right:12px;top:24px}
-html.movil .iter p{font-size:14px}
-html.movil .ui-post{gap:28px}
-html.movil .precision.enorme{width:140px;height:140px}
-html.movil .precision.enorme b{font-size:36px}
-html.movil .pastillas{gap:12px}
-html.movil .pastillas span{font-size:18px;padding:8px 16px;border-width:3px}
 </style>
 </head>
 <body>
@@ -2001,7 +1660,6 @@ html.movil .pastillas span{font-size:18px;padding:8px 16px;border-width:3px}
     <button class="btn-menu" data-abrir-menu aria-label="Abrir índice"><img src="assets/home/lista.svg" alt=""></button>
     <img class="logo-centro" src="assets/home/logo-spot.svg" alt="SPOT!">
     <p class="actualizado">Última actualización Nov 2026</p>
-    <div class="submarcas"><a class="a-post" href="#post" aria-label="Conocé post."><img src="assets/home/logo-post.svg" alt="post." style="width:102px;height:47px"></a><img src="assets/home/logo-stop-comp4.svg" alt="STOP" style="width:96px;height:44px"></div>
   </div>
 </main>
 
@@ -2051,7 +1709,7 @@ html.movil .pastillas span{font-size:18px;padding:8px 16px;border-width:3px}
     <div class="decos" data-decos="post"></div>
     <img class="abs" src="assets/km1/post-logo-capa4.svg" alt="post." style="left:751px;top:232px;width:419px;height:193px">
     <p class="abs txt" style="top:659px">Post es la experiencia multimedia de Spot que acompaña el momento que llega después del recorrido. Si Spot se ocupa de lo que pasa antes y durante, Post se ocupa de lo que viene tras la meta: <b style="color:var(--verde)">el descanso</b>. Se trata de una cabina con pantallas LED por dentro y por fuera que se instala al final de carreras largas para recordarle a cada deportista, de forma lúdica, que recuperarse también es parte del entrenamiento.</p>
-    <a class="boton" href="#post" style="left:960.5px;top:909px;background:var(--verde)">Conocé más sobre POST <img src="assets/km1/flecha-der.svg" alt=""></a>
+    <a class="boton" href="#inicio" style="left:960.5px;top:909px;background:var(--verde)">Conocé más sobre POST <img src="assets/km1/flecha-der.svg" alt=""></a>
     <img class="foto-rot" data-mazo="post" src="assets/km1/foto-post-2.jpg" alt="Vista de la cabina post." style="left:964.6px;top:1282.3px;width:821.493px;height:462.324px;rotate:4.43deg">
     <img class="foto-rot" data-mazo="post" src="assets/km1/foto-post-1.jpg" alt="Vista exterior de post." style="left:133.9px;top:1271.9px;width:806.071px;height:453.805px;rotate:-4.31deg">
     <img class="foto-rot" data-mazo="post" src="assets/km1/foto-instalacion.jpg" alt="Instalación interactiva de estiramientos" style="left:403px;top:1183px;width:1114px;height:627px">
@@ -2808,7 +2466,7 @@ html.movil .pastillas span{font-size:18px;padding:8px 16px;border-width:3px}
  </div>
 </article>
 
-<!-- ======================= KM 10 · Arquigrafía y señalética (Figma "Slide 16:9 - 10") ======================= -->
+<!-- ======================= KM 8 · Arquigrafía y señalética (Figma "Slide 16:9 - 10") ======================= -->
 <article id="km10" class="pantalla km" aria-label="KM 8: Arquigrafía y señalética">
  <div class="lienzo">
   <section class="hero" style="--c:var(--rosa)">
@@ -2877,182 +2535,6 @@ html.movil .pastillas span{font-size:18px;padding:8px 16px;border-width:3px}
 
 <!-- ======================= MENÚ (Slide 3) ======================= -->
 <div id="velo-menu" data-cerrar-menu></div>
-<article id="post" class="pantalla km" aria-label="post.: la experiencia multimedial de Spot">
- <div class="lienzo">
-  <section class="post-hero" id="post-inicio">
-    <button class="btn-menu" data-abrir-menu aria-label="Abrir índice"><img src="assets/km2/21764.svg" alt=""></button>
-    <div class="ph-misc" data-ph-misc aria-hidden="true"></div>
-    <p class="ph-kicker"><span>Una submarca de SPOT!</span><span>Experiencia multimedial</span></p>
-    <div class="ph-centro">
-      <div class="respira" aria-hidden="true"><span class="r1"></span><span class="r2"></span></div>
-      <img class="ph-logo" src="assets/km6/post-logo.svg" alt="post.">
-      <p class="respira-et" aria-hidden="true"><span class="in">Inhalá</span><span class="ex">Exhalá</span></p>
-    </div>
-    <p class="ph-bajada">Darse un momento para <b>estirar</b> y <b>respirar</b>.</p>
-    <nav class="ph-links"><button data-a="post-origen">¿De dónde viene? ↗</button><button data-a="post-que">¿Qué es? ↗</button><button data-a="post-dinamica">La dinámica ↗</button><button data-a="post-recorrido">El recorrido ↗</button><button data-a="post-dedicatorias">Dedicatorias ↗</button><button data-a="post-contexto">Contexto ↗</button><button data-a="post-prototipo">Prototipo ↗</button></nav>
-    <p class="ph-pie"><span>post.</span><span>Pasá el mouse: las formas se corren a tu paso</span></p>
-  </section>
-
-  <section class="ps-meta" id="post-intro">
-    <div class="meta-spot">
-      <p class="mono-k tinta">01 · Introducción</p>
-      <img class="meta-logo" src="assets/km6/spot-logo.svg" alt="SPOT!">
-      <p class="meta-txt">En Spot creamos una experiencia para que las personas se animen a dar el primer paso, que logren salir y encuentren un lugar para realizar el deporte que buscaban. Pero...</p>
-      <p class="meta-preg" data-palabras>¿qué pasa cuando ya cruzamos esa primera línea de meta?</p>
-    </div>
-    <div class="linea-meta" aria-hidden="true"><span class="cuadros"></span><span class="et">Meta</span></div>
-    <div class="meta-post">
-      <p class="meta-txt">Para la realización de una experiencia multimedial, quisimos poner el foco en el <b>descanso</b> y la <b>recuperación</b> después de exigirle tanto a nuestro cuerpo. En darse un momento para estirar y respirar.</p>
-      <p class="meta-nacio">Así es como nació <img src="assets/km6/post-logo.svg" alt="post."></p>
-    </div>
-  </section>
-
-  <section class="ps" id="post-origen">
-    <p class="mono-k">02 · Introducción</p>
-    <h2 class="ps-t">¿De dónde viene la idea?</h2>
-    <div class="tp1">
-      <p>En el TP1 investigamos la relación entre los deportes de recorrido y el aspecto social y el entorno geográfico de las personas que los realizan.</p>
-      <dl><div><dt>Eje</dt><dd>Deportes</dd></div><div><dt>Tema</dt><dd>Deportes de recorrido</dd></div><div><dt>Subtema</dt><dd>Comunidad y entorno físico</dd></div></dl>
-    </div>
-    <div class="ideas">
-      <div class="idea"><span class="mono-n">01</span><p>Los deportes de recorrido son <b>nómades</b> por naturaleza. No tienen un espacio de referencia. Con la app resolvimos lo que pasa durante el recorrido, pero faltaba algo después de las salidas.</p></div>
-      <div class="idea"><span class="mono-n">02</span><p>El post entreno ya es una costumbre en estas comunidades: el café, el desayuno, el “post ride”. La investigación mostró que las personas se suman con más facilidad a <b>actividades curadas y organizadas</b> por alguien más, sobre todo antes y después de entrenar.</p></div>
-      <div class="idea"><span class="mono-n">03</span><p>Y hay un momento que muchas veces se saltea, <b>la elongación</b>. La recuperación es parte de cualquier actividad física, pero a veces sucede que los atletas lo hacen apurados, sin guía y cada uno por su cuenta.</p></div>
-    </div>
-    <div class="fotos-post">
-      <figure style="--r:-5deg"><img src="assets/post/post-ride.jpg" alt="Post ride" loading="lazy"><figcaption>post ride</figcaption></figure>
-      <figure style="--r:3deg"><img src="assets/post/grupo-ciclismo.jpg" alt="Grupo de ciclismo" loading="lazy"><figcaption>grupo de ciclismo</figcaption></figure>
-      <figure style="--r:-2deg"><img src="assets/post/cafe.jpg" alt="Café después de entrenar" loading="lazy"><figcaption>café</figcaption></figure>
-      <figure style="--r:4deg"><img src="assets/post/social-running.jpg" alt="Social running club" loading="lazy"><figcaption>social running club</figcaption></figure>
-    </div>
-    <div class="encuestas">
-      <p class="mono-k">Encuestas</p>
-      <div class="datos-enc">
-        <div><b data-cuenta="79.7">79,7</b><span>%</span><p>dejó de practicar alguna actividad. Las barreras: tiempo (41,7 %), motivación (24 %) y constancia (21,9 %).</p></div>
-        <div><b data-cuenta="73.4">73,4</b><span>%</span><p>prefiere hacer actividad física en compañía.</p></div>
-        <div><b data-cuenta="29.7">29,7</b><span>%</span><p>teme sentirse observado o juzgado; el 32,3 % siente que tiene menos nivel y el 19,3 % no conoce a nadie.</p></div>
-        <div><b data-cuenta="80.4">80,4</b><span>%</span><p>mantiene vínculos por fuera de la actividad.</p></div>
-      </div>
-      <p class="pregunta">¿Cómo podríamos ayudar a las personas a sumarse a una actividad física en compañía, sin que el miedo a ser juzgadas por su nivel se convierta en una barrera para sostenerla?</p>
-    </div>
-  </section>
-
-  <section class="ps" id="post-que">
-    <p class="mono-k">03 · Experiencia multimedia</p>
-    <h2 class="ps-t">¿Qué es Post?</h2>
-    <p class="ps-txt">Proponemos una experiencia de <b>estiramiento guiado</b> dentro de una cabina de pantallas LED, montado junto al Obelisco los días de carrera. Está pensada para quienes terminan la actividad y buscan un momento para estirar, respirar y quedarse con otras personas. En el interior se participa con el <b>cuerpo</b>; en el exterior, con <b>dedicatorias</b> para quienes acompañaron el camino.</p>
-    <div class="ficha">
-      <div><dt>Medidas exterior</dt><dd>21,5 × 12,42 × 5 m</dd></div>
-      <div><dt>Por sesión</dt><dd><b data-cuenta="16">16</b> personas</dd></div>
-      <div><dt>Duración</dt><dd><b data-cuenta="20">20</b> minutos</dd></div>
-      <div><dt>Cuándo</dt><dd>Días de carrera, hasta las 18 h</dd></div>
-    </div>
-    <div class="fachada-videos" data-post-videos>
-      <div class="fv"><span class="mono-e">Pantalla de entrada · respirar</span><video src="assets/km10/post-respirar.mp4" muted loop playsinline preload="none"></video></div>
-      <div class="fv"><span class="mono-e">Pantalla del frente · running</span><video src="assets/km10/post-running.mp4" muted loop playsinline preload="none"></video></div>
-      <div class="fv"><span class="mono-e">Pantalla de atrás · insignia</span><video src="assets/km10/post-insignia.mp4" muted loop playsinline preload="none"></video></div>
-    </div>
-  </section>
-
-  <section class="ps" id="post-dinamica">
-    <p class="mono-k">04 · Experiencia interior</p>
-    <h2 class="ps-t">Dinámica principal del interior</h2>
-    <div class="dina">
-      <div class="dina-txt">
-        <p class="ps-txt">Las pantallas proponen una pose de estiramiento dibujada en <b class="v">contorno</b>. Por encima aparece la <b>silueta de la persona en vivo</b>, para que pueda comparar su posición con la propuesta. El porcentaje muestra cuánto se aproxima a esa pose y acompaña el movimiento mientras se realiza.</p>
-        <figure class="hole"><img src="assets/post/hole-in-the-wall.jpg" alt="Hole in the Wall" loading="lazy"><figcaption>Tomamos la dinámica de “Hole in the Wall”, un juego donde hay que seguir la pose de una pared que se acerca al jugador. La adaptamos a una actividad de estiramiento guiado.</figcaption></figure>
-      </div>
-      <div class="pose-caja" data-pose>
-        <div class="pose-barra"><span></span></div>
-        <canvas width="900" height="760" aria-label="Juego: mové el mouse o el dedo para acercar la silueta de puntos a la pose en contorno verde"></canvas>
-        <div class="precision"><svg viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="52"/><circle class="arco" cx="60" cy="60" r="52"/></svg><b>0%</b></div>
-        <span class="pastilla" aria-live="polite"></span>
-        <p class="pose-pista"><span class="mono-e">Pose <i>1</i>/3</span>Mové el mouse arriba y abajo para los brazos, y a los costados para inclinarte</p>
-        <button class="pose-otra">Otra pose ↻</button>
-      </div>
-    </div>
-  </section>
-
-  <section class="ps" id="post-recorrido">
-    <p class="mono-k">05 · Experiencia interior</p>
-    <h2 class="ps-t">Recorrido en pantalla</h2>
-    <div class="reco" data-reco>
-      <div class="reco-pin"><div class="reco-pantalla" data-paso="1">
-        <img class="v v1" src="assets/post/pantalla-inicio.jpg" alt="" loading="lazy">
-        <div class="v v2"><svg viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="80"/><circle class="arco" cx="100" cy="100" r="80"/></svg><span class="huellas"><i></i><i></i></span></div>
-        <img class="v v3" src="assets/post/pantalla-calibracion.jpg" alt="" loading="lazy">
-        <div class="v v4 v7"><div class="respira"><span class="r1"></span><span class="r2"></span></div><p class="respira-et"><span class="in">Inhalá</span><span class="ex">Exhalá</span></p></div>
-        <div class="v v5"><img src="assets/post/pantalla-calibracion.jpg" alt="" loading="lazy"><span class="barra"><i></i></span><span class="pastilla-f">¡Seguí así!</span></div>
-        <div class="v v6"><i></i><i></i><i></i></div>
-        <img class="v v8" src="assets/post/pantalla-cierre.jpg" alt="" loading="lazy">
-        <img class="marca" src="assets/km6/post-logo.svg" alt="">
-      </div></div>
-      <ol class="reco-pasos">
-        <li data-n="1"><span class="mono-e">01 · Bienvenida</span><p>Te damos la bienvenida a post.</p></li>
-        <li data-n="2"><span class="mono-e">02 · Los pies</span><p>Se paran sobre las huellas del piso y un círculo se completa.</p></li>
-        <li data-n="3"><span class="mono-e">03 · Calibración</span><p>Con los brazos abiertos, el sistema los reconoce.</p></li>
-        <li data-n="4"><span class="mono-e">04 · Respiración</span><p>Un círculo guía: inhalar 4 s, exhalar 6 s.</p></li>
-        <li data-n="5"><span class="mono-e">05 · Poses</span><p>Estiramientos de 10 s con la silueta en vivo.</p></li>
-        <li data-n="6"><span class="mono-e">06 · De a dos</span><p>Tres pantallas se unen para la pose en pareja.</p></li>
-        <li data-n="7"><span class="mono-e">07 · Respiración</span><p>Bajan el ritmo para cerrar.</p></li>
-        <li data-n="8"><span class="mono-e">08 · Cierre</span><p>Precisión, insignia con QR y fotos de la sesión.</p></li>
-      </ol>
-    </div>
-  </section>
-
-  <section class="ps" id="post-dedicatorias">
-    <p class="mono-k">06 · Experiencia exterior · Otra tendencia</p>
-    <h2 class="ps-t enorme">¿A quién le dedicás esta carrera?</h2>
-    <p class="ps-txt">En las carreras aparece la gratitud de los atletas hacia otras personas: agradecen a amigos y familia, e incluso a sus propios “yo” del pasado. En TikTok, @marielgrr tiene un ritual: escribe en su brazo una persona por kilómetro.</p>
-    <div class="dedica-fotos">
-      <img src="assets/post/dedica-1.jpg" alt="" loading="lazy"><img src="assets/post/dedica-2.jpg" alt="" loading="lazy"><img src="assets/post/dedica-3.jpg" alt="" loading="lazy"><img src="assets/post/dedica-4.jpg" alt="" loading="lazy">
-    </div>
-    <p class="mono-k sep">La fachada</p>
-    <p class="ps-txt">Al publicar las notas desde la app o la tablet, estas aparecen en gran tamaño en la pantalla para que todos lo vean. Van apareciendo y desapareciendo cada minuto.</p>
-    <div class="fachada" data-fachada>
-      <div class="fachada-pantalla"><div class="fachada-misc" aria-hidden="true"></div><img class="fachada-logo" src="assets/km6/post-logo.svg" alt="post."><div class="notas"></div></div>
-      <form class="nota-form" autocomplete="off">
-        <p class="mono-e">Escribí tu dedicatoria</p>
-        <label><span>para:</span><input name="para" maxlength="18" placeholder="nombre" required></label>
-        <textarea name="msj" maxlength="110" rows="3" placeholder="Tu mensaje" required></textarea>
-        <p class="nota-ayuda">La nota se ajusta al largo del mensaje.</p>
-        <button type="submit">Publicar en la pantalla ↗</button>
-      </form>
-    </div>
-  </section>
-
-  <section class="ps" id="post-contexto">
-    <p class="mono-k">07 · Espacio</p>
-    <h2 class="ps-t">Contexto</h2>
-    <figure class="render"><div class="render-marco"><img src="assets/post/render-obelisco.jpg" alt="Render de post. junto al Obelisco" loading="lazy"></div><figcaption class="mono-e">Implantación propuesta junto al Obelisco.</figcaption></figure>
-    <p class="ps-txt">Trabajamos con marcas u organizadores de carreras que terminan cerca del Obelisco: nosotros sumamos un lugar de encuentro después de la llegada. Se consideraron Club de Corredores y Gran Fondo Argentina.</p>
-    <div class="carreras">
-      <div class="carrera"><span class="mono-e">11 de octubre · 46 km</span><h3>Gran Fondo Argentina</h3><p>Venzo · Loto Plus · Across · Remax · Granix</p></div>
-      <div class="carrera"><span class="mono-e">1 de noviembre · 10 km · 9 h</span><h3>Hoka Run · Club de Corredores</h3><p>Gatorade · Heineken · Maní King · Molinos · Granix · La Serenísima</p></div>
-    </div>
-  </section>
-
-  <section class="ps" id="post-prototipo">
-    <p class="mono-k">08 · Prototipo y testeo</p>
-    <h2 class="ps-t">De un prototipo que funciona a la gráfica de post.</h2>
-    <p class="ps-txt">Las primeras pruebas se hicieron con <span class="chip-m">TouchDesigner</span> + <span class="chip-m">MediaPipe</span>.</p>
-    <div class="iters">
-      <div class="iter"><canvas class="mini-sil" width="260" height="260" aria-hidden="true"></canvas><span class="mono-e">La silueta</span><p>Tu cuerpo pasó a ser una matriz de puntos, y la pose, un contorno verde fino.</p></div>
-      <div class="iter"><div class="mini-barra"><i></i></div><span class="mono-e">El tiempo</span><p>El cronómetro se cambió por una barra que se vacía arriba de la pantalla.</p></div>
-      <div class="iter"><div class="respira chica"><span class="r1"></span><span class="r2"></span></div><span class="mono-e">La respiración</span><p>Un círculo de dos capas que crece al inhalar y se achica al exhalar.</p></div>
-      <div class="iter"><div class="mini-reco"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><span class="mono-e">El recorrido</span><p>Bienvenida, pies sobre la silueta, respiración al inicio y al final, y un cierre con porcentaje, insignia, QR y fotos.</p></div>
-    </div>
-    <div class="ui-post">
-      <div class="precision enorme" data-precision><svg viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="52"/><circle class="arco" cx="60" cy="60" r="52"/></svg><b>0%</b></div>
-      <div class="pastillas"><span>¡Genial!</span><span class="vi">#zentotal</span><span>¡Seguí así!</span><span class="vi">¡WOW!</span></div>
-      <p class="mono-e">Círculo de precisión y pastillas de la interfaz</p>
-    </div>
-  </section>
-
-  <footer class="pie-km" data-ant="km1|KM1|Acerca de SPOT!" data-sig="inicio|KM0|Volver al inicio"></footer>
- </div>
-</article>
-
 <nav id="menu" aria-label="Índice" aria-hidden="true">
  <div class="lienzo">
   <span class="linea"></span>
@@ -3447,8 +2929,9 @@ const INDICE = [
   ['Arquigrafía','km10',[['Principios','km10-principios'],['Tipos de señales','km10-tipos'],['Iconografía','km10-iconos'],['Medidas y alturas','km10-medidas'],['Arquigrafía','km10-arqui']]]
 ];
 function armarMenu(){
-  // el nombre de la sección lleva a su header; la flechita de al lado (y el número) abren o cierran las subsecciones
-  $('#indice').innerHTML = INDICE.map(([t, km, subs], n) => `<li><button class="num" ${subs.length ? 'data-toggle' : 'tabindex="-1"'} aria-label="Abrir o cerrar ${t}">${n + 1}</button><div class="cuerpo">
+  // el nombre de la sección lleva a su header; la flechita de al lado (y el número) abren o cierran las subsecciones.
+  // El número va del color de su punto en el mapa de la Home.
+  $('#indice').innerHTML = INDICE.map(([t, km, subs], n) => `<li><button class="num" ${subs.length ? 'data-toggle' : 'tabindex="-1"'} aria-label="Abrir o cerrar ${t}" style="background:var(--${(PUNTOS_MAPA[n] || [])[2] || 'amarillo'})">${n + 1}</button><div class="cuerpo">
       <div class="enc">${km ? `<button class="ir-sec" data-ir="${km}">${t}</button>` : `<span class="ir-sec">${t}</span>`}${subs.length ? `<button class="flecha-sub" data-toggle aria-expanded="true" aria-label="Mostrar u ocultar las partes de ${t}"><img src="assets/home/menu-flecha.svg" alt="" style="rotate:180deg"></button>` : ''}</div>
       ${subs.length ? `<div class="subs">${subs.map(([s, a]) => `<button ${a ? `data-ir="${km}" data-ancla="${a}"` : 'disabled'}>${s}</button>`).join('')}</div>` : ''}</div></li>`).join('');
   // "Smart animate" 0,35 s ease-in-out al abrir/cerrar
@@ -3582,11 +3065,11 @@ function salirDePortada(){
   // el contorno del logo (con los piquitos de las letras) se funde con el recorrido del mapa, que es más suave:
   // uno se va mientras el otro aparece, sin quedar los dos a la vez ni pasar por encima de los puntos
   borde.animate([{ opacity: 1 }, { opacity: 0 }], { duration: D * .4, delay: D * .55, easing: 'ease-in-out', fill: 'forwards' }).onfinish = () => portada.remove();
-  // la Home entra: el recorrido aparece debajo del contorno, y cuando el contorno ya se fue, los puntos en orden; después menú, logo y submarcas
+  // la Home entra: el recorrido aparece debajo del contorno, y cuando el contorno ya se fue, los puntos en orden; después menú y logo
   $('#inicio .mapa').animate([{ opacity: 0 }, { opacity: 1 }], { duration: D * .45, delay: D * .5, easing: 'ease-in-out', fill: 'backwards' });
   $$('#puntos-mapa .punto').forEach((p, i) => p.animate([{ transform: 'translateY(10px) scale(0)', opacity: 0 }, { transform: 'none', opacity: 1 }],
     { duration: 500, delay: D * .95 + i * 80, easing: 'cubic-bezier(.34,1.56,.64,1)', fill: 'backwards' }));
-  $$('#inicio .btn-menu, #inicio .logo-centro, #inicio .submarcas').forEach((e, i) => e.animate([{ opacity: 0, transform: 'translateY(-12px)' }, { opacity: 1, transform: 'none' }],
+  $$('#inicio .btn-menu, #inicio .logo-centro').forEach((e, i) => e.animate([{ opacity: 0, transform: 'translateY(-12px)' }, { opacity: 1, transform: 'none' }],
     { duration: 600, delay: D * .9 + i * 120, easing: 'cubic-bezier(.22,1,.36,1)', fill: 'backwards' }));
   $('#inicio .fondo-video').animate([{ transform: 'scale(1.08)' }, { transform: 'scale(1)' }], { duration: D + 900, easing: 'cubic-bezier(.22,1,.36,1)' });
 }
@@ -3595,7 +3078,7 @@ function salirDePortada(){
    NAVEGACIÓN (prototipo): KM entra desde la derecha 0,3 s · Volver al Inicio sale a la izquierda 0,3 s
    ===================================================================== */
 let actual = 'inicio';
-const KMS = ['km1','km2','km3','km4','km5','km6','km7','km10','post'];
+const KMS = ['km1','km2','km3','km4','km5','km6','km7','km10'];
 function irA(destino, ancla){
   const de = actual;
   if (destino === de) { if (ancla) scrollA(destino, ancla); else if (destino !== 'inicio') irArriba(document.getElementById(destino)); return; }   // sin ancla: al header
@@ -4981,7 +4464,7 @@ function iniciarParalaje(){
 
 
 /* =====================================================================
-   KM 10 · Arquigrafía y señalética
+   KM 8 · Arquigrafía y señalética
    Los esquemas del Figma (señales sobre la regla de alturas e íconos) se pasan de <img> a SVG en la página la
    primera vez que se abre el KM, para animar sus partes. Todo se repite al volver a pasar (entradaRepetida).
    ===================================================================== */
@@ -5389,228 +4872,6 @@ function vigilarKM10(){
   new MutationObserver(ver).observe(km, { attributes: true, attributeFilter: ['class'] }); ver();
 }
 
-/* =====================================================================
-   PÁGINA post. (iniciarPost): misceláneas del hero que se corren al paso del mouse (comportamiento del Figma:
-   "si se acercan a la silueta de la persona, puede empujarlas al moverse"), respiración 4 s / 6 s, juego de la pose,
-   recorrido en pantalla, fachada con dedicatorias y entradas al scrollear
-   ===================================================================== */
-function iniciarPost(){
-  const km = $('#post'); if (!km) return;
-  const BASE = MOVIL ? 480 : 1920, activa = () => km.classList.contains('activa');
-  const seVe = el => { const r = el.getBoundingClientRect(); return r.bottom > 0 && r.top < innerHeight && r.width > 0; };
-  // avisa al entrar en pantalla (umbral: parte visible) y al salir del todo; se repite
-  const vigilar = (el, entra, sale, umbral = .3) => {
-    let dentro = false;
-    const mirar = () => {
-      const r = el.getBoundingClientRect(), h = innerHeight, vis = Math.min(r.bottom, h) - Math.max(r.top, 0);
-      if (!dentro && r.width && vis / (Math.min(r.height, h) || 1) >= umbral) { dentro = true; entra(); }
-      else if (dentro && (r.bottom < 0 || r.top > h)) { dentro = false; sale && sale(); }
-    };
-    km.addEventListener('scroll', mirar, { passive: true }); addEventListener('resize', mirar);
-    new MutationObserver(mirar).observe(km, { attributes: true, attributeFilter: ['class'] }); mirar();
-  };
-  if (MOVIL) {
-    $('.ph-pie span:last-child', km).textContent = 'Tocá la pantalla: las formas se corren';
-    $('.pose-pista', km).lastChild.textContent = 'Arrastrá el dedo: arriba y abajo para los brazos, a los costados para inclinarte';
-  }
-
-  /* ---- hero: misceláneas de post. que flotan y se corren al paso del mouse ---- */
-  const hero = $('.post-hero', km), capa = $('[data-ph-misc]', hero);
-  const P = n => (n.startsWith('fig') ? 'assets/post/' : 'assets/km6/') + n + '.svg';
-  const LUGARES = [[140,250,'post-p1',53],[330,150,'fig-649d6',86],[520,330,'fig-47350',26],[250,520,'fig-63909',59],[110,760,'post-p2',53],[420,700,'fig-9e35e',26],
-    [600,990,'fig-4a4d9',104],[1340,170,'fig-83dad',67],[1580,300,'post-p3',53],[1760,180,'fig-f3b2f',43],[1450,560,'post-p5',80],[1720,640,'fig-4d99a',39],
-    [1300,990,'post-p4',96],[1640,900,'fig-9e35e',26],[880,140,'fig-47350',26],[1010,1010,'fig-4d99a',39]];
-  const piezas = LUGARES.map(([x, y, n, w]) => {
-    const s = MOVIL ? .6 : 1, img = document.createElement('img'); img.src = P(n); img.alt = ''; img.style.width = (w * s) + 'px';
-    capa.appendChild(img);
-    return { img, hx: MOVIL ? x / 1920 * 480 : x, hy: MOVIL ? y / 1080 * 1000 : y, w: w * s, x: 0, y: 0, vx: 0, vy: 0, f: Math.random() * 9, r: 0 };
-  });
-  let px = -999, py = -999;
-  const puntero = e => { const r = hero.getBoundingClientRect(), k = BASE / r.width; px = (e.clientX - r.left) * k; py = (e.clientY - r.top) * k; };
-  hero.addEventListener('pointermove', puntero); hero.addEventListener('pointerdown', puntero);
-  hero.addEventListener('pointerleave', () => { px = py = -999; });
-  const R = MOVIL ? 110 : 210;
-  const pasoHero = t => {
-    piezas.forEach(p => {
-      const ox = Math.sin(t / 2600 + p.f) * 14, oy = Math.cos(t / 3100 + p.f * 1.3) * 16;
-      p.vx += (ox - p.x) * .012; p.vy += (oy - p.y) * .012;
-      const dx = p.hx + p.x - px, dy = p.hy + p.y - py, d = Math.hypot(dx, dy);
-      if (d < R && d > 1) { const f = (1 - d / R) * 2.4; p.vx += dx / d * f; p.vy += dy / d * f; }
-      p.vx *= .9; p.vy *= .9; p.x += p.vx; p.y += p.vy; p.r += (p.vx * 3 - p.r) * .1;
-      p.img.style.transform = `translate(${(p.hx + p.x - p.w / 2).toFixed(1)}px,${(p.hy + p.y - p.w / 2).toFixed(1)}px) rotate(${p.r.toFixed(1)}deg)`;
-    });
-  };
-  pasoHero(0);
-
-  /* ---- 01 · la pregunta se arma palabra por palabra ---- */
-  $$('[data-palabras]', km).forEach(p => { p.innerHTML = p.textContent.split(' ').map((w, i) => `<span style="--i:${i}">${w}</span>`).join(' '); });
-
-  /* ---- entradas al scrollear (se repiten) ---- */
-  if (!REDUCIR) {
-    [['.fotos-post figure'], ['.fachada-videos .fv'], ['.dedica-fotos img'], ['.pastillas span'], ['.mini-reco i']].forEach(([s]) => $$(s, km).forEach((el, i) => el.style.setProperty('--i', i)));
-    entradaRepetida($$('.ps-meta', km), .25);
-    entradaRepetida($$('.fotos-post, .fachada-videos, .dedica-fotos, .ui-post', km), .3);
-    const sueltas = $$('.ps-t, .ps > .ps-txt, .tp1, .idea, .encuestas, .ficha, .dina-txt, .pose-caja, .carrera, .iter, .fachada, .render', km);
-    sueltas.forEach(el => el.classList.add('rv-p')); entradaRepetida(sueltas, .15);
-  } else $$('.mini-reco i', km).forEach((el, i) => el.style.setProperty('--i', i));
-
-  /* ---- contadores (79,7 %, 16 personas…) ---- */
-  const fmt = (v, dec) => dec ? v.toFixed(1).replace('.', ',') : Math.round(v) + '';
-  const contar = (el, fin, dur = 1400, extra, suf = '') => {
-    const dec = String(fin).includes('.'), t0 = performance.now();
-    if (REDUCIR) { el.textContent = fmt(fin, dec) + suf; extra && extra(1); return; }
-    const paso = t => { const k = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - k, 3); el.textContent = fmt(fin * e, dec) + suf; extra && extra(e); if (k < 1) setTimeout(() => paso(performance.now()), 16); };
-    paso(t0);
-  };
-  $$('.datos-enc, .ficha', km).forEach(caja => vigilar(caja, () => $$('[data-cuenta]', caja).forEach(b => contar(b, +b.dataset.cuenta)), () => $$('[data-cuenta]', caja).forEach(b => b.textContent = '0')));
-  const prec = $('[data-precision]', km);
-  vigilar(prec, () => contar($('b', prec), 86, 1800, e => prec.style.setProperty('--p', (.86 * e).toFixed(3)), '%'), () => { prec.style.setProperty('--p', 0); $('b', prec).textContent = '0%'; });
-
-  /* ---- videos de la fachada: se cargan al acercarse y solo corren mientras se ven ---- */
-  const cajaV = $('[data-post-videos]', km), vids = $$('video', cajaV);
-  const videos = () => {
-    const r = cajaV.getBoundingClientRect(), h = innerHeight, cerca = r.bottom > -h * .5 && r.top < h * 1.5, ve = r.bottom > 0 && r.top < h && activa();
-    vids.forEach(v => { if (cerca && v.preload === 'none') v.preload = 'auto'; if (ve) { if (v.paused) v.play().catch(() => {}); } else if (!v.paused) v.pause(); });
-  };
-  km.addEventListener('scroll', videos, { passive: true }); new MutationObserver(videos).observe(km, { attributes: true, attributeFilter: ['class'] });
-
-  /* ---- silueta de puntos (como la pantalla de post.) ---- */
-  const RAD = Math.PI / 180;
-  const cuerpo = (c, a, l, X, Y, s) => {
-    c.save(); c.translate(X, Y); c.scale(s, s); c.lineCap = 'round';
-    const linea = (x1, y1, x2, y2, w) => { c.lineWidth = w; c.beginPath(); c.moveTo(x1, y1); c.lineTo(x2, y2); c.stroke(); };
-    linea(-16, -250, -58, 0, 46); linea(16, -250, 58, 0, 46);
-    c.translate(0, -250); c.rotate(l * RAD);
-    linea(0, 0, 0, -185, 92);
-    c.beginPath(); c.arc(0, -258, 42, 0, Math.PI * 2); c.fill();
-    [-1, 1].forEach(sd => { const sx = sd * 34, sy = -175; linea(sx, sy, sx + sd * Math.cos(a * RAD) * 215, sy + Math.sin(a * RAD) * 215, 32); });
-    c.restore();
-  };
-  const lienzo = (w, h) => { const cv = document.createElement('canvas'); cv.width = w; cv.height = h; return cv; };
-  // contorno fino de la pose (verde): la figura corrida 3 px en 8 direcciones, menos la figura
-  const contorno = (w, h, a, l, X, Y, s, g = 3) => {
-    const cv = lienzo(w, h), c = cv.getContext('2d'); c.fillStyle = c.strokeStyle = '#49B867';
-    for (let k = 0; k < 8; k++) { c.save(); c.translate(Math.cos(k * Math.PI / 4) * g, Math.sin(k * Math.PI / 4) * g); cuerpo(c, a, l, X, Y, s); c.restore(); }
-    c.globalCompositeOperation = 'destination-out'; c.fillStyle = c.strokeStyle = '#000'; cuerpo(c, a, l, X, Y, s);
-    return cv;
-  };
-  const puntos = (ctx, a, l, X, Y, s, paso, rr) => {
-    const W = ctx.canvas.width, H = ctx.canvas.height, k = .5, of = lienzo(W * k, H * k), oc = of.getContext('2d');
-    oc.scale(k, k); oc.fillStyle = oc.strokeStyle = '#000'; cuerpo(oc, a, l, X, Y, s);
-    const d = oc.getImageData(0, 0, of.width, of.height).data;
-    ctx.fillStyle = '#EDE8DB'; ctx.beginPath();
-    for (let y = paso / 2; y < H; y += paso) for (let x = paso / 2; x < W; x += paso) {
-      if (d[((Math.floor(y * k) * of.width) + Math.floor(x * k)) * 4 + 3] > 120) { ctx.moveTo(x + rr, y); ctx.arc(x, y, rr, 0, Math.PI * 2); }
-    }
-    ctx.fill();
-  };
-
-  /* ---- 04 · juego de la pose ---- */
-  const caja = $('[data-pose]', km), cv = $('canvas', caja), ctx = cv.getContext('2d'), W = cv.width, H = cv.height, X = W / 2, Y = H - 50, S = .98;
-  const POSES = [{ a: 0, l: 0 }, { a: -62, l: 0 }, { a: -38, l: 16 }];
-  const precJ = $('.precision', caja), pctJ = $('b', precJ), barra = $('.pose-barra span', caja), pas = $('.pastilla', caja), num = $('.pose-pista i', caja);
-  const FRASES = [['¡Genial!', ''], ['¡Seguí así!', ''], ['¡WOW!', 'vi'], ['#zentotal', 'vi']];
-  let pose = 0, cont = contorno(W, H, POSES[0].a, POSES[0].l, X, Y, S), a = 40, l = 0, ta = 40, tl = 0, ult = -1e9, t0 = performance.now(), ultPas = 0;
-  const DUR = 10000;
-  const cambiarPose = () => { pose = (pose + 1) % POSES.length; cont = contorno(W, H, POSES[pose].a, POSES[pose].l, X, Y, S); num.textContent = pose + 1; t0 = performance.now(); };
-  $('.pose-otra', caja).addEventListener('click', cambiarPose);
-  const mover = e => {
-    const r = cv.getBoundingClientRect(), nx = (e.clientX - r.left) / r.width, ny = (e.clientY - r.top) / r.height;
-    ta = -85 + Math.max(0, Math.min(1, ny)) * 155; tl = (Math.max(0, Math.min(1, nx)) - .5) * 50; ult = performance.now();
-  };
-  cv.addEventListener('pointermove', mover); cv.addEventListener('pointerdown', e => { mover(e); cv.setPointerCapture && cv.setPointerCapture(e.pointerId); });
-  const dibujarPose = t => {
-    if (t - ult > 3000) { ta = Math.sin(t / 1700) * 55 - 15; tl = Math.sin(t / 2600) * 14; }   // sin nadie, se mueve solo
-    a += (ta - a) * .14; l += (tl - l) * .14;
-    ctx.clearRect(0, 0, W, H); ctx.drawImage(cont, 0, 0); puntos(ctx, a, l, X, Y, S, 11, 3.6);
-    const p = Math.max(0, Math.min(100, Math.round(100 - Math.abs(a - POSES[pose].a) * .7 - Math.abs(l - POSES[pose].l) * 2.2)));
-    pctJ.textContent = p + '%'; precJ.style.setProperty('--p', p / 100);
-    if (p >= 90 && t - ult < 3000 && t - ultPas > 2600) {
-      ultPas = t; const [txt, cl] = FRASES[Math.floor(Math.random() * FRASES.length)];
-      pas.textContent = txt; pas.className = 'pastilla ' + cl; void pas.offsetWidth; pas.classList.add('ver');
-    }
-    const k = Math.max(0, 1 - (t - t0) / DUR); barra.style.transform = `scaleX(${k.toFixed(3)})`;
-    if (k <= 0) cambiarPose();
-  };
-  dibujarPose(performance.now());
-
-  /* ---- 08 · silueta chica del prototipo ---- */
-  const mini = $('.mini-sil', km), mc = mini.getContext('2d');
-  const contMini = contorno(260, 260, -30, 0, 130, 245, .4, 1.5);
-  const dibujarMini = t => { const am = -30 + Math.sin(t / 1400) * 28; mc.clearRect(0, 0, 260, 260); mc.drawImage(contMini, 0, 0); puntos(mc, am, 0, 130, 245, .4, 6, 2); };
-  dibujarMini(0);
-
-  /* ---- 05 · recorrido en pantalla: el paso que cruza el medio de la pantalla manda ---- */
-  const reco = $('[data-reco]', km), pant = $('.reco-pantalla', reco), pin = $('.reco-pin', reco), pasos = $$('.reco-pasos li', reco);
-  const recorrido = () => {
-    if (!activa()) return;
-    const h = innerHeight, mira = MOVIL ? h * .68 : h * .5;
-    let mejor = pasos[0], md = 1e9;
-    pasos.forEach(li => { const r = li.getBoundingClientRect(), d = Math.abs(r.top + r.height / 2 - mira); if (d < md) { md = d; mejor = li; } });
-    pasos.forEach(li => li.classList.toggle('on', li === mejor));
-    if (pant.dataset.paso !== mejor.dataset.n) pant.dataset.paso = mejor.dataset.n;
-    if (MOVIL) {   // en el celular, sticky no anda dentro del transform: la pantalla se mantiene arriba con JS
-      const rr = reco.getBoundingClientRect(), z = rr.width / reco.offsetWidth, ph = pin.offsetHeight * z;
-      pin.style.translate = `0 ${Math.max(0, Math.min(rr.height - ph, 70 - rr.top) / z).toFixed(1)}px`;
-    }
-  };
-  km.addEventListener('scroll', recorrido, { passive: true }); addEventListener('resize', recorrido); recorrido();
-
-  /* ---- 06 · fachada: las notas aparecen y desaparecen; la tuya entra al publicarla ---- */
-  const fach = $('[data-fachada]', km), pantF = $('.fachada-pantalla', fach), capaN = $('.notas', fach), miscF = $('.fachada-misc', fach);
-  [['post-p1',6,62,40],['fig-649d6',30,8,60],['fig-47350',46,20,20],['post-p3',58,78,36],['fig-4a4d9',86,30,64],['fig-9e35e',64,12,20],['fig-83dad',18,84,44],['post-p2',92,82,30]].forEach(([n, x, y, w], i) => {
-    const img = document.createElement('img'); img.src = P(n); img.alt = ''; img.style.cssText = `left:${x}%;top:${y}%;width:${MOVIL ? w * .7 : w}px;animation-delay:${-i * 1.3}s`; miscF.appendChild(img);
-  });
-  const NOTAS = [['nacho', 'Me salvaste nachito! <3'], ['el grupo del parque', 'Los martes a las 7 no serían lo mismo sin ustedes.'],
-    ['cami', 'Gracias por esperarme en cada kilómetro, sin vos no llegaba ni a 21k!!!!!!!!!'], ['sofi', 'Gracias por esperarme siempre al final, aunque llegara última.'],
-    ['profe caro', 'Por enseñarme que el descanso también es parte del entrenamiento.']];
-  const COLORES = ['var(--violeta)', 'var(--verde)', 'var(--azul)', 'var(--rosa)'];
-  const LUG = MOVIL ? [[3, 4], [52, 3], [4, 66], [50, 68]] : [[3, 6], [16, 56], [68, 5], [70, 54], [38, 70], [40, 2]];
-  const enPantalla = new Map(); let iN = 0, iC = 0;
-  const poner = (para, msj, propia) => {
-    let libres = LUG.map((_, i) => i).filter(i => !enPantalla.has(i));
-    if (!libres.length) { const viejo = [...enPantalla.keys()][0]; sacar(viejo); libres = [viejo]; }
-    const slot = libres[Math.floor(Math.random() * libres.length)], [x, y] = LUG[slot];
-    const n = document.createElement('div'), len = msj.length;
-    n.className = 'nota ' + (len < 35 ? 'S' : len < 60 ? 'M' : len < 85 ? 'L' : 'XL');
-    n.style.cssText = `left:${x}%;top:${y}%;--c:${COLORES[iC++ % COLORES.length]};--r:${(Math.random() * 10 - 5).toFixed(1)}deg`;
-    const b = document.createElement('b'), p = document.createElement('p'); b.textContent = 'para: ' + para; p.textContent = msj; n.append(b, p);
-    capaN.appendChild(n); enPantalla.set(slot, { n, hasta: performance.now() + (propia ? 14000 : 9000) });
-    // si se sale por abajo o por la derecha, se acomoda adentro
-    requestAnimationFrame(() => { const rp = pantF.getBoundingClientRect(), rn = n.getBoundingClientRect(), z = rp.width / pantF.offsetWidth;
-      if (rn.bottom > rp.bottom - 8) n.style.top = Math.max(2, (pantF.offsetHeight - n.offsetHeight - 12) / pantF.offsetHeight * 100) + '%';
-      if (rn.right > rp.right - 8) n.style.left = Math.max(1, (pantF.offsetWidth - n.offsetWidth - 12) / pantF.offsetWidth * 100) + '%'; void z; });
-  };
-  const sacar = slot => { const e = enPantalla.get(slot); if (!e) return; enPantalla.delete(slot); e.n.classList.add('sale'); setTimeout(() => e.n.remove(), 650); };
-  let proxNota = 0;
-  const pasoFachada = t => {
-    enPantalla.forEach((e, s) => { if (t > e.hasta) sacar(s); });
-    if (t > proxNota && enPantalla.size < (MOVIL ? 3 : 4)) { const [pa, m] = NOTAS[iN++ % NOTAS.length]; poner(pa, m); proxNota = t + 2600; }
-  };
-  $('form', fach).addEventListener('submit', e => {
-    e.preventDefault(); const f = e.target, pa = f.para.value.trim(), m = f.msj.value.trim(); if (!pa || !m) return;
-    poner(pa.toLowerCase(), m, true); f.reset(); proxNota = performance.now() + 5000;
-  });
-
-  /* ---- 07 · render: se acerca despacio al scrollear ---- */
-  const marco = $('.render-marco', km);
-  const render = () => { const r = marco.getBoundingClientRect(), h = innerHeight, k = Math.max(0, Math.min(1, (h - r.top) / (h + r.height))); marco.style.setProperty('--s', (1.18 - k * .18).toFixed(3)); };
-  km.addEventListener('scroll', render, { passive: true }); render();
-
-  /* ---- un solo ciclo para todo lo animado, solo con la página abierta y lo que se ve ---- */
-  let ultimoMini = 0;
-  const ciclo = t => {
-    if (activa()) {
-      if (seVe(hero)) pasoHero(t);
-      if (seVe(caja)) dibujarPose(t); else t0 = t - (1 - (parseFloat((barra.style.transform.match(/[\d.]+/) || [1])[0]))) * DUR;
-      if (seVe(mini) && t - ultimoMini > 50) { ultimoMini = t; dibujarMini(t); }
-      if (seVe(pantF)) pasoFachada(t);
-    }
-    requestAnimationFrame(ciclo);
-  };
-  if (!REDUCIR) requestAnimationFrame(ciclo); else pasoFachada(performance.now());
-}
-
 function leerHash(){
   const h = location.hash.replace('#', '');
   cerrarMenu(true);
@@ -5636,7 +4897,7 @@ function prepararMovil(){
     km.insertBefore(caja, lienzo); caja.appendChild(lienzo);
     const medir = () => { caja.style.height = (lienzo.offsetHeight * zoomActual()).toFixed(1) + 'px'; };
     new ResizeObserver(medir).observe(lienzo); addEventListener('resize', medir); medir();
-    const btn = $('.hero .btn-menu, .post-hero .btn-menu', km); if (btn) km.appendChild(btn);      // fijo arriba, fuera de lo escalado
+    const btn = $('.hero .btn-menu', km); if (btn) km.appendChild(btn);      // fijo arriba, fuera de lo escalado
   });
   const zona = $('.submarcas-zona'); if (!zona) return;
   // un mazo por marca, debajo de su botón "Conocé más", con sus misceláneas
@@ -5716,7 +4977,7 @@ addEventListener('keydown', e => { if (e.key === 'Escape') cerrarMenu(); });
 $$('[data-a]').forEach(b => b.addEventListener('click', () => scrollA(b.closest('article.km').id, b.dataset.a)));
 $$('[data-bajar]').forEach(b => b.addEventListener('click', () => { const k = b.closest('article.km'); irA_Y(k, k.scrollTop + innerHeight * .9); }));
 $$('[data-arriba]').forEach(b => b.addEventListener('click', () => irArriba(b.closest('article.km'))));
-iniciarScrollSuave(); iniciarEntradas(); iniciarStickers(); iniciarToques(); iniciarCursor(); iniciarFavicon(); iniciarFaviconSec(); iniciarBotonMenu(); iniciarRastro(); iniciarPerfil(); iniciarSobreFotos(); iniciarUnirPuntos(); iniciarCintaIconos(); iniciarReceta(); iniciarColab(); iniciarKM3Entradas(); iniciarProporcion(); iniciarTira(); iniciarCarruseles(); iniciarCarruselUI(); iniciarParalaje(); iniciarViajeKM6(); iniciarMazo(); iniciarMecer(); iniciarRasgos(); iniciarFlotar(); achicarTodo(); iniciarEscenaDS(); iniciarActivoScroll(); vigilarKM10(); iniciarGuia(); iniciarFuentesUI(); iniciarSticker(); iniciarComparador(); iniciarKM7Secciones(); iniciarPost();
+iniciarScrollSuave(); iniciarEntradas(); iniciarStickers(); iniciarToques(); iniciarCursor(); iniciarFavicon(); iniciarFaviconSec(); iniciarBotonMenu(); iniciarRastro(); iniciarPerfil(); iniciarSobreFotos(); iniciarUnirPuntos(); iniciarCintaIconos(); iniciarReceta(); iniciarColab(); iniciarKM3Entradas(); iniciarProporcion(); iniciarTira(); iniciarCarruseles(); iniciarCarruselUI(); iniciarParalaje(); iniciarViajeKM6(); iniciarMazo(); iniciarMecer(); iniciarRasgos(); iniciarFlotar(); achicarTodo(); iniciarEscenaDS(); iniciarActivoScroll(); vigilarKM10(); iniciarGuia(); iniciarFuentesUI(); iniciarSticker(); iniciarComparador(); iniciarKM7Secciones();
 addEventListener('hashchange', leerHash);
 
 if (location.hash && location.hash !== '#inicio') { portada.remove(); portadaFuera = true; leerHash(); }

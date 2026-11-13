@@ -577,3 +577,11 @@ El 10/11/2026 se borró todo lo construido y se empezó de nuevo. Respaldo de la
     - Puntuación: "caritaa. utilizamos" → "caritas. Utilizamos", "entrada. guiamos" → "entrada: guiamos", "principales. el hogar" → "principales: el hogar".
     - Números con la unidad separada, como pide la Guía de estilo: 18km → 18 km, 4km → 4 km.
     - En la página de post.: "primer línea de meta" → "primera línea de meta", serian → serían, kilometro → kilómetro.
+- 13/11/2026 · Mateo · **Se borró la página de post.** (pedido del equipo). Se sacaron:
+  - el `<article id="post">`, sus estilos (también los de mobile) y `iniciarPost`;
+  - `post` de `KMS`;
+  - JetBrains Mono de Google Fonts;
+  - la carpeta `assets/post/`.
+  - El botón "Conocé más sobre POST" del KM 1 vuelve a llevar a la Home, como en el prototipo. La entrada del 12/11 sobre esa página queda solo como historial.
+- 13/11/2026 · Mateo · **Home sin los logos de post. y STOP** arriba a la derecha (pedido del equipo). Se borró el bloque `.submarcas` de la Home, con sus estilos y su animación de entrada.
+- 13/11/2026 · Mateo · **Menú y mapa con 8 paradas**, revisados contra el Figma. Los números del menú ahora tienen el color de su punto en el mapa, como en el Figma: amarillo, naranja, rosa, violeta, azul, amarillo, naranja y rosa. Antes eran todos amarillos. Los toman de `PUNTOS_MAPA`.
