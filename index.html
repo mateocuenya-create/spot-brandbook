@@ -3456,7 +3456,6 @@ function armarMazo(fotos, dy){
     der:    { left: 964.6, top: 1282.3, width: 821.493, height: 462.324, rotation: 4.43,  z: 2 },
     centro: { left: 403,   top: 1183,   width: 1114,    height: 627,     rotation: 0,     z: 3 }
   };
-  if (dy) Object.values(SLOT).forEach(o => o.top += dy);
   const pos = ['der', 'izq', 'centro'];                       // lugar de cada foto (orden del HTML)
   const props = s => ({ left: s.left, top: s.top + dy, width: s.width, height: s.height, rotation: s.rotation, x: 0, y: 0 });
   fotos.forEach((f, k) => { f.style.rotate = ''; f.draggable = false; f.style.zIndex = SLOT[pos[k]].z; gsap.set(f, props(SLOT[pos[k]])); });

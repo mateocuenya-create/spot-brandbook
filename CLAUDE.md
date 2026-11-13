@@ -596,6 +596,10 @@ El 10/11/2026 se borró todo lo construido y se empezó de nuevo. Respaldo de la
   - Las misceláneas del hero esquivan las flechas.
   - Celular: una fila abajo del hero con solo la flecha y el KM de cada lado (los nombres no entran).
 - 13/11/2026 · Equipo · **Menú: tocar el nombre de una sección lleva a su header** (antes solo abría o cerraba las subsecciones). Las subsecciones se abren y cierran con la flechita de al lado del nombre o con el número. Si ya estás en esa sección, sube al header.
+- 13/11/2026 · Equipo · **Arreglos después del merge:**
+  - Las flechas de los headers no se veían porque se había borrado `assets/hero/` (`flecha-izq.svg` y `flecha-der.svg`, exportadas del Figma). Se recuperaron. Ojo: es una carpeta nueva, hay que subirla en el Commit.
+  - Las fotos de STOP del KM 1 quedaban abajo de todo, fuera de la zona negra: al combinar quedaron sumados dos veces los 2217 px (`armarMazo`). Ahora se suman una sola vez.
+  - Se borraron otra vez las fotos repetidas que volvieron con el merge (`foto-stop-centro.jpg`, `fachada-post.jpg`).
 - 13/11/2026 · Mateo · **KM 1: se sacaron los botones "Conocé más sobre POST" y "Conocé más sobre STOP"** (pedido del equipo). En el celular, cada mazo de fotos va ahora debajo del texto de su marca.
 - 13/11/2026 · Mateo · **KM 3 · Colaboraciones: la plantilla ya no se parte en tres** (pedido del equipo, la animación se veía rara).
   - Antes, al cortarla en SPOT! / × / recuadro, las líneas de las guías quedaban cortadas y se separaban.
