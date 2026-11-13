@@ -600,6 +600,15 @@ El 10/11/2026 se borró todo lo construido y se empezó de nuevo. Respaldo de la
   - Las flechas de los headers no se veían porque se había borrado `assets/hero/` (`flecha-izq.svg` y `flecha-der.svg`, exportadas del Figma). Se recuperaron. Ojo: es una carpeta nueva, hay que subirla en el Commit.
   - Las fotos de STOP del KM 1 quedaban abajo de todo, fuera de la zona negra: al combinar quedaron sumados dos veces los 2217 px (`armarMazo`). Ahora se suman una sola vez.
   - Se borraron otra vez las fotos repetidas que volvieron con el merge (`foto-stop-centro.jpg`, `fachada-post.jpg`).
+- 13/11/2026 · Equipo · **Ícono del menú invisible al abrir `index.html` con doble clic.** El botón de los KM dibuja el ícono con una máscara CSS (para cambiarle el color según el fondo) y la máscara cargaba `assets/km2/21764.svg`; con `file://` Chrome bloquea las máscaras que vienen de archivos, así que el botón andaba pero no se veía. Ahora el mismo SVG va escrito dentro del CSS (`--bm-icono`, data URI). **Regla:** para `mask` o `mask-image`, usar el SVG escrito en el CSS, nunca `url(assets/...)`.
+  - Se exportó la página a Descargas: "Spot - Sistema de diseño (13-11-2026) v2" (`index.html` + `assets/`).
+- 13/11/2026 · Equipo · **Favicons y mezclador de íconos vacíos al abrir `index.html` con doble clic.** Leían sus SVG con `fetch`, que Chrome bloquea con `file://` (publicada sí andaba).
+  - KM 3 · Favicon: las tres formas (`assets/favicon/f01`, `f05`, `f09`) van escritas en `FAV_BASE` y los cuadros se arman con `favCuadro`. El favicon animado de la pestaña también usa eso (los mismos 12 cuadros de "General").
+  - KM 7 · Íconos: los 33 SVG de `ICONOS_DS` van escritos en `ICONOS_SVG` (si falta alguno, prueba con `fetch`).
+  - Si se cambia un SVG de esas carpetas, hay que actualizarlo también dentro de `index.html`.
+  - Siguen usando `fetch`, pero si falla queda la imagen quieta: los diagramas del KM 3 y los esquemas del KM 8 (con doble clic se ven, sin la animación de dibujarse).
+  - **Regla:** nada que tenga que verse puede depender de `fetch`; si hace falta el texto de un SVG, escribirlo en el HTML.
+  - Exportado a Descargas: "Spot - Sistema de diseño (13-11-2026) v3".
 - 13/11/2026 · Mateo · **KM 1: se sacaron los botones "Conocé más sobre POST" y "Conocé más sobre STOP"** (pedido del equipo). En el celular, cada mazo de fotos va ahora debajo del texto de su marca.
 - 13/11/2026 · Mateo · **KM 3 · Colaboraciones: la plantilla ya no se parte en tres** (pedido del equipo, la animación se veía rara).
   - Antes, al cortarla en SPOT! / × / recuadro, las líneas de las guías quedaban cortadas y se separaban.
