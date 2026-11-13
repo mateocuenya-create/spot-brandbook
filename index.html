@@ -883,6 +883,9 @@ html.cursor-propio.cursor-visible :is(#cursor,#cursor-mini){opacity:1}
 .colab-muestra.armado:hover .lockup .p1{transform:translateX(-14px)}
 .colab-muestra.armado:hover .lockup .p3{transform:translateX(14px)}
 .colab-muestra.armado:hover .lockup .p2{transform:rotate(90deg) scale(1.12);transition-duration:.6s}
+/* la plantilla entra entera (sin partirse): un fundido suave */
+.colab-muestra > img{transition:opacity .8s var(--ease-out),scale 1s cubic-bezier(.22,1,.36,1)}
+.colab-muestra:not(.armado) > img{opacity:0;scale:.96}
 
 /* KM 5 · Proporción (Figma 372:1525): una barra por marca, de borde a borde, con el ancho de cada color según su porcentaje.
    Al entrar en pantalla cada barra se llena de izquierda a derecha; al pasar el mouse un color se ensancha. */
@@ -1709,7 +1712,6 @@ html.movil .carpeta p{font-size:16px;word-break:break-all}
     <div class="decos" data-decos="post"></div>
     <img class="abs" src="assets/km1/post-logo-capa4.svg" alt="post." style="left:751px;top:232px;width:419px;height:193px">
     <p class="abs txt" style="top:659px">Post es la experiencia multimedia de Spot que acompaña el momento que llega después del recorrido. Si Spot se ocupa de lo que pasa antes y durante, Post se ocupa de lo que viene tras la meta: <b style="color:var(--verde)">el descanso</b>. Se trata de una cabina con pantallas LED por dentro y por fuera que se instala al final de carreras largas para recordarle a cada deportista, de forma lúdica, que recuperarse también es parte del entrenamiento.</p>
-    <a class="boton" href="#inicio" style="left:960.5px;top:909px;background:var(--verde)">Conocé más sobre POST <img src="assets/km1/flecha-der.svg" alt=""></a>
     <img class="foto-rot" data-mazo="post" src="assets/km1/foto-post-2.jpg" alt="Vista de la cabina post." style="left:964.6px;top:1282.3px;width:821.493px;height:462.324px;rotate:4.43deg">
     <img class="foto-rot" data-mazo="post" src="assets/km1/foto-post-1.jpg" alt="Vista exterior de post." style="left:133.9px;top:1271.9px;width:806.071px;height:453.805px;rotate:-4.31deg">
     <img class="foto-rot" data-mazo="post" src="assets/km1/foto-instalacion.jpg" alt="Instalación interactiva de estiramientos" style="left:403px;top:1183px;width:1114px;height:627px">
@@ -1717,7 +1719,6 @@ html.movil .carpeta p{font-size:16px;word-break:break-all}
     <div class="decos" data-decos="stop"></div>
     <img class="abs" src="assets/km1/stop-logo-comp3.svg" alt="STOP" style="left:751px;top:2329px;width:419px;height:193px">
     <p class="abs txt" style="top:2813px">Stop es el evento anual de Spot: una parada en el camino para celebrar lo recorrido. Alrededor de una carrera nocturna, propone una experiencia <b style="color:var(--rosa)">social, lúdica y reflexiva</b> donde corredores y acompañantes se encuentran, se divierten y se toman un momento para valorar todo el esfuerzo que los trajo hasta ahí. Si Spot acompaña el camino y Post cuida el después, Stop es la pausa que les da sentido a los dos.</p>
-    <a class="boton" href="#inicio" style="left:945.5px;top:3063px;background:var(--rosa)">Conocé más sobre STOP <img src="assets/km1/flecha-der.svg" alt=""></a>
     <!-- Fotos de STOP (Figma "Group 111" 708:12461): mismo mazo que las de post., 2217 px más abajo, con sus misceláneas -->
     <img class="foto-rot stop" data-mazo="stop" src="assets/km1/foto-stop-1.jpg" alt="Dos personas frente a las cápsulas iluminadas de STOP, de noche." style="left:964.6px;top:3499.3px;width:821.493px;height:462.324px;rotate:4.43deg">
     <img class="foto-rot stop" data-mazo="stop" src="assets/km1/foto-stop-2.jpg" alt="Largada de una carrera nocturna con el portal de STOP." style="left:133.9px;top:3488.9px;width:806.071px;height:453.805px;rotate:-4.31deg">
@@ -4187,7 +4188,7 @@ function iniciarReceta(){
 
 /* KM 3 · Colaboraciones: cada lockup se parte en tres (SPOT!, ×, logo aliado) y se arma cada vez que entra en pantalla.
    Cortes en px dentro de cada imagen (en el medio de los espacios entre logo y ×, según el Figma). */
-const CORTES_LOCKUP = { 'lockup-martinez': [303, 395], 'lockup-integra': [303, 395], 'lockup-hyper': [303, 391], 'lockup-adidas': [303, 395], 'plantilla-colaboracion': [466, 586] };
+const CORTES_LOCKUP = { 'lockup-martinez': [303, 395], 'lockup-integra': [303, 395], 'lockup-hyper': [303, 391], 'lockup-adidas': [303, 395] };
 /* KM 3 · entradas de Logos Spot, Construcción, Espacios seguros y Ubicación (ver CSS .logo-hover/.logo-fijo y .diag).
    Los diagramas se pasan de <img> a SVG en la página para poder animar sus partes. Todo se repite al volver a entrar. */
 function entradaRepetida(els, umbral = .35){
@@ -4900,8 +4901,8 @@ function prepararMovil(){
     const btn = $('.hero .btn-menu', km); if (btn) km.appendChild(btn);      // fijo arriba, fuera de lo escalado
   });
   const zona = $('.submarcas-zona'); if (!zona) return;
-  // un mazo por marca, debajo de su botón "Conocé más", con sus misceláneas
-  const botones = $$('.boton', zona);
+  // un mazo por marca, debajo del texto de esa marca, con sus misceláneas
+  const botones = $$('p.abs.txt', zona).filter(t => /^(Post|Stop) es /.test(t.textContent.trim()));
   ['post', 'stop'].forEach((marca, i) => {
     const fotos = $$(`.foto-rot[data-mazo="${marca}"]`, zona); if (!fotos.length || !botones[i]) return;
     const mazo = document.createElement('div'); mazo.className = 'mazo-movil';
