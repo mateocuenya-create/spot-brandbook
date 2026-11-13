@@ -605,3 +605,16 @@ El 10/11/2026 se borró todo lo construido y se empezó de nuevo. Respaldo de la
   - Antes, al cortarla en SPOT! / × / recuadro, las líneas de las guías quedaban cortadas y se separaban.
   - Ahora entra entera, con un fundido suave, y no se mueve con el mouse.
   - Los cuatro lockups de ejemplo siguen armándose como antes (`CORTES_LOCKUP` ya no incluye la plantilla).
+- 13/11/2026 · Mateo · **KM 1 · Acerca de SPOT!: animaciones al scrollear** (pedido del equipo: las de antes casi no se veían; `iniciarKM1Entradas`). Se repiten cada vez que una parte sale del todo de la pantalla y vuelve a entrar. El KM 1 ya no usa las entradas generales (`ENTRAN`).
+  - **Brand Spirit** y la bajada de submarcas: el título entra desde la izquierda y los párrafos suben de a uno. Lo destacado en naranja se enciende después.
+  - **Divisores:** la línea punteada se dibuja de izquierda a derecha.
+  - **Misión y visión:** cada frase sube palabra por palabra; primero la misión y después la visión.
+  - **Foto de corredores:** "Comienzos / en Compañía / Comunidad & / Comodidad" entran alternando desde la izquierda y la derecha. Las "Co" de color saltan y las líneas punteadas se dibujan. La foto se mueve más lento que la página (paralaje).
+  - **post. y STOP:**
+    - el logo de post. aparece calmo, de desenfocado a nítido;
+    - el de STOP explota girando con rebote;
+    - sus misceláneas saltan una por una;
+    - el texto sube;
+    - las tres fotos de cada mazo se reparten como cartas desde abajo, y después se siguen pudiendo tirar.
+  - **Paradas:** la anterior entra desde la izquierda, la siguiente desde la derecha, y después "Volver arriba".
+  - Igual en el celular.
