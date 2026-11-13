@@ -460,6 +460,42 @@ a.punto{cursor:pointer} span.punto{cursor:default}
 .ui-progreso{display:flex;gap:8px;align-items:center}
 .ui-progreso i{width:8px;height:8px;border-radius:4px;background:rgba(37,37,37,.2)}
 .ui-progreso i.on{width:28px;background:#ff5e27}
+/* tarjeta "Abasto Run" (Figma 307:1577) */
+.ui-grupo{display:flex;flex-direction:column;gap:38px;color:var(--negro)}
+.ui-grupo .bloque{display:flex;flex-direction:column;gap:16px}
+.ui-grupo .cab{display:flex;gap:16px;align-items:flex-start}
+.ui-grupo .cab > div{flex:1;display:flex;flex-direction:column;gap:4px}
+.ui-grupo h5{font:600 20px/normal var(--sora)}
+.ui-grupo .sub{font:700 15px/normal var(--reddit);color:var(--negro-60)}
+.ui-grupo .miembros{display:flex;gap:6px;align-items:center;padding:6px 10px;border-radius:31px;background:rgba(37,37,37,.2);box-shadow:0 4px 4px rgba(0,0,0,.25);font:700 14px/1 var(--reddit)}
+.ui-grupo .tags{display:flex;gap:8px;flex-wrap:wrap}
+.ui-grupo .tag{padding:8px 14px;border-radius:28px;font:700 14px/normal var(--reddit)}
+.ui-grupo .bio{font:400 16px/1.4 var(--reddit);color:var(--negro-80)}
+.ui-grupo .stats{display:flex;align-items:center;height:98px}
+.ui-grupo .stat{position:relative;width:127px;flex:none;margin-right:-20px;padding:19px 16px;border:3px solid var(--negro);border-radius:22px;box-shadow:0 4px 10px rgba(0,0,0,.18);display:flex;flex-direction:column;gap:8px;align-items:flex-end;text-align:right}
+.ui-grupo .stat b{font:700 24px/.8 var(--sora);-webkit-text-stroke:5px var(--crema);paint-order:stroke fill;white-space:nowrap}
+.ui-grupo .stat span{font:600 13px/normal var(--reddit)}
+.ui-grupo .dias h6{font:700 16px/normal var(--reddit);color:var(--negro-80)}
+.ui-grupo .fila-d{display:flex;justify-content:space-between;align-items:center;height:76px}
+.ui-grupo .dia{width:42px;height:42px;border-radius:21px;border:1.5px solid var(--negro);display:grid;place-items:center;font:700 15px/1 var(--reddit)}
+.ui-grupo .dia.on{border:none;background:rgba(37,37,37,.4);box-shadow:0 4px 4px rgba(0,0,0,.25)}
+.ui-grupo .horas{display:flex;gap:6px;margin-top:30px;padding:0 20px;border-left:1px solid rgba(37,37,37,.2)}
+.ui-grupo .hora{display:flex;flex-direction:column;gap:12px;align-items:center}
+.ui-grupo .hora span{padding:6px 12px;border-radius:24px;background:var(--negro);color:var(--crema);font:600 12px/normal var(--reddit);text-transform:uppercase}
+.ui-grupo .hora small{font:400 16px/1.1 var(--reddit);color:#666}
+/* Dos familias: con el mouse sobre un texto (en el celular, tocándolo), queda prendido todo lo que usa esa misma
+   tipografía y lo demás baja al 50 % (comentario del Figma). Un cartelito dice qué familia, peso y tamaño es. */
+.ui-pista .tf,.ui-pista img{transition:opacity .4s var(--ease-out)}
+.ui-ventana[data-fuente="sora"] .tf-reddit,.ui-ventana[data-fuente="reddit"] .tf-sora,.ui-ventana[data-fuente] .ui-pista img{opacity:.5}
+.ui-ventana[data-fuente] .tf.prendida{animation:prendida .5s cubic-bezier(.34,1.56,.64,1)}
+@keyframes prendida{0%{opacity:.5}100%{opacity:1}}
+.ui-fuente{position:absolute;z-index:5;left:0;top:0;padding:8px 14px;border-radius:30px;background:var(--negro);color:var(--crema);font:400 14px/1 var(--reddit);white-space:nowrap;pointer-events:none;
+  box-shadow:0 6px 14px rgba(0,0,0,.25);opacity:0;scale:.6;translate:-50% 0;transform-origin:50% 100%;transition:opacity .25s var(--ease-out),scale .35s cubic-bezier(.34,1.56,.64,1),left .3s cubic-bezier(.22,1,.36,1),top .3s cubic-bezier(.22,1,.36,1)}
+.ui-fuente.ver{opacity:1;scale:1}
+.ui-fuente b{font-size:15px;margin-right:6px}
+.ui-fuente.sora b{font-family:var(--sora);font-weight:600}
+.ui-fuente.reddit b{font-family:var(--reddit);font-weight:700}
+.ui-fuente::after{content:'';position:absolute;left:50%;bottom:-5px;width:10px;height:10px;background:var(--negro);rotate:45deg;translate:-50% 0}
 /* hoja "Confirmación solicitud" */
 .ui-hoja{position:relative;width:402px;height:430px;border-radius:32px 32px 0 0;background:var(--crema);color:var(--negro)}
 .ui-hoja > *{position:absolute}
@@ -1234,6 +1270,7 @@ html.movil :is(.frente,.vestir,.pantallas-post){width:480px;margin-left:-24px}
 html.movil .hitos{flex-direction:column;gap:12px;width:480px;margin-left:-24px}
 html.movil .hito{width:100%}
 html.movil .col-izq{width:100%;gap:20px}
+html.movil .ui-fuente{font-size:24px;padding:12px 20px} html.movil .ui-fuente b{font-size:26px}   /* la ventana va achicada al 60 % */
 html.movil .juego-insignias{flex:none;height:360px;min-height:0;border-radius:22px}
 html.movil .frente .m1{transform:translate(calc((1 - var(--p)) * -60px), calc((1 - var(--p)) * 14px)) rotate(calc((1 - var(--p)) * -6deg))}
 html.movil .frente .m2{transform:translateY(calc((1 - var(--p)) * 24px))}
@@ -1564,7 +1601,17 @@ html.movil .frente .m3{transform:translate(calc((1 - var(--p)) * 60px), calc((1 
     <div style="left:950px;top:789px;width:970px;height:1133px;background:var(--negro);border:1px solid var(--crema-60)"></div>
     <div class="ui-ventana arrastrable" data-carrusel-ui aria-label="Ejemplos de la app: arrastrá para ver más" role="region">
       <div class="ui-pista">
-        <img src="assets/km4/ui-grupo.png" alt="Tarjeta de grupo en la app" style="width:378px;height:566.5px">
+        <div class="ui-grupo" aria-label="Tarjeta de grupo en la app" style="width:362px">
+          <div class="bloque">
+            <div class="cab"><div><h5>Abasto Run</h5><span class="sub">Grupo de running</span></div><span class="miembros">15<img src="assets/km4/ui-users.svg" alt="miembros" style="width:16px"></span></div>
+            <div class="tags"><span class="tag" style="background:rgba(37,37,37,.6)">Principiantes</span><span class="tag" style="background:rgba(37,37,37,.4)">Solo mujeres</span></div>
+            <p class="bio">Somos un grupo de chicas de todas las edades y muchas recién arrancamos en el mundo del running. Hacemos recorridos cortos y tranquilos, sin presión por los tiempos. Al terminar, a veces desayunamos juntas en el café del parque.</p>
+          </div>
+          <div class="stats"><div class="stat" style="background:rgba(237,232,219,.2);rotate:-5deg;z-index:3"><b>6125</b><span>puntos</span></div><div class="stat" style="background:rgba(37,37,37,.4);rotate:5deg;z-index:2"><b>16</b><span>logros</span></div><div class="stat" style="background:rgba(37,37,37,.6);rotate:-5deg;z-index:1;margin-right:0"><b>1 año</b><span>juntos</span></div></div>
+          <div class="dias"><h6>Días de salida</h6>
+            <div class="fila-d"><span class="dia">L</span><span class="dia on">M</span><span class="dia">X</span><span class="dia">J</span><span class="dia">V</span><span class="dia on">S</span><span class="dia">D</span></div>
+            <div class="horas"><div class="hora"><span>Martes</span><small>6:00pm</small></div><div class="hora"><span>Sábados</span><small>8:00am</small></div></div></div>
+        </div>
         <div class="ui-equipo" aria-label="Pantalla Crear equipo de la app">
           <div class="ui-cab"><img src="assets/km4/ui-atras.svg" alt="" style="width:32px;margin:4px"><span class="titulo">Crear equipo</span><span class="ib"><img src="assets/km4/ui-icono.svg" alt="" style="width:24px"></span></div>
           <div class="ui-paso"><p>Paso 1 ·  Agregá una foto de perfil, nombre y descripción</p>
@@ -3173,6 +3220,43 @@ function iniciarCarruselUI(){
   ir(0);
 }
 
+/* KM 4 · Dos familias: cada texto de las pantallas de ejemplo se marca como Sora o Reddit Sans (según su fuente real).
+   Con el mouse encima (o tocándolo en el celular) queda prendida esa familia, lo demás baja al 50 % y aparece un
+   cartelito arriba del texto con la familia, el peso y el tamaño. */
+function iniciarFuentesUI(){
+  const v = $('[data-carrusel-ui]'); if (!v) return;
+  const pista = $('.ui-pista', v), PESOS = { 300: 'Light', 400: 'Regular', 500: 'Medium', 600: 'SemiBold', 700: 'Bold', 800: 'ExtraBold' };
+  const textos = $$('*', pista).filter(el => [...el.childNodes].some(n => n.nodeType === 3 && n.textContent.trim()));
+  textos.forEach(el => { el.classList.add('tf', /sora/i.test(getComputedStyle(el).fontFamily) ? 'tf-sora' : 'tf-reddit'); });
+  const cartel = document.createElement('div'); cartel.className = 'ui-fuente'; cartel.setAttribute('aria-hidden', 'true'); v.appendChild(cartel);
+  let actual = null;
+  const prender = el => {
+    if (el === actual) return; actual = el;
+    if (!el) { delete v.dataset.fuente; cartel.classList.remove('ver'); $$('.prendida', pista).forEach(t => t.classList.remove('prendida')); return; }
+    const fam = el.classList.contains('tf-sora') ? 'sora' : 'reddit';
+    if (v.dataset.fuente !== fam) {                                     // cambia de familia: la que se prende "vuelve" con un fundido
+      v.dataset.fuente = fam;
+      $$('.prendida', pista).forEach(t => t.classList.remove('prendida'));
+      $$('.tf-' + fam, pista).forEach(t => { void t.offsetWidth; t.classList.add('prendida'); });
+    }
+    const cs = getComputedStyle(el), vr = v.getBoundingClientRect(), k = vr.width / v.offsetWidth || 1, r = el.getBoundingClientRect();
+    cartel.className = 'ui-fuente ver ' + fam;
+    cartel.innerHTML = `<b>${fam === 'sora' ? 'Sora' : 'Reddit Sans'}</b>${PESOS[cs.fontWeight] || cs.fontWeight} · ${Math.round(parseFloat(cs.fontSize))} px`;
+    const x = (r.left + r.width / 2 - vr.left) / k, y = (r.top - vr.top) / k - cartel.offsetHeight - 12;
+    cartel.style.left = Math.max(cartel.offsetWidth / 2 + 8, Math.min(v.offsetWidth - cartel.offsetWidth / 2 - 8, x)) + 'px';
+    cartel.style.top = Math.max(8, y) + 'px';
+  };
+  if (MOVIL || matchMedia('(hover: none)').matches) {
+    pista.addEventListener('click', e => { const el = e.target.closest('.tf'); prender(el && el !== actual ? el : null); });
+    document.addEventListener('click', e => { if (!v.contains(e.target)) prender(null); });
+  } else {
+    pista.addEventListener('pointerover', e => { if (e.pointerType === 'mouse') prender(e.target.closest('.tf')); });
+    v.addEventListener('pointerleave', () => prender(null));
+    v.addEventListener('pointerdown', () => prender(null));             // al arrastrar o cambiar de pantalla se apaga
+  }
+  $('[data-puntos]', v).addEventListener('click', () => prender(null));
+}
+
 /* Banner de fotografías (KM 6): la foto se mueve más lento que la página */
 /* KM 6 · las misceláneas de la intro viajan con el scroll hasta la card de SPOT! y se ordenan alrededor del logo.
    Entran 8 (3 estrellas y 5 puntos) para no recargar la card; las amarillas no, porque la card es amarilla
@@ -4054,7 +4138,7 @@ addEventListener('keydown', e => { if (e.key === 'Escape') cerrarMenu(); });
 $$('[data-a]').forEach(b => b.addEventListener('click', () => scrollA(b.closest('article.km').id, b.dataset.a)));
 $$('[data-bajar]').forEach(b => b.addEventListener('click', () => { const k = b.closest('article.km'); irA_Y(k, k.scrollTop + innerHeight * .9); }));
 $$('[data-arriba]').forEach(b => b.addEventListener('click', () => irArriba(b.closest('article.km'))));
-iniciarScrollSuave(); iniciarEntradas(); iniciarStickers(); iniciarToques(); iniciarCursor(); iniciarFavicon(); iniciarFaviconSec(); iniciarBotonMenu(); iniciarRastro(); iniciarPerfil(); iniciarSobreFotos(); iniciarUnirPuntos(); iniciarCintaIconos(); iniciarReceta(); iniciarColab(); iniciarKM3Entradas(); iniciarProporcion(); iniciarTira(); iniciarCarruseles(); iniciarCarruselUI(); iniciarParalaje(); iniciarViajeKM6(); iniciarMazo(); iniciarMecer(); iniciarRasgos(); iniciarFlotar(); achicarTodo(); iniciarActivoScroll(); vigilarKM10(); iniciarGuia();
+iniciarScrollSuave(); iniciarEntradas(); iniciarStickers(); iniciarToques(); iniciarCursor(); iniciarFavicon(); iniciarFaviconSec(); iniciarBotonMenu(); iniciarRastro(); iniciarPerfil(); iniciarSobreFotos(); iniciarUnirPuntos(); iniciarCintaIconos(); iniciarReceta(); iniciarColab(); iniciarKM3Entradas(); iniciarProporcion(); iniciarTira(); iniciarCarruseles(); iniciarCarruselUI(); iniciarParalaje(); iniciarViajeKM6(); iniciarMazo(); iniciarMecer(); iniciarRasgos(); iniciarFlotar(); achicarTodo(); iniciarActivoScroll(); vigilarKM10(); iniciarGuia(); iniciarFuentesUI();
 addEventListener('hashchange', leerHash);
 
 if (location.hash && location.hash !== '#inicio') { portada.remove(); portadaFuera = true; leerHash(); }
