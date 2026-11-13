@@ -543,3 +543,26 @@ El 10/11/2026 se borró todo lo construido y se empezó de nuevo. Respaldo de la
   - **Archivos**: imágenes del Figma en `assets/post/`, pasadas a JPG y achicadas con `sips`; misceláneas `assets/post/fig-*.svg` y `nota-borde-1.svg`.
   - **Mobile**: una columna. El juego de la pose se usa arrastrando el dedo. La pantalla del recorrido queda arriba con JS, porque `sticky` no anda dentro del transform. Las fotos van en 2 columnas.
   - **No se hizo todavía**: accesibilidad, reflexiones finales ni UI kit completo del Figma. La página de STOP va después.
+- 13/11/2026 · Mateo · **Sincronización con el Figma (3.ª ronda) y corrección de errores de tipeo.**
+  - **El recorrido pasa a tener 8 KM** (Figma: Home con 8 puntos y menú sin Animaciones ni Íconos). El mapa tiene los 8 puntos en sus lugares y colores nuevos (amarillo, naranja, rosa, violeta, azul, amarillo, naranja, rosa), y el menú tiene 8 ítems.
+  - **Arquigrafía es ahora el KM 8**: hero rosa, tag "KM 8", parada anterior KM 7 · Design System. La "siguiente parada" del KM 7 y la "parada anterior" del KM 1 llevan a Arquigrafía (KM8). El id interno sigue siendo `km10` (y la carpeta `assets/km10/`) para no romper enlaces.
+  - **Hueco del Figma (avisar):** el hero de Arquigrafía dice "Parada anterior: Animaciones · KM8"; se puso Design System · KM7 porque Animaciones ya no existe. El KM 1 del Figma todavía dice "KM10" en la parada anterior; se usó KM8.
+  - **KM 8 · Wayfinding:** se sacó la grilla de 6 principios, porque en el Figma quedó afuera de la lámina. Queda solo el texto.
+  - **KM 8 · Arquigrafía:**
+    - Títulos nuevos: "Nuestra identidad sobre lo existente" e "Hitos inflables y a gran escala".
+    - La parada y los hitos miden 1113 px, como en el Figma. Las dos fotos de los hitos van una debajo de la otra.
+    - Debajo de los videos de post. se sumó el render de la cabina por fuera (`assets/km10/fachada-render.jpg`).
+    - En el Figma ese bloque repite el título y el texto de "Nuestra identidad sobre lo existente" (copia por error). Se dejó "La pantalla también es arquitectura" con su texto.
+  - **KM 8 · textos que cambiaron:**
+    - Orientativas: "El directorio de cada piso. Número, nombre y la lista…".
+    - 1,50–1,70 m: se sumó "Para tener en cuenta, la altura promedio de una persona es de 1,75 m". En el Figma dice "1,75 cm"; se corrigió.
+  - **KM 7 · De átomos a botones:** frase nueva debajo del botón amarillo (Figma `682:10959`), "Todo comienza con pequeños elementos. Estos pequeños elementos van a formar cosas más grandes.". Aparece cuando el botón termina de armarse.
+  - **KM 1 · fotos de STOP** (Figma Group 111): mazo de 3 fotos igual al de post., que se tira y se reordena. Son la largada con el portal, la terraza del after y las cápsulas (`assets/km1/foto-stop-1..3.jpg`). La zona de submarcas creció a 4863 px y las paradas bajaron. `iniciarMazo` arma los dos mazos (`armarMazo`). En el celular cada mazo va en su caja, debajo de su botón.
+  - **Arreglo:** la foto de adelante del mazo usa la clase `frente`, que chocaba con `.frente` del KM 8 y la ponía en `position: relative`. Ahora `.submarcas-zona .foto-rot` fuerza `position: absolute`.
+  - **Errores de tipeo corregidos en la página** (antes estaban copiados tal cual del Figma; en el Figma siguen):
+    - Ortografía: hehcas → hechas, aun → aún, fromado → formado, areglarlo → arreglarlo, princincipiantes → principiantes, sumbarcas → submarcas, Despúes → Después, subtitulos → subtítulos, especifica → específica, iconos → íconos.
+    - Tildes en preguntas indirectas: "como dialogan" → "cómo dialogan", "simbolizar como" → "simbolizar cómo".
+    - Gramática: "esta la única excepción" → "esta es la única excepción", "usar colocar" → "colocar", "Los variantes" → "Las variantes", "se tratan de" → "se trata de" (dos veces).
+    - Puntuación: "caritaa. utilizamos" → "caritas. Utilizamos", "entrada. guiamos" → "entrada: guiamos", "principales. el hogar" → "principales: el hogar".
+    - Números con la unidad separada, como pide la Guía de estilo: 18km → 18 km, 4km → 4 km.
+    - En la página de post.: "primer línea de meta" → "primera línea de meta", serian → serían, kilometro → kilómetro.

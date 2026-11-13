@@ -151,7 +151,7 @@ a.punto{cursor:pointer} span.punto{cursor:default}
 .foto-co .linea{position:absolute;z-index:2;left:1px;height:4px;background:radial-gradient(circle,var(--crema) 2px,transparent 2.4px) 0 0/12.1px 4px repeat-x}
 .oscuro{background:var(--negro);color:var(--crema)}
 .oscuro .fila > .t,.oscuro .txt{color:var(--crema)}
-.submarcas-zona{position:relative;height:3779px;background:var(--negro)}
+.submarcas-zona{position:relative;height:4863px;background:var(--negro)}
 .submarcas-zona .abs{position:absolute}
 .submarcas-zona .txt{color:var(--crema);width:830px;left:545px}
 .boton{position:absolute;display:inline-flex;align-items:center;gap:10px;padding:16px 30px;border-radius:54px;font:600 20px/normal var(--reddit);color:var(--negro);transform:translateX(-50%);
@@ -656,7 +656,7 @@ a.punto{cursor:pointer} span.punto{cursor:default}
 
 /* ---------- Más juego (11/11) ---------- */
 .hero{overflow:hidden}
-.submarcas-zona .foto-rot{cursor:pointer;user-select:none;-webkit-user-select:none;-webkit-user-drag:none;touch-action:pan-y}
+.submarcas-zona .foto-rot{position:absolute;cursor:pointer;user-select:none;-webkit-user-select:none;-webkit-user-drag:none;touch-action:pan-y}
 .submarcas-zona .foto-rot.frente{cursor:grab}
 .submarcas-zona .foto-rot.frente:active{cursor:grabbing}
 .decos.flota{position:absolute;inset:0;z-index:4;pointer-events:none}
@@ -1117,6 +1117,9 @@ html.cursor-propio.cursor-visible :is(#cursor,#cursor-mini){opacity:1}
 .escena[data-paso="3"] .texto-ds span{clip-path:inset(0 0 0 0)}
 .escena[data-paso="3"] .flecha-ds.negra{opacity:1;transition:opacity .4s .6s}
 .escena[data-paso="3"] .btn-ds{animation:pop-ds .55s 1.1s both}
+.frase-ds.fin{left:142px;top:240px;width:546px;white-space:normal}
+.escena[data-paso="1"] .frase-ds.fin{opacity:0;transform:translateY(8px)}
+.escena[data-paso="3"] .frase-ds.fin{opacity:1;transform:none;transition:opacity .5s 1.4s,transform .5s 1.4s var(--ease-out)}
 @keyframes pop-ds{40%{transform:scale(1.04)}100%{transform:scale(1)}}
 
 /* ===== KM 10 · Arquigrafía y señalética ===== */
@@ -1184,14 +1187,14 @@ svg.esquema .nivel .raya{fill:var(--naranja);transform:translateY(var(--y,0))}
 .frente .m1{clip-path:inset(0 78% 0 0);transform:translate(calc((1 - var(--p)) * -180px), calc((1 - var(--p)) * 40px)) rotate(calc((1 - var(--p)) * -6deg));opacity:calc(.2 + var(--p) * .8)}
 .frente .m2{clip-path:inset(0 23.2% 0 22%);transform:translateY(calc((1 - var(--p)) * 70px))}
 .frente .m3{clip-path:inset(0 0 0 76.8%);transform:translate(calc((1 - var(--p)) * 180px), calc((1 - var(--p)) * 40px)) rotate(calc((1 - var(--p)) * 6deg));opacity:calc(.2 + var(--p) * .8)}
-.vestir{position:relative;width:1255px;aspect-ratio:16/9;flex:none;overflow:hidden}
+.vestir{position:relative;width:1113px;margin-left:auto;aspect-ratio:1113/616;flex:none;overflow:hidden}
 .vestir img{width:100%;height:100%;object-fit:cover;display:block;transition:opacity 0s linear .6s,scale 1.8s cubic-bezier(.22,1,.36,1) .6s}
 .vestir::after{content:'';position:absolute;inset:0;background:var(--rosa);transform:scaleX(0)}
 .vestir.espera img{opacity:0;scale:1.12}
 .vestir:not(.espera)::after{animation:franja 1.3s cubic-bezier(.65,0,.35,1)}
 @keyframes franja{0%{transform-origin:left;transform:scaleX(0)}45%{transform-origin:left;transform:scaleX(1)}55%{transform-origin:right;transform:scaleX(1)}100%{transform-origin:right;transform:scaleX(0)}}
-.hitos{display:flex;gap:20px;width:1255px;flex:none}
-.hito{width:617.5px;aspect-ratio:16/9;overflow:hidden;transition:transform .9s cubic-bezier(.34,1.56,.64,1) var(--d,0s),border-radius .9s cubic-bezier(.34,1.56,.64,1) var(--d,0s),opacity .3s var(--ease-out) var(--d,0s)}
+.hitos{display:flex;flex-direction:column;gap:48px;width:1113px;margin-left:auto;flex:none}
+.hito{width:1113px;aspect-ratio:1113/616;overflow:hidden;transition:transform .9s cubic-bezier(.34,1.56,.64,1) var(--d,0s),border-radius .9s cubic-bezier(.34,1.56,.64,1) var(--d,0s),opacity .3s var(--ease-out) var(--d,0s)}
 .hito:nth-child(2){--d:.15s}
 .hito img{width:100%;height:100%;object-fit:cover;display:block}
 .hitos.espera .hito{transform:scale(.55);border-radius:50%;opacity:0}
@@ -1206,7 +1209,9 @@ svg.esquema .nivel .raya{fill:var(--naranja);transform:translateY(var(--y,0))}
 .juego-insignias .ins img{width:100%;height:100%;pointer-events:none;-webkit-user-drag:none;filter:drop-shadow(0 4px 4px rgba(0,0,0,.18));transition:scale .25s cubic-bezier(.34,1.56,.64,1)}
 .juego-insignias .ins.agarrada{cursor:grabbing;z-index:2}
 .juego-insignias .ins.agarrada img{scale:1.12;filter:drop-shadow(0 12px 10px rgba(0,0,0,.25))}
-.pantallas-post{width:1255px;flex:none;display:flex;flex-direction:column;gap:8px;background:var(--negro)}
+.pantallas-col{width:1110px;flex:none;margin-left:auto;display:flex;flex-direction:column;gap:48px}
+.render-fachada{display:block;width:100%;height:auto}
+.pantallas-post{width:100%;flex:none;display:flex;flex-direction:column;gap:8px;background:var(--negro)}
 .pantallas-post video{display:block;width:100%;height:auto;background:#1c1c1c}
 .pantallas-post .s2{--d:.35s}
 .pantallas-post .s3{--d:.7s}
@@ -1767,6 +1772,7 @@ html.movil .km10-sec{gap:48px}
 html.movil .km7-escena{width:480px;padding:0 24px;margin-bottom:72px}
 html.movil .escena{width:1080px;height:940px}
 html.movil .btn-ds{left:125px;top:330px}
+html.movil .frase-ds.fin{left:-40px;top:250px;width:910px;font-size:40px}
 html.movil .etq-ds{left:calc(125px + var(--mx));top:calc(330px + var(--my));font-size:36px;padding:24px 34px;border-width:3px}
 html.movil :is(.principios,.senal-fila,.alturas,.hitos){width:100%}
 html.movil .principios{flex-direction:column;gap:40px}
@@ -1782,7 +1788,10 @@ html.movil .altura b{font-size:24px}
 html.movil .altura span{font-size:17px}
 html.movil :is(.frente,.vestir,.pantallas-post){width:480px;margin-left:-24px}
 html.movil .hitos{flex-direction:column;gap:12px;width:480px;margin-left:-24px}
-html.movil .hito{width:100%}
+html.movil .hito{width:100%;aspect-ratio:16/9}
+html.movil :is(.vestir,.pantallas-col){margin-left:0}
+html.movil .pantallas-col{width:100%;gap:16px}
+html.movil .render-fachada{width:480px;max-width:none;margin-left:-24px}
 html.movil .col-izq{width:100%;gap:20px}
 html.movil .ui-fuente{font-size:24px;padding:12px 20px} html.movil .ui-fuente b{font-size:26px}   /* la ventana va achicada al 60 % */
 html.movil .juego-insignias{flex:none;height:360px;min-height:0;border-radius:22px}
@@ -2001,7 +2010,7 @@ html.movil .pastillas span{font-size:18px;padding:8px 16px;border-width:3px}
   </section>
   <section class="sec oscuro" id="km1-sub" style="height:374px">
     <div class="fila"><h2 class="t">Brand Spirit</h2>
-      <p class="c txt">Spot funciona como una marca paraguas con identidad propia, la cual está aplicada principalmente a la app. Sin embargo, ha desarrollado dos submarcas que forman parte de todo el ecosistema de Spot: se tratan de Post y Stop.</p></div>
+      <p class="c txt">Spot funciona como una marca paraguas con identidad propia, la cual está aplicada principalmente a la app. Sin embargo, ha desarrollado dos submarcas que forman parte de todo el ecosistema de Spot: se trata de Post y Stop.</p></div>
   </section>
   <section class="submarcas-zona">
     <div class="decos" data-decos="post"></div>
@@ -2016,16 +2025,19 @@ html.movil .pastillas span{font-size:18px;padding:8px 16px;border-width:3px}
     <img class="abs" src="assets/km1/stop-logo-comp3.svg" alt="STOP" style="left:751px;top:2329px;width:419px;height:193px">
     <p class="abs txt" style="top:2813px">Stop es el evento anual de Spot: una parada en el camino para celebrar lo recorrido. Alrededor de una carrera nocturna, propone una experiencia <b style="color:var(--rosa)">social, lúdica y reflexiva</b> donde corredores y acompañantes se encuentran, se divierten y se toman un momento para valorar todo el esfuerzo que los trajo hasta ahí. Si Spot acompaña el camino y Post cuida el después, Stop es la pausa que les da sentido a los dos.</p>
     <a class="boton" href="#inicio" style="left:945.5px;top:3063px;background:var(--rosa)">Conocé más sobre STOP <img src="assets/km1/flecha-der.svg" alt=""></a>
-    <a class="parada" href="#km10" style="left:262px;top:3356px">
+    <img class="foto-rot stop" src="assets/km1/foto-stop-1.jpg" alt="Dos personas frente a las cápsulas iluminadas de STOP, de noche." style="left:964.6px;top:3499.3px;width:821.493px;height:462.324px;rotate:4.43deg">
+    <img class="foto-rot stop" src="assets/km1/foto-stop-2.jpg" alt="Largada de una carrera nocturna con el portal de STOP." style="left:133.9px;top:3488.9px;width:806.071px;height:453.805px;rotate:-4.31deg">
+    <img class="foto-rot stop" src="assets/km1/foto-stop-3.jpg" alt="After de STOP en una terraza, con gente y pantallas de noche." style="left:403px;top:3400px;width:1114px;height:627px">
+    <a class="parada" href="#km10" style="left:262px;top:4415px">
       <span class="circ"><img src="assets/km1/flecha-izq-32.svg" alt=""></span>
-      <span class="info" style="border-right:2px solid var(--crema);padding-right:20px"><span class="chip">KM10</span><span class="tx" style="text-align:right;align-items:flex-end"><small>Parada anterior</small><span>Arquigrafía</span></span></span>
+      <span class="info" style="border-right:2px solid var(--crema);padding-right:20px"><span class="chip">KM8</span><span class="tx" style="text-align:right;align-items:flex-end"><small>Parada anterior</small><span>Arquigrafía</span></span></span>
     </a>
-    <a class="parada" href="#km2" style="left:1112px;top:3356px">
+    <a class="parada" href="#km2" style="left:1112px;top:4415px">
       <span class="info" style="border-left:2px solid var(--crema);padding-left:20px"><span class="tx"><small>Siguiente parada</small><span>Manual de Voz y Tono</span></span><span class="chip">KM2</span></span>
       <span class="circ"><img src="assets/km1/flecha-der-32.svg" alt=""></span>
     </a>
-    <button class="volver-arriba" style="top:3484px" data-arriba><img src="assets/km1/slide-down-crema.svg" alt="">Volver arriba</button>
-    <p class="abs" style="left:765px;top:3663px;font:400 16px/normal var(--reddit);color:#fff;white-space:nowrap">© Copyright 2026 Spot. Todos los derechos reservados</p>
+    <button class="volver-arriba" style="top:4543px" data-arriba><img src="assets/km1/slide-down-crema.svg" alt="">Volver arriba</button>
+    <p class="abs" style="left:765px;top:4722px;font:400 16px/normal var(--reddit);color:#fff;white-space:nowrap">© Copyright 2026 Spot. Todos los derechos reservados</p>
   </section>
  </div>
 </article>
@@ -2046,7 +2058,7 @@ html.movil .pastillas span{font-size:18px;padding:8px 16px;border-width:3px}
   <section class="sec">
     <div class="fila">
       <p class="grande" style="width:972px;font-size:48px">
-        <b class="naranja">Spot</b> existe para que la ciudad sea un <span class="glosa" tabindex="0"><b class="naranja">tercer lugar</b><span class="def" role="tooltip"><strong>*Tercer lugar</strong>Se define como los espacios de la vida cotidiana donde las personas socializan y se reúnen fuera de los dos entornos principales. el hogar y el trabajo. Algunos ejemplos de terceros lugares son iglesias, cafés, bares, clubes, bibliotecas, gimnasios, entre muchos otros.</span></span> para quienes se mueven. Acompañamos a quien corre, pedalea o patina desde su primera salida hasta su próxima meta, y lo conectamos con los lugares, las personas y los momentos que hacen que siempre den ganas de <b class="naranja">volver a salir</b>.</p>
+        <b class="naranja">Spot</b> existe para que la ciudad sea un <span class="glosa" tabindex="0"><b class="naranja">tercer lugar</b><span class="def" role="tooltip"><strong>*Tercer lugar</strong>Se define como los espacios de la vida cotidiana donde las personas socializan y se reúnen fuera de los dos entornos principales: el hogar y el trabajo. Algunos ejemplos de terceros lugares son iglesias, cafés, bares, clubes, bibliotecas, gimnasios, entre muchos otros.</span></span> para quienes se mueven. Acompañamos a quien corre, pedalea o patina desde su primera salida hasta su próxima meta, y lo conectamos con los lugares, las personas y los momentos que hacen que siempre den ganas de <b class="naranja">volver a salir</b>.</p>
       <p class="txt" style="width:547px">Por eso hablamos como <b class="naranja">un compañero más</b>, alguien que te ayuda a encontrar un grupo, te recuerda tus objetivos o te avisa dónde hay un baño cerca, sin juzgar el ritmo de nadie.</p>
     </div>
   </section>
@@ -2060,7 +2072,7 @@ html.movil .pastillas span{font-size:18px;padding:8px 16px;border-width:3px}
   <section class="sec" id="km2-voz">
     <div class="fila"><h2 class="t">La Voz</h2>
       <div class="c txt">
-        <p><span class="frase">La voz es la personalidad de Spot puesta en palabras.</span> Hablamos de vos y en imperativo, <b>como quien invita a salir</b> y no como quien da órdenes. Usamos las palabras que ya circulan en los grupos de running, bici o patín, y sumamos inglés deportivo solo cuando ya forma parte del habla cotidiana. El objetivo es bajar la barrera de entrada. <b>guiamos con pasos cortos, damos datos concretos</b> de lugar, horario y distancia, y respondemos de antemano lo que da vergüenza preguntar, para que nadie se quede afuera por no animarse.</p>
+        <p><span class="frase">La voz es la personalidad de Spot puesta en palabras.</span> Hablamos de vos y en imperativo, <b>como quien invita a salir</b> y no como quien da órdenes. Usamos las palabras que ya circulan en los grupos de running, bici o patín, y sumamos inglés deportivo solo cuando ya forma parte del habla cotidiana. El objetivo es bajar la barrera de entrada: <b>guiamos con pasos cortos, damos datos concretos</b> de lugar, horario y distancia, y respondemos de antemano lo que da vergüenza preguntar, para que nadie se quede afuera por no animarse.</p>
         <p>Cuando algo sale bien, <b>celebramos en plural</b>: los logros son del grupo y no de una sola persona, y cada avance se festeja con entusiasmo para que siempre haya un motivo para volver. Nuestro rol es <b>resolver lo logístico para que cada persona solo se ocupe de moverse</b>, y esa voz se mantiene igual en la app, en Post y en Stop.</p>
       </div></div>
   </section>
@@ -2200,7 +2212,7 @@ html.movil .pastillas span{font-size:18px;padding:8px 16px;border-width:3px}
       <div class="colab-muestra oscura" style="height:560px"><img src="assets/km3/lockup-martinez.svg" alt="Lockup SPOT! × Café Martínez" width="754" height="107"></div></div>
     <div class="colab-fila"><div class="pautas-c"><h4>Jerarquía visual</h4><div><p>Los dos logos tienen el mismo peso visual: ninguno opaca al otro.</p><p>Aunque el logo aliado tenga sus propios colores o un fondo propio, en el lockup va en Blanco Spot, sin caja, sobre Negro Spot.</p></div></div>
       <div class="colab-muestra oscura" style="height:560px"><img src="assets/km3/lockup-integra.svg" alt="Lockup SPOT! × Íntegra" width="792" height="108"></div></div>
-    <div class="colab-fila"><div class="pautas-c"><h4>A pedido de la marca</h4><div><p>Si una marca aliada exige usar su logo a color, o una variante que no aplica a nuestras reglas generales, esta la única excepción y se aplica solo a pedido de esa marca.</p></div></div>
+    <div class="colab-fila"><div class="pautas-c"><h4>A pedido de la marca</h4><div><p>Si una marca aliada exige usar su logo a color, o una variante que no aplica a nuestras reglas generales, esta es la única excepción y se aplica solo a pedido de esa marca.</p></div></div>
       <div class="colab-muestra oscura" style="height:720px"><img src="assets/km3/lockup-hyper.svg" alt="Lockup SPOT! × Hyper Night 10K" width="638" height="96"><img src="assets/km3/lockup-adidas.svg" alt="Lockup SPOT! × adidas Hyper Night 10K" width="744" height="110"></div></div>
     <div class="colab-fila"><div class="pautas-c"><h4>Plantilla</h4><div><p>Esta plantilla es la guía general para armar cualquier lockup con una marca aliada.</p><p>El logo aliado entra en el recuadro de la derecha, sin superar su alto, y los márgenes se mantienen iguales en todos los lados.</p></div>
         <a class="boton-descarga" href="assets/km3/plantilla-colaboracion.svg" download="Spot - Plantilla de colaboración.svg">Descargar plantilla</a></div>
@@ -2306,7 +2318,7 @@ html.movil .pastillas span{font-size:18px;padding:8px 16px;border-width:3px}
       <div class="alinear" data-alinear></div>
     </div>
     <div class="pesos" style="left:950px;top:2292px;height:418px"><div style="height:210px;font-family:var(--reddit)"><span data-peso="400" data-para="reddit" style="font-weight:400">Regular</span><span data-peso="600" data-para="reddit" style="font-weight:600">Semi bold</span><span data-peso="700" data-para="reddit" style="font-weight:700">Bold</span></div></div>
-    <div class="expl" style="left:1395px;top:2292px;height:418px"><p>La variable Regular es la de uso principal para textos de lectura. La <b>Bold</b> aparece cuando hay que destacar una palabra o frase. Despúes la <b style="font-weight:600">semibold</b> es usada para botones o subtitulos.</p></div>
+    <div class="expl" style="left:1395px;top:2292px;height:418px"><p>La variable Regular es la de uso principal para textos de lectura. La <b>Bold</b> aparece cuando hay que destacar una palabra o frase. Después la <b style="font-weight:600">semibold</b> es usada para botones o subtítulos.</p></div>
   </section>
 
   <div class="divisor"></div>
@@ -2356,7 +2368,7 @@ html.movil .pastillas span{font-size:18px;padding:8px 16px;border-width:3px}
 
   <section class="sec km4-intro" style="height:562px">
     <div class="fila">
-      <p class="t-grande">Es muy importante entender como dialogan los colores, ya que cada submarca es marcada por una paleta especifica</p>
+      <p class="t-grande">Es muy importante entender cómo dialogan los colores, ya que cada submarca es marcada por una paleta específica</p>
       <div class="col txt"><p>En Spot puede haber fondos oscuros tranquilamente, solo que no tan seguido. En Post y Stop casi siempre todo es con fondo negro.</p>
         <p style="margin-top:0">Los colores nunca se van a tocar entre sí en las decoraciones. Siempre tiene que haber blanco o negro de por medio.<br>Puede haber tipografía a color siempre y cuando el fondo sea blanco o negro.</p></div>
     </div>
@@ -2387,7 +2399,7 @@ html.movil .pastillas span{font-size:18px;padding:8px 16px;border-width:3px}
   </div>
   <section class="sec km4-intro" style="height:562px">
     <div class="fila">
-      <p class="t-grande">Los variantes de porcentajes del <b>negro</b> y el <b>crema</b> son pilares de nuestra jerarquía de colores</p>
+      <p class="t-grande">Las variantes de porcentajes del <b>negro</b> y el <b>crema</b> son pilares de nuestra jerarquía de colores</p>
       <div class="col txt"><p>Las variables en porcentaje de  100 / 80 / 60 / 40 / 20 /10 de los colores blanco y negro son para este tipo de instancias, para que no esté todo tan cargado.</p>
         <p style="margin-top:0">Se puede dar este ejemplo de un buen y un mal uso.<br>El 1 destaca mejor instancias más importantes y jerarquiza mejor a lo largo de pantallas extensas. El 2 puede ser molesto para la vista.</p></div>
     </div>
@@ -2453,7 +2465,7 @@ html.movil .pastillas span{font-size:18px;padding:8px 16px;border-width:3px}
   </section>
 
   <section class="km6-intro">
-    <p>La marca de Spot y sus sumbarcas utilizan múltiples elementos gráficos, tanto puntos decorativos como líneas, imágenes y hasta ilustraciones. ¿Cómo las ordenamos?</p>
+    <p>La marca de Spot y sus submarcas utilizan múltiples elementos gráficos, tanto puntos decorativos como líneas, imágenes y hasta ilustraciones. ¿Cómo las ordenamos?</p>
     <div class="decos" data-decos="km6intro"></div>
   </section>
   <div class="divisor"></div>
@@ -2505,7 +2517,7 @@ html.movil .pastillas span{font-size:18px;padding:8px 16px;border-width:3px}
     <div class="indebidos" data-indebidos></div>
   </section>
   <section class="sec-foto" id="km6-sobre-fotos">
-    <div class="fila"><h3 class="t">Elementos sobre fotografías</h3><p class="c txt">Si se van a colocar logotipos, tipografía u otros elementos sobre fotografías, es importante diferenciarlos bien del fondo. Recomendamos usar colocar sobre la imagen una capa de negro #000000 a un 20 - 30%. También puede usarse un degradado para textos que solo aparezcan en un área de la imagen.</p></div>
+    <div class="fila"><h3 class="t">Elementos sobre fotografías</h3><p class="c txt">Si se van a colocar logotipos, tipografía u otros elementos sobre fotografías, es importante diferenciarlos bien del fondo. Recomendamos colocar sobre la imagen una capa de negro #000000 a un 20 - 30%. También puede usarse un degradado para textos que solo aparezcan en un área de la imagen.</p></div>
     <div class="sobre-fotos">
       <figure class="sobre-foto" tabindex="0" aria-label="Foto con capa negra al 30 %, la frase “En compañía es mejor.” y el logo de SPOT!">
         <div class="marco"><img src="assets/km6/sobre-foto-1.jpg" alt="Corredores bajo un puente" style="top:0;height:788px" loading="lazy">
@@ -2521,7 +2533,7 @@ html.movil .pastillas span{font-size:18px;padding:8px 16px;border-width:3px}
       <figure class="sobre-foto" tabindex="0" aria-label="Foto con degradado negro de 0 a 80 % y un título con texto encima">
         <div class="marco"><img src="assets/km6/sobre-foto-2.jpg" alt="Ciclistas charlando junto a sus bicis" style="top:-60.2px;height:1399.6px" loading="lazy">
           <div class="capa" style="background:linear-gradient(to bottom,rgba(0,0,0,0) 0%,rgba(0,0,0,var(--op,.8)) 87%)"></div>
-          <div class="encima"><h4 class="titulo" style="left:76px;top:565px">Encontrá tu team</h4><p class="bajada-foto" style="left:76px;top:614px">Buscá grupos que en base a tus necesidades: Si querés que estén cerca de tu zona, ser princincipiantes como vos, que hagan la actividad en tus horarios o incluso las actividades pre y post que realizan. Todo lo podés filtrar desde la app.</p></div></div>
+          <div class="encima"><h4 class="titulo" style="left:76px;top:565px">Encontrá tu team</h4><p class="bajada-foto" style="left:76px;top:614px">Buscá grupos que en base a tus necesidades: Si querés que estén cerca de tu zona, ser principiantes como vos, que hagan la actividad en tus horarios o incluso las actividades pre y post que realizan. Todo lo podés filtrar desde la app.</p></div></div>
         <div class="cartel" style="left:1250px;top:300px">
           <span class="et">Degradado lineal</span>
           <div class="valor"><i class="muestra" style="background:linear-gradient(180deg,rgba(0,0,0,0),#000)"></i>#000000<b data-valor>80 %</b></div>
@@ -2534,7 +2546,7 @@ html.movil .pastillas span{font-size:18px;padding:8px 16px;border-width:3px}
   </section>
   <div class="divisor"></div>
   <section class="sec" id="km6-ilustraciones">
-    <div class="fila"><h2 class="t">Ilustraciones</h2><p class="c txt">Utilizamos dos tipos de elementos gráficos por fuera de los puntos y fotografías: Se tratan de ilustraciones de caritas y un tratamiento de imagen especial, fromado por puntos.</p></div>
+    <div class="fila"><h2 class="t">Ilustraciones</h2><p class="c txt">Utilizamos dos tipos de elementos gráficos por fuera de los puntos y fotografías: Se trata de ilustraciones de caritas y un tratamiento de imagen especial, formado por puntos.</p></div>
   </section>
   <div class="divisor"></div>
   <section class="sec-foto" id="km6-caritas">
@@ -2543,7 +2555,7 @@ html.movil .pastillas span{font-size:18px;padding:8px 16px;border-width:3px}
   </section>
   <div class="divisor"></div>
   <section class="sec insignias-sec" id="km6-insignias">
-    <div class="fila"><h3 class="t">Insignias</h3><p class="c txt">Las insignias toman un estilo visual diferenciado de los iconos, y de las caritaa. utilizamos puntos haciendo referencia al nombre de la marca “spot”, además queremos simbolizar como el recorrido hasta llegar a conseguir una de estas insignias requiere pasar por varios <b>puntos</b></p></div>
+    <div class="fila"><h3 class="t">Insignias</h3><p class="c txt">Las insignias toman un estilo visual diferenciado de los íconos, y de las caritas. Utilizamos puntos haciendo referencia al nombre de la marca “spot”, además queremos simbolizar cómo el recorrido hasta llegar a conseguir una de estas insignias requiere pasar por varios <b>puntos</b></p></div>
     <div class="unir-puntos" data-unir role="img" aria-label="Unir los puntos: al bajar, una línea violeta une los puntos del 1 al 29 y se forma la palabra SPOT."></div>
     <a class="boton-plantilla" href="assets/km6/plantilla-insignia.svg" download="Spot - Plantilla de insignia.svg">Descargar plantilla</a>
     <div class="cinta-iconos" aria-label="Íconos de puntos de las insignias"><div class="pista-iconos" data-cinta></div></div>
@@ -2621,6 +2633,7 @@ html.movil .pastillas span{font-size:18px;padding:8px 16px;border-width:3px}
       <span class="circulo-ds izq"><img src="assets/km7/circulo.svg" alt=""><img class="b" src="assets/km7/circulo-borde.svg" alt=""></span>
       <span class="circulo-ds der"><img src="assets/km7/circulo.svg" alt=""><img class="b" src="assets/km7/circulo-borde.svg" alt=""></span>
       <p class="frase-ds">Todo nuestro sistema se basa en los puntos.</p>
+      <p class="frase-ds fin">Todo comienza con pequeños elementos.<br>Estos pequeños elementos van a formar cosas más grandes.</p>
       <span class="texto-ds"><span>SOY UN BOTÓN</span></span>
       <img class="cursor-ds" src="assets/km7/linea-cursor.svg" alt="">
       <span class="caja-ds"><i style="left:-3px;top:-4px"></i><i style="left:85px;top:-4px"></i><i style="left:-3px;top:85px"></i><i style="left:85px;top:85px"></i></span>
@@ -2754,16 +2767,16 @@ html.movil .pastillas span{font-size:18px;padding:8px 16px;border-width:3px}
       <p class="txt">Ordenada alfabéticamente, cada carpeta separa sola las tres marcas: primero todo lo de post., después spot. y al final stop.</p>
     </div>
   </section>
-  <footer class="pie-km" data-ant="km6|KM6|Elementos gráficos" data-sig="|KM8|Animaciones"></footer>
+  <footer class="pie-km" data-ant="km6|KM6|Elementos gráficos" data-sig="km10|KM8|Arquigrafía"></footer>
  </div>
 </article>
 
 <!-- ======================= KM 10 · Arquigrafía y señalética (Figma "Slide 16:9 - 10") ======================= -->
-<article id="km10" class="pantalla km" aria-label="KM 10: Arquigrafía y señalética">
+<article id="km10" class="pantalla km" aria-label="KM 8: Arquigrafía y señalética">
  <div class="lienzo">
-  <section class="hero" style="--c:var(--naranja)">
+  <section class="hero" style="--c:var(--rosa)">
     <button class="btn-menu" data-abrir-menu aria-label="Abrir índice"><img src="assets/km2/21764.svg" alt=""></button>
-    <span class="km-tag">KM 10</span>
+    <span class="km-tag">KM 8</span>
     <h1 class="titulo-km" data-t="Arquigrafía y señalética" data-w="1549" style="left:120px">Arquigrafía y señalética</h1>
     <p class="bajada" style="top:612px">La marca en el espacio</p>
     <nav class="links dos" style="top:724px"><button data-a="km10-principios">Principios ↗</button><button data-a="km10-tipos">Tipos de señales ↗</button><button data-a="km10-iconos">Iconografía ↗</button><button data-a="km10-medidas">Medidas ↗</button><button data-a="km10-arqui">Arquigrafía ↗</button></nav>
@@ -2775,14 +2788,6 @@ html.movil .pastillas span{font-size:18px;padding:8px 16px;border-width:3px}
     <div class="fila"><h2 class="t">Wayfinding</h2>
       <div class="c txt"><p>Spot también vive fuera de la pantalla: en eventos, stands y espacios que comparte con otras marcas. Ahí la identidad se vuelve arquigrafía, la marca construida en el lugar, y señalética, el sistema que le dice a cada persona dónde está y hacia dónde ir.</p>
         <p>Las reglas son las mismas para Spot, post. y Stop. Para mostrarlas usamos como caso el evento anual, donde el sistema se pone a prueba en una plaza abierta y en un edificio de nueve pisos.</p></div></div>
-    <div class="principios">
-      <article class="principio"><span class="n">01 · Ubicación</span><h3>Señalar donde se decide</h3><p>En los ingresos, cruces, escaleras y ascensores: los puntos donde la persona elige hacia dónde ir. Lejos del destino, direccionales; al llegar, locativas.</p></article>
-      <article class="principio"><span class="n">02 · Contenido</span><h3>Nombrar por lo que pasa</h3><p>Cada espacio se nombra por su función y su horario, como “Piso 2 · Recuperación”, y no solo por un número. Así se entiende qué hay, además de dónde.</p></article>
-      <article class="principio"><span class="n">03 · Lectura</span><h3>Leer cansado</h3><p>Quien busca un cartel suele venir de correr. Pictograma grande, flecha y una palabra; la bajada es opcional y siempre corta.</p></article>
-      <article class="principio"><span class="n">04 · Color</span><h3>Un color por función</h3><p>Cada tipo de señal tiene un color fijo de la paleta de la marca que firma el espacio. En el evento, las direccionales van en rosa y las locativas en azul, siempre sobre negro o crema.</p></article>
-      <article class="principio"><span class="n">05 · Altura</span><h3>A la altura de la vista</h3><p>Las placas sobre pared van entre 1,50 y 1,70 m. Lo que tiene que verse por encima de la gente arranca en 2,25 m.</p></article>
-      <article class="principio"><span class="n">06 · Hitos</span><h3>Piezas que orientan</h3><p>Las piezas grandes, como portales, paradas o inflables, se ven de lejos: funcionan como referencia, punto de encuentro y fondo para la foto.</p></article>
-    </div>
   </section>
   <div class="divisor"></div>
   <section class="sec km10-sec" id="km10-tipos">
@@ -2791,7 +2796,7 @@ html.movil .pastillas span{font-size:18px;padding:8px 16px;border-width:3px}
       <img class="esquema" src="assets/km10/direccionales.svg" width="1255" height="445" loading="lazy" alt="Direccionales sobre la regla de alturas, con una persona como referencia: parada de bus, un destino, dos destinos y cuatro destinos sobre pared."></div>
     <div class="senal-fila"><div class="pauta"><h4>Locativas</h4><p>¿Llegué? Nombran el lugar y sirven de referencia para encontrarse. Un stand lleva su cartel elevado; una sala, una placa junto a la puerta con nombre, piso y el color del mapa; un punto numerado, una pieza autoportante que se ve de lejos.</p></div>
       <img class="esquema" src="assets/km10/locativas.svg" width="1255" height="445" loading="lazy" alt="Locativas sobre la regla de alturas: cartel de hamburguesería, cartel de sala y locativa 10."></div>
-    <div class="senal-fila"><div class="pauta"><h4>Orientativas</h4><p>¿Qué hay acá? El directorio de cada piso: número y nombre, y la lista de espacios con una línea sobre lo que se hace en cada uno. Va junto a escaleras y ascensores, lo primero que se ve al llegar.</p></div>
+    <div class="senal-fila"><div class="pauta"><h4>Orientativas</h4><p>¿Qué hay acá? El directorio de cada piso. Número, nombre y la lista de espacios con una línea sobre lo que se hace en cada uno. Va junto a escaleras y ascensores, lo primero que se ve al llegar.</p></div>
       <img class="esquema" src="assets/km10/orientativas.svg" width="1255" height="445" loading="lazy" alt="Orientativa: directorio del piso 2, Recuperación, junto a una persona como referencia."></div>
     <div class="senal-fila"><div class="pauta"><h4>Complementarias</h4><p>Resuelven dudas puntuales para que nadie tenga que preguntar: dónde pedir y dónde retirar, cómo conectarse al wi-fi, dónde está la tienda o dónde apoyar el celular para la foto grupal.</p></div>
       <img class="esquema" src="assets/km10/complementarias.svg" width="1255" height="416" loading="lazy" alt="Complementarias: placa wi-fi, soporte para la foto grupal, aviso de merch y carteles de pedí y retirá."></div>
@@ -2807,7 +2812,7 @@ html.movil .pastillas span{font-size:18px;padding:8px 16px;border-width:3px}
     <div class="fila"><h2 class="t">Medidas y alturas</h2><p class="c txt">Todas las piezas se dibujan sobre la misma regla de alturas, con una persona como referencia. Así cada señal se decide por dónde se lee y no solo por el espacio disponible.</p></div>
     <div class="alturas" data-alturas>
       <button class="altura"><b>0,75 m</b><span>Base de las piezas de piso, como los atriles de pedí y retirá.</span></button>
-      <button class="altura"><b>1,50 – 1,70 m</b><span>Altura de la vista: placas sobre pared, carteles de sala y directorios.</span></button>
+      <button class="altura"><b>1,50 – 1,70 m</b><span>Altura de la vista: placas sobre pared, carteles de sala y directorios. Para tener en cuenta, la altura promedio de una persona es de 1,75 m.</span></button>
       <button class="altura"><b>2,25 m</b><span>Desde acá, lo que tiene que verse por encima de la gente.</span></button>
       <button class="altura"><b>3 m o más</b><span>Coronamientos de stands y portales, visibles desde lejos.</span></button>
     </div>
@@ -2818,19 +2823,20 @@ html.movil .pastillas span{font-size:18px;padding:8px 16px;border-width:3px}
     <div class="fila"><h2 class="t">Arquigrafía</h2><p class="c txt">La arquigrafía lleva la identidad a <b class="az">la escala del cuerpo y del edificio</b>. No inventa piezas nuevas: toma los elementos gráficos de la marca, como estrellas, puntos y caritas, y los vuelve estructura, volumen y color.</p></div>
     <div class="senal-fila"><div class="pauta"><h4>Un solo frente</h4><p>Los módulos de un stand se arman juntos, uno al lado del otro, y forman una sola fachada. Quien se acerca <b class="az">encuentra en un mismo lugar</b> todo lo que la marca ofrece.</p></div>
       <div class="frente" data-frente role="img" aria-label="Stand de STOP: un tótem, el mostrador con el frente “A SPOT TO STOP.” y un perchero de merch, armados como una sola fachada."><i class="m1"></i><i class="m2"></i><i class="m3"></i></div></div>
-    <div class="senal-fila"><div class="pauta"><h4>Lo existente, con identidad</h4><p>Cuando el espacio ya tiene su mobiliario, se lo viste en lugar de reemplazarlo. La parada de micro suma una franja de color con el nombre, los elementos gráficos y una direccional al lado, y pasa a ser un punto de reencuentro.</p></div>
+    <div class="senal-fila"><div class="pauta"><h4>Nuestra identidad sobre lo existente</h4><p>Cuando el espacio ya tiene su mobiliario, se lo viste en lugar de reemplazarlo. La parada de micro suma una franja de color con el nombre, los elementos gráficos y una direccional al lado, y pasa a ser un punto de reencuentro.</p></div>
       <figure class="vestir" data-vestir><img src="assets/km10/parada.jpg" alt="Parada de micro en una plaza, vestida con una franja rosa que dice BUS STOP, los elementos gráficos de STOP y una direccional al lado." loading="lazy"></figure></div>
-    <div class="senal-fila"><div class="pauta"><h4>Hitos a gran escala</h4><p>Los elementos gráficos crecen hasta volverse objetos: una copa, una estrella y una carita inflables marcan la llegada y se ven desde lejos. La parada fotográfica suma un espejo y señales con frases que invitan a frenar.</p></div>
+    <div class="senal-fila"><div class="pauta"><h4>Hitos inflables y a gran escala</h4><p>Los elementos gráficos crecen hasta volverse objetos: una copa, una estrella y una carita inflables marcan la llegada y se ven desde lejos. La parada fotográfica suma un espejo y señales con frases que invitan a frenar.</p></div>
       <div class="hitos" data-hitos><figure class="hito"><img src="assets/km10/inflables.jpg" alt="Copa, estrella y carita inflables de STOP iluminadas de noche frente a un edificio." loading="lazy"></figure>
         <figure class="hito"><img src="assets/km10/parada-foto.jpg" alt="Parada fotográfica: una carita inflable con anteojos, un espejo y señales con frases como “Pará, tomá aire.”." loading="lazy"></figure></div></div>
     <div class="senal-fila"><div class="col-izq"><div class="pauta"><h4>La pantalla también es arquitectura</h4><p>En post., la fachada de pantallas cumple el mismo rol que un cartel: deja reconocer la instalación desde afuera, anuncia lo que está por empezar y suma movimiento con las animaciones de la marca.</p></div>
         <div class="juego-insignias" data-juego aria-label="Juego: las misceláneas de post. (puntos y estrellas) caen y se pueden agarrar y tirar"><p class="pista">Agarrá un punto o una estrella y tiralo</p></div></div>
-      <div class="pantallas-post" data-pantallas>
+      <div class="pantallas-col"><div class="pantallas-post" data-pantallas>
         <video class="s1" src="assets/km10/post-respirar.mp4" muted loop playsinline preload="none" style="aspect-ratio:2366/820" aria-label="Pantalla de la entrada de post.: animación respirar"></video>
         <video class="s2" src="assets/km10/post-running.mp4" muted loop playsinline preload="none" style="aspect-ratio:3240/1080" aria-label="Pantalla del frente de post.: animación running"></video>
-        <video class="s3" src="assets/km10/post-insignia.mp4" muted loop playsinline preload="none" style="aspect-ratio:4096/1484" aria-label="Pantalla de atrás de post.: animación insignia"></video></div></div>
+        <video class="s3" src="assets/km10/post-insignia.mp4" muted loop playsinline preload="none" style="aspect-ratio:4096/1484" aria-label="Pantalla de atrás de post.: animación insignia"></video></div>
+        <img class="render-fachada" src="assets/km10/fachada-render.jpg" alt="Render de la cabina de post. por fuera: pantallas negras con el logo, puntos y estrellas de la marca y las dedicatorias." loading="lazy"></div></div>
   </section>
-  <footer class="pie-km" data-ant="|KM9|Íconos" data-sig="inicio|KM0|Volver al inicio"></footer>
+  <footer class="pie-km" data-ant="km7|KM7|Design System" data-sig="inicio|KM0|Volver al inicio"></footer>
  </div>
 </article>
 
@@ -2857,7 +2863,7 @@ html.movil .pastillas span{font-size:18px;padding:8px 16px;border-width:3px}
       <p class="mono-k tinta">01 · Introducción</p>
       <img class="meta-logo" src="assets/km6/spot-logo.svg" alt="SPOT!">
       <p class="meta-txt">En Spot creamos una experiencia para que las personas se animen a dar el primer paso, que logren salir y encuentren un lugar para realizar el deporte que buscaban. Pero...</p>
-      <p class="meta-preg" data-palabras>¿qué pasa cuando ya cruzamos esa primer línea de meta?</p>
+      <p class="meta-preg" data-palabras>¿qué pasa cuando ya cruzamos esa primera línea de meta?</p>
     </div>
     <div class="linea-meta" aria-hidden="true"><span class="cuadros"></span><span class="et">Meta</span></div>
     <div class="meta-post">
@@ -3038,9 +3044,9 @@ const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [..
 
 /* Puntos del mapa (Slide 2): posición, color y destino */
 const PUNTOS_MAPA = [
-  [1009,407,'amarillo','km1','SPOT!'],[1171,407,'naranja','km2','Manual de voz y tono'],[1275,474,'rosa','km3','Logotipos'],
-  [1264,610,'violeta','km4','Tipografías'],[1081,598,'azul','km5','Colores'],[908,577,'amarillo','km6','Elementos gráficos'],
-  [753,619,'naranja','km7','Design System'],[597,577,'rosa',null,'Animaciones'],[597,461,'violeta',null,'Íconos'],[721,407,'azul','km10','Arquigrafía']
+  [1009,407,'amarillo','km1','SPOT!'],[1238,407,'naranja','km2','Manual de voz y tono'],[1276,548,'rosa','km3','Logotipos'],
+  [1128,626,'violeta','km4','Tipografías'],[907,576,'azul','km5','Colores'],[721,626,'amarillo','km6','Elementos gráficos'],
+  [601,491,'naranja','km7','Design System'],[721,407,'rosa','km10','Arquigrafía']
 ];
 
 /* Decoraciones (Componentes "Punto", insignia y carita). [archivo, x, y, w, h, inset%(t,r,b,l), rotación, caja] */
@@ -3076,7 +3082,7 @@ const DECOS = {
   km1: HERO('km1/', ['punto3.svg','punto4.svg','punto5.svg','punto6.svg','punto7.svg','punto8.svg','punto9.svg','star8.svg','star10.svg','star9-insignia.svg','insignia-img.png']),
   // KM 2–6: misma ubicación que el Figma, pero cada KM arranca con sus propias piezas (colores, estrella e insignia)
   km2: variarHero(2, 'naranja', 'grupo'), km3: variarHero(3, 'rosa', 'consistencia'), km4: variarHero(4, 'violeta', 'asistencia'),
-  km5: variarHero(5, 'azul', 'repetido'), km6: variarHero(6, 'amarillo', 'asociado'), km7: variarHero(7, 'naranja', 'integrante'), km10: variarHero(10, 'naranja', 'consistencia'),
+  km5: variarHero(5, 'azul', 'repetido'), km6: variarHero(6, 'amarillo', 'asociado'), km7: variarHero(7, 'naranja', 'integrante'), km10: variarHero(10, 'rosa', 'consistencia'),
   // KM 6: puntos y estrellas sueltos sobre el texto de introducción (relativos a la sección, y − 1080)
   km6intro: [[1,332,230,113],[2,544,160,113],[3,948,235,113],[4,327.4,109.5,112.3],[5,801.4,314.5,112.3],[6,195,298,71],[7,697.8,219,46.4],[8,696.8,330,46.4],
     [9,219.8,190,46.4],[10,959,148,71],[11,1151,292,71],[12,123,132,71],[13,791,131,71],[14,1088.8,133,46.4],[15,439,347,71],[16,588.8,304,46.4]].map(([n, x, y, w]) => ['km6/intro-' + n + '.svg', x, y, w, w, [0,0,0,0]]),
@@ -3207,9 +3213,9 @@ const ENFOQUE = [['Invitamos a hacer','azul',['“Encontrá grupos cerca tuyo”
   ['Damos datos concretos','amarillo',['“Running · Principiante · a 800 m”','“Mar, Jue y Sáb · 07:00 h”','“Locker gratis 2 hs · a 300 m”','“Abierto ahora · hasta las 20 h”']],
   ['Celebramos los logros','violeta',['“¡Ya hicieron equipo!”','“¡5 actividades juntos!”','“¡Mirá ese progreso!”','“¡Qué gusto verte de vuelta!”']]];
 const TONO = [['Primera vez en la app','amarillo',219,'Paciente y entusiasta','“¡Qué bueno que te sumes! Contanos cómo te movés y te armamos tu primer recorrido.”'],
-  ['Haciendo actividad','naranja',201,'Motivador','¡Wow! Recorriste 18km este mes. ¿Vamos por los 20?'],
+  ['Haciendo actividad','naranja',201,'Motivador','¡Wow! Recorriste 18 km este mes. ¿Vamos por los 20?'],
   ['Si algo falla','azul',139,'Claro y sin dramatismo','“Se cortó la conexión, pero tu recorrido quedó guardado. Seguí cuando quieras.”'],
-  ['Al terminar un recorrido','rosa',241,'Festivo y celebratorio','"¡Bien hecho! Hoy recorriste 4km. Te merecés un buen descanso este finde."']];
+  ['Al terminar un recorrido','rosa',241,'Festivo y celebratorio','"¡Bien hecho! Hoy recorriste 4 km. Te merecés un buen descanso este finde."']];
 // [izquierda, derecha, color, posición de Spot sobre 1000 px (el centro es 500), velo de la pista, texto]
 const PERFIL = [['Divertido','Serio','amarillo',300,.4,'Somos divertidos, pero no ridículos. El humor acompaña, pero no tapa la información ni molesta.'],
   ['Casual','Formal','violeta',200,.2,'Hablamos de vos y con palabras de todos los días. La formalidad la dejamos para términos y condiciones.'],
@@ -3393,7 +3399,7 @@ const INDICE = [
   ['Tipografías','km4',[]],
   ['Colores','km5',[['Usos correctos e incorrectos','km5-usos']]],
   ['Elementos gráficos','km6',[['Misceláneas','km6-puntos'],['Fotografías','km6-fotos'],['Espacios seguros',null]]],
-  ['Design System','km7',[['Átomos','km7-atomos'],['De átomos a botones','km7-boton'],['Botones','km7-botones'],['Grillas','km7-grillas'],['Íconos','km7-iconos'],['Nomenclatura','km7-nomenclatura']]], ['Animaciones',null,[]], ['Íconos',null,[]],
+  ['Design System','km7',[['Átomos','km7-atomos'],['De átomos a botones','km7-boton'],['Botones','km7-botones'],['Grillas','km7-grillas'],['Íconos','km7-iconos'],['Nomenclatura','km7-nomenclatura']]],
   ['Arquigrafía','km10',[['Principios','km10-principios'],['Tipos de señales','km10-tipos'],['Iconografía','km10-iconos'],['Medidas y alturas','km10-medidas'],['Arquigrafía','km10-arqui']]]
 ];
 function armarMenu(){
@@ -3641,7 +3647,7 @@ function iniciarToques(){
    ENTRADAS AL SCROLLEAR: suben 24 px + aparecen, 0,45 s, escalonadas 0,15 s
    ===================================================================== */
 const ENTRAN = ['.sec .fila > *', '.pilar', '.rasgo', '.card-enf', '.card-tono', '.somos-fila', '.enfoque > h4', '.momentos > h4',
-  '.banda p', '.foto-co p', '.tira', '.variantes', '.tamanos > div', '.submarcas-zona > img.abs', '.submarcas-zona > p', '.foto-rot', '.boton', '.parada', '.volver-arriba', '.diagramas > *', '.mala', '.app-pantallas', '.pauta', '.alturas', '.marca-card', '.piezas', '.signo', '.carrusel', '.uso', '.filtros figure', '.indebido', '.km6-intro > p', '.carita-ej', '.insignia-card', '.sobre-foto', '.siluetas-fila', '.siluetas-grande']
+  '.banda p', '.foto-co p', '.tira', '.variantes', '.tamanos > div', '.submarcas-zona > img.abs', '.submarcas-zona > p', '.foto-rot', '.boton', '.parada', '.volver-arriba', '.diagramas > *', '.mala', '.app-pantallas', '.render-fachada', '.pauta', '.alturas', '.marca-card', '.piezas', '.signo', '.carrusel', '.uso', '.filtros figure', '.indebido', '.km6-intro > p', '.carita-ej', '.insignia-card', '.sobre-foto', '.siluetas-fila', '.siluetas-grande']
   .join(',');
 function iniciarEntradas(){
   if (REDUCIR || !('IntersectionObserver' in window)) return;
@@ -3686,7 +3692,7 @@ function armarPies(){
 /* ---------- KM 3 · malas prácticas ---------- */
 const MALAS = [['No lo deformes ni lo estires','No lo rotes','No lo desintegres en otras partes que no sean las indicadas','No utilices el logotipo sin su reborde. Recordá que puede haber excepciones si se trata de una animación o elemento interactivo, como es el inicio de este sitio.'],
   ['No cambies la inclinación, escala o posición de los elementos que componen el isotipo','No apliques outline a ninguno de los elementos. La única excepción es para explicar la construcción del logo, como en este mismo sitio.','No utilices colores que no pertenezcan a ninguna marca de Spot.','Y si pertenecen a la marca, solo está permitida la versión explicada más arriba, según el fondo.'],
-  ['No apliques efectos al logo (sombra paralela, resplandor, etc.)','No lo coloques sobre fondos muy complejos sin antes oscurecer la imagen (puede aplicarse una capa en negro en baja opacidad para areglarlo).']];
+  ['No apliques efectos al logo (sombra paralela, resplandor, etc.)','No lo coloques sobre fondos muy complejos sin antes oscurecer la imagen (puede aplicarse una capa en negro en baja opacidad para arreglarlo).']];
 function armarMalas(){
   let n = 0;
   const cont = $('[data-malas]'); if (!cont) return;
@@ -3809,7 +3815,7 @@ const FOTOS = {
 const INDEBIDOS = [
   [['indebido-1','No uses fotos de baja calidad o pixeladas','left:-51.4%;top:-56.65%;width:214%;height:181.65%;inset:auto'],['indebido-2','No apliques filtros que alteren los colores'],
    ['indebido-3','Evitá fotos demasiado profesionales, que parezcan sacadas de bancos de imágenes. Buscamos momentos reales.']],
-  [['indebido-4','No uses fotografías hehcas con inteligencia artificial. La única excepción son renders de eventos o experiencias que aun no hayan sido realizadas físicamente, como puede ser la experiencia Post.','object-position:bottom'],
+  [['indebido-4','No uses fotografías hechas con inteligencia artificial. La única excepción son renders de eventos o experiencias que aún no hayan sido realizadas físicamente, como puede ser la experiencia Post.','object-position:bottom'],
    ['indebido-5','Evitá fotografías que claramente no son de Argentina'],['indebido-6','Por otro lado, tampoco utilices fotografías demasiado caseras']],
   [['indebido-7','Si bien se pueden usar fotografías donde aparece una sola persona, un plano general puede hacerla parecer solitaria'],
    ['indebido-8','Como nuestro público no abarca tanto las competiciones profesionales, es preferible usar imágenes de entrenamientos en grupo informales'],['indebido-9','No subexpongas o sobreexpongas mucho las fotografías']]];
@@ -3870,8 +3876,12 @@ function deslizable(zona, { mover, soltar, rueda }){
 
 /* KM 1 · fotos de post. como el mazo de truus.co: la de adelante se arrastra y se tira
    a un costado; las de atrás pasan adelante con un click. Vuelven a los lugares del Figma. */
-function iniciarMazo(){
-  const fotos = $$('.submarcas-zona .foto-rot'); if (fotos.length !== 3 || !window.gsap) return;
+function iniciarMazo(){   // dos mazos: post. y, 2217 px más abajo (Figma), STOP
+  armarMazo($$('.submarcas-zona .foto-rot:not(.stop)'), 0);
+  armarMazo($$('.submarcas-zona .foto-rot.stop'), MOVIL ? 0 : 2217);
+}
+function armarMazo(fotos, dy){
+  if (fotos.length !== 3 || !window.gsap) return;
   const SLOT = MOVIL ? {
     izq:    { left: 0,   top: 46, width: 280, height: 158, rotation: -6, z: 1 },
     der:    { left: 152, top: 52, width: 280, height: 158, rotation: 6,  z: 2 },
@@ -3881,6 +3891,7 @@ function iniciarMazo(){
     der:    { left: 964.6, top: 1282.3, width: 821.493, height: 462.324, rotation: 4.43,  z: 2 },
     centro: { left: 403,   top: 1183,   width: 1114,    height: 627,     rotation: 0,     z: 3 }
   };
+  if (dy) Object.values(SLOT).forEach(o => o.top += dy);
   const pos = ['der', 'izq', 'centro'];                       // lugar de cada foto (orden del HTML)
   const props = s => ({ left: s.left, top: s.top, width: s.width, height: s.height, rotation: s.rotation, x: 0, y: 0 });
   fotos.forEach((f, k) => { f.style.rotate = ''; f.draggable = false; f.style.zIndex = SLOT[pos[k]].z; gsap.set(f, props(SLOT[pos[k]])); });
@@ -5469,8 +5480,8 @@ function iniciarPost(){
   [['post-p1',6,62,40],['fig-649d6',30,8,60],['fig-47350',46,20,20],['post-p3',58,78,36],['fig-4a4d9',86,30,64],['fig-9e35e',64,12,20],['fig-83dad',18,84,44],['post-p2',92,82,30]].forEach(([n, x, y, w], i) => {
     const img = document.createElement('img'); img.src = P(n); img.alt = ''; img.style.cssText = `left:${x}%;top:${y}%;width:${MOVIL ? w * .7 : w}px;animation-delay:${-i * 1.3}s`; miscF.appendChild(img);
   });
-  const NOTAS = [['nacho', 'Me salvaste nachito! <3'], ['el grupo del parque', 'Los martes a las 7 no serian lo mismo sin ustedes.'],
-    ['cami', 'Gracias por esperarme en cada kilometro, sin vos no llegaba ni a 21k!!!!!!!!!'], ['sofi', 'Gracias por esperarme siempre al final, aunque llegara última.'],
+  const NOTAS = [['nacho', 'Me salvaste nachito! <3'], ['el grupo del parque', 'Los martes a las 7 no serían lo mismo sin ustedes.'],
+    ['cami', 'Gracias por esperarme en cada kilómetro, sin vos no llegaba ni a 21k!!!!!!!!!'], ['sofi', 'Gracias por esperarme siempre al final, aunque llegara última.'],
     ['profe caro', 'Por enseñarme que el descanso también es parte del entrenamiento.']];
   const COLORES = ['var(--violeta)', 'var(--verde)', 'var(--azul)', 'var(--rosa)'];
   const LUG = MOVIL ? [[3, 4], [52, 3], [4, 66], [50, 68]] : [[3, 6], [16, 56], [68, 5], [70, 54], [38, 70], [40, 2]];
@@ -5549,7 +5560,9 @@ function prepararMovil(){
   const zona = $('.submarcas-zona'); if (!zona) return;
   const mazo = document.createElement('div'); mazo.className = 'mazo-movil';
   $('.boton', zona).after(mazo);
-  $$('.foto-rot', zona).forEach(f => mazo.appendChild(f));
+  $$('.foto-rot:not(.stop)', zona).forEach(f => mazo.appendChild(f));
+  const mazoStop = document.createElement('div'); mazoStop.className = 'mazo-movil';
+  $$('.boton', zona)[1].after(mazoStop); $$('.foto-rot.stop', zona).forEach(f => mazoStop.appendChild(f));
   const pf = $('[data-decos="postfotos"]', zona); if (pf) mazo.appendChild(pf);
 }
 
