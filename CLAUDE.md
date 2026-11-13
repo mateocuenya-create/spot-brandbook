@@ -522,3 +522,7 @@ El 10/11/2026 se borró todo lo construido y se empezó de nuevo. Respaldo de la
   - Hero: se sumaron los links "Botones ↗" y "Nomenclatura ↗"; en el menú, las cuatro secciones nuevas.
   - **Huecos del Figma:** el texto de Botones dice "Pensando l la interfaz"; se corrigió a "Pensando la interfaz". La imagen de referencia de Dropbox (`682:10950`) no va en la página.
   - Archivos nuevos: `assets/km7/ds/` (íconos de los botones y de la hoja de filtros, `mockup-iphone.png`, `pantalla-filtros.png` para la parte de arriba de la pantalla) y `assets/km7/iconos/` (41 íconos).
+- 12/11/2026 · Mateo · **KM 7 · ajustes de Íconos y Nomenclatura.**
+  - Íconos: el cambio de ícono es más rápido y sutil (sale en 0,12 s y entra en 0,3 s, con un giro chico). Ahora se mezcla al entrar con el mouse **y mientras el mouse se mueve encima** (cada 0,3 s), así alcanza con pasarlo por arriba. La pista dice "Pasá el mouse por los íconos para mezclarlos" (en el celular, "Tocá los íconos para mezclarlos"), con el ícono de flechas girando; hasta que alguien la usa, cada 2,5 s un ícono hace un saltito para invitar.
+  - El unicornio que se vio sobre un ícono no es de la página (no está en el código ni en los archivos): viene de algo del navegador de quien lo vio, por ejemplo una extensión.
+  - Nomenclatura: "Así se ve una carpeta ordenada" va dentro del contorno de una carpeta de macOS (pestaña arriba a la izquierda, borde Negro Spot), con las tres carpetas adentro. Entra con un leve crecimiento antes de que se acomoden los archivos.

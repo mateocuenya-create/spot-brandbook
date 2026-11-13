@@ -998,14 +998,21 @@ html.cursor-propio.cursor-visible :is(#cursor,#cursor-mini){opacity:1}
 .celda-m.pintada .ic{color:var(--negro)}
 .celda-m .ic svg{display:block;width:100%;height:100%}
 .celda-m .nombre-m{position:absolute;bottom:34px;left:0;right:0;text-align:center;font:600 14px/1 var(--reddit);color:rgba(237,232,219,.55);letter-spacing:.04em;transition:opacity .3s}
-.celda-m .ic.sale{animation:ic-sale .22s cubic-bezier(.55,0,1,.45) forwards}
-.celda-m .ic.entra{animation:ic-entra .55s cubic-bezier(.34,1.56,.64,1)}
-@keyframes ic-sale{to{rotate:100deg;scale:.3;opacity:0}}
-@keyframes ic-entra{from{rotate:-100deg;scale:.3;opacity:0}to{rotate:0deg;scale:1;opacity:1}}
+.celda-m .ic.sale{animation:ic-sale .12s ease-in forwards}
+.celda-m .ic.entra{animation:ic-entra .3s cubic-bezier(.34,1.4,.64,1)}
+@keyframes ic-sale{to{rotate:30deg;scale:.7;opacity:0}}
+@keyframes ic-entra{from{rotate:-30deg;scale:.7;opacity:0}to{rotate:0deg;scale:1;opacity:1}}
+.celda-m .punto-m{transition-duration:.3s}
+/* pista: hasta que se usa, cada tanto un ícono hace un saltito para invitar a pasar el mouse */
+.celda-m.invita .ic{animation:invita .6s cubic-bezier(.34,1.56,.64,1)}
+@keyframes invita{0%,100%{translate:0 0;rotate:0deg}35%{translate:0 -10px;rotate:-8deg}70%{translate:0 2px;rotate:4deg}}
+.mezcla{cursor:pointer}
 .mezcla .celda-m{transition:opacity .45s var(--ease-out) var(--d,0s),translate .6s cubic-bezier(.34,1.56,.64,1) var(--d,0s)}
 .mezcla.espera .celda-m{opacity:0;translate:0 40px}
-.mezcla-pista{display:flex;gap:8px;align-items:center;padding-left:100px;font:600 14px/1 var(--reddit);color:var(--azul)}
-.mezcla-pista img{width:18px;height:18px;filter:invert(58%) sepia(60%) saturate(1500%) hue-rotate(200deg)}
+.mezcla-pista{display:flex;gap:10px;align-items:center;padding-left:100px;font:600 18px/1 var(--reddit);color:var(--negro-80);transition:opacity .4s}
+.mezcla-pista img{width:22px;height:22px;animation:gira-pista 2.4s linear infinite}
+.mezcla-caja.usada .mezcla-pista{opacity:.45} .mezcla-caja.usada .mezcla-pista img{animation:none}
+@keyframes gira-pista{to{rotate:360deg}}
 /* nomenclatura */
 .formula{width:1680px;padding:72px 64px;background:var(--negro);display:flex;flex-direction:column;gap:24px;color:var(--crema)}
 .formula .et{font:600 20px/normal var(--reddit);color:var(--naranja)}
@@ -1034,7 +1041,13 @@ html.cursor-propio.cursor-visible :is(#cursor,#cursor-mini){opacity:1}
 .cod-fila.marcada b{translate:12px 0}
 .cod-fila{cursor:pointer}
 .ejemplos{width:1680px;display:flex;flex-direction:column;overflow-x:clip}
-.carpetas{display:flex;gap:40px;align-items:flex-start;margin-bottom:32px}
+.carpetas{display:flex;gap:40px;align-items:flex-start}
+/* contorno de carpeta de macOS (pestaña arriba a la izquierda) alrededor de las tres carpetas */
+.finder{position:relative;margin:58px 0 36px;padding:48px 48px 52px;border:3px solid var(--negro);border-radius:0 26px 26px 26px;background:var(--crema);
+  transition:opacity .5s var(--ease-out),scale .7s cubic-bezier(.34,1.3,.64,1);transform-origin:20% 0}
+.finder-tab{position:absolute;left:-3px;top:-52.5px;width:310px;height:54px;overflow:visible}
+.finder .carpeta{width:auto;flex:1;min-width:0}
+.ejemplos.espera .finder{opacity:0;scale:.94}
 .carpeta{position:relative;width:533px;flex:none;padding-top:24px;display:flex;flex-direction:column;gap:12px}
 .carpeta::before{content:'';position:absolute;left:0;right:0;top:0;border-top:2px solid var(--negro);transform-origin:left;transition:transform .8s cubic-bezier(.65,0,.35,1) var(--d,0s)}
 .carpeta b{font:600 32px/normal var(--sora);color:var(--naranja);transition:opacity .5s var(--ease-out) var(--d,0s)}
@@ -1573,6 +1586,8 @@ html.movil .cod-fila :is(b,span){width:auto}
 html.movil .cod-fila b{font-size:24px}
 html.movil .cod-fila :is(span,em){font-size:17px}
 html.movil .carpetas{flex-direction:column;gap:36px}
+html.movil .finder{margin-top:40px;padding:32px 18px 28px;border-radius:0 20px 20px 20px}
+html.movil .finder-tab{width:200px;height:35px;top:-34.5px}
 html.movil .carpeta{width:100%}
 html.movil .carpeta p{font-size:16px;word-break:break-all}
 </style>
@@ -2357,7 +2372,7 @@ html.movil .carpeta p{font-size:16px;word-break:break-all}
     <div class="fila"><h2 class="t">Íconos</h2><p class="c txt">Spot utiliza los íconos del sitio <a href="https://phosphoricons.com/" target="_blank" rel="noopener" style="text-decoration:underline">Phosphor Icons</a>, una librería gratuita de íconos disponibles para copiar y descargar en svg y png. Sus puntas redondeadas conectan a la perfección con nuestro design system, continuando la base de construcción con puntos.</p></div>
     <div class="mezcla-caja">
       <div class="mezcla" data-mezcla role="group" aria-label="Íconos de la app de Spot: pasá el mouse (o tocá) cada uno para mezclarlo"></div>
-      <p class="mezcla-pista"><img src="assets/km7/iconos/switch.svg" alt="">Pasá el mouse para mezclar</p>
+      <p class="mezcla-pista"><img src="assets/km7/iconos/switch.svg" alt="">Pasá el mouse por los íconos para mezclarlos</p>
     </div>
   </section>
 
@@ -2389,10 +2404,13 @@ html.movil .carpeta p{font-size:16px;word-break:break-all}
     </div>
     <div class="ejemplos" data-ejemplos>
       <h4>Así se ve una carpeta ordenada</h4>
-      <div class="carpetas">
+      <div class="finder" aria-label="Carpeta">
+        <svg class="finder-tab" viewBox="0 0 310 54" aria-hidden="true"><rect x="3" y="48" width="301" height="6" fill="var(--crema)"/><path d="M1.5 54V20Q1.5 1.5 20 1.5H236Q250 1.5 258 12L282 42Q290 51 304 51H310" fill="var(--crema)" stroke="var(--negro)" stroke-width="3" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></svg>
+        <div class="carpetas">
         <div class="carpeta"><b>post.</b><p>post.arq_fachada_dedicatorias_v04.mp4</p><p>post.foto_cabina_estiramiento_v01.jpg</p><p>post.logo_isotipo_verde_sobrenegro.png</p><p>post.motion_break_1920x1080_v02.mp4</p></div>
         <div class="carpeta"><b>spot.</b><p>spot.adidas.logo_lockup_crema.svg</p><p>spot.fav_animado_32.gif</p><p>spot.ico_lockers_bold_24.svg</p><p>spot.ilu_mariposa_405.svg</p><p>spot.logo_principal_negro.svg</p><p>spot.pant_home_mapa_390x844_v03.png</p><p>spot.pant_logro_noobie_390x844_v01.png</p></div>
         <div class="carpeta"><b>stop.</b><p>stop.arq_busstop_render_v01.jpg</p><p>stop.integra.senal_stand_v01.pdf</p><p>stop.logo_principal_azul_v02.svg</p><p>stop.senal_direccional_banos_v02.pdf</p><p>stop.senal_orientativa_piso2_v01.pdf</p></div>
+      </div>
       </div>
       <p class="txt">Ordenada alfabéticamente, cada carpeta separa sola las tres marcas: primero todo lo de post., después spot. y al final stop.</p>
     </div>
@@ -3698,16 +3716,26 @@ function iniciarKM7Secciones(){
       setTimeout(() => { cambiar(); ic.classList.remove('sale'); void ic.offsetWidth; ic.classList.add('entra'); }, 220);
     };
     const mezclar = celda => {
-      if (celda._ocupada) return; celda._ocupada = true; setTimeout(() => celda._ocupada = false, 480);
+      if (celda._ocupada) return; celda._ocupada = true; setTimeout(() => celda._ocupada = false, 280);
       const usados = $$('.celda-m', mezcla).map(c => c.dataset.n), libres = ICONOS_DS.filter(n => !usados.includes(n));
       const otro = libres[Math.floor(Math.random() * libres.length)];
       const c = COLORES.filter(x => x !== celda.dataset.c); celda.dataset.c = c[Math.floor(Math.random() * c.length)];
       celda.style.setProperty('--c', `var(--${celda.dataset.c})`); celda.classList.add('pintada');
       poner(celda, otro, true);
     };
-    if (MOVIL || matchMedia('(hover: none)').matches) { const pi = $('.mezcla-pista', km); if (pi) pi.lastChild.textContent = 'Tocá un ícono para mezclar'; }
+    if (MOVIL || matchMedia('(hover: none)').matches) { const pi = $('.mezcla-pista', km); if (pi) pi.lastChild.textContent = 'Tocá los íconos para mezclarlos'; }
     $$('.celda-m', mezcla).forEach(c => { poner(c, c.dataset.n, false);
-      c.addEventListener('mouseenter', () => mezclar(c)); c.addEventListener('click', () => mezclar(c)); });
+      const usar = () => { mezcla.parentElement.classList.add('usada'); mezclar(c); };
+      // al entrar y también mientras el mouse se mueve encima (cada 0,3 s), así basta con pasarlo por arriba
+      c.addEventListener('mouseenter', usar); c.addEventListener('click', usar);
+      let ultimo = 0; c.addEventListener('mousemove', () => { const t = performance.now(); if (t - ultimo > 300) { ultimo = t; usar(); } }); });
+    // hasta que alguien la usa, cada 2,5 s un ícono hace un saltito (solo si se ve)
+    setInterval(() => {
+      if (mezcla.parentElement.classList.contains('usada') || !km.classList.contains('activa')) return;
+      const r = mezcla.getBoundingClientRect(); if (r.bottom < 0 || r.top > innerHeight) return;
+      const cs = $$('.celda-m', mezcla).filter(c => c.offsetParent), c = cs[Math.floor(Math.random() * cs.length)];
+      c.classList.remove('invita'); void c.offsetWidth; c.classList.add('invita'); setTimeout(() => c.classList.remove('invita'), 700);
+    }, 2500);
     // al llegar: entran las celdas y después se mezclan solas una vez, de izquierda a derecha, para mostrar cómo funciona
     let mostro = false;
     const demo = () => { if (mostro || REDUCIR) return; mostro = true;
