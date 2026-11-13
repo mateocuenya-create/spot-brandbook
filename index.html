@@ -577,7 +577,31 @@ a.punto{cursor:pointer} span.punto{cursor:default}
 .filtros figure{width:402px;display:flex;flex-direction:column;gap:34px}
 .filtros img{width:402px;height:778px;transition:transform .3s var(--ease-out),filter .3s}
 .filtros figure:hover img{transform:translateY(-10px);filter:drop-shadow(0 18px 24px rgba(0,0,0,.18))}
-.filtros figcaption{font:300 40px/1.18 var(--sora);color:var(--negro)}
+.filtros figcaption{font:300 40px/1.18 var(--sora);color:var(--negro);display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px}
+/* Bien / mal (ver iniciarFiltrosOjo): sobre la 1, la "mirada" recorre la pantalla en orden (título → filtro elegido →
+   días → botón); sobre la 2, todo se prende a la vez y titila, y la pantalla tiembla: todo compite por la atención.
+   Al final aparece el veredicto al lado del número. Se repite al volver a pasar. */
+.filtros .marco-f{position:relative}
+.filtros .ojo{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
+.ojo .camino{fill:none;stroke:var(--naranja);stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1}
+.ojo .p{fill:rgba(255,118,64,.16);stroke:var(--naranja);stroke-width:3;transform-box:fill-box;transform-origin:center;scale:0;opacity:0}
+.ojo .n{font:700 15px var(--reddit);fill:var(--naranja);text-anchor:middle;opacity:0}
+.filtros:not(.espera) .bien .camino{stroke-dashoffset:0;transition:stroke-dashoffset 2.2s cubic-bezier(.65,0,.35,1) .4s}
+.filtros:not(.espera) .bien .p{animation:mirada .55s cubic-bezier(.34,1.56,.64,1) var(--d) forwards}
+.filtros:not(.espera) .bien .n{animation:aparece-n .4s var(--ease-out) var(--d) forwards}
+@keyframes mirada{0%{scale:0;opacity:0}100%{scale:1;opacity:1}}
+@keyframes aparece-n{to{opacity:1}}
+.filtros:not(.espera) .mal .p{animation:titila var(--t) ease-in-out calc(2.6s + var(--d)) 7 alternate both}
+@keyframes titila{0%{scale:.2;opacity:0}100%{scale:1;opacity:1}}
+.filtros:not(.espera) .mal > .marco-f > img{animation:temblor .45s ease-in-out 2.9s 4}
+@keyframes temblor{0%,100%{translate:0 0}20%{translate:-4px 1px}40%{translate:4px -1px}60%{translate:-3px 0}80%{translate:3px 1px}}
+.veredicto{display:inline-flex;align-items:center;gap:8px;padding:8px 16px 8px 12px;border-radius:30px;border:2px solid var(--negro);font:600 18px/1.2 var(--reddit);color:var(--negro);opacity:0;scale:.6;transform-origin:left center}
+.veredicto img{width:22px;height:22px}
+.mal .veredicto{border-color:#6b6b6b;color:#6b6b6b}
+.filtros:not(.espera) .bien .veredicto{animation:veredicto .6s cubic-bezier(.34,1.56,.64,1) 2.7s forwards}
+.filtros:not(.espera) .mal .veredicto{animation:veredicto .6s cubic-bezier(.34,1.56,.64,1) 4.6s forwards,niega .85s ease-out 5.1s}
+@keyframes veredicto{to{opacity:1;scale:1}}
+.filtros.quieto .veredicto{opacity:1;scale:1}
 .usos{display:flex;flex-direction:column;gap:96px}
 .usos .fila-usos{display:flex;gap:20px;align-items:flex-start}
 .uso{width:405px;flex:none;display:flex;flex-direction:column;gap:24px}
@@ -1172,7 +1196,9 @@ html.movil .crema-negro .tonos div{padding:20px 10px;font-size:16px}
 html.movil .filtros{padding:0 24px;gap:24px;margin-top:0}
 html.movil .filtros figure{width:204px;gap:16px}
 html.movil .filtros img{width:204px;height:395px}
-html.movil .filtros figcaption{font-size:30px}
+html.movil .filtros figcaption{font-size:30px;gap:8px}
+html.movil .veredicto{font-size:15px;padding:6px 12px 6px 8px;gap:6px}
+html.movil .veredicto img{width:18px;height:18px}
 html.movil .prop-sec .fila{padding:0 24px!important}
 html.movil .prop-barras{gap:28px}
 html.movil .prop-barra{width:480px;height:170px}
@@ -1769,8 +1795,8 @@ html.movil .frente .m3{transform:translate(calc((1 - var(--p)) * 60px), calc((1 
     </div>
   </section>
   <div class="filtros">
-    <figure><img src="assets/km5/filtros-1.png" alt="Hoja de filtros de la app con los porcentajes de negro bien jerarquizados"><figcaption>1</figcaption></figure>
-    <figure><img src="assets/km5/filtros-2.png" alt="Hoja de filtros de la app con todo el negro al mismo nivel"><figcaption>2</figcaption></figure>
+    <figure class="bien"><img src="assets/km5/filtros-1.png" alt="Hoja de filtros de la app con los porcentajes de negro bien jerarquizados"><figcaption>1 <span class="veredicto"><img src="assets/km2/12a07.svg" alt="">Así sí: la vista sigue un orden</span></figcaption></figure>
+    <figure class="mal"><img src="assets/km5/filtros-2.png" alt="Hoja de filtros de la app con todo el negro al mismo nivel"><figcaption>2 <span class="veredicto"><img src="assets/km2/876eb.svg" alt="">Así no: todo compite por la atención</span></figcaption></figure>
   </div>
   <section class="sec prop-sec" id="km5-proporcion" style="padding-left:0;padding-right:0">
     <div class="fila" style="padding:0 120px"><h2 class="t">Proporción</h2><div class="c txt"><p>El equilibrio entre los colores sostiene una identidad coherente. Cada marca tiene su propia proporción: Spot se apoya en el crema y reparte el color en partes iguales, mientras que post. y Stop parten del negro y suman pocos colores con más protagonismo.</p><p>Cuando uses la paleta en cualquier pieza, tomá como referencia estas proporciones.</p></div></div>
@@ -4094,6 +4120,25 @@ function iniciarSticker(){
   explicar(); ajustar(); if (document.fonts) document.fonts.ready.then(ajustar);
   if (!REDUCIR) entradaRepetida([lab], .5);
 }
+/* KM 5 · filtros bien / mal: arma la capa de la "mirada" sobre cada pantalla (coordenadas en la imagen de 402 × 778) */
+function iniciarFiltrosOjo(){
+  const caja = $('.filtros'); if (!caja) return;
+  if (REDUCIR) { caja.classList.add('quieto'); return; }
+  const NS = 'http://www.w3.org/2000/svg';
+  const capa = (fig, html) => {
+    const img = $(':scope > img', fig), marco = document.createElement('div'); marco.className = 'marco-f';
+    img.before(marco); marco.appendChild(img);
+    marco.insertAdjacentHTML('beforeend', `<svg class="ojo" viewBox="0 0 402 778" preserveAspectRatio="none" aria-hidden="true">${html}</svg>`);
+  };
+  // 1: un recorrido ordenado (título, filtro elegido, días, botón)
+  const ORDEN = [[52, 48, 34], [103, 98, 30], [200, 297, 40], [200, 709, 34]];
+  capa($('.bien', caja), `<polyline class="camino" pathLength="1" points="${ORDEN.map(([x, y]) => x + ',' + y).join(' ')}"/>` +
+    ORDEN.map(([x, y, r], k) => `<circle class="p" cx="${x}" cy="${y}" r="${r}" style="--d:${(.4 + k * .65).toFixed(2)}s"/><text class="n" x="${x + r + 12}" y="${y + 5}" style="--d:${(.4 + k * .65).toFixed(2)}s">${k + 1}</text>`).join(''));
+  // 2: todo a la vez (cada filtro con borde negro pide atención)
+  const TODO = [[103, 98], [81, 194], [210, 194], [338, 194], [200, 301], [93, 436], [253, 436], [86, 482], [234, 482], [72, 606], [185, 606], [292, 606]];
+  capa($('.mal', caja), TODO.map(([x, y]) => `<circle class="p" cx="${x}" cy="${y}" r="30" style="--d:${(Math.random() * .5).toFixed(2)}s;--t:${(.25 + Math.random() * .25).toFixed(2)}s"/>`).join(''));
+  entradaRepetida([caja], .45);
+}
 let km10Listo = false;
 async function iniciarKM10(){
   if (km10Listo) return; km10Listo = true;
@@ -4217,7 +4262,7 @@ addEventListener('keydown', e => { if (e.key === 'Escape') cerrarMenu(); });
 $$('[data-a]').forEach(b => b.addEventListener('click', () => scrollA(b.closest('article.km').id, b.dataset.a)));
 $$('[data-bajar]').forEach(b => b.addEventListener('click', () => { const k = b.closest('article.km'); irA_Y(k, k.scrollTop + innerHeight * .9); }));
 $$('[data-arriba]').forEach(b => b.addEventListener('click', () => irArriba(b.closest('article.km'))));
-iniciarScrollSuave(); iniciarEntradas(); iniciarStickers(); iniciarToques(); iniciarCursor(); iniciarFavicon(); iniciarFaviconSec(); iniciarBotonMenu(); iniciarRastro(); iniciarPerfil(); iniciarSobreFotos(); iniciarUnirPuntos(); iniciarCintaIconos(); iniciarReceta(); iniciarColab(); iniciarKM3Entradas(); iniciarProporcion(); iniciarTira(); iniciarCarruseles(); iniciarCarruselUI(); iniciarParalaje(); iniciarViajeKM6(); iniciarMazo(); iniciarMecer(); iniciarRasgos(); iniciarFlotar(); achicarTodo(); iniciarActivoScroll(); vigilarKM10(); iniciarGuia(); iniciarFuentesUI(); iniciarSticker();
+iniciarScrollSuave(); iniciarEntradas(); iniciarStickers(); iniciarToques(); iniciarCursor(); iniciarFavicon(); iniciarFaviconSec(); iniciarBotonMenu(); iniciarRastro(); iniciarPerfil(); iniciarSobreFotos(); iniciarUnirPuntos(); iniciarCintaIconos(); iniciarReceta(); iniciarColab(); iniciarKM3Entradas(); iniciarProporcion(); iniciarTira(); iniciarCarruseles(); iniciarCarruselUI(); iniciarParalaje(); iniciarViajeKM6(); iniciarMazo(); iniciarMecer(); iniciarRasgos(); iniciarFlotar(); achicarTodo(); iniciarActivoScroll(); vigilarKM10(); iniciarGuia(); iniciarFuentesUI(); iniciarSticker(); iniciarFiltrosOjo();
 addEventListener('hashchange', leerHash);
 
 if (location.hash && location.hash !== '#inicio') { portada.remove(); portadaFuera = true; leerHash(); }
