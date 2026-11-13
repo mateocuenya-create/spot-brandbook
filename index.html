@@ -505,6 +505,30 @@ a.punto{cursor:pointer} span.punto{cursor:default}
 .ui-hoja .mientras{left:17.24px;top:214px;rotate:1.5deg;display:flex;gap:10px;align-items:center;padding:12px 16px;border-radius:18px;border:2px solid #fff;background:rgba(37,37,37,.2);font:700 14px/normal var(--reddit);white-space:nowrap}
 .ui-hoja .ui-boton{left:50%;top:299px;transform:translateX(-50%)}
 .ui-hoja u{left:calc(50% - 56px);top:360px;font:600 14px/normal var(--reddit);color:var(--negro-60);white-space:nowrap}
+/* Títulos Display · laboratorio del sticker (ver iniciarSticker) */
+.display-izq{display:flex;flex-direction:column;gap:48px}
+.display-izq h2{font:inherit}
+.lab-sticker{width:547px;display:flex;flex-direction:column;gap:20px;font:400 16px/1.4 var(--reddit);color:var(--negro)}
+.st-lienzo{height:250px;border-radius:24px;background:var(--violeta);overflow:hidden}
+.st-lienzo svg{display:block;width:100%;height:100%;overflow:visible}
+.st-lienzo text{font:700 78px var(--sora);fill:var(--negro);stroke:var(--crema);stroke-width:calc(var(--borde) * 2px);stroke-linejoin:var(--puntas);stroke-miterlimit:12;paint-order:stroke fill;
+  filter:drop-shadow(0 4px 4px rgba(0,0,0,calc(var(--sombra) * .25)));transform-box:fill-box;transform-origin:center;
+  transition:stroke-width .45s cubic-bezier(.34,1.56,.64,1),filter .35s var(--ease-out),transform .8s cubic-bezier(.34,1.56,.64,1)}
+.lab-sticker.espera .st-lienzo text{stroke-width:0;transform:scale(.82) rotate(-5deg)}
+.st-lienzo.salta text{animation:pegar .5s cubic-bezier(.34,1.56,.64,1)}
+@keyframes pegar{0%{transform:scale(1)}40%{transform:scale(1.06) rotate(-2deg)}100%{transform:scale(1)}}
+.st-ctrl{display:flex;flex-direction:column;gap:14px;padding:20px 24px;border-radius:20px;background:rgba(37,37,37,.06)}
+.st-fila{display:flex;align-items:center;justify-content:space-between;gap:16px;font:600 16px/1 var(--reddit)}
+.st-fila input{flex:1;max-width:240px;accent-color:var(--negro);cursor:pointer}
+.st-fila b{width:52px;text-align:right;font:700 16px/1 var(--reddit)}
+.st-seg{display:flex;padding:3px;border-radius:30px;background:rgba(37,37,37,.1)}
+.st-seg button{padding:7px 14px;border-radius:30px;font:600 14px/1 var(--reddit);color:var(--negro-60);transition:background .25s,color .25s}
+.st-seg button.on{background:var(--negro);color:var(--crema)}
+.st-switch{position:relative;width:46px;height:26px;border-radius:13px;background:rgba(37,37,37,.25);transition:background .25s}
+.st-switch::after{content:'';position:absolute;left:3px;top:3px;width:20px;height:20px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25);transition:translate .35s cubic-bezier(.34,1.56,.64,1)}
+.st-switch.on{background:var(--negro)}
+.st-switch.on::after{translate:20px 0}
+.st-nota{min-height:44px;font:400 16px/1.4 var(--reddit);color:var(--negro-60)}
 /* títulos display: pantallas de la app */
 .app-pantallas{display:flex;gap:32.35px}
 .app-pantallas img{width:302.433px;height:657.529px;object-fit:cover;transition:transform .35s var(--ease-out)}
@@ -1125,6 +1149,9 @@ html.movil .tipos .familias .nombres span{width:auto}
 html.movil .tipos .xan{width:100%;background:var(--negro);font-size:150px!important;padding:0 24px}
 html.movil .tipos .xan.reddit{padding-bottom:24px}
 html.movil .app-pantallas{gap:12px}
+html.movil .display-izq{gap:28px}
+html.movil .lab-sticker{width:100%}
+html.movil .st-lienzo{height:auto;aspect-ratio:547/250}
 html.movil .app-pantallas img{width:136px;height:296px}
 
 /* ---- KM 5 ---- */
@@ -1657,7 +1684,17 @@ html.movil .frente .m3{transform:translate(calc((1 - var(--p)) * 60px), calc((1 
 
   <div class="divisor"></div>
   <section class="sec" id="km4-display">
-    <div class="fila"><h2 class="t sticky">Títulos Display</h2>
+    <div class="fila"><div class="t sticky display-izq"><h2>Títulos Display</h2>
+      <!-- laboratorio del sticker: el "Team Peaks" de la pantalla de equipo, en grande, para probar contorno, puntas y sombra -->
+      <div class="lab-sticker" data-sticker>
+        <div class="st-lienzo" style="--borde:10;--sombra:1;--puntas:round"><svg viewBox="0 0 547 250" role="img" aria-label="Título Team Peaks en Sora con contorno de sticker"><text x="273.5" y="152" text-anchor="middle">Team Peaks</text></svg></div>
+        <div class="st-ctrl">
+          <label class="st-fila"><span>Contorno</span><input type="range" min="0" max="16" value="10" data-borde aria-label="Grosor del contorno"><b data-valor>10 px</b></label>
+          <div class="st-fila"><span>Puntas</span><div class="st-seg"><button class="on" data-puntas="round">Redondeadas</button><button data-puntas="miter">Rectas</button></div></div>
+          <div class="st-fila"><span>Sombra paralela</span><button class="st-switch on" data-sombra aria-pressed="true" aria-label="Sombra paralela"></button></div>
+        </div>
+        <p class="st-nota" data-nota aria-live="polite"></p>
+      </div></div>
       <div class="c" style="display:flex;flex-direction:column;gap:64px;align-items:center">
         <p class="txt">A la hora de diseñar composiciones, si necesitás un título que destaque por sobre todo lo demás, a Sora se le puede aplicar un outline-stroke bien grueso con puntas redondeadas para darle una apariencia de sticker. También se le puede aplicar una leve sombra paralela si el diseñador lo ve necesario para despegar el título del fondo. Debajo mostramos algunos ejemplos de su uso en la app. De todos modos, estas son pantallas destacadas donde solo se usa una o dos veces. No recomendamos un uso excesivo de este recurso.</p>
         <div class="app-pantallas"><img src="assets/km4/app-inicio.png" alt="Pantalla de inicio de la app"><img src="assets/km4/app-registrar.png" alt="Pantalla de registro en proceso"><img src="assets/km4/app-equipo.png" alt="Pantalla de equipo creado con éxito"></div>
@@ -4015,6 +4052,35 @@ function iniciarGuia(){
   km.addEventListener('scroll', revisar, { passive: true }); addEventListener('resize', revisar);
   new MutationObserver(revisar).observe(km, { attributes: true, attributeFilter: ['class'] }); revisar();
 }
+/* KM 4 · Títulos Display: el "Team Peaks" en grande con el contorno de sticker. Se puede cambiar el grosor del contorno,
+   las puntas (redondeadas o rectas) y prender o apagar la sombra paralela; abajo una línea explica lo que se ve.
+   Al llegar, el contorno "se pega" con un rebote (se repite al volver a pasar). */
+function iniciarSticker(){
+  const lab = $('[data-sticker]'); if (!lab) return;
+  const lienzo = $('.st-lienzo', lab), rango = $('[data-borde]', lab), valor = $('[data-valor]', lab), sombra = $('[data-sombra]', lab), nota = $('[data-nota]', lab);
+  let puntas = 'round';
+  const explicar = () => {
+    const b = +rango.value, on = sombra.classList.contains('on');
+    nota.textContent = b === 0 ? 'Sin contorno, el título no se despega del fondo.'
+      : b < 6 ? 'Con un contorno fino todavía no parece un sticker: el outline tiene que ser bien grueso.'
+      : puntas === 'miter' ? 'Con puntas rectas, las esquinas del contorno quedan filosas. Por eso van redondeadas.'
+      : on ? 'Outline grueso con puntas redondeadas y una leve sombra paralela: así el título se despega del fondo.'
+      : 'Outline grueso con puntas redondeadas: apariencia de sticker. La sombra es opcional.';
+  };
+  const saltar = () => { lienzo.classList.remove('salta'); void lienzo.offsetWidth; lienzo.classList.add('salta'); };
+  rango.addEventListener('input', () => { lienzo.style.setProperty('--borde', rango.value); valor.textContent = rango.value + ' px'; explicar(); });
+  rango.addEventListener('change', saltar);
+  $$('[data-puntas]', lab).forEach(b => b.addEventListener('click', () => {
+    puntas = b.dataset.puntas; lienzo.style.setProperty('--puntas', puntas);
+    $$('[data-puntas]', lab).forEach(x => x.classList.toggle('on', x === b)); explicar(); saltar();
+  }));
+  sombra.addEventListener('click', () => {
+    const on = !sombra.classList.contains('on'); sombra.classList.toggle('on', on); sombra.setAttribute('aria-pressed', on);
+    lienzo.style.setProperty('--sombra', on ? 1 : 0); explicar(); saltar();
+  });
+  explicar();
+  if (!REDUCIR) entradaRepetida([lab], .5);
+}
 let km10Listo = false;
 async function iniciarKM10(){
   if (km10Listo) return; km10Listo = true;
@@ -4138,7 +4204,7 @@ addEventListener('keydown', e => { if (e.key === 'Escape') cerrarMenu(); });
 $$('[data-a]').forEach(b => b.addEventListener('click', () => scrollA(b.closest('article.km').id, b.dataset.a)));
 $$('[data-bajar]').forEach(b => b.addEventListener('click', () => { const k = b.closest('article.km'); irA_Y(k, k.scrollTop + innerHeight * .9); }));
 $$('[data-arriba]').forEach(b => b.addEventListener('click', () => irArriba(b.closest('article.km'))));
-iniciarScrollSuave(); iniciarEntradas(); iniciarStickers(); iniciarToques(); iniciarCursor(); iniciarFavicon(); iniciarFaviconSec(); iniciarBotonMenu(); iniciarRastro(); iniciarPerfil(); iniciarSobreFotos(); iniciarUnirPuntos(); iniciarCintaIconos(); iniciarReceta(); iniciarColab(); iniciarKM3Entradas(); iniciarProporcion(); iniciarTira(); iniciarCarruseles(); iniciarCarruselUI(); iniciarParalaje(); iniciarViajeKM6(); iniciarMazo(); iniciarMecer(); iniciarRasgos(); iniciarFlotar(); achicarTodo(); iniciarActivoScroll(); vigilarKM10(); iniciarGuia(); iniciarFuentesUI();
+iniciarScrollSuave(); iniciarEntradas(); iniciarStickers(); iniciarToques(); iniciarCursor(); iniciarFavicon(); iniciarFaviconSec(); iniciarBotonMenu(); iniciarRastro(); iniciarPerfil(); iniciarSobreFotos(); iniciarUnirPuntos(); iniciarCintaIconos(); iniciarReceta(); iniciarColab(); iniciarKM3Entradas(); iniciarProporcion(); iniciarTira(); iniciarCarruseles(); iniciarCarruselUI(); iniciarParalaje(); iniciarViajeKM6(); iniciarMazo(); iniciarMecer(); iniciarRasgos(); iniciarFlotar(); achicarTodo(); iniciarActivoScroll(); vigilarKM10(); iniciarGuia(); iniciarFuentesUI(); iniciarSticker();
 addEventListener('hashchange', leerHash);
 
 if (location.hash && location.hash !== '#inicio') { portada.remove(); portadaFuera = true; leerHash(); }
