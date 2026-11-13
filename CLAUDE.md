@@ -533,3 +533,47 @@ El 10/11/2026 se borró todo lo construido y se empezó de nuevo. Respaldo de la
   - Hero: se sumaron los links "Botones ↗" y "Nomenclatura ↗"; en el menú, las cuatro secciones nuevas.
   - **Huecos del Figma:** el texto de Botones dice "Pensando l la interfaz"; se corrigió a "Pensando la interfaz". La imagen de referencia de Dropbox (`682:10950`) no va en la página.
   - Archivos nuevos: `assets/km7/ds/` (íconos de los botones y de la hoja de filtros, `mockup-iphone.png`, `pantalla-filtros.png` para la parte de arriba de la pantalla) y `assets/km7/iconos/` (41 íconos).
+- 12/11/2026 · Mateo · **KM 7 · ajustes de Íconos y Nomenclatura.**
+  - Íconos: el cambio de ícono es más rápido y sutil (sale en 0,12 s y entra en 0,3 s, con un giro chico). Ahora se mezcla al entrar con el mouse **y mientras el mouse se mueve encima** (cada 0,3 s), así alcanza con pasarlo por arriba. La pista dice "Pasá el mouse por los íconos para mezclarlos" (en el celular, "Tocá los íconos para mezclarlos"), con el ícono de flechas girando; hasta que alguien la usa, cada 2,5 s un ícono hace un saltito para invitar.
+  - El unicornio que se vio sobre un ícono no es de la página (no está en el código ni en los archivos): viene de algo del navegador de quien lo vio, por ejemplo una extensión.
+  - Nomenclatura: "Así se ve una carpeta ordenada" va dentro del contorno de una carpeta de macOS (pestaña arriba a la izquierda, borde Negro Spot), con las tres carpetas adentro. Entra con un leve crecimiento antes de que se acomoden los archivos.
+- 12/11/2026 · Mateo · **Página de post.** (`<article id="post">`, link `#post`). Se abre desde el logo de post. de la Home (arriba a la derecha, crece con un brillo verde al pasar el mouse) y desde el botón "Conocé más sobre POST" del KM 1. No está en el menú ni en el mapa porque no es un KM. Footer: anterior KM 1 · Acerca de SPOT!, siguiente "Volver al inicio".
+  - **Contenido**: todo sale de la página POST del Figma (`1:18433`, el informe del TP3), sin textos inventados. Los títulos son los de las láminas.
+  - **Estilo gráfico de post.**, distinto al de SPOT!: fondo Negro Spot, verde #49B867, crema y violeta de acento. Las bajadas van en **JetBrains Mono** (se sumó a Google Fonts) y el texto en Reddit Sans. Solo se usan misceláneas de post.: puntos verdes, aros crema y verdes, y estrellas de 7 y 12 puntas.
+  - **Secciones y animaciones:**
+    - **Hero**: el logo de post. con el círculo de respiración de dos capas detrás (inhala 4 s, exhala 6 s, con "Inhalá / Exhalá"). Las misceláneas flotan y se corren al paso del mouse o del dedo, como dice el Figma ("si se acercan a la silueta de la persona, puede empujarlas al moverse").
+    - **01 Introducción**: el bloque amarillo de Spot con la pregunta "¿qué pasa cuando ya cruzamos esa primer línea de meta?", que se arma palabra por palabra. Una línea de meta a cuadros cruza la pantalla y abajo, en negro, "Así es como nació post.".
+    - **02 ¿De dónde viene la idea?**: TP1 (eje, tema, subtema), los tres motivos, 4 fotos tipo polaroid que caen y se enderezan con el mouse, y las encuestas con contadores.
+    - **03 ¿Qué es Post?**: ficha (medidas, 16 personas, 20 minutos, cuándo) y los 3 videos de las pantallas de afuera (los mismos del KM 10).
+    - **04 Dinámica del interior**: **juego de la pose**, una silueta de puntos que se mueve con el mouse o el dedo (arriba y abajo los brazos, a los costados se inclina). Hay que acercarla a la pose en contorno verde. Tiene el círculo de precisión con el %, la barra de tiempo que se vacía en 10 s y las pastillas (¡Genial!, ¡Seguí así!, ¡WOW!, #zentotal). Son 3 poses; sin nadie, se mueve sola. Al lado está la referencia de Hole in the Wall.
+    - **05 Recorrido en pantalla**: los 8 pasos. La pantalla queda fija y muestra cada paso al scrollear: bienvenida, círculo que se completa, calibración, respiración, barra y pastilla, tres pantallas que se unen y cierre. Las capturas son las del Figma.
+    - **06 Dedicatorias**: "¿A quién le dedicás esta carrera?", las 4 capturas de TikTok y la **fachada en vivo**. Las notas del Figma (nacho, cami, sofi, el grupo del parque, profe caro) aparecen y desaparecen. Se puede escribir una dedicatoria propia ("para:" y mensaje), que entra a la pantalla. La nota se agranda según el largo del mensaje (S, M, L, XL), con el borde rasgado arriba y el color al 80 %.
+    - **07 Contexto**: render junto al Obelisco (se acerca al scrollear) y las dos carreras (Gran Fondo Argentina y Hoka Run · Club de Corredores) con sus sponsors.
+    - **08 Prototipo**: TouchDesigner + MediaPipe, las 4 iteraciones (silueta, tiempo, respiración, recorrido), cada una con su mini animación, y el círculo de precisión que cuenta hasta 86 % con las pastillas.
+  - Las animaciones de entrada se repiten al volver a pasar (`entradaRepetida`). Los videos se cargan al acercarse y solo corren mientras se ven (`iniciarPost`).
+  - **Archivos**: imágenes del Figma en `assets/post/`, pasadas a JPG y achicadas con `sips`; misceláneas `assets/post/fig-*.svg` y `nota-borde-1.svg`.
+  - **Mobile**: una columna. El juego de la pose se usa arrastrando el dedo. La pantalla del recorrido queda arriba con JS, porque `sticky` no anda dentro del transform. Las fotos van en 2 columnas.
+  - **No se hizo todavía**: accesibilidad, reflexiones finales ni UI kit completo del Figma. La página de STOP va después.
+- 13/11/2026 · Mateo · **Sincronización con el Figma (3.ª ronda) y corrección de errores de tipeo.**
+  - **El recorrido pasa a tener 8 KM** (Figma: Home con 8 puntos y menú sin Animaciones ni Íconos). El mapa tiene los 8 puntos en sus lugares y colores nuevos (amarillo, naranja, rosa, violeta, azul, amarillo, naranja, rosa), y el menú tiene 8 ítems.
+  - **Arquigrafía es ahora el KM 8**: hero rosa, tag "KM 8", parada anterior KM 7 · Design System. La "siguiente parada" del KM 7 y la "parada anterior" del KM 1 llevan a Arquigrafía (KM8). El id interno sigue siendo `km10` (y la carpeta `assets/km10/`) para no romper enlaces.
+  - **Hueco del Figma (avisar):** el hero de Arquigrafía dice "Parada anterior: Animaciones · KM8"; se puso Design System · KM7 porque Animaciones ya no existe. El KM 1 del Figma todavía dice "KM10" en la parada anterior; se usó KM8.
+  - **KM 8 · Wayfinding:** se sacó la grilla de 6 principios, porque en el Figma quedó afuera de la lámina. Queda solo el texto.
+  - **KM 8 · Arquigrafía:**
+    - Títulos nuevos: "Nuestra identidad sobre lo existente" e "Hitos inflables y a gran escala".
+    - La parada y los hitos miden 1113 px, como en el Figma. Las dos fotos de los hitos van una debajo de la otra.
+    - Debajo de los videos de post. se sumó el render de la cabina por fuera (`assets/km10/fachada-render.jpg`).
+    - En el Figma ese bloque repite el título y el texto de "Nuestra identidad sobre lo existente" (copia por error). Se dejó "La pantalla también es arquitectura" con su texto.
+  - **KM 8 · textos que cambiaron:**
+    - Orientativas: "El directorio de cada piso. Número, nombre y la lista…".
+    - 1,50–1,70 m: se sumó "Para tener en cuenta, la altura promedio de una persona es de 1,75 m". En el Figma dice "1,75 cm"; se corrigió.
+  - **KM 7 · De átomos a botones:** frase nueva debajo del botón amarillo (Figma `682:10959`), "Todo comienza con pequeños elementos. Estos pequeños elementos van a formar cosas más grandes.". Aparece cuando el botón termina de armarse.
+  - **KM 1 · fotos de STOP** (Figma Group 111): mazo de 3 fotos igual al de post., que se tira y se reordena. Son la largada con el portal, la terraza del after y las cápsulas (`assets/km1/foto-stop-1..3.jpg`). La zona de submarcas creció a 4863 px y las paradas bajaron. `iniciarMazo` arma los dos mazos (`armarMazo`). En el celular cada mazo va en su caja, debajo de su botón.
+  - **Arreglo:** la foto de adelante del mazo usa la clase `frente`, que chocaba con `.frente` del KM 8 y la ponía en `position: relative`. Ahora `.submarcas-zona .foto-rot` fuerza `position: absolute`.
+  - **Errores de tipeo corregidos en la página** (antes estaban copiados tal cual del Figma; en el Figma siguen):
+    - Ortografía: hehcas → hechas, aun → aún, fromado → formado, areglarlo → arreglarlo, princincipiantes → principiantes, sumbarcas → submarcas, Despúes → Después, subtitulos → subtítulos, especifica → específica, iconos → íconos.
+    - Tildes en preguntas indirectas: "como dialogan" → "cómo dialogan", "simbolizar como" → "simbolizar cómo".
+    - Gramática: "esta la única excepción" → "esta es la única excepción", "usar colocar" → "colocar", "Los variantes" → "Las variantes", "se tratan de" → "se trata de" (dos veces).
+    - Puntuación: "caritaa. utilizamos" → "caritas. Utilizamos", "entrada. guiamos" → "entrada: guiamos", "principales. el hogar" → "principales: el hogar".
+    - Números con la unidad separada, como pide la Guía de estilo: 18km → 18 km, 4km → 4 km.
+    - En la página de post.: "primer línea de meta" → "primera línea de meta", serian → serían, kilometro → kilómetro.

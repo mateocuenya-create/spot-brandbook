@@ -9,7 +9,7 @@
 <link rel="icon" type="image/svg+xml" href="assets/favicon/f01.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Reddit+Sans:ital,wght@0,200..900;1,200..900&family=Sora:wght@100..800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Reddit+Sans:ital,wght@0,200..900;1,200..900&family=Sora:wght@100..800&family=JetBrains+Mono:wght@200..800&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Bitcount+Single:wght@700&display=swap" rel="stylesheet">
 <script>
 /* Versión mobile: en pantallas de hasta 760 px la página se diseña a 480 px de ancho (en vez de 1920) y se reacomoda en columna */
@@ -81,6 +81,8 @@ a.punto{cursor:pointer} span.punto{cursor:default}
 .rastro{position:absolute;inset:0;pointer-events:none;z-index:0}
 .rastro img{position:absolute;left:0;top:0;will-change:transform}
 #inicio .logo-centro{position:absolute;left:897px;top:83px;width:127px;height:42px}
+#inicio .submarcas .a-post{display:block;transition:scale .3s cubic-bezier(.34,1.56,.64,1),filter .3s}
+#inicio .submarcas .a-post:hover{scale:1.12;filter:drop-shadow(0 0 12px rgba(73,184,103,.7))}
 #inicio .submarcas{position:absolute;left:1537px;top:78px;width:263px;display:flex;justify-content:space-between;align-items:center}
 
 /* ---------- PÁGINAS KM ---------- */
@@ -97,11 +99,27 @@ a.punto{cursor:pointer} span.punto{cursor:default}
 .titulo-km svg.listo text{stroke:none}   /* el borde pasa a ser la imagen sin huecos (ver bordesSinHuecos) */
 /* borde crema por fuera (stroke OUTSIDE 23 del Figma) */
 .bajada{position:absolute;left:828px;font:600 48px/normal var(--reddit);color:var(--negro);white-space:nowrap}
-.links{position:absolute;left:828px;display:flex;flex-direction:column;gap:16px;align-items:flex-start}
+.links{position:absolute;left:828px;display:flex;flex-direction:column;gap:18px;align-items:flex-start}
 .links button{font:600 24px/normal var(--reddit);text-transform:uppercase;color:var(--negro-60);transition:color .2s var(--ease-out)}
 .links button:hover{color:var(--negro)}
 .slide-down{position:absolute;left:936px;width:48px;height:48px}
 .slide-down img{width:100%;height:100%}
+/* Hero · navegación (componente "Hero · Sección" del Figma): parada anterior a la izquierda y siguiente a la derecha,
+   con la misma línea de base que el índice (178 px del borde de abajo). La bajada y el índice se acomodan en armarNavHero. */
+.nav-hero{display:contents}
+.nh{position:absolute;bottom:178px;z-index:6;display:flex;gap:16px;align-items:center;color:var(--negro-80)}
+.nh.ant{left:120px;width:520px}
+.nh.sig{right:120px}
+.nh .circ{width:64px;height:64px;flex:none;border-radius:63px;display:grid;place-items:center;transition:background-color .2s var(--ease-out)}
+.nh .circ img{width:32px;height:32px;transition:translate .25s var(--ease-out)}
+.nh .tx{display:flex;gap:23px;align-items:center;border-left:2px solid var(--negro-80);padding-left:20px}
+.nh .et{display:flex;flex-direction:column;gap:7px;white-space:nowrap}
+.nh small{font:600 16px/normal var(--reddit)}
+.nh b{font:600 24px/normal var(--sora)}
+.nh .chip{border:1px solid var(--negro-80);border-radius:33px;padding:4px 12px;font:600 16px/normal var(--reddit);white-space:nowrap}
+a.nh:hover .circ{background:var(--negro-10)}
+a.nh.ant:hover .circ img{translate:-4px 0}
+a.nh.sig:hover .circ img{translate:4px 0}
 .deco{position:absolute;pointer-events:none}
 .deco .mov{position:absolute;inset:0;will-change:transform}
 .deco img{position:absolute;max-width:none}
@@ -149,7 +167,7 @@ a.punto{cursor:pointer} span.punto{cursor:default}
 .foto-co .linea{position:absolute;z-index:2;left:1px;height:4px;background:radial-gradient(circle,var(--crema) 2px,transparent 2.4px) 0 0/12.1px 4px repeat-x}
 .oscuro{background:var(--negro);color:var(--crema)}
 .oscuro .fila > .t,.oscuro .txt{color:var(--crema)}
-.submarcas-zona{position:relative;height:4685px;background:var(--negro)}
+.submarcas-zona{position:relative;height:4863px;background:var(--negro)}
 .submarcas-zona .abs{position:absolute}
 .submarcas-zona .txt{color:var(--crema);width:830px;left:545px}
 .boton{position:absolute;display:inline-flex;align-items:center;gap:10px;padding:16px 30px;border-radius:54px;font:600 20px/normal var(--reddit);color:var(--negro);transform:translateX(-50%);
@@ -356,6 +374,11 @@ a.punto{cursor:pointer} span.punto{cursor:default}
 #menu .num{flex:none;width:42px;height:42px;border-radius:50%;background:var(--amarillo);display:grid;place-items:center;font:400 20px var(--reddit);color:var(--negro);filter:drop-shadow(0 4px 3px rgba(0,0,0,.4))}
 #menu .cuerpo{flex:1;display:flex;flex-direction:column}
 #menu .enc{display:flex;gap:20px;align-items:center;font:600 32px/normal var(--sora);color:var(--crema);white-space:nowrap}
+#menu .enc .ir-sec{font:inherit;color:inherit;transition:opacity .15s}
+#menu .enc button.ir-sec:hover{opacity:.75}
+#menu .enc span.ir-sec{cursor:default}
+#menu .flecha-sub{display:grid;place-items:center;width:44px;height:44px;margin:-8px;border-radius:50%;transition:background-color .15s}
+#menu .flecha-sub:hover{background:rgba(237,232,219,.12)}
 #menu .enc img{width:28px;height:28px;transition:rotate .35s var(--ease-in-out)}
 #menu li.cerrado .enc img{rotate:180deg}
 #menu .subs{display:flex;flex-direction:column;gap:6px;align-items:flex-start;overflow:hidden;max-height:300px;margin-top:12px;
@@ -654,7 +677,7 @@ a.punto{cursor:pointer} span.punto{cursor:default}
 
 /* ---------- Más juego (11/11) ---------- */
 .hero{overflow:hidden}
-.submarcas-zona .foto-rot{cursor:pointer;user-select:none;-webkit-user-select:none;-webkit-user-drag:none;touch-action:pan-y}
+.submarcas-zona .foto-rot{position:absolute;cursor:pointer;user-select:none;-webkit-user-select:none;-webkit-user-drag:none;touch-action:pan-y}
 .submarcas-zona .foto-rot.frente{cursor:grab}
 .submarcas-zona .foto-rot.frente:active{cursor:grabbing}
 .decos.flota{position:absolute;inset:0;z-index:4;pointer-events:none}
@@ -998,14 +1021,21 @@ html.cursor-propio.cursor-visible :is(#cursor,#cursor-mini){opacity:1}
 .celda-m.pintada .ic{color:var(--negro)}
 .celda-m .ic svg{display:block;width:100%;height:100%}
 .celda-m .nombre-m{position:absolute;bottom:34px;left:0;right:0;text-align:center;font:600 14px/1 var(--reddit);color:rgba(237,232,219,.55);letter-spacing:.04em;transition:opacity .3s}
-.celda-m .ic.sale{animation:ic-sale .22s cubic-bezier(.55,0,1,.45) forwards}
-.celda-m .ic.entra{animation:ic-entra .55s cubic-bezier(.34,1.56,.64,1)}
-@keyframes ic-sale{to{rotate:100deg;scale:.3;opacity:0}}
-@keyframes ic-entra{from{rotate:-100deg;scale:.3;opacity:0}to{rotate:0deg;scale:1;opacity:1}}
+.celda-m .ic.sale{animation:ic-sale .12s ease-in forwards}
+.celda-m .ic.entra{animation:ic-entra .3s cubic-bezier(.34,1.4,.64,1)}
+@keyframes ic-sale{to{rotate:30deg;scale:.7;opacity:0}}
+@keyframes ic-entra{from{rotate:-30deg;scale:.7;opacity:0}to{rotate:0deg;scale:1;opacity:1}}
+.celda-m .punto-m{transition-duration:.3s}
+/* pista: hasta que se usa, cada tanto un ícono hace un saltito para invitar a pasar el mouse */
+.celda-m.invita .ic{animation:invita .6s cubic-bezier(.34,1.56,.64,1)}
+@keyframes invita{0%,100%{translate:0 0;rotate:0deg}35%{translate:0 -10px;rotate:-8deg}70%{translate:0 2px;rotate:4deg}}
+.mezcla{cursor:pointer}
 .mezcla .celda-m{transition:opacity .45s var(--ease-out) var(--d,0s),translate .6s cubic-bezier(.34,1.56,.64,1) var(--d,0s)}
 .mezcla.espera .celda-m{opacity:0;translate:0 40px}
-.mezcla-pista{display:flex;gap:8px;align-items:center;padding-left:100px;font:600 14px/1 var(--reddit);color:var(--azul)}
-.mezcla-pista img{width:18px;height:18px;filter:invert(58%) sepia(60%) saturate(1500%) hue-rotate(200deg)}
+.mezcla-pista{display:flex;gap:10px;align-items:center;padding-left:100px;font:600 18px/1 var(--reddit);color:var(--negro-80);transition:opacity .4s}
+.mezcla-pista img{width:22px;height:22px;animation:gira-pista 2.4s linear infinite}
+.mezcla-caja.usada .mezcla-pista{opacity:.45} .mezcla-caja.usada .mezcla-pista img{animation:none}
+@keyframes gira-pista{to{rotate:360deg}}
 /* nomenclatura */
 .formula{width:1680px;padding:72px 64px;background:var(--negro);display:flex;flex-direction:column;gap:24px;color:var(--crema)}
 .formula .et{font:600 20px/normal var(--reddit);color:var(--naranja)}
@@ -1034,7 +1064,13 @@ html.cursor-propio.cursor-visible :is(#cursor,#cursor-mini){opacity:1}
 .cod-fila.marcada b{translate:12px 0}
 .cod-fila{cursor:pointer}
 .ejemplos{width:1680px;display:flex;flex-direction:column;overflow-x:clip}
-.carpetas{display:flex;gap:40px;align-items:flex-start;margin-bottom:32px}
+.carpetas{display:flex;gap:40px;align-items:flex-start}
+/* contorno de carpeta de macOS (pestaña arriba a la izquierda) alrededor de las tres carpetas */
+.finder{position:relative;margin:58px 0 36px;padding:48px 48px 52px;border:3px solid var(--negro);border-radius:0 26px 26px 26px;background:var(--crema);
+  transition:opacity .5s var(--ease-out),scale .7s cubic-bezier(.34,1.3,.64,1);transform-origin:20% 0}
+.finder-tab{position:absolute;left:-3px;top:-52.5px;width:310px;height:54px;overflow:visible}
+.finder .carpeta{width:auto;flex:1;min-width:0}
+.ejemplos.espera .finder{opacity:0;scale:.94}
 .carpeta{position:relative;width:533px;flex:none;padding-top:24px;display:flex;flex-direction:column;gap:12px}
 .carpeta::before{content:'';position:absolute;left:0;right:0;top:0;border-top:2px solid var(--negro);transform-origin:left;transition:transform .8s cubic-bezier(.65,0,.35,1) var(--d,0s)}
 .carpeta b{font:600 32px/normal var(--sora);color:var(--naranja);transition:opacity .5s var(--ease-out) var(--d,0s)}
@@ -1102,10 +1138,13 @@ html.cursor-propio.cursor-visible :is(#cursor,#cursor-mini){opacity:1}
 .escena[data-paso="3"] .texto-ds span{clip-path:inset(0 0 0 0)}
 .escena[data-paso="3"] .flecha-ds.negra{opacity:1;transition:opacity .4s .6s}
 .escena[data-paso="3"] .btn-ds{animation:pop-ds .55s 1.1s both}
+.frase-ds.fin{left:142px;top:240px;width:546px;white-space:normal}
+.escena[data-paso="1"] .frase-ds.fin{opacity:0;transform:translateY(8px)}
+.escena[data-paso="3"] .frase-ds.fin{opacity:1;transform:none;transition:opacity .5s 1.4s,transform .5s 1.4s var(--ease-out)}
 @keyframes pop-ds{40%{transform:scale(1.04)}100%{transform:scale(1)}}
 
 /* ===== KM 10 · Arquigrafía y señalética ===== */
-.links.dos{display:grid;grid-template-columns:305px auto;grid-template-rows:repeat(4,auto);grid-auto-flow:column;gap:16px 0}
+.links.dos{display:grid;grid-template-columns:305px auto;grid-template-rows:repeat(4,auto);grid-auto-flow:column;gap:18px 0}
 .km10-sec{display:flex;flex-direction:column;gap:96px}
 .km10-sec .az{font-weight:700;color:var(--azul)}
 .principios{display:flex;flex-wrap:wrap;gap:64px 40px;width:1680px}
@@ -1169,14 +1208,14 @@ div.frente{position:relative;width:1255px;aspect-ratio:1760/535;flex:none;--p:1}
 .frente .m1{clip-path:inset(0 78% 0 0);transform:translate(calc((1 - var(--p)) * -180px), calc((1 - var(--p)) * 40px)) rotate(calc((1 - var(--p)) * -6deg));opacity:calc(.2 + var(--p) * .8)}
 .frente .m2{clip-path:inset(0 23.2% 0 22%);transform:translateY(calc((1 - var(--p)) * 70px))}
 .frente .m3{clip-path:inset(0 0 0 76.8%);transform:translate(calc((1 - var(--p)) * 180px), calc((1 - var(--p)) * 40px)) rotate(calc((1 - var(--p)) * 6deg));opacity:calc(.2 + var(--p) * .8)}
-.vestir{position:relative;width:1255px;aspect-ratio:16/9;flex:none;overflow:hidden}
+.vestir{position:relative;width:1113px;margin-left:auto;aspect-ratio:1113/616;flex:none;overflow:hidden}
 .vestir img{width:100%;height:100%;object-fit:cover;display:block;transition:opacity 0s linear .6s,scale 1.8s cubic-bezier(.22,1,.36,1) .6s}
 .vestir::after{content:'';position:absolute;inset:0;background:var(--rosa);transform:scaleX(0)}
 .vestir.espera img{opacity:0;scale:1.12}
 .vestir:not(.espera)::after{animation:franja 1.3s cubic-bezier(.65,0,.35,1)}
 @keyframes franja{0%{transform-origin:left;transform:scaleX(0)}45%{transform-origin:left;transform:scaleX(1)}55%{transform-origin:right;transform:scaleX(1)}100%{transform-origin:right;transform:scaleX(0)}}
-.hitos{display:flex;gap:20px;width:1255px;flex:none}
-.hito{width:617.5px;aspect-ratio:16/9;overflow:hidden;transition:transform .9s cubic-bezier(.34,1.56,.64,1) var(--d,0s),border-radius .9s cubic-bezier(.34,1.56,.64,1) var(--d,0s),opacity .3s var(--ease-out) var(--d,0s)}
+.hitos{display:flex;flex-direction:column;gap:48px;width:1113px;margin-left:auto;flex:none}
+.hito{width:1113px;aspect-ratio:1113/616;overflow:hidden;transition:transform .9s cubic-bezier(.34,1.56,.64,1) var(--d,0s),border-radius .9s cubic-bezier(.34,1.56,.64,1) var(--d,0s),opacity .3s var(--ease-out) var(--d,0s)}
 .hito:nth-child(2){--d:.15s}
 .hito img{width:100%;height:100%;object-fit:cover;display:block}
 .hitos.espera .hito{transform:scale(.55);border-radius:50%;opacity:0}
@@ -1191,25 +1230,252 @@ div.frente{position:relative;width:1255px;aspect-ratio:1760/535;flex:none;--p:1}
 .juego-insignias .ins img{width:100%;height:100%;pointer-events:none;-webkit-user-drag:none;filter:drop-shadow(0 4px 4px rgba(0,0,0,.18));transition:scale .25s cubic-bezier(.34,1.56,.64,1)}
 .juego-insignias .ins.agarrada{cursor:grabbing;z-index:2}
 .juego-insignias .ins.agarrada img{scale:1.12;filter:drop-shadow(0 12px 10px rgba(0,0,0,.25))}
-.pantallas-post{width:1255px;flex:none;display:flex;flex-direction:column;gap:8px;background:var(--negro)}
+.pantallas-col{width:1110px;flex:none;margin-left:auto;display:flex;flex-direction:column;gap:48px}
+.render-fachada{display:block;width:100%;height:auto}
+.pantallas-post{width:100%;flex:none;display:flex;flex-direction:column;gap:8px;background:var(--negro)}
 /* Figma actualizado (KM 8): Iconografía sobre fondo Negro Spot; en Arquigrafía las imágenes van a la derecha (x 567, 1113 px)
-   y los hitos uno debajo del otro; la fachada de post. va debajo de las pantallas */
+   y los hitos uno debajo del otro */
 .km10-sec.oscura{background:var(--negro)}
 .oscura .fila > .t,.oscura .txt,.oscura .pauta{color:var(--crema)}
 .senal-fila.ancha{justify-content:space-between}
 .ancha .vestir{width:1113px;aspect-ratio:1113/616}
 .ancha .hitos{flex-direction:column;gap:48px;width:1113px}
 .ancha .hito{width:1113px;aspect-ratio:1113/616}
-.col-der{width:1110px;flex:none;display:flex;flex-direction:column;gap:48px}
-.col-der .pantallas-post{width:100%}
-.fachada-post{width:100%;aspect-ratio:3/1;overflow:hidden}
-.fachada-post img{width:100%;height:100%;object-fit:cover;display:block}
 .pantallas-post video{display:block;width:100%;height:auto;background:#1c1c1c}
 .pantallas-post .s2{--d:.35s}
 .pantallas-post .s3{--d:.7s}
 .pantallas-post:not(.espera) video{animation:prender 1s steps(1,end) var(--d,0s) backwards}
 .pantallas-post.espera video{filter:brightness(0)}
 @keyframes prender{0%{filter:brightness(0)}12%{filter:brightness(1.6)}20%{filter:brightness(.15)}34%{filter:brightness(1.3)}44%{filter:brightness(.5)}60%{filter:brightness(1.15)}100%{filter:none}}
+
+/* =====================================================================
+   PÁGINA post. (sale del logo de post. en la Home). Estilo gráfico de post. (informe TP3, Figma 1:18433):
+   fondo Negro Spot, verde #49B867, crema y violeta de acento; bajadas en JetBrains Mono; texto en Reddit Sans
+   ===================================================================== */
+#post{background:var(--negro);color:var(--crema);--mono:'JetBrains Mono',ui-monospace,monospace}
+#post .btn-menu:not(.sobre-claro){--bm-fg:var(--crema)}
+#post b{font-weight:700}
+.mono-k{font:500 24px/1.2 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--verde)}
+.mono-k.tinta{color:var(--negro)}
+.mono-e{display:block;font:500 16px/1.3 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--verde)}
+.mono-n{font:200 20px/1 var(--mono);letter-spacing:.1em;color:var(--crema)}
+/* hero */
+.post-hero{position:relative;height:1080px;overflow:hidden;background:
+  radial-gradient(900px 620px at 24% 46%,rgba(73,184,103,.38),transparent 70%),
+  radial-gradient(820px 560px at 82% 62%,rgba(171,138,229,.32),transparent 70%),var(--negro)}
+.ph-misc{position:absolute;inset:0;pointer-events:none}
+.ph-misc img{position:absolute;left:0;top:0;will-change:transform}
+.ph-kicker{position:absolute;left:120px;top:84px;right:120px;display:flex;justify-content:flex-end;gap:48px;font:200 20px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--crema)}
+.ph-centro{position:absolute;left:50%;top:430px;translate:-50% -50%;width:760px;height:350px;display:grid;place-items:center}
+.ph-logo{position:relative;width:760px;height:auto;animation:ph-entra 1.4s cubic-bezier(.34,1.3,.64,1) both}
+@keyframes ph-entra{from{opacity:0;scale:.86;filter:blur(14px)}}
+.respira{position:absolute;left:50%;top:50%;width:640px;height:640px;translate:-50% -50%;pointer-events:none}
+.respira span{position:absolute;inset:0;border-radius:50%;animation:respirar 10s cubic-bezier(.45,0,.55,1) infinite}
+.respira .r1{background:rgba(73,184,103,.14);border:3px solid rgba(73,184,103,.55)}
+.respira .r2{inset:16%;background:rgba(73,184,103,.22);border:3px solid var(--verde);animation-delay:.25s}
+/* inhalar 4 s, exhalar 6 s (Figma, recorrido en pantalla) */
+@keyframes respirar{0%,100%{scale:.62}40%{scale:1}}
+.respira-et{position:absolute;left:50%;top:calc(100% + 150px);translate:-50% 0;font:500 22px/1 var(--mono);letter-spacing:.3em;text-transform:uppercase;color:var(--verde);height:1em;width:300px;text-align:center}
+.respira-et span{position:absolute;inset:0;animation:et-in 10s linear infinite}
+.respira-et .ex{animation-name:et-ex}
+@keyframes et-in{0%,38%{opacity:1}42%,96%{opacity:0}100%{opacity:1}}
+@keyframes et-ex{0%,38%{opacity:0}42%,96%{opacity:1}100%{opacity:0}}
+.ph-bajada{position:absolute;left:0;right:0;top:720px;text-align:center;font:400 44px/1.2 var(--sora);color:var(--crema)}
+.ph-bajada b{font-weight:600;color:var(--verde)}
+.ph-links{position:absolute;left:120px;right:120px;top:840px;display:flex;flex-wrap:wrap;justify-content:center;gap:14px 40px}
+.ph-links button{font:500 18px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:rgba(237,232,219,.6);transition:color .2s var(--ease-out)}
+.ph-links button:hover{color:var(--verde)}
+.ph-pie{position:absolute;left:120px;right:120px;bottom:40px;display:flex;justify-content:space-between;padding-top:16px;border-top:1px solid rgba(237,232,219,.25);font:200 16px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:rgba(237,232,219,.6)}
+/* 01 · introducción: de Spot a post. */
+.ps-meta{position:relative}
+.meta-spot{background:var(--amarillo);color:var(--negro);padding:148px 120px 120px;display:flex;flex-direction:column;gap:40px}
+.meta-logo{width:230px;height:auto}
+.meta-txt{width:1150px;font:400 34px/1.36 var(--reddit)}
+.meta-preg{width:1500px;font:600 84px/1.08 var(--sora)}
+.meta-preg span{display:inline-block;transition:opacity .5s var(--ease-out),translate .6s cubic-bezier(.34,1.4,.64,1);transition-delay:calc(var(--i) * 70ms)}
+.ps-meta.espera .meta-preg span{opacity:0;translate:0 30px}
+.linea-meta{position:relative;height:72px;background:var(--crema);overflow:hidden}
+.linea-meta .cuadros{position:absolute;inset:0;background:repeating-conic-gradient(var(--negro) 0 25%,var(--crema) 0 50%) 0 0/36px 36px;transform-origin:0 50%;transition:scale 1.4s cubic-bezier(.65,0,.35,1) .3s}
+.linea-meta .et{position:absolute;right:120px;top:50%;translate:0 -50%;background:var(--negro);color:var(--crema);font:500 22px/1 var(--mono);letter-spacing:.3em;text-transform:uppercase;padding:10px 20px;transition:opacity .4s 1.5s}
+.ps-meta.espera .linea-meta .cuadros{scale:0 1}
+.ps-meta.espera .linea-meta .et{opacity:0;transition-delay:0s}
+.meta-post{padding:120px 120px 148px;display:flex;flex-direction:column;gap:56px}
+.meta-post .meta-txt{color:var(--crema)}
+.meta-post .meta-txt b{color:var(--verde)}
+.meta-nacio{display:flex;align-items:center;gap:36px;font:600 84px/1 var(--sora)}
+.meta-nacio img{height:150px;width:auto;transition:opacity .8s var(--ease-out) 1.6s,scale 1s cubic-bezier(.34,1.4,.64,1) 1.6s}
+.ps-meta.espera .meta-nacio img{opacity:0;scale:.7;transition-delay:0s}
+/* secciones */
+.ps{padding:148px 120px;display:flex;flex-direction:column;gap:48px;border-top:1px solid rgba(237,232,219,.14)}
+.ps-t{font:600 72px/1.08 var(--sora);color:var(--crema);width:1500px;margin-top:-16px}
+.ps-t.enorme{font-size:104px}
+.ps-txt{width:1240px;font:400 30px/1.36 var(--reddit);color:rgba(237,232,219,.88)}
+.ps-txt b{color:var(--crema)} .ps-txt b.v{color:var(--verde)}
+.mono-k.sep{margin-top:64px}
+.ps .rv-p{transition:opacity .6s var(--ease-out),translate .7s cubic-bezier(.22,1,.36,1)}
+.ps .rv-p.espera{opacity:0;translate:0 40px}
+/* 02 · origen */
+.tp1{display:flex;gap:80px;align-items:flex-start;padding:40px 0;border-top:1px solid rgba(237,232,219,.25);border-bottom:1px solid rgba(237,232,219,.25)}
+.tp1 > p{width:720px;font:400 28px/1.36 var(--reddit)}
+.tp1 dl{display:flex;flex-direction:column;gap:18px}
+.tp1 dl div{display:flex;gap:24px;align-items:baseline}
+.tp1 dt{width:150px;font:500 18px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--verde)}
+.tp1 dd{font:600 30px/1.1 var(--sora)}
+.ideas{display:grid;grid-template-columns:repeat(3,1fr);gap:48px}
+.idea{display:flex;flex-direction:column;gap:20px;padding-top:24px;border-top:3px solid var(--verde)}
+.idea p{font:400 26px/1.4 var(--reddit);color:rgba(237,232,219,.88)}
+.idea b{color:var(--verde)}
+.fotos-post{display:flex;gap:32px;justify-content:center;padding:40px 0}
+.fotos-post figure{width:390px;background:var(--crema);padding:14px 14px 0;border-radius:6px;box-shadow:0 18px 40px rgba(0,0,0,.4);rotate:var(--r);transition:rotate .5s cubic-bezier(.34,1.5,.64,1),translate .5s cubic-bezier(.34,1.5,.64,1),opacity .6s;transition-delay:calc(var(--i,0) * 110ms)}
+.fotos-post img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:3px}
+.fotos-post figcaption{font:500 16px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--negro);padding:16px 2px 18px}
+.fotos-post figure:hover{rotate:0deg;translate:0 -14px;transition-delay:0s}
+.fotos-post.espera figure{opacity:0;translate:0 120px;rotate:calc(var(--r) * 4)}
+.encuestas{display:flex;flex-direction:column;gap:40px;padding:56px;border:3px solid var(--verde);border-radius:40px}
+.datos-enc{display:grid;grid-template-columns:repeat(4,1fr);gap:40px}
+.datos-enc > div{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px}
+.datos-enc b{font:700 96px/1 var(--sora);color:var(--verde)}
+.datos-enc span{font:600 48px/1 var(--sora);color:var(--verde)}
+.datos-enc p{width:100%;margin-top:12px;font:400 22px/1.36 var(--reddit);color:rgba(237,232,219,.85)}
+.pregunta{font:600 40px/1.25 var(--sora);color:var(--crema);padding-left:32px;border-left:6px solid var(--violeta)}
+/* 03 · qué es */
+.ficha{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid rgba(237,232,219,.25);border-bottom:1px solid rgba(237,232,219,.25)}
+.ficha > div{padding:32px 32px 32px 0;display:flex;flex-direction:column;gap:14px}
+.ficha > div + div{padding-left:32px;border-left:1px solid rgba(237,232,219,.25)}
+.ficha dt{font:500 16px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--verde)}
+.ficha dd{font:600 34px/1.15 var(--sora)}
+.ficha dd b{font-size:64px;color:var(--verde)}
+.fachada-videos{display:flex;flex-direction:column;gap:20px}
+.fv{display:flex;gap:40px;align-items:center}
+.fv .mono-e{width:240px;flex:none;color:rgba(237,232,219,.7)}
+.fv video{width:1100px;display:block;background:#1c1c1c;border-radius:6px}
+.fachada-videos .fv{transition:opacity .6s,translate .7s cubic-bezier(.22,1,.36,1);transition-delay:calc(var(--i) * 180ms)}
+.fachada-videos.espera .fv{opacity:0;translate:-60px 0}
+/* 04 · dinámica: juego de la pose */
+.dina{display:flex;gap:80px;align-items:flex-start}
+.dina-txt{width:700px;flex:none;display:flex;flex-direction:column;gap:48px}
+.dina-txt .ps-txt{width:auto}
+.hole{display:flex;gap:28px;align-items:flex-start}
+.hole img{width:250px;border-radius:8px;flex:none}
+.hole figcaption{font:400 22px/1.4 var(--reddit);color:rgba(237,232,219,.75)}
+.pose-caja{position:relative;width:900px;flex:none;border-radius:32px;overflow:hidden;background:radial-gradient(600px 500px at 50% 40%,#303030,#1d1d1d);box-shadow:inset 0 0 0 2px rgba(237,232,219,.12)}
+.pose-caja canvas{display:block;width:100%;height:auto;touch-action:none;cursor:crosshair}
+.pose-barra{position:absolute;left:40px;right:40px;top:28px;height:10px;border-radius:10px;background:rgba(237,232,219,.15);overflow:hidden}
+.pose-barra span{position:absolute;inset:0;background:var(--crema);border-radius:inherit;transform-origin:0 50%}
+.precision{position:absolute;right:28px;top:60px;width:120px;height:120px;display:grid;place-items:center}
+.precision svg{position:absolute;inset:0;rotate:-90deg}
+.precision circle{fill:rgba(37,37,37,.6);stroke:rgba(237,232,219,.18);stroke-width:8}
+.precision .arco{fill:none;stroke:var(--verde);stroke-linecap:round;stroke-dasharray:326.7;stroke-dashoffset:calc(326.7 * (1 - var(--p,0)));transition:stroke-dashoffset .3s}
+.precision b{position:relative;font:700 30px/1 var(--sora);color:var(--crema)}
+.pastilla{position:absolute;left:50%;top:84px;translate:-50% 0;padding:12px 26px;border-radius:40px;border:4px solid var(--crema);background:var(--verde);font:700 28px/1 var(--sora);color:var(--crema);opacity:0;scale:.4;pointer-events:none}
+.pastilla.vi{background:var(--violeta)}
+.pastilla.ver{animation:pastilla 1.3s cubic-bezier(.34,1.56,.64,1) forwards}
+@keyframes pastilla{0%{opacity:0;scale:.4;rotate:-8deg}25%{opacity:1;scale:1;rotate:3deg}80%{opacity:1;scale:1;rotate:0deg}100%{opacity:0;scale:.9;translate:-50% -20px}}
+.pose-pista{position:relative;padding:4px 240px 26px 28px;font:400 18px/1.35 var(--reddit);color:rgba(237,232,219,.7)}
+.pose-pista .mono-e{margin-bottom:6px}
+.pose-pista i{font-style:normal}
+.pose-otra{position:absolute;right:28px;bottom:26px;padding:12px 22px;border-radius:40px;border:2px solid var(--verde);font:500 16px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--crema);transition:background .2s}
+.pose-otra:hover{background:var(--verde)}
+/* 05 · recorrido */
+.reco{display:flex;gap:80px;align-items:flex-start}
+.reco-pin{position:sticky;top:120px;width:960px;flex:none}
+.reco-pantalla{position:relative;width:960px;aspect-ratio:16/9;border-radius:24px;overflow:hidden;background:#1c1c1c;box-shadow:0 0 0 2px rgba(237,232,219,.12),0 30px 80px rgba(0,0,0,.45)}
+.reco-pantalla .v{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;scale:1.04;transition:opacity .6s var(--ease-out),scale .8s var(--ease-out)}
+.reco-pantalla .marca{position:absolute;left:24px;bottom:20px;width:90px;height:auto;z-index:2}
+.reco-pantalla[data-paso="1"] .v1,.reco-pantalla[data-paso="2"] .v2,.reco-pantalla[data-paso="3"] .v3,.reco-pantalla[data-paso="4"] .v4,
+.reco-pantalla[data-paso="5"] .v5,.reco-pantalla[data-paso="6"] .v6,.reco-pantalla[data-paso="7"] .v7,.reco-pantalla[data-paso="8"] .v8{opacity:1;scale:1}
+.v2{display:grid;place-items:center}
+.v2 svg{width:300px;height:300px;rotate:-90deg}
+.v2 circle{fill:none;stroke:rgba(237,232,219,.18);stroke-width:8}
+.v2 .arco{stroke:var(--verde);stroke-linecap:round;stroke-dasharray:502.7;stroke-dashoffset:502.7}
+.reco-pantalla[data-paso="2"] .v2 .arco{animation:completar 2.4s .3s var(--ease-in-out) forwards}
+@keyframes completar{to{stroke-dashoffset:0}}
+.huellas{position:absolute;left:50%;top:50%;translate:-50% -50%;display:flex;gap:26px}
+.huellas i{width:40px;height:92px;border-radius:50% 50% 45% 45%/60% 60% 40% 40%;background:var(--crema);opacity:.85}
+.v4{display:grid;place-items:center}
+.v4 .respira{width:360px;height:360px;top:46%}
+.v4 .respira-et{top:auto;bottom:40px}
+.v5 img{width:100%;height:100%;object-fit:cover}
+.v5 .barra{position:absolute;left:5%;right:5%;top:20px;height:8px;border-radius:8px;background:rgba(237,232,219,.18);overflow:hidden}
+.v5 .barra i{position:absolute;inset:0;background:var(--crema);transform-origin:0 50%}
+.reco-pantalla[data-paso="5"] .v5 .barra i{animation:vaciar 10s linear infinite}
+@keyframes vaciar{from{scale:1 1}to{scale:0 1}}
+.pastilla-f{position:absolute;left:50%;top:60px;translate:-50% 0;padding:8px 18px;border-radius:30px;border:3px solid var(--crema);background:var(--verde);font:700 20px/1 var(--sora);color:var(--crema)}
+.reco-pantalla[data-paso="5"] .pastilla-f{animation:pastilla-f 2.5s 1s cubic-bezier(.34,1.56,.64,1) infinite both}
+@keyframes pastilla-f{0%{opacity:0;scale:.4}15%,70%{opacity:1;scale:1}85%,100%{opacity:0;scale:.9}}
+.v6{display:flex;gap:10px;align-items:center;justify-content:center;padding:70px}
+.v6 i{flex:1;height:100%;border-radius:10px;background:linear-gradient(160deg,#2f2f2f,#202020);box-shadow:inset 0 0 0 2px rgba(73,184,103,.5);transition:margin 1s cubic-bezier(.65,0,.35,1) .4s,border-radius 1s .4s}
+.reco-pantalla[data-paso="6"] .v6 i{margin:0 -5px;border-radius:0}
+.reco-pantalla[data-paso="6"] .v6 i:first-child{border-radius:10px 0 0 10px} .reco-pantalla[data-paso="6"] .v6 i:last-child{border-radius:0 10px 10px 0}
+.reco-pasos{list-style:none;display:flex;flex-direction:column;width:560px;padding:20vh 0 30vh}
+.reco-pasos li{padding:40px 0 40px 28px;border-left:3px solid rgba(237,232,219,.15);opacity:.35;transition:opacity .4s,border-color .4s}
+.reco-pasos li.on{opacity:1;border-color:var(--verde)}
+.reco-pasos p{margin-top:12px;font:400 28px/1.36 var(--reddit)}
+/* 06 · dedicatorias */
+.dedica-fotos{display:flex;gap:28px;justify-content:center}
+.dedica-fotos img{width:300px;aspect-ratio:9/19;object-fit:cover;border-radius:36px;border:6px solid #111;box-shadow:0 20px 50px rgba(0,0,0,.45);transition:translate .7s cubic-bezier(.34,1.3,.64,1),opacity .6s,rotate .7s;transition-delay:calc(var(--i) * 120ms)}
+.dedica-fotos img:nth-child(odd){translate:0 40px}
+.dedica-fotos.espera img{opacity:0;translate:0 160px;rotate:6deg}
+.fachada{display:flex;gap:40px;align-items:stretch}
+.fachada-pantalla{position:relative;flex:1;height:560px;border-radius:12px;overflow:hidden;background:
+  radial-gradient(520px 420px at 30% 40%,rgba(73,184,103,.55),transparent 72%),radial-gradient(520px 420px at 82% 60%,rgba(171,138,229,.45),transparent 72%),#1b1b1b}
+.fachada-misc img{position:absolute;opacity:.9;animation:mecer 7s ease-in-out infinite alternate}
+@keyframes mecer{from{translate:0 -8px;rotate:-6deg}to{translate:0 8px;rotate:6deg}}
+.fachada-logo{position:absolute;left:50%;top:50%;translate:-50% -50%;width:340px;height:auto}
+.notas{position:absolute;inset:0}
+.nota{position:absolute;width:var(--w,290px);padding:26px 24px 24px;background:color-mix(in srgb,var(--c) 80%,transparent);color:var(--negro);rotate:var(--r);
+  animation:nota-entra .7s cubic-bezier(.34,1.56,.64,1) both;box-shadow:0 10px 24px rgba(0,0,0,.3)}
+.nota::before{content:"";position:absolute;left:0;right:0;bottom:100%;height:14px;background:inherit;
+  -webkit-mask:url(assets/post/nota-borde-1.svg) 0 100%/100% 100% no-repeat;mask:url(assets/post/nota-borde-1.svg) 0 100%/100% 100% no-repeat}
+.nota b{display:block;font:800 18px/1.2 var(--mono);margin-bottom:10px}
+.nota p{font:400 19px/1.35 var(--reddit)}
+.nota.M{--w:330px} .nota.L{--w:370px} .nota.XL{--w:410px}
+.nota.sale{animation:nota-sale .6s ease-in forwards}
+@keyframes nota-entra{from{opacity:0;scale:.3;rotate:calc(var(--r) - 20deg)}}
+@keyframes nota-sale{to{opacity:0;scale:.6;translate:0 30px}}
+.nota-form{width:440px;flex:none;display:flex;flex-direction:column;gap:18px;padding:32px;border-radius:24px;background:#1d1d1d;box-shadow:inset 0 0 0 2px rgba(237,232,219,.12)}
+.nota-form label{display:flex;gap:12px;align-items:center;font:800 18px/1 var(--mono);color:var(--crema)}
+.nota-form input,.nota-form textarea{flex:1;width:100%;padding:14px 16px;border-radius:12px;border:2px solid rgba(237,232,219,.25);background:transparent;color:var(--crema);font:400 20px/1.3 var(--reddit);resize:none}
+.nota-form input:focus,.nota-form textarea:focus{outline:none;border-color:var(--verde)}
+.nota-ayuda{font:400 16px/1.3 var(--reddit);color:rgba(237,232,219,.55)}
+.nota-form button{margin-top:auto;padding:16px;border-radius:40px;background:var(--verde);font:700 20px/1 var(--sora);color:var(--crema);border:3px solid var(--crema);transition:scale .2s}
+.nota-form button:hover{scale:1.03}
+/* 07 · contexto */
+.render{display:flex;flex-direction:column;gap:16px}
+.render-marco{width:1680px;height:900px;overflow:hidden;border-radius:16px}
+.render-marco img{width:100%;height:100%;object-fit:cover;scale:var(--s,1.15);transform-origin:50% 60%}
+.render figcaption{color:rgba(237,232,219,.7)}
+.carreras{display:grid;grid-template-columns:1fr 1fr;gap:40px}
+.carrera{padding:36px;border-radius:24px;border:2px solid rgba(237,232,219,.25);display:flex;flex-direction:column;gap:16px;transition:border-color .3s,translate .3s}
+.carrera:hover{border-color:var(--verde);translate:0 -6px}
+.carrera h3{font:600 40px/1.1 var(--sora)}
+.carrera p{font:400 20px/1.4 var(--reddit);color:rgba(237,232,219,.7)}
+/* 08 · prototipo */
+.chip-m{display:inline-block;padding:4px 14px;border-radius:30px;border:2px solid var(--verde);font:500 22px/1.3 var(--mono);color:var(--crema)}
+.iters{display:grid;grid-template-columns:repeat(4,1fr);gap:32px}
+.iter{display:flex;flex-direction:column;gap:16px;padding:28px;border-radius:24px;background:#1d1d1d}
+.iter > :first-child{height:260px;width:100%;border-radius:16px;background:#151515;position:relative;overflow:hidden}
+.iter canvas{display:block;width:100%;height:260px;object-fit:contain}
+.iter p{font:400 22px/1.36 var(--reddit);color:rgba(237,232,219,.85)}
+.mini-barra i{position:absolute;left:24px;right:24px;top:40px;height:10px;border-radius:10px;background:var(--crema);transform-origin:0 50%;animation:vaciar 6s linear infinite}
+.mini-barra::before{content:"";position:absolute;left:24px;right:24px;top:40px;height:10px;border-radius:10px;background:rgba(237,232,219,.15)}
+.respira.chica{position:relative;left:auto;top:auto;translate:none;width:100%;height:260px}
+.respira.chica span{inset:auto;left:50%;top:50%;width:200px;height:200px;margin:-100px 0 0 -100px}
+.respira.chica .r2{width:136px;height:136px;margin:-68px 0 0 -68px}
+.mini-reco{display:flex;align-items:center;justify-content:center;gap:12px}
+.mini-reco::before{content:"";position:absolute;left:30px;right:30px;top:50%;height:3px;background:rgba(237,232,219,.18)}
+.mini-reco i{position:relative;width:18px;height:18px;border-radius:50%;border:3px solid var(--crema);background:var(--negro);animation:paso-reco 8s infinite;animation-delay:calc(var(--i) * 1s)}
+@keyframes paso-reco{0%,10%{background:var(--verde);scale:1.4}20%,100%{background:var(--negro);scale:1}}
+.ui-post{display:flex;align-items:center;gap:60px;flex-wrap:wrap;padding-top:24px}
+.precision.enorme{position:relative;right:auto;top:auto;width:220px;height:220px}
+.precision.enorme b{font-size:56px}
+.pastillas{display:flex;gap:24px;flex-wrap:wrap}
+.pastillas span{padding:14px 30px;border-radius:40px;border:4px solid var(--crema);background:var(--verde);font:700 30px/1 var(--sora);transition:scale .6s cubic-bezier(.34,1.56,.64,1),rotate .6s cubic-bezier(.34,1.56,.64,1),opacity .4s;transition-delay:calc(.6s + var(--i) * 150ms)}
+.pastillas span.vi{background:var(--violeta)}
+.pastillas span:hover{rotate:-4deg;scale:1.08;transition-delay:0s}
+.ui-post.espera .pastillas span{opacity:0;scale:.3;rotate:-15deg}
+.ui-post .mono-e{width:100%;color:rgba(237,232,219,.6)}
+#post .pie-km{border-top:1px solid rgba(237,232,219,.14)}
 
 /* =====================================================================
    VERSIÓN MOBILE (hasta 760 px de ancho): la clase .movil la pone un script en el <head>.
@@ -1248,6 +1514,12 @@ html.movil .bajada{font-size:30px;white-space:normal;width:432px;line-height:1.2
 html.movil .links{gap:12px}
 html.movil .links button{font-size:18px}
 html.movil .slide-down{left:216px;top:900px!important}
+/* hero · navegación en el celular: una fila abajo, solo flecha y KM (los nombres no entran) */
+html.movil .nav-hero{display:flex;justify-content:space-between;align-self:stretch;margin:auto 0 116px}
+html.movil .nh{position:relative;left:auto;right:auto;bottom:auto;width:auto;gap:8px}
+html.movil .nh .circ{width:48px;height:48px}
+html.movil .nh .tx{padding-left:12px;gap:0}
+html.movil .nh .et{display:none}
 html.movil .km > .btn-menu{left:12px;top:14px;width:44px;height:44px}
 html.movil .km > .btn-menu.chico{transform:scale(.8)}
 
@@ -1535,6 +1807,7 @@ html.movil .km10-sec{gap:48px}
 html.movil .km7-escena{width:480px;padding:0 24px;margin-bottom:72px}
 html.movil .escena{width:1080px;height:940px}
 html.movil .btn-ds{left:125px;top:330px}
+html.movil .frase-ds.fin{left:-40px;top:250px;width:910px;font-size:40px}
 html.movil .etq-ds{left:calc(125px + var(--mx));top:calc(330px + var(--my));font-size:36px;padding:24px 34px;border-width:3px}
 html.movil :is(.principios,.senal-fila,.alturas,.hitos){width:100%}
 html.movil .principios{flex-direction:column;gap:40px}
@@ -1550,10 +1823,11 @@ html.movil .altura b{font-size:24px}
 html.movil .altura span{font-size:17px}
 html.movil :is(div.frente,.vestir,.pantallas-post){width:480px;margin-left:-24px}
 html.movil .hitos{flex-direction:column;gap:12px;width:480px;margin-left:-24px}
-html.movil .hito{width:100%}
+html.movil .hito{width:100%;aspect-ratio:16/9}
+html.movil :is(.vestir,.pantallas-col){margin-left:0}
+html.movil .pantallas-col{width:100%;gap:16px}
+html.movil .render-fachada{width:480px;max-width:none;margin-left:-24px}
 html.movil .col-izq{width:100%;gap:20px}
-html.movil .col-der{width:480px;margin-left:-24px;gap:12px}
-html.movil .col-der .pantallas-post{width:100%;margin-left:0}
 html.movil .ui-fuente{font-size:24px;padding:12px 20px} html.movil .ui-fuente b{font-size:26px}   /* la ventana va achicada al 60 % */
 html.movil .juego-insignias{flex:none;height:360px;min-height:0;border-radius:22px}
 html.movil .frente .m1{transform:translate(calc((1 - var(--p)) * -60px), calc((1 - var(--p)) * 14px)) rotate(calc((1 - var(--p)) * -6deg))}
@@ -1587,8 +1861,118 @@ html.movil .cod-fila :is(b,span){width:auto}
 html.movil .cod-fila b{font-size:24px}
 html.movil .cod-fila :is(span,em){font-size:17px}
 html.movil .carpetas{flex-direction:column;gap:36px}
+html.movil .finder{margin-top:40px;padding:32px 18px 28px;border-radius:0 20px 20px 20px}
+html.movil .finder-tab{width:200px;height:35px;top:-34.5px}
 html.movil .carpeta{width:100%}
 html.movil .carpeta p{font-size:16px;word-break:break-all}
+/* ---- post. en mobile: una columna de 480 ---- */
+html.movil .post-hero{height:1000px}
+html.movil .ph-kicker{left:24px;right:24px;top:96px;flex-direction:column;align-items:flex-end;gap:10px;font-size:14px}
+html.movil .ph-centro{top:400px;width:400px;height:184px}
+html.movil .ph-logo{width:400px}
+html.movil .respira{width:380px;height:380px}
+html.movil .respira-et{top:calc(100% + 120px);font-size:16px}
+html.movil .ph-bajada{top:640px;padding:0 24px;font-size:28px}
+html.movil .ph-links{left:24px;right:24px;top:740px;gap:12px 20px}
+html.movil .ph-links button{font-size:13px}
+html.movil .ph-pie{left:24px;right:24px;bottom:24px;font-size:11px;gap:16px}
+html.movil .mono-k{font-size:16px}
+html.movil .mono-e{font-size:13px}
+html.movil .meta-spot{padding:72px 24px;gap:28px}
+html.movil .meta-logo{width:150px}
+html.movil .meta-txt{width:auto;font-size:20px}
+html.movil .meta-preg{width:auto;font-size:40px}
+html.movil .linea-meta{height:44px}
+html.movil .linea-meta .cuadros{background-size:22px 22px}
+html.movil .linea-meta .et{right:24px;font-size:14px;padding:6px 12px}
+html.movil .meta-post{padding:64px 24px 80px;gap:32px}
+html.movil .meta-nacio{font-size:40px;gap:16px;flex-wrap:wrap}
+html.movil .meta-nacio img{height:80px}
+html.movil .ps{padding:80px 24px;gap:32px}
+html.movil .ps-t{width:auto;font-size:36px;margin-top:-8px}
+html.movil .ps-t.enorme{font-size:44px}
+html.movil .ps-txt{width:auto;font-size:19px}
+html.movil .mono-k.sep{margin-top:32px}
+html.movil .tp1{flex-direction:column;gap:28px;padding:28px 0}
+html.movil .tp1 > p{width:auto;font-size:19px}
+html.movil .tp1 dt{width:96px;font-size:13px}
+html.movil .tp1 dd{font-size:20px}
+html.movil .ideas{grid-template-columns:1fr;gap:32px}
+html.movil .idea p{font-size:18px}
+html.movil .fotos-post{flex-wrap:wrap;gap:16px;padding:16px 0}
+html.movil .fotos-post figure{width:200px;padding:8px 8px 0}
+html.movil .fotos-post figcaption{font-size:11px;padding:10px 0 12px}
+html.movil .encuestas{padding:28px 22px;border-radius:24px;gap:28px}
+html.movil .datos-enc{grid-template-columns:1fr 1fr;gap:24px}
+html.movil .datos-enc b{font-size:52px} html.movil .datos-enc span{font-size:28px}
+html.movil .datos-enc p{font-size:15px}
+html.movil .pregunta{font-size:22px;padding-left:16px;border-left-width:4px}
+html.movil .ficha{grid-template-columns:1fr 1fr}
+html.movil .ficha > div{padding:20px 12px 20px 0}
+html.movil .ficha > div + div{padding-left:12px}
+html.movil .ficha > div:nth-child(3){padding-left:0;border-left:0;border-top:1px solid rgba(237,232,219,.25)}
+html.movil .ficha > div:nth-child(4){border-top:1px solid rgba(237,232,219,.25)}
+html.movil .ficha dt{font-size:12px}
+html.movil .ficha dd{font-size:20px} html.movil .ficha dd b{font-size:40px}
+html.movil .fv{flex-direction:column;align-items:flex-start;gap:8px}
+html.movil .fv .mono-e{width:auto}
+html.movil .fv video{width:432px}
+html.movil .dina{flex-direction:column;gap:32px}
+html.movil .dina-txt{width:auto;gap:28px}
+html.movil .hole img{width:150px}
+html.movil .hole figcaption{font-size:16px}
+html.movil .pose-caja{width:432px;border-radius:20px}
+html.movil .pose-barra{left:18px;right:18px;top:14px;height:6px}
+html.movil .precision{right:12px;top:30px;width:72px;height:72px}
+html.movil .precision b{font-size:18px}
+html.movil .pastilla{top:40px;font-size:16px;padding:8px 14px;border-width:3px}
+html.movil .pose-pista{position:relative;left:auto;bottom:auto;width:auto;padding:14px 18px 0;font-size:15px}
+html.movil .pose-otra{position:relative;right:auto;bottom:auto;margin:12px 18px 18px;font-size:13px}
+html.movil .reco{flex-direction:column;gap:0}
+html.movil .reco-pin{position:relative;top:auto;width:432px;z-index:2}
+html.movil .reco-pin::before{content:"";position:absolute;left:-24px;right:-24px;top:-90px;bottom:-16px;background:var(--negro);z-index:-1}
+html.movil .reco-pantalla{width:432px;border-radius:14px}
+html.movil .reco-pantalla .marca{width:54px;left:12px;bottom:10px}
+html.movil .v2 svg{width:140px;height:140px}
+html.movil .huellas{gap:12px} html.movil .huellas i{width:20px;height:46px}
+html.movil .v4 .respira{width:170px;height:170px}
+html.movil .v4 .respira-et{top:auto;bottom:14px;font-size:12px}
+html.movil .pastilla-f{top:28px;font-size:13px;padding:5px 10px;border-width:2px}
+html.movil .v5 .barra{top:10px;height:5px}
+html.movil .v6{padding:30px}
+html.movil .reco-pasos{width:auto;padding:24px 0 40vh}
+html.movil .reco-pasos li{padding:24px 0 24px 18px}
+html.movil .reco-pasos p{font-size:18px}
+html.movil .dedica-fotos{flex-wrap:wrap;gap:16px}
+html.movil .dedica-fotos img{width:200px;border-radius:24px;border-width:4px}
+html.movil .dedica-fotos img:nth-child(odd){translate:0 0}
+html.movil .fachada{flex-direction:column;gap:20px}
+html.movil .fachada-pantalla{flex:none;height:420px}
+html.movil .fachada-logo{width:200px}
+html.movil .nota{--w:170px;padding:16px 12px 12px}
+html.movil .nota.M{--w:190px} html.movil .nota.L,html.movil .nota.XL{--w:210px}
+html.movil .nota b{font-size:11px} html.movil .nota p,html.movil .nota.L p,html.movil .nota.XL p{font-size:12px}
+html.movil .nota-form{width:auto;padding:22px}
+html.movil .render-marco{width:432px;height:300px;border-radius:12px}
+html.movil .carreras{grid-template-columns:1fr;gap:20px}
+html.movil .carrera{padding:24px}
+html.movil .carrera h3{font-size:26px} html.movil .carrera p{font-size:16px}
+html.movil .chip-m{font-size:15px}
+html.movil .iters{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+html.movil .iter{min-width:0}
+html.movil .iter{padding:14px;gap:10px;border-radius:16px}
+html.movil .iter > :first-child,html.movil .iter canvas,html.movil .respira.chica{height:150px}
+html.movil .respira.chica span{width:120px;height:120px;margin:-60px 0 0 -60px}
+html.movil .respira.chica .r2{width:82px;height:82px;margin:-41px 0 0 -41px}
+html.movil .mini-reco{gap:4px} html.movil .mini-reco i{width:12px;height:12px;border-width:2px}
+html.movil .mini-reco::before{left:12px;right:12px}
+html.movil .mini-barra i,html.movil .mini-barra::before{left:12px;right:12px;top:24px}
+html.movil .iter p{font-size:14px}
+html.movil .ui-post{gap:28px}
+html.movil .precision.enorme{width:140px;height:140px}
+html.movil .precision.enorme b{font-size:36px}
+html.movil .pastillas{gap:12px}
+html.movil .pastillas span{font-size:18px;padding:8px 16px;border-width:3px}
 </style>
 </head>
 <body>
@@ -1617,7 +2001,7 @@ html.movil .carpeta p{font-size:16px;word-break:break-all}
     <button class="btn-menu" data-abrir-menu aria-label="Abrir índice"><img src="assets/home/lista.svg" alt=""></button>
     <img class="logo-centro" src="assets/home/logo-spot.svg" alt="SPOT!">
     <p class="actualizado">Última actualización Nov 2026</p>
-    <div class="submarcas"><img src="assets/home/logo-post.svg" alt="post." style="width:102px;height:47px"><img src="assets/home/logo-stop-comp4.svg" alt="STOP" style="width:96px;height:44px"></div>
+    <div class="submarcas"><a class="a-post" href="#post" aria-label="Conocé post."><img src="assets/home/logo-post.svg" alt="post." style="width:102px;height:47px"></a><img src="assets/home/logo-stop-comp4.svg" alt="STOP" style="width:96px;height:44px"></div>
   </div>
 </main>
 
@@ -1661,13 +2045,13 @@ html.movil .carpeta p{font-size:16px;word-break:break-all}
   </section>
   <section class="sec oscuro" id="km1-sub" style="height:374px">
     <div class="fila"><h2 class="t">Brand Spirit</h2>
-      <p class="c txt">Spot funciona como una marca paraguas con identidad propia, la cual está aplicada principalmente a la app. Sin embargo, ha desarrollado dos submarcas que forman parte de todo el ecosistema de Spot: se tratan de Post y Stop.</p></div>
+      <p class="c txt">Spot funciona como una marca paraguas con identidad propia, la cual está aplicada principalmente a la app. Sin embargo, ha desarrollado dos submarcas que forman parte de todo el ecosistema de Spot: se trata de Post y Stop.</p></div>
   </section>
   <section class="submarcas-zona">
     <div class="decos" data-decos="post"></div>
     <img class="abs" src="assets/km1/post-logo-capa4.svg" alt="post." style="left:751px;top:232px;width:419px;height:193px">
     <p class="abs txt" style="top:659px">Post es la experiencia multimedia de Spot que acompaña el momento que llega después del recorrido. Si Spot se ocupa de lo que pasa antes y durante, Post se ocupa de lo que viene tras la meta: <b style="color:var(--verde)">el descanso</b>. Se trata de una cabina con pantallas LED por dentro y por fuera que se instala al final de carreras largas para recordarle a cada deportista, de forma lúdica, que recuperarse también es parte del entrenamiento.</p>
-    <a class="boton" href="#inicio" style="left:960.5px;top:909px;background:var(--verde)">Conocé más sobre POST <img src="assets/km1/flecha-der.svg" alt=""></a>
+    <a class="boton" href="#post" style="left:960.5px;top:909px;background:var(--verde)">Conocé más sobre POST <img src="assets/km1/flecha-der.svg" alt=""></a>
     <img class="foto-rot" data-mazo="post" src="assets/km1/foto-post-2.jpg" alt="Vista de la cabina post." style="left:964.6px;top:1282.3px;width:821.493px;height:462.324px;rotate:4.43deg">
     <img class="foto-rot" data-mazo="post" src="assets/km1/foto-post-1.jpg" alt="Vista exterior de post." style="left:133.9px;top:1271.9px;width:806.071px;height:453.805px;rotate:-4.31deg">
     <img class="foto-rot" data-mazo="post" src="assets/km1/foto-instalacion.jpg" alt="Instalación interactiva de estiramientos" style="left:403px;top:1183px;width:1114px;height:627px">
@@ -1676,21 +2060,21 @@ html.movil .carpeta p{font-size:16px;word-break:break-all}
     <img class="abs" src="assets/km1/stop-logo-comp3.svg" alt="STOP" style="left:751px;top:2329px;width:419px;height:193px">
     <p class="abs txt" style="top:2813px">Stop es el evento anual de Spot: una parada en el camino para celebrar lo recorrido. Alrededor de una carrera nocturna, propone una experiencia <b style="color:var(--rosa)">social, lúdica y reflexiva</b> donde corredores y acompañantes se encuentran, se divierten y se toman un momento para valorar todo el esfuerzo que los trajo hasta ahí. Si Spot acompaña el camino y Post cuida el después, Stop es la pausa que les da sentido a los dos.</p>
     <a class="boton" href="#inicio" style="left:945.5px;top:3063px;background:var(--rosa)">Conocé más sobre STOP <img src="assets/km1/flecha-der.svg" alt=""></a>
-    <!-- Fotos de STOP (Figma "Group 111" 708:12461): mismo mazo que las de post., 2217 px más abajo -->
-    <img class="foto-rot" data-mazo="stop" src="assets/km1/foto-stop-2.jpg" alt="Tótem interactivo de STOP en una plaza de noche, con dos personas usando sus pantallas." style="left:964.6px;top:3499.3px;width:821.493px;height:462.324px;rotate:4.43deg">
-    <img class="foto-rot" data-mazo="stop" src="assets/km1/foto-stop-1.jpg" alt="Largada de la carrera de STOP con un pórtico de pantallas y mensajes de aliento." style="left:133.9px;top:3488.9px;width:806.071px;height:453.805px;rotate:-4.31deg">
-    <img class="foto-rot" data-mazo="stop" src="assets/km1/foto-stop-centro.jpg" alt="Fiesta de STOP en una terraza de noche, con DJ y una pantalla gigante." style="left:403px;top:3400px;width:1114px;height:627px">
+    <!-- Fotos de STOP (Figma "Group 111" 708:12461): mismo mazo que las de post., 2217 px más abajo, con sus misceláneas -->
+    <img class="foto-rot stop" data-mazo="stop" src="assets/km1/foto-stop-1.jpg" alt="Dos personas frente a las cápsulas iluminadas de STOP, de noche." style="left:964.6px;top:3499.3px;width:821.493px;height:462.324px;rotate:4.43deg">
+    <img class="foto-rot stop" data-mazo="stop" src="assets/km1/foto-stop-2.jpg" alt="Largada de una carrera nocturna con el portal de STOP." style="left:133.9px;top:3488.9px;width:806.071px;height:453.805px;rotate:-4.31deg">
+    <img class="foto-rot stop" data-mazo="stop" src="assets/km1/foto-stop-3.jpg" alt="After de STOP en una terraza, con gente y pantallas de noche." style="left:403px;top:3400px;width:1114px;height:627px">
     <div class="decos flota" data-decos="stopfotos"></div>
-    <a class="parada" href="#km10" style="left:262px;top:4262px">
+    <a class="parada" href="#km10" style="left:262px;top:4415px">
       <span class="circ"><img src="assets/km1/flecha-izq-32.svg" alt=""></span>
       <span class="info" style="border-right:2px solid var(--crema);padding-right:20px"><span class="chip">KM8</span><span class="tx" style="text-align:right;align-items:flex-end"><small>Parada anterior</small><span>Arquigrafía</span></span></span>
     </a>
-    <a class="parada" href="#km2" style="left:1112px;top:4262px">
+    <a class="parada" href="#km2" style="left:1112px;top:4415px">
       <span class="info" style="border-left:2px solid var(--crema);padding-left:20px"><span class="tx"><small>Siguiente parada</small><span>Manual de Voz y Tono</span></span><span class="chip">KM2</span></span>
       <span class="circ"><img src="assets/km1/flecha-der-32.svg" alt=""></span>
     </a>
-    <button class="volver-arriba" style="top:4390px" data-arriba><img src="assets/km1/slide-down-crema.svg" alt="">Volver arriba</button>
-    <p class="abs" style="left:765px;top:4569px;font:400 16px/normal var(--reddit);color:#fff;white-space:nowrap">© Copyright 2026 Spot. Todos los derechos reservados</p>
+    <button class="volver-arriba" style="top:4543px" data-arriba><img src="assets/km1/slide-down-crema.svg" alt="">Volver arriba</button>
+    <p class="abs" style="left:765px;top:4722px;font:400 16px/normal var(--reddit);color:#fff;white-space:nowrap">© Copyright 2026 Spot. Todos los derechos reservados</p>
   </section>
  </div>
 </article>
@@ -1711,7 +2095,7 @@ html.movil .carpeta p{font-size:16px;word-break:break-all}
   <section class="sec">
     <div class="fila">
       <p class="grande" style="width:972px;font-size:48px">
-        <b class="naranja">Spot</b> existe para que la ciudad sea un <span class="glosa" tabindex="0"><b class="naranja">tercer lugar</b><span class="def" role="tooltip"><strong>*Tercer lugar</strong>Se define como los espacios de la vida cotidiana donde las personas socializan y se reúnen fuera de los dos entornos principales. el hogar y el trabajo. Algunos ejemplos de terceros lugares son iglesias, cafés, bares, clubes, bibliotecas, gimnasios, entre muchos otros.</span></span> para quienes se mueven. Acompañamos a quien corre, pedalea o patina desde su primera salida hasta su próxima meta, y lo conectamos con los lugares, las personas y los momentos que hacen que siempre den ganas de <b class="naranja">volver a salir</b>.</p>
+        <b class="naranja">Spot</b> existe para que la ciudad sea un <span class="glosa" tabindex="0"><b class="naranja">tercer lugar</b><span class="def" role="tooltip"><strong>*Tercer lugar</strong>Se define como los espacios de la vida cotidiana donde las personas socializan y se reúnen fuera de los dos entornos principales: el hogar y el trabajo. Algunos ejemplos de terceros lugares son iglesias, cafés, bares, clubes, bibliotecas, gimnasios, entre muchos otros.</span></span> para quienes se mueven. Acompañamos a quien corre, pedalea o patina desde su primera salida hasta su próxima meta, y lo conectamos con los lugares, las personas y los momentos que hacen que siempre den ganas de <b class="naranja">volver a salir</b>.</p>
       <p class="txt" style="width:547px">Por eso hablamos como <b class="naranja">un compañero más</b>, alguien que te ayuda a encontrar un grupo, te recuerda tus objetivos o te avisa dónde hay un baño cerca, sin juzgar el ritmo de nadie.</p>
     </div>
   </section>
@@ -1725,7 +2109,7 @@ html.movil .carpeta p{font-size:16px;word-break:break-all}
   <section class="sec" id="km2-voz">
     <div class="fila"><h2 class="t">La Voz</h2>
       <div class="c txt">
-        <p><span class="frase">La voz es la personalidad de Spot puesta en palabras.</span> Hablamos de vos y en imperativo, <b>como quien invita a salir</b> y no como quien da órdenes. Usamos las palabras que ya circulan en los grupos de running, bici o patín, y sumamos inglés deportivo solo cuando ya forma parte del habla cotidiana. El objetivo es bajar la barrera de entrada. <b>guiamos con pasos cortos, damos datos concretos</b> de lugar, horario y distancia, y respondemos de antemano lo que da vergüenza preguntar, para que nadie se quede afuera por no animarse.</p>
+        <p><span class="frase">La voz es la personalidad de Spot puesta en palabras.</span> Hablamos de vos y en imperativo, <b>como quien invita a salir</b> y no como quien da órdenes. Usamos las palabras que ya circulan en los grupos de running, bici o patín, y sumamos inglés deportivo solo cuando ya forma parte del habla cotidiana. El objetivo es bajar la barrera de entrada: <b>guiamos con pasos cortos, damos datos concretos</b> de lugar, horario y distancia, y respondemos de antemano lo que da vergüenza preguntar, para que nadie se quede afuera por no animarse.</p>
         <p>Cuando algo sale bien, <b>celebramos en plural</b>: los logros son del grupo y no de una sola persona, y cada avance se festeja con entusiasmo para que siempre haya un motivo para volver. Nuestro rol es <b>resolver lo logístico para que cada persona solo se ocupe de moverse</b>, y esa voz se mantiene igual en la app, en Post y en Stop.</p>
       </div></div>
   </section>
@@ -1865,7 +2249,7 @@ html.movil .carpeta p{font-size:16px;word-break:break-all}
       <div class="colab-muestra oscura" style="height:560px"><img src="assets/km3/lockup-martinez.svg" alt="Lockup SPOT! × Café Martínez" width="754" height="107"></div></div>
     <div class="colab-fila"><div class="pautas-c"><h4>Jerarquía visual</h4><div><p>Los dos logos tienen el mismo peso visual: ninguno opaca al otro.</p><p>Aunque el logo aliado tenga sus propios colores o un fondo propio, en el lockup va en Blanco Spot, sin caja, sobre Negro Spot.</p></div></div>
       <div class="colab-muestra oscura" style="height:560px"><img src="assets/km3/lockup-integra.svg" alt="Lockup SPOT! × Íntegra" width="792" height="108"></div></div>
-    <div class="colab-fila"><div class="pautas-c"><h4>A pedido de la marca</h4><div><p>Si una marca aliada exige usar su logo a color, o una variante que no aplica a nuestras reglas generales, esta la única excepción y se aplica solo a pedido de esa marca.</p></div></div>
+    <div class="colab-fila"><div class="pautas-c"><h4>A pedido de la marca</h4><div><p>Si una marca aliada exige usar su logo a color, o una variante que no aplica a nuestras reglas generales, esta es la única excepción y se aplica solo a pedido de esa marca.</p></div></div>
       <div class="colab-muestra oscura" style="height:720px"><img src="assets/km3/lockup-hyper.svg" alt="Lockup SPOT! × Hyper Night 10K" width="638" height="96"><img src="assets/km3/lockup-adidas.svg" alt="Lockup SPOT! × adidas Hyper Night 10K" width="744" height="110"></div></div>
     <div class="colab-fila"><div class="pautas-c"><h4>Plantilla</h4><div><p>Esta plantilla es la guía general para armar cualquier lockup con una marca aliada.</p><p>El logo aliado entra en el recuadro de la derecha, sin superar su alto, y los márgenes se mantienen iguales en todos los lados.</p></div>
         <a class="boton-descarga" href="assets/km3/plantilla-colaboracion.svg" download="Spot - Plantilla de colaboración.svg">Descargar plantilla</a></div>
@@ -1971,7 +2355,7 @@ html.movil .carpeta p{font-size:16px;word-break:break-all}
       <div class="alinear" data-alinear></div>
     </div>
     <div class="pesos" style="left:950px;top:2292px;height:418px"><div style="height:210px;font-family:var(--reddit)"><span data-peso="400" data-para="reddit" style="font-weight:400">Regular</span><span data-peso="600" data-para="reddit" style="font-weight:600">Semi bold</span><span data-peso="700" data-para="reddit" style="font-weight:700">Bold</span></div></div>
-    <div class="expl" style="left:1395px;top:2292px;height:418px"><p>La variable Regular es la de uso principal para textos de lectura. La <b>Bold</b> aparece cuando hay que destacar una palabra o frase. Despúes la <b style="font-weight:600">semibold</b> es usada para botones o subtitulos.</p></div>
+    <div class="expl" style="left:1395px;top:2292px;height:418px"><p>La variable Regular es la de uso principal para textos de lectura. La <b>Bold</b> aparece cuando hay que destacar una palabra o frase. Después la <b style="font-weight:600">semibold</b> es usada para botones o subtítulos.</p></div>
   </section>
 
   <div class="divisor"></div>
@@ -2021,7 +2405,7 @@ html.movil .carpeta p{font-size:16px;word-break:break-all}
 
   <section class="sec km4-intro" style="height:562px">
     <div class="fila">
-      <p class="t-grande">Es muy importante entender como dialogan los colores, ya que cada submarca es marcada por una paleta especifica</p>
+      <p class="t-grande">Es muy importante entender cómo dialogan los colores, ya que cada submarca es marcada por una paleta específica</p>
       <div class="col txt"><p>En Spot puede haber fondos oscuros tranquilamente, solo que no tan seguido. En Post y Stop casi siempre todo es con fondo negro.</p>
         <p style="margin-top:0">Los colores nunca se van a tocar entre sí en las decoraciones. Siempre tiene que haber blanco o negro de por medio.<br>Puede haber tipografía a color siempre y cuando el fondo sea blanco o negro.</p></div>
     </div>
@@ -2052,7 +2436,7 @@ html.movil .carpeta p{font-size:16px;word-break:break-all}
   </div>
   <section class="sec km4-intro" style="height:562px">
     <div class="fila">
-      <p class="t-grande">Los variantes de porcentajes del <b>negro</b> y el <b>crema</b> son pilares de nuestra jerarquía de colores</p>
+      <p class="t-grande">Las variantes de porcentajes del <b>negro</b> y el <b>crema</b> son pilares de nuestra jerarquía de colores</p>
       <div class="col txt"><p>Las variables en porcentaje de  100 / 80 / 60 / 40 / 20 /10 de los colores blanco y negro son para este tipo de instancias, para que no esté todo tan cargado.</p>
         <p style="margin-top:0">Se puede dar este ejemplo de un buen y un mal uso.<br>El 1 destaca mejor instancias más importantes y jerarquiza mejor a lo largo de pantallas extensas. El 2 puede ser molesto para la vista.</p></div>
     </div>
@@ -2118,7 +2502,7 @@ html.movil .carpeta p{font-size:16px;word-break:break-all}
   </section>
 
   <section class="km6-intro">
-    <p>La marca de Spot y sus sumbarcas utilizan múltiples elementos gráficos, tanto puntos decorativos como líneas, imágenes y hasta ilustraciones. ¿Cómo las ordenamos?</p>
+    <p>La marca de Spot y sus submarcas utilizan múltiples elementos gráficos, tanto puntos decorativos como líneas, imágenes y hasta ilustraciones. ¿Cómo las ordenamos?</p>
     <div class="decos" data-decos="km6intro"></div>
   </section>
   <div class="divisor"></div>
@@ -2170,7 +2554,7 @@ html.movil .carpeta p{font-size:16px;word-break:break-all}
     <div class="indebidos" data-indebidos></div>
   </section>
   <section class="sec-foto" id="km6-sobre-fotos">
-    <div class="fila"><h3 class="t">Elementos sobre fotografías</h3><p class="c txt">Si se van a colocar logotipos, tipografía u otros elementos sobre fotografías, es importante diferenciarlos bien del fondo. Recomendamos usar colocar sobre la imagen una capa de negro #000000 a un 20 - 30%. También puede usarse un degradado para textos que solo aparezcan en un área de la imagen.</p></div>
+    <div class="fila"><h3 class="t">Elementos sobre fotografías</h3><p class="c txt">Si se van a colocar logotipos, tipografía u otros elementos sobre fotografías, es importante diferenciarlos bien del fondo. Recomendamos colocar sobre la imagen una capa de negro #000000 a un 20 - 30%. También puede usarse un degradado para textos que solo aparezcan en un área de la imagen.</p></div>
     <div class="sobre-fotos">
       <figure class="sobre-foto" tabindex="0" aria-label="Foto con capa negra al 30 %, la frase “En compañía es mejor.” y el logo de SPOT!">
         <div class="marco"><img src="assets/km6/sobre-foto-1.jpg" alt="Corredores bajo un puente" style="top:0;height:788px" loading="lazy">
@@ -2186,7 +2570,7 @@ html.movil .carpeta p{font-size:16px;word-break:break-all}
       <figure class="sobre-foto" tabindex="0" aria-label="Foto con degradado negro de 0 a 80 % y un título con texto encima">
         <div class="marco"><img src="assets/km6/sobre-foto-2.jpg" alt="Ciclistas charlando junto a sus bicis" style="top:-60.2px;height:1399.6px" loading="lazy">
           <div class="capa" style="background:linear-gradient(to bottom,rgba(0,0,0,0) 0%,rgba(0,0,0,var(--op,.8)) 87%)"></div>
-          <div class="encima"><h4 class="titulo" style="left:76px;top:565px">Encontrá tu team</h4><p class="bajada-foto" style="left:76px;top:614px">Buscá grupos que en base a tus necesidades: Si querés que estén cerca de tu zona, ser princincipiantes como vos, que hagan la actividad en tus horarios o incluso las actividades pre y post que realizan. Todo lo podés filtrar desde la app.</p></div></div>
+          <div class="encima"><h4 class="titulo" style="left:76px;top:565px">Encontrá tu team</h4><p class="bajada-foto" style="left:76px;top:614px">Buscá grupos que en base a tus necesidades: Si querés que estén cerca de tu zona, ser principiantes como vos, que hagan la actividad en tus horarios o incluso las actividades pre y post que realizan. Todo lo podés filtrar desde la app.</p></div></div>
         <div class="cartel" style="left:1250px;top:300px">
           <span class="et">Degradado lineal</span>
           <div class="valor"><i class="muestra" style="background:linear-gradient(180deg,rgba(0,0,0,0),#000)"></i>#000000<b data-valor>80 %</b></div>
@@ -2199,7 +2583,7 @@ html.movil .carpeta p{font-size:16px;word-break:break-all}
   </section>
   <div class="divisor"></div>
   <section class="sec" id="km6-ilustraciones">
-    <div class="fila"><h2 class="t">Ilustraciones</h2><p class="c txt">Utilizamos dos tipos de elementos gráficos por fuera de los puntos y fotografías: Se tratan de ilustraciones de caritas y un tratamiento de imagen especial, fromado por puntos.</p></div>
+    <div class="fila"><h2 class="t">Ilustraciones</h2><p class="c txt">Utilizamos dos tipos de elementos gráficos por fuera de los puntos y fotografías: Se trata de ilustraciones de caritas y un tratamiento de imagen especial, formado por puntos.</p></div>
   </section>
   <div class="divisor"></div>
   <section class="sec-foto" id="km6-caritas">
@@ -2208,7 +2592,7 @@ html.movil .carpeta p{font-size:16px;word-break:break-all}
   </section>
   <div class="divisor"></div>
   <section class="sec insignias-sec" id="km6-insignias">
-    <div class="fila"><h3 class="t">Insignias</h3><p class="c txt">Las insignias toman un estilo visual diferenciado de los iconos, y de las caritaa. utilizamos puntos haciendo referencia al nombre de la marca “spot”, además queremos simbolizar como el recorrido hasta llegar a conseguir una de estas insignias requiere pasar por varios <b>puntos</b></p></div>
+    <div class="fila"><h3 class="t">Insignias</h3><p class="c txt">Las insignias toman un estilo visual diferenciado de los íconos, y de las caritas. Utilizamos puntos haciendo referencia al nombre de la marca “spot”, además queremos simbolizar cómo el recorrido hasta llegar a conseguir una de estas insignias requiere pasar por varios <b>puntos</b></p></div>
     <div class="unir-puntos" data-unir role="img" aria-label="Unir los puntos: al bajar, una línea violeta une los puntos del 1 al 29 y se forma la palabra SPOT."></div>
     <a class="boton-plantilla" href="assets/km6/plantilla-insignia.svg" download="Spot - Plantilla de insignia.svg">Descargar plantilla</a>
     <div class="cinta-iconos" aria-label="Íconos de puntos de las insignias"><div class="pista-iconos" data-cinta></div></div>
@@ -2286,6 +2670,7 @@ html.movil .carpeta p{font-size:16px;word-break:break-all}
       <span class="circulo-ds izq"><img src="assets/km7/circulo.svg" alt=""><img class="b" src="assets/km7/circulo-borde.svg" alt=""></span>
       <span class="circulo-ds der"><img src="assets/km7/circulo.svg" alt=""><img class="b" src="assets/km7/circulo-borde.svg" alt=""></span>
       <p class="frase-ds">Todo nuestro sistema se basa en los puntos.</p>
+      <p class="frase-ds fin">Todo comienza con pequeños elementos.<br>Estos pequeños elementos van a formar cosas más grandes.</p>
       <span class="texto-ds"><span>SOY UN BOTÓN</span></span>
       <img class="cursor-ds" src="assets/km7/linea-cursor.svg" alt="">
       <span class="caja-ds"><i style="left:-3px;top:-4px"></i><i style="left:85px;top:-4px"></i><i style="left:-3px;top:85px"></i><i style="left:85px;top:85px"></i></span>
@@ -2376,7 +2761,7 @@ html.movil .carpeta p{font-size:16px;word-break:break-all}
     <div class="fila"><h2 class="t">Íconos</h2><p class="c txt">Spot utiliza los íconos del sitio <a href="https://phosphoricons.com/" target="_blank" rel="noopener" style="text-decoration:underline">Phosphor Icons</a>, una librería gratuita de íconos disponibles para copiar y descargar en svg y png. Sus puntas redondeadas conectan a la perfección con nuestro design system, continuando la base de construcción con puntos.</p></div>
     <div class="mezcla-caja">
       <div class="mezcla" data-mezcla role="group" aria-label="Íconos de la app de Spot: pasá el mouse (o tocá) cada uno para mezclarlo"></div>
-      <p class="mezcla-pista"><img src="assets/km7/iconos/switch.svg" alt="">Pasá el mouse para mezclar</p>
+      <p class="mezcla-pista"><img src="assets/km7/iconos/switch.svg" alt="">Pasá el mouse por los íconos para mezclarlos</p>
     </div>
   </section>
 
@@ -2408,10 +2793,13 @@ html.movil .carpeta p{font-size:16px;word-break:break-all}
     </div>
     <div class="ejemplos" data-ejemplos>
       <h4>Así se ve una carpeta ordenada</h4>
-      <div class="carpetas">
+      <div class="finder" aria-label="Carpeta">
+        <svg class="finder-tab" viewBox="0 0 310 54" aria-hidden="true"><rect x="3" y="48" width="301" height="6" fill="var(--crema)"/><path d="M1.5 54V20Q1.5 1.5 20 1.5H236Q250 1.5 258 12L282 42Q290 51 304 51H310" fill="var(--crema)" stroke="var(--negro)" stroke-width="3" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></svg>
+        <div class="carpetas">
         <div class="carpeta"><b>post.</b><p>post.arq_fachada_dedicatorias_v04.mp4</p><p>post.foto_cabina_estiramiento_v01.jpg</p><p>post.logo_isotipo_verde_sobrenegro.png</p><p>post.motion_break_1920x1080_v02.mp4</p></div>
         <div class="carpeta"><b>spot.</b><p>spot.adidas.logo_lockup_crema.svg</p><p>spot.fav_animado_32.gif</p><p>spot.ico_lockers_bold_24.svg</p><p>spot.ilu_mariposa_405.svg</p><p>spot.logo_principal_negro.svg</p><p>spot.pant_home_mapa_390x844_v03.png</p><p>spot.pant_logro_noobie_390x844_v01.png</p></div>
         <div class="carpeta"><b>stop.</b><p>stop.arq_busstop_render_v01.jpg</p><p>stop.integra.senal_stand_v01.pdf</p><p>stop.logo_principal_azul_v02.svg</p><p>stop.senal_direccional_banos_v02.pdf</p><p>stop.senal_orientativa_piso2_v01.pdf</p></div>
+      </div>
       </div>
       <p class="txt">Ordenada alfabéticamente, cada carpeta separa sola las tres marcas: primero todo lo de post., después spot. y al final stop.</p>
     </div>
@@ -2459,7 +2847,7 @@ html.movil .carpeta p{font-size:16px;word-break:break-all}
     <div class="fila"><h2 class="t">Medidas y alturas</h2><p class="c txt">Todas las piezas se dibujan sobre la misma regla de alturas, con una persona como referencia. Así cada señal se decide por dónde se lee y no solo por el espacio disponible.</p></div>
     <div class="alturas" data-alturas>
       <button class="altura"><b>0,75 m</b><span>Base de las piezas de piso, como los atriles de pedí y retirá.</span></button>
-      <button class="altura"><b>1,50 – 1,70 m</b><span>Altura de la vista: placas sobre pared, carteles de sala y directorios. Para tener en cuenta, la altura promedio de una persona es de 1,75 cm.</span></button>
+      <button class="altura"><b>1,50 – 1,70 m</b><span>Altura de la vista: placas sobre pared, carteles de sala y directorios. Para tener en cuenta, la altura promedio de una persona es de 1,75 m.</span></button>
       <button class="altura"><b>2,25 m</b><span>Desde acá, lo que tiene que verse por encima de la gente.</span></button>
       <button class="altura"><b>3 m o más</b><span>Coronamientos de stands y portales, visibles desde lejos.</span></button>
     </div>
@@ -2477,11 +2865,11 @@ html.movil .carpeta p{font-size:16px;word-break:break-all}
         <figure class="hito"><img src="assets/km10/parada-foto.jpg" alt="Parada fotográfica: una carita inflable con anteojos, un espejo y señales con frases como “Pará, tomá aire.”." loading="lazy"></figure></div></div>
     <div class="senal-fila ancha"><div class="col-izq"><div class="pauta"><h4>La pantalla también es arquitectura</h4><p>En post., la fachada de pantallas cumple el mismo rol que un cartel: deja reconocer la instalación desde afuera, anuncia lo que está por empezar y suma movimiento con las animaciones de la marca.</p></div>
         <div class="juego-insignias" data-juego aria-label="Juego: las misceláneas de post. (puntos y estrellas) caen y se pueden agarrar y tirar"><p class="pista">Agarrá un punto o una estrella y tiralo</p></div></div>
-      <div class="col-der"><div class="pantallas-post" data-pantallas>
+      <div class="pantallas-col"><div class="pantallas-post" data-pantallas>
         <video class="s1" src="assets/km10/post-respirar.mp4" muted loop playsinline preload="none" style="aspect-ratio:2366/820" aria-label="Pantalla de la entrada de post.: animación respirar"></video>
         <video class="s2" src="assets/km10/post-running.mp4" muted loop playsinline preload="none" style="aspect-ratio:3240/1080" aria-label="Pantalla del frente de post.: animación running"></video>
         <video class="s3" src="assets/km10/post-insignia.mp4" muted loop playsinline preload="none" style="aspect-ratio:4096/1484" aria-label="Pantalla de atrás de post.: animación insignia"></video></div>
-        <figure class="fachada-post"><img src="assets/km10/fachada-post.jpg" alt="Fachada de post. en una plaza: la cabina negra con el logo, puntos y aros verdes, y gente pasando." loading="lazy"></figure></div></div>
+        <img class="render-fachada" src="assets/km10/fachada-render.jpg" alt="Render de la cabina de post. por fuera: pantallas negras con el logo, puntos y estrellas de la marca y las dedicatorias." loading="lazy"></div></div>
   </section>
   <footer class="pie-km" data-ant="km7|KM7|Design System" data-sig="inicio|KM0|Volver al inicio"></footer>
  </div>
@@ -2489,6 +2877,182 @@ html.movil .carpeta p{font-size:16px;word-break:break-all}
 
 <!-- ======================= MENÚ (Slide 3) ======================= -->
 <div id="velo-menu" data-cerrar-menu></div>
+<article id="post" class="pantalla km" aria-label="post.: la experiencia multimedial de Spot">
+ <div class="lienzo">
+  <section class="post-hero" id="post-inicio">
+    <button class="btn-menu" data-abrir-menu aria-label="Abrir índice"><img src="assets/km2/21764.svg" alt=""></button>
+    <div class="ph-misc" data-ph-misc aria-hidden="true"></div>
+    <p class="ph-kicker"><span>Una submarca de SPOT!</span><span>Experiencia multimedial</span></p>
+    <div class="ph-centro">
+      <div class="respira" aria-hidden="true"><span class="r1"></span><span class="r2"></span></div>
+      <img class="ph-logo" src="assets/km6/post-logo.svg" alt="post.">
+      <p class="respira-et" aria-hidden="true"><span class="in">Inhalá</span><span class="ex">Exhalá</span></p>
+    </div>
+    <p class="ph-bajada">Darse un momento para <b>estirar</b> y <b>respirar</b>.</p>
+    <nav class="ph-links"><button data-a="post-origen">¿De dónde viene? ↗</button><button data-a="post-que">¿Qué es? ↗</button><button data-a="post-dinamica">La dinámica ↗</button><button data-a="post-recorrido">El recorrido ↗</button><button data-a="post-dedicatorias">Dedicatorias ↗</button><button data-a="post-contexto">Contexto ↗</button><button data-a="post-prototipo">Prototipo ↗</button></nav>
+    <p class="ph-pie"><span>post.</span><span>Pasá el mouse: las formas se corren a tu paso</span></p>
+  </section>
+
+  <section class="ps-meta" id="post-intro">
+    <div class="meta-spot">
+      <p class="mono-k tinta">01 · Introducción</p>
+      <img class="meta-logo" src="assets/km6/spot-logo.svg" alt="SPOT!">
+      <p class="meta-txt">En Spot creamos una experiencia para que las personas se animen a dar el primer paso, que logren salir y encuentren un lugar para realizar el deporte que buscaban. Pero...</p>
+      <p class="meta-preg" data-palabras>¿qué pasa cuando ya cruzamos esa primera línea de meta?</p>
+    </div>
+    <div class="linea-meta" aria-hidden="true"><span class="cuadros"></span><span class="et">Meta</span></div>
+    <div class="meta-post">
+      <p class="meta-txt">Para la realización de una experiencia multimedial, quisimos poner el foco en el <b>descanso</b> y la <b>recuperación</b> después de exigirle tanto a nuestro cuerpo. En darse un momento para estirar y respirar.</p>
+      <p class="meta-nacio">Así es como nació <img src="assets/km6/post-logo.svg" alt="post."></p>
+    </div>
+  </section>
+
+  <section class="ps" id="post-origen">
+    <p class="mono-k">02 · Introducción</p>
+    <h2 class="ps-t">¿De dónde viene la idea?</h2>
+    <div class="tp1">
+      <p>En el TP1 investigamos la relación entre los deportes de recorrido y el aspecto social y el entorno geográfico de las personas que los realizan.</p>
+      <dl><div><dt>Eje</dt><dd>Deportes</dd></div><div><dt>Tema</dt><dd>Deportes de recorrido</dd></div><div><dt>Subtema</dt><dd>Comunidad y entorno físico</dd></div></dl>
+    </div>
+    <div class="ideas">
+      <div class="idea"><span class="mono-n">01</span><p>Los deportes de recorrido son <b>nómades</b> por naturaleza. No tienen un espacio de referencia. Con la app resolvimos lo que pasa durante el recorrido, pero faltaba algo después de las salidas.</p></div>
+      <div class="idea"><span class="mono-n">02</span><p>El post entreno ya es una costumbre en estas comunidades: el café, el desayuno, el “post ride”. La investigación mostró que las personas se suman con más facilidad a <b>actividades curadas y organizadas</b> por alguien más, sobre todo antes y después de entrenar.</p></div>
+      <div class="idea"><span class="mono-n">03</span><p>Y hay un momento que muchas veces se saltea, <b>la elongación</b>. La recuperación es parte de cualquier actividad física, pero a veces sucede que los atletas lo hacen apurados, sin guía y cada uno por su cuenta.</p></div>
+    </div>
+    <div class="fotos-post">
+      <figure style="--r:-5deg"><img src="assets/post/post-ride.jpg" alt="Post ride" loading="lazy"><figcaption>post ride</figcaption></figure>
+      <figure style="--r:3deg"><img src="assets/post/grupo-ciclismo.jpg" alt="Grupo de ciclismo" loading="lazy"><figcaption>grupo de ciclismo</figcaption></figure>
+      <figure style="--r:-2deg"><img src="assets/post/cafe.jpg" alt="Café después de entrenar" loading="lazy"><figcaption>café</figcaption></figure>
+      <figure style="--r:4deg"><img src="assets/post/social-running.jpg" alt="Social running club" loading="lazy"><figcaption>social running club</figcaption></figure>
+    </div>
+    <div class="encuestas">
+      <p class="mono-k">Encuestas</p>
+      <div class="datos-enc">
+        <div><b data-cuenta="79.7">79,7</b><span>%</span><p>dejó de practicar alguna actividad. Las barreras: tiempo (41,7 %), motivación (24 %) y constancia (21,9 %).</p></div>
+        <div><b data-cuenta="73.4">73,4</b><span>%</span><p>prefiere hacer actividad física en compañía.</p></div>
+        <div><b data-cuenta="29.7">29,7</b><span>%</span><p>teme sentirse observado o juzgado; el 32,3 % siente que tiene menos nivel y el 19,3 % no conoce a nadie.</p></div>
+        <div><b data-cuenta="80.4">80,4</b><span>%</span><p>mantiene vínculos por fuera de la actividad.</p></div>
+      </div>
+      <p class="pregunta">¿Cómo podríamos ayudar a las personas a sumarse a una actividad física en compañía, sin que el miedo a ser juzgadas por su nivel se convierta en una barrera para sostenerla?</p>
+    </div>
+  </section>
+
+  <section class="ps" id="post-que">
+    <p class="mono-k">03 · Experiencia multimedia</p>
+    <h2 class="ps-t">¿Qué es Post?</h2>
+    <p class="ps-txt">Proponemos una experiencia de <b>estiramiento guiado</b> dentro de una cabina de pantallas LED, montado junto al Obelisco los días de carrera. Está pensada para quienes terminan la actividad y buscan un momento para estirar, respirar y quedarse con otras personas. En el interior se participa con el <b>cuerpo</b>; en el exterior, con <b>dedicatorias</b> para quienes acompañaron el camino.</p>
+    <div class="ficha">
+      <div><dt>Medidas exterior</dt><dd>21,5 × 12,42 × 5 m</dd></div>
+      <div><dt>Por sesión</dt><dd><b data-cuenta="16">16</b> personas</dd></div>
+      <div><dt>Duración</dt><dd><b data-cuenta="20">20</b> minutos</dd></div>
+      <div><dt>Cuándo</dt><dd>Días de carrera, hasta las 18 h</dd></div>
+    </div>
+    <div class="fachada-videos" data-post-videos>
+      <div class="fv"><span class="mono-e">Pantalla de entrada · respirar</span><video src="assets/km10/post-respirar.mp4" muted loop playsinline preload="none"></video></div>
+      <div class="fv"><span class="mono-e">Pantalla del frente · running</span><video src="assets/km10/post-running.mp4" muted loop playsinline preload="none"></video></div>
+      <div class="fv"><span class="mono-e">Pantalla de atrás · insignia</span><video src="assets/km10/post-insignia.mp4" muted loop playsinline preload="none"></video></div>
+    </div>
+  </section>
+
+  <section class="ps" id="post-dinamica">
+    <p class="mono-k">04 · Experiencia interior</p>
+    <h2 class="ps-t">Dinámica principal del interior</h2>
+    <div class="dina">
+      <div class="dina-txt">
+        <p class="ps-txt">Las pantallas proponen una pose de estiramiento dibujada en <b class="v">contorno</b>. Por encima aparece la <b>silueta de la persona en vivo</b>, para que pueda comparar su posición con la propuesta. El porcentaje muestra cuánto se aproxima a esa pose y acompaña el movimiento mientras se realiza.</p>
+        <figure class="hole"><img src="assets/post/hole-in-the-wall.jpg" alt="Hole in the Wall" loading="lazy"><figcaption>Tomamos la dinámica de “Hole in the Wall”, un juego donde hay que seguir la pose de una pared que se acerca al jugador. La adaptamos a una actividad de estiramiento guiado.</figcaption></figure>
+      </div>
+      <div class="pose-caja" data-pose>
+        <div class="pose-barra"><span></span></div>
+        <canvas width="900" height="760" aria-label="Juego: mové el mouse o el dedo para acercar la silueta de puntos a la pose en contorno verde"></canvas>
+        <div class="precision"><svg viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="52"/><circle class="arco" cx="60" cy="60" r="52"/></svg><b>0%</b></div>
+        <span class="pastilla" aria-live="polite"></span>
+        <p class="pose-pista"><span class="mono-e">Pose <i>1</i>/3</span>Mové el mouse arriba y abajo para los brazos, y a los costados para inclinarte</p>
+        <button class="pose-otra">Otra pose ↻</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="ps" id="post-recorrido">
+    <p class="mono-k">05 · Experiencia interior</p>
+    <h2 class="ps-t">Recorrido en pantalla</h2>
+    <div class="reco" data-reco>
+      <div class="reco-pin"><div class="reco-pantalla" data-paso="1">
+        <img class="v v1" src="assets/post/pantalla-inicio.jpg" alt="" loading="lazy">
+        <div class="v v2"><svg viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="80"/><circle class="arco" cx="100" cy="100" r="80"/></svg><span class="huellas"><i></i><i></i></span></div>
+        <img class="v v3" src="assets/post/pantalla-calibracion.jpg" alt="" loading="lazy">
+        <div class="v v4 v7"><div class="respira"><span class="r1"></span><span class="r2"></span></div><p class="respira-et"><span class="in">Inhalá</span><span class="ex">Exhalá</span></p></div>
+        <div class="v v5"><img src="assets/post/pantalla-calibracion.jpg" alt="" loading="lazy"><span class="barra"><i></i></span><span class="pastilla-f">¡Seguí así!</span></div>
+        <div class="v v6"><i></i><i></i><i></i></div>
+        <img class="v v8" src="assets/post/pantalla-cierre.jpg" alt="" loading="lazy">
+        <img class="marca" src="assets/km6/post-logo.svg" alt="">
+      </div></div>
+      <ol class="reco-pasos">
+        <li data-n="1"><span class="mono-e">01 · Bienvenida</span><p>Te damos la bienvenida a post.</p></li>
+        <li data-n="2"><span class="mono-e">02 · Los pies</span><p>Se paran sobre las huellas del piso y un círculo se completa.</p></li>
+        <li data-n="3"><span class="mono-e">03 · Calibración</span><p>Con los brazos abiertos, el sistema los reconoce.</p></li>
+        <li data-n="4"><span class="mono-e">04 · Respiración</span><p>Un círculo guía: inhalar 4 s, exhalar 6 s.</p></li>
+        <li data-n="5"><span class="mono-e">05 · Poses</span><p>Estiramientos de 10 s con la silueta en vivo.</p></li>
+        <li data-n="6"><span class="mono-e">06 · De a dos</span><p>Tres pantallas se unen para la pose en pareja.</p></li>
+        <li data-n="7"><span class="mono-e">07 · Respiración</span><p>Bajan el ritmo para cerrar.</p></li>
+        <li data-n="8"><span class="mono-e">08 · Cierre</span><p>Precisión, insignia con QR y fotos de la sesión.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="ps" id="post-dedicatorias">
+    <p class="mono-k">06 · Experiencia exterior · Otra tendencia</p>
+    <h2 class="ps-t enorme">¿A quién le dedicás esta carrera?</h2>
+    <p class="ps-txt">En las carreras aparece la gratitud de los atletas hacia otras personas: agradecen a amigos y familia, e incluso a sus propios “yo” del pasado. En TikTok, @marielgrr tiene un ritual: escribe en su brazo una persona por kilómetro.</p>
+    <div class="dedica-fotos">
+      <img src="assets/post/dedica-1.jpg" alt="" loading="lazy"><img src="assets/post/dedica-2.jpg" alt="" loading="lazy"><img src="assets/post/dedica-3.jpg" alt="" loading="lazy"><img src="assets/post/dedica-4.jpg" alt="" loading="lazy">
+    </div>
+    <p class="mono-k sep">La fachada</p>
+    <p class="ps-txt">Al publicar las notas desde la app o la tablet, estas aparecen en gran tamaño en la pantalla para que todos lo vean. Van apareciendo y desapareciendo cada minuto.</p>
+    <div class="fachada" data-fachada>
+      <div class="fachada-pantalla"><div class="fachada-misc" aria-hidden="true"></div><img class="fachada-logo" src="assets/km6/post-logo.svg" alt="post."><div class="notas"></div></div>
+      <form class="nota-form" autocomplete="off">
+        <p class="mono-e">Escribí tu dedicatoria</p>
+        <label><span>para:</span><input name="para" maxlength="18" placeholder="nombre" required></label>
+        <textarea name="msj" maxlength="110" rows="3" placeholder="Tu mensaje" required></textarea>
+        <p class="nota-ayuda">La nota se ajusta al largo del mensaje.</p>
+        <button type="submit">Publicar en la pantalla ↗</button>
+      </form>
+    </div>
+  </section>
+
+  <section class="ps" id="post-contexto">
+    <p class="mono-k">07 · Espacio</p>
+    <h2 class="ps-t">Contexto</h2>
+    <figure class="render"><div class="render-marco"><img src="assets/post/render-obelisco.jpg" alt="Render de post. junto al Obelisco" loading="lazy"></div><figcaption class="mono-e">Implantación propuesta junto al Obelisco.</figcaption></figure>
+    <p class="ps-txt">Trabajamos con marcas u organizadores de carreras que terminan cerca del Obelisco: nosotros sumamos un lugar de encuentro después de la llegada. Se consideraron Club de Corredores y Gran Fondo Argentina.</p>
+    <div class="carreras">
+      <div class="carrera"><span class="mono-e">11 de octubre · 46 km</span><h3>Gran Fondo Argentina</h3><p>Venzo · Loto Plus · Across · Remax · Granix</p></div>
+      <div class="carrera"><span class="mono-e">1 de noviembre · 10 km · 9 h</span><h3>Hoka Run · Club de Corredores</h3><p>Gatorade · Heineken · Maní King · Molinos · Granix · La Serenísima</p></div>
+    </div>
+  </section>
+
+  <section class="ps" id="post-prototipo">
+    <p class="mono-k">08 · Prototipo y testeo</p>
+    <h2 class="ps-t">De un prototipo que funciona a la gráfica de post.</h2>
+    <p class="ps-txt">Las primeras pruebas se hicieron con <span class="chip-m">TouchDesigner</span> + <span class="chip-m">MediaPipe</span>.</p>
+    <div class="iters">
+      <div class="iter"><canvas class="mini-sil" width="260" height="260" aria-hidden="true"></canvas><span class="mono-e">La silueta</span><p>Tu cuerpo pasó a ser una matriz de puntos, y la pose, un contorno verde fino.</p></div>
+      <div class="iter"><div class="mini-barra"><i></i></div><span class="mono-e">El tiempo</span><p>El cronómetro se cambió por una barra que se vacía arriba de la pantalla.</p></div>
+      <div class="iter"><div class="respira chica"><span class="r1"></span><span class="r2"></span></div><span class="mono-e">La respiración</span><p>Un círculo de dos capas que crece al inhalar y se achica al exhalar.</p></div>
+      <div class="iter"><div class="mini-reco"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><span class="mono-e">El recorrido</span><p>Bienvenida, pies sobre la silueta, respiración al inicio y al final, y un cierre con porcentaje, insignia, QR y fotos.</p></div>
+    </div>
+    <div class="ui-post">
+      <div class="precision enorme" data-precision><svg viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="52"/><circle class="arco" cx="60" cy="60" r="52"/></svg><b>0%</b></div>
+      <div class="pastillas"><span>¡Genial!</span><span class="vi">#zentotal</span><span>¡Seguí así!</span><span class="vi">¡WOW!</span></div>
+      <p class="mono-e">Círculo de precisión y pastillas de la interfaz</p>
+    </div>
+  </section>
+
+  <footer class="pie-km" data-ant="km1|KM1|Acerca de SPOT!" data-sig="inicio|KM0|Volver al inicio"></footer>
+ </div>
+</article>
+
 <nav id="menu" aria-label="Índice" aria-hidden="true">
  <div class="lienzo">
   <span class="linea"></span>
@@ -2515,9 +3079,9 @@ const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [..
 
 /* Puntos del mapa (Slide 2): posición, color y destino */
 const PUNTOS_MAPA = [
-  [1009,407,'amarillo','km1','SPOT!'],[1171,407,'naranja','km2','Manual de voz y tono'],[1275,474,'rosa','km3','Logotipos'],
-  [1264,610,'violeta','km4','Tipografías'],[1081,598,'azul','km5','Colores'],[908,577,'amarillo','km6','Elementos gráficos'],
-  [753,619,'naranja','km7','Design System'],[597,577,'rosa',null,'Animaciones'],[597,461,'violeta',null,'Íconos'],[721,407,'azul','km10','Arquigrafía']
+  [1009,407,'amarillo','km1','SPOT!'],[1238,407,'naranja','km2','Manual de voz y tono'],[1276,548,'rosa','km3','Logotipos'],
+  [1128,626,'violeta','km4','Tipografías'],[907,576,'azul','km5','Colores'],[721,626,'amarillo','km6','Elementos gráficos'],
+  [601,491,'naranja','km7','Design System'],[721,407,'rosa','km10','Arquigrafía']
 ];
 
 /* Decoraciones (Componentes "Punto", insignia y carita). [archivo, x, y, w, h, inset%(t,r,b,l), rotación, caja] */
@@ -2693,9 +3257,9 @@ const ENFOQUE = [['Invitamos a hacer','azul',['“Encontrá grupos cerca tuyo”
   ['Damos datos concretos','amarillo',['“Running · Principiante · a 800 m”','“Mar, Jue y Sáb · 07:00 h”','“Locker gratis 2 hs · a 300 m”','“Abierto ahora · hasta las 20 h”']],
   ['Celebramos los logros','violeta',['“¡Ya hicieron equipo!”','“¡5 actividades juntos!”','“¡Mirá ese progreso!”','“¡Qué gusto verte de vuelta!”']]];
 const TONO = [['Primera vez en la app','amarillo',219,'Paciente y entusiasta','“¡Qué bueno que te sumes! Contanos cómo te movés y te armamos tu primer recorrido.”'],
-  ['Haciendo actividad','naranja',201,'Motivador','¡Wow! Recorriste 18km este mes. ¿Vamos por los 20?'],
+  ['Haciendo actividad','naranja',201,'Motivador','¡Wow! Recorriste 18 km este mes. ¿Vamos por los 20?'],
   ['Si algo falla','azul',139,'Claro y sin dramatismo','“Se cortó la conexión, pero tu recorrido quedó guardado. Seguí cuando quieras.”'],
-  ['Al terminar un recorrido','rosa',241,'Festivo y celebratorio','"¡Bien hecho! Hoy recorriste 4km. Te merecés un buen descanso este finde."']];
+  ['Al terminar un recorrido','rosa',241,'Festivo y celebratorio','"¡Bien hecho! Hoy recorriste 4 km. Te merecés un buen descanso este finde."']];
 // [izquierda, derecha, color, posición de Spot sobre 1000 px (el centro es 500), velo de la pista, texto]
 const PERFIL = [['Divertido','Serio','amarillo',300,.4,'Somos divertidos, pero no ridículos. El humor acompaña, pero no tapa la información ni molesta.'],
   ['Casual','Formal','violeta',200,.2,'Hablamos de vos y con palabras de todos los días. La formalidad la dejamos para términos y condiciones.'],
@@ -2879,17 +3443,18 @@ const INDICE = [
   ['Tipografías','km4',[]],
   ['Colores','km5',[['Usos correctos e incorrectos','km5-usos']]],
   ['Elementos gráficos','km6',[['Misceláneas','km6-puntos'],['Fotografías','km6-fotos'],['Espacios seguros',null]]],
-  ['Design System','km7',[['Átomos','km7-atomos'],['De átomos a botones','km7-boton'],['Botones','km7-botones'],['Grillas','km7-grillas'],['Íconos','km7-iconos'],['Nomenclatura','km7-nomenclatura']]], ['Animaciones',null,[]], ['Íconos',null,[]],
+  ['Design System','km7',[['Átomos','km7-atomos'],['De átomos a botones','km7-boton'],['Botones','km7-botones'],['Grillas','km7-grillas'],['Íconos','km7-iconos'],['Nomenclatura','km7-nomenclatura']]],
   ['Arquigrafía','km10',[['Principios','km10-principios'],['Tipos de señales','km10-tipos'],['Iconografía','km10-iconos'],['Medidas y alturas','km10-medidas'],['Arquigrafía','km10-arqui']]]
 ];
 function armarMenu(){
-  $('#indice').innerHTML = INDICE.map(([t, km, subs], n) => `<li><button class="num" data-toggle aria-label="Abrir o cerrar ${t}">${n + 1}</button><div class="cuerpo">
-      <button class="enc" ${subs.length || !km ? 'data-toggle aria-expanded="true"' : `data-ir="${km}"`}>${t}${subs.length ? '<img src="assets/home/menu-flecha.svg" alt="" style="rotate:180deg">' : ''}</button>
+  // el nombre de la sección lleva a su header; la flechita de al lado (y el número) abren o cierran las subsecciones
+  $('#indice').innerHTML = INDICE.map(([t, km, subs], n) => `<li><button class="num" ${subs.length ? 'data-toggle' : 'tabindex="-1"'} aria-label="Abrir o cerrar ${t}">${n + 1}</button><div class="cuerpo">
+      <div class="enc">${km ? `<button class="ir-sec" data-ir="${km}">${t}</button>` : `<span class="ir-sec">${t}</span>`}${subs.length ? `<button class="flecha-sub" data-toggle aria-expanded="true" aria-label="Mostrar u ocultar las partes de ${t}"><img src="assets/home/menu-flecha.svg" alt="" style="rotate:180deg"></button>` : ''}</div>
       ${subs.length ? `<div class="subs">${subs.map(([s, a]) => `<button ${a ? `data-ir="${km}" data-ancla="${a}"` : 'disabled'}>${s}</button>`).join('')}</div>` : ''}</div></li>`).join('');
   // "Smart animate" 0,35 s ease-in-out al abrir/cerrar
   $$('#indice [data-toggle]').forEach(b => b.addEventListener('click', () => {
     const li = b.closest('li'); li.classList.toggle('cerrado');
-    $('.enc', li).setAttribute('aria-expanded', !li.classList.contains('cerrado'));
+    const f = $('.flecha-sub', li); if (f) f.setAttribute('aria-expanded', !li.classList.contains('cerrado'));
   }));
   $$('#indice [data-ir]').forEach(b => b.addEventListener('click', () => { cerrarMenu(true); irA(b.dataset.ir, b.dataset.ancla); history.replaceState(null, '', '#' + b.dataset.ir); }));
 }
@@ -3030,10 +3595,10 @@ function salirDePortada(){
    NAVEGACIÓN (prototipo): KM entra desde la derecha 0,3 s · Volver al Inicio sale a la izquierda 0,3 s
    ===================================================================== */
 let actual = 'inicio';
-const KMS = ['km1','km2','km3','km4','km5','km6','km7','km10'];
+const KMS = ['km1','km2','km3','km4','km5','km6','km7','km10','post'];
 function irA(destino, ancla){
   const de = actual;
-  if (destino === de) { if (ancla) scrollA(destino, ancla); return; }
+  if (destino === de) { if (ancla) scrollA(destino, ancla); else if (destino !== 'inicio') irArriba(document.getElementById(destino)); return; }   // sin ancla: al header
   actual = destino;
   if (destino === 'inicio') {
     const sale = document.getElementById(de); if (!sale) return;
@@ -3127,7 +3692,7 @@ function iniciarToques(){
    ENTRADAS AL SCROLLEAR: suben 24 px + aparecen, 0,45 s, escalonadas 0,15 s
    ===================================================================== */
 const ENTRAN = ['.sec .fila > *', '.pilar', '.rasgo', '.card-enf', '.card-tono', '.somos-fila', '.enfoque > h4', '.momentos > h4',
-  '.banda p', '.foto-co p', '.tira', '.variantes', '.tamanos > div', '.submarcas-zona > img.abs', '.submarcas-zona > p', '.foto-rot', '.boton', '.parada', '.volver-arriba', '.diagramas > *', '.mala', '.app-pantallas', '.pauta', '.alturas', '.marca-card', '.piezas', '.signo', '.carrusel', '.uso', '.filtros figure', '.indebido', '.km6-intro > p', '.carita-ej', '.insignia-card', '.sobre-foto', '.siluetas-fila', '.siluetas-grande']
+  '.banda p', '.foto-co p', '.tira', '.variantes', '.tamanos > div', '.submarcas-zona > img.abs', '.submarcas-zona > p', '.foto-rot', '.boton', '.parada', '.volver-arriba', '.diagramas > *', '.mala', '.app-pantallas', '.render-fachada', '.pauta', '.alturas', '.marca-card', '.piezas', '.signo', '.carrusel', '.uso', '.filtros figure', '.indebido', '.km6-intro > p', '.carita-ej', '.insignia-card', '.sobre-foto', '.siluetas-fila', '.siluetas-grande']
   .join(',');
 function iniciarEntradas(){
   if (REDUCIR || !('IntersectionObserver' in window)) return;
@@ -3169,10 +3734,43 @@ function armarPies(){
   });
 }
 
+/* ---------- Hero · navegación (Figma "Hero · Sección"): flechas a la parada anterior y a la siguiente ----------
+   Usa las mismas paradas que el footer de cada KM (data-ant / data-sig; el KM 1 las toma de sus paradas).
+   Como en el componente del Figma, el índice y las flechas comparten la línea de base de abajo (178 px)
+   y la bajada queda 50 px arriba del índice ("la bajada crece hacia arriba"). */
+function armarNavHero(){
+  $$('article.km').forEach(km => {
+    const hero = $('.hero', km); if (!hero || $('.nav-hero', hero)) return;
+    let datos;
+    const pie = $('.pie-km', km);
+    if (pie) datos = [pie.dataset.ant, pie.dataset.sig];
+    else datos = $$('.submarcas-zona .parada', km).map(a => [(a.getAttribute('href') || '').slice(1), $('.chip', a).textContent, $('.tx > span', a).textContent].join('|'));
+    if (!datos || datos.length < 2) return;
+    const flecha = lado => `<span class="circ"><img src="assets/hero/flecha-${lado === 'ant' ? 'izq' : 'der'}.svg" alt=""></span>`;
+    const parada = (dato, lado) => {
+      const [destino, chip, nombre] = dato.split('|');
+      const tx = `<span class="tx"><span class="et"><small>${lado === 'ant' ? 'Parada anterior' : 'Siguiente parada'}</small><b>${nombre}</b></span><span class="chip">${chip}</span></span>`;
+      const dentro = lado === 'ant' ? flecha(lado) + tx : tx + flecha(lado);
+      const etiqueta = `${lado === 'ant' ? 'Parada anterior' : 'Siguiente parada'}: ${nombre}`;
+      return destino ? `<a class="nh ${lado}" href="#${destino}" aria-label="${etiqueta}">${dentro}</a>` : `<span class="nh ${lado}" aria-label="${etiqueta}">${dentro}</span>`;
+    };
+    const nav = document.createElement('nav'); nav.className = 'nav-hero'; nav.setAttribute('aria-label', 'Paradas');
+    nav.innerHTML = parada(datos[0], 'ant') + parada(datos[1], 'sig');
+    const decos = $('.decos', hero); hero.insertBefore(nav, decos || null);
+  });
+  if (MOVIL) return;
+  const acomodar = () => $$('article.km .hero').forEach(hero => {
+    const links = $('.links', hero), bajada = $('.bajada', hero); if (!links) return;
+    const top = 902 - links.offsetHeight; links.style.top = top + 'px';
+    if (bajada) bajada.style.top = (top - 50 - bajada.offsetHeight) + 'px';
+  });
+  acomodar(); if (document.fonts) document.fonts.ready.then(acomodar);
+}
+
 /* ---------- KM 3 · malas prácticas ---------- */
 const MALAS = [['No lo deformes ni lo estires','No lo rotes','No lo desintegres en otras partes que no sean las indicadas','No utilices el logotipo sin su reborde. Recordá que puede haber excepciones si se trata de una animación o elemento interactivo, como es el inicio de este sitio.'],
   ['No cambies la inclinación, escala o posición de los elementos que componen el isotipo','No apliques outline a ninguno de los elementos. La única excepción es para explicar la construcción del logo, como en este mismo sitio.','No utilices colores que no pertenezcan a ninguna marca de Spot.','Y si pertenecen a la marca, solo está permitida la versión explicada más arriba, según el fondo.'],
-  ['No apliques efectos al logo (sombra paralela, resplandor, etc.)','No lo coloques sobre fondos muy complejos sin antes oscurecer la imagen (puede aplicarse una capa en negro en baja opacidad para areglarlo).']];
+  ['No apliques efectos al logo (sombra paralela, resplandor, etc.)','No lo coloques sobre fondos muy complejos sin antes oscurecer la imagen (puede aplicarse una capa en negro en baja opacidad para arreglarlo).']];
 function armarMalas(){
   let n = 0;
   const cont = $('[data-malas]'); if (!cont) return;
@@ -3295,7 +3893,7 @@ const FOTOS = {
 const INDEBIDOS = [
   [['indebido-1','No uses fotos de baja calidad o pixeladas','left:-51.4%;top:-56.65%;width:214%;height:181.65%;inset:auto'],['indebido-2','No apliques filtros que alteren los colores'],
    ['indebido-3','Evitá fotos demasiado profesionales, que parezcan sacadas de bancos de imágenes. Buscamos momentos reales.']],
-  [['indebido-4','No uses fotografías hehcas con inteligencia artificial. La única excepción son renders de eventos o experiencias que aun no hayan sido realizadas físicamente, como puede ser la experiencia Post.','object-position:bottom'],
+  [['indebido-4','No uses fotografías hechas con inteligencia artificial. La única excepción son renders de eventos o experiencias que aún no hayan sido realizadas físicamente, como puede ser la experiencia Post.','object-position:bottom'],
    ['indebido-5','Evitá fotografías que claramente no son de Argentina'],['indebido-6','Por otro lado, tampoco utilices fotografías demasiado caseras']],
   [['indebido-7','Si bien se pueden usar fotografías donde aparece una sola persona, un plano general puede hacerla parecer solitaria'],
    ['indebido-8','Como nuestro público no abarca tanto las competiciones profesionales, es preferible usar imágenes de entrenamientos en grupo informales'],['indebido-9','No subexpongas o sobreexpongas mucho las fotografías']]];
@@ -3374,6 +3972,7 @@ function armarMazo(fotos, dy){
     der:    { left: 964.6, top: 1282.3, width: 821.493, height: 462.324, rotation: 4.43,  z: 2 },
     centro: { left: 403,   top: 1183,   width: 1114,    height: 627,     rotation: 0,     z: 3 }
   };
+  if (dy) Object.values(SLOT).forEach(o => o.top += dy);
   const pos = ['der', 'izq', 'centro'];                       // lugar de cada foto (orden del HTML)
   const props = s => ({ left: s.left, top: s.top + dy, width: s.width, height: s.height, rotation: s.rotation, x: 0, y: 0 });
   fotos.forEach((f, k) => { f.style.rotate = ''; f.draggable = false; f.style.zIndex = SLOT[pos[k]].z; gsap.set(f, props(SLOT[pos[k]])); });
@@ -3519,7 +4118,7 @@ function iniciarFlotar(){
       o.push({ x1: ox - (me.actualBoundingBoxLeft + BORDE) * e, x2: ox + (me.actualBoundingBoxRight + BORDE) * e,
         y1: oy - (me.actualBoundingBoxAscent + BORDE) * e, y2: oy + (me.actualBoundingBoxDescent + BORDE) * e });
     }
-    $$(MOVIL ? '.km-tag, img[alt="SPOT!"], .bajada, .links' : '.km-tag, img[alt="SPOT!"]', esc.hero).concat(MOVIL ? $$(':scope > .btn-menu', esc.km) : []).forEach(e => { const r = e.getBoundingClientRect();
+    $$(MOVIL ? '.km-tag, img[alt="SPOT!"], .bajada, .links, .nh' : '.km-tag, img[alt="SPOT!"], .nh', esc.hero).concat(MOVIL ? $$(':scope > .btn-menu', esc.km) : []).forEach(e => { const r = e.getBoundingClientRect();
       o.push({ x1: (r.left - hr.left) / z - 6, x2: (r.right - hr.left) / z + 6, y1: (r.top - hr.top) / z - 6, y2: (r.bottom - hr.top) / z + 6 }); });
     esc.obst = o; esc.medido = true;
   };
@@ -3724,16 +4323,26 @@ function iniciarKM7Secciones(){
       setTimeout(() => { cambiar(); ic.classList.remove('sale'); void ic.offsetWidth; ic.classList.add('entra'); }, 220);
     };
     const mezclar = celda => {
-      if (celda._ocupada) return; celda._ocupada = true; setTimeout(() => celda._ocupada = false, 480);
+      if (celda._ocupada) return; celda._ocupada = true; setTimeout(() => celda._ocupada = false, 280);
       const usados = $$('.celda-m', mezcla).map(c => c.dataset.n), libres = ICONOS_DS.filter(n => !usados.includes(n));
       const otro = libres[Math.floor(Math.random() * libres.length)];
       const c = COLORES.filter(x => x !== celda.dataset.c); celda.dataset.c = c[Math.floor(Math.random() * c.length)];
       celda.style.setProperty('--c', `var(--${celda.dataset.c})`); celda.classList.add('pintada');
       poner(celda, otro, true);
     };
-    if (MOVIL || matchMedia('(hover: none)').matches) { const pi = $('.mezcla-pista', km); if (pi) pi.lastChild.textContent = 'Tocá un ícono para mezclar'; }
+    if (MOVIL || matchMedia('(hover: none)').matches) { const pi = $('.mezcla-pista', km); if (pi) pi.lastChild.textContent = 'Tocá los íconos para mezclarlos'; }
     $$('.celda-m', mezcla).forEach(c => { poner(c, c.dataset.n, false);
-      c.addEventListener('mouseenter', () => mezclar(c)); c.addEventListener('click', () => mezclar(c)); });
+      const usar = () => { mezcla.parentElement.classList.add('usada'); mezclar(c); };
+      // al entrar y también mientras el mouse se mueve encima (cada 0,3 s), así basta con pasarlo por arriba
+      c.addEventListener('mouseenter', usar); c.addEventListener('click', usar);
+      let ultimo = 0; c.addEventListener('mousemove', () => { const t = performance.now(); if (t - ultimo > 300) { ultimo = t; usar(); } }); });
+    // hasta que alguien la usa, cada 2,5 s un ícono hace un saltito (solo si se ve)
+    setInterval(() => {
+      if (mezcla.parentElement.classList.contains('usada') || !km.classList.contains('activa')) return;
+      const r = mezcla.getBoundingClientRect(); if (r.bottom < 0 || r.top > innerHeight) return;
+      const cs = $$('.celda-m', mezcla).filter(c => c.offsetParent), c = cs[Math.floor(Math.random() * cs.length)];
+      c.classList.remove('invita'); void c.offsetWidth; c.classList.add('invita'); setTimeout(() => c.classList.remove('invita'), 700);
+    }, 2500);
     // al llegar: entran las celdas y después se mezclan solas una vez, de izquierda a derecha, para mostrar cómo funciona
     let mostro = false;
     const demo = () => { if (mostro || REDUCIR) return; mostro = true;
@@ -4780,6 +5389,228 @@ function vigilarKM10(){
   new MutationObserver(ver).observe(km, { attributes: true, attributeFilter: ['class'] }); ver();
 }
 
+/* =====================================================================
+   PÁGINA post. (iniciarPost): misceláneas del hero que se corren al paso del mouse (comportamiento del Figma:
+   "si se acercan a la silueta de la persona, puede empujarlas al moverse"), respiración 4 s / 6 s, juego de la pose,
+   recorrido en pantalla, fachada con dedicatorias y entradas al scrollear
+   ===================================================================== */
+function iniciarPost(){
+  const km = $('#post'); if (!km) return;
+  const BASE = MOVIL ? 480 : 1920, activa = () => km.classList.contains('activa');
+  const seVe = el => { const r = el.getBoundingClientRect(); return r.bottom > 0 && r.top < innerHeight && r.width > 0; };
+  // avisa al entrar en pantalla (umbral: parte visible) y al salir del todo; se repite
+  const vigilar = (el, entra, sale, umbral = .3) => {
+    let dentro = false;
+    const mirar = () => {
+      const r = el.getBoundingClientRect(), h = innerHeight, vis = Math.min(r.bottom, h) - Math.max(r.top, 0);
+      if (!dentro && r.width && vis / (Math.min(r.height, h) || 1) >= umbral) { dentro = true; entra(); }
+      else if (dentro && (r.bottom < 0 || r.top > h)) { dentro = false; sale && sale(); }
+    };
+    km.addEventListener('scroll', mirar, { passive: true }); addEventListener('resize', mirar);
+    new MutationObserver(mirar).observe(km, { attributes: true, attributeFilter: ['class'] }); mirar();
+  };
+  if (MOVIL) {
+    $('.ph-pie span:last-child', km).textContent = 'Tocá la pantalla: las formas se corren';
+    $('.pose-pista', km).lastChild.textContent = 'Arrastrá el dedo: arriba y abajo para los brazos, a los costados para inclinarte';
+  }
+
+  /* ---- hero: misceláneas de post. que flotan y se corren al paso del mouse ---- */
+  const hero = $('.post-hero', km), capa = $('[data-ph-misc]', hero);
+  const P = n => (n.startsWith('fig') ? 'assets/post/' : 'assets/km6/') + n + '.svg';
+  const LUGARES = [[140,250,'post-p1',53],[330,150,'fig-649d6',86],[520,330,'fig-47350',26],[250,520,'fig-63909',59],[110,760,'post-p2',53],[420,700,'fig-9e35e',26],
+    [600,990,'fig-4a4d9',104],[1340,170,'fig-83dad',67],[1580,300,'post-p3',53],[1760,180,'fig-f3b2f',43],[1450,560,'post-p5',80],[1720,640,'fig-4d99a',39],
+    [1300,990,'post-p4',96],[1640,900,'fig-9e35e',26],[880,140,'fig-47350',26],[1010,1010,'fig-4d99a',39]];
+  const piezas = LUGARES.map(([x, y, n, w]) => {
+    const s = MOVIL ? .6 : 1, img = document.createElement('img'); img.src = P(n); img.alt = ''; img.style.width = (w * s) + 'px';
+    capa.appendChild(img);
+    return { img, hx: MOVIL ? x / 1920 * 480 : x, hy: MOVIL ? y / 1080 * 1000 : y, w: w * s, x: 0, y: 0, vx: 0, vy: 0, f: Math.random() * 9, r: 0 };
+  });
+  let px = -999, py = -999;
+  const puntero = e => { const r = hero.getBoundingClientRect(), k = BASE / r.width; px = (e.clientX - r.left) * k; py = (e.clientY - r.top) * k; };
+  hero.addEventListener('pointermove', puntero); hero.addEventListener('pointerdown', puntero);
+  hero.addEventListener('pointerleave', () => { px = py = -999; });
+  const R = MOVIL ? 110 : 210;
+  const pasoHero = t => {
+    piezas.forEach(p => {
+      const ox = Math.sin(t / 2600 + p.f) * 14, oy = Math.cos(t / 3100 + p.f * 1.3) * 16;
+      p.vx += (ox - p.x) * .012; p.vy += (oy - p.y) * .012;
+      const dx = p.hx + p.x - px, dy = p.hy + p.y - py, d = Math.hypot(dx, dy);
+      if (d < R && d > 1) { const f = (1 - d / R) * 2.4; p.vx += dx / d * f; p.vy += dy / d * f; }
+      p.vx *= .9; p.vy *= .9; p.x += p.vx; p.y += p.vy; p.r += (p.vx * 3 - p.r) * .1;
+      p.img.style.transform = `translate(${(p.hx + p.x - p.w / 2).toFixed(1)}px,${(p.hy + p.y - p.w / 2).toFixed(1)}px) rotate(${p.r.toFixed(1)}deg)`;
+    });
+  };
+  pasoHero(0);
+
+  /* ---- 01 · la pregunta se arma palabra por palabra ---- */
+  $$('[data-palabras]', km).forEach(p => { p.innerHTML = p.textContent.split(' ').map((w, i) => `<span style="--i:${i}">${w}</span>`).join(' '); });
+
+  /* ---- entradas al scrollear (se repiten) ---- */
+  if (!REDUCIR) {
+    [['.fotos-post figure'], ['.fachada-videos .fv'], ['.dedica-fotos img'], ['.pastillas span'], ['.mini-reco i']].forEach(([s]) => $$(s, km).forEach((el, i) => el.style.setProperty('--i', i)));
+    entradaRepetida($$('.ps-meta', km), .25);
+    entradaRepetida($$('.fotos-post, .fachada-videos, .dedica-fotos, .ui-post', km), .3);
+    const sueltas = $$('.ps-t, .ps > .ps-txt, .tp1, .idea, .encuestas, .ficha, .dina-txt, .pose-caja, .carrera, .iter, .fachada, .render', km);
+    sueltas.forEach(el => el.classList.add('rv-p')); entradaRepetida(sueltas, .15);
+  } else $$('.mini-reco i', km).forEach((el, i) => el.style.setProperty('--i', i));
+
+  /* ---- contadores (79,7 %, 16 personas…) ---- */
+  const fmt = (v, dec) => dec ? v.toFixed(1).replace('.', ',') : Math.round(v) + '';
+  const contar = (el, fin, dur = 1400, extra, suf = '') => {
+    const dec = String(fin).includes('.'), t0 = performance.now();
+    if (REDUCIR) { el.textContent = fmt(fin, dec) + suf; extra && extra(1); return; }
+    const paso = t => { const k = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - k, 3); el.textContent = fmt(fin * e, dec) + suf; extra && extra(e); if (k < 1) setTimeout(() => paso(performance.now()), 16); };
+    paso(t0);
+  };
+  $$('.datos-enc, .ficha', km).forEach(caja => vigilar(caja, () => $$('[data-cuenta]', caja).forEach(b => contar(b, +b.dataset.cuenta)), () => $$('[data-cuenta]', caja).forEach(b => b.textContent = '0')));
+  const prec = $('[data-precision]', km);
+  vigilar(prec, () => contar($('b', prec), 86, 1800, e => prec.style.setProperty('--p', (.86 * e).toFixed(3)), '%'), () => { prec.style.setProperty('--p', 0); $('b', prec).textContent = '0%'; });
+
+  /* ---- videos de la fachada: se cargan al acercarse y solo corren mientras se ven ---- */
+  const cajaV = $('[data-post-videos]', km), vids = $$('video', cajaV);
+  const videos = () => {
+    const r = cajaV.getBoundingClientRect(), h = innerHeight, cerca = r.bottom > -h * .5 && r.top < h * 1.5, ve = r.bottom > 0 && r.top < h && activa();
+    vids.forEach(v => { if (cerca && v.preload === 'none') v.preload = 'auto'; if (ve) { if (v.paused) v.play().catch(() => {}); } else if (!v.paused) v.pause(); });
+  };
+  km.addEventListener('scroll', videos, { passive: true }); new MutationObserver(videos).observe(km, { attributes: true, attributeFilter: ['class'] });
+
+  /* ---- silueta de puntos (como la pantalla de post.) ---- */
+  const RAD = Math.PI / 180;
+  const cuerpo = (c, a, l, X, Y, s) => {
+    c.save(); c.translate(X, Y); c.scale(s, s); c.lineCap = 'round';
+    const linea = (x1, y1, x2, y2, w) => { c.lineWidth = w; c.beginPath(); c.moveTo(x1, y1); c.lineTo(x2, y2); c.stroke(); };
+    linea(-16, -250, -58, 0, 46); linea(16, -250, 58, 0, 46);
+    c.translate(0, -250); c.rotate(l * RAD);
+    linea(0, 0, 0, -185, 92);
+    c.beginPath(); c.arc(0, -258, 42, 0, Math.PI * 2); c.fill();
+    [-1, 1].forEach(sd => { const sx = sd * 34, sy = -175; linea(sx, sy, sx + sd * Math.cos(a * RAD) * 215, sy + Math.sin(a * RAD) * 215, 32); });
+    c.restore();
+  };
+  const lienzo = (w, h) => { const cv = document.createElement('canvas'); cv.width = w; cv.height = h; return cv; };
+  // contorno fino de la pose (verde): la figura corrida 3 px en 8 direcciones, menos la figura
+  const contorno = (w, h, a, l, X, Y, s, g = 3) => {
+    const cv = lienzo(w, h), c = cv.getContext('2d'); c.fillStyle = c.strokeStyle = '#49B867';
+    for (let k = 0; k < 8; k++) { c.save(); c.translate(Math.cos(k * Math.PI / 4) * g, Math.sin(k * Math.PI / 4) * g); cuerpo(c, a, l, X, Y, s); c.restore(); }
+    c.globalCompositeOperation = 'destination-out'; c.fillStyle = c.strokeStyle = '#000'; cuerpo(c, a, l, X, Y, s);
+    return cv;
+  };
+  const puntos = (ctx, a, l, X, Y, s, paso, rr) => {
+    const W = ctx.canvas.width, H = ctx.canvas.height, k = .5, of = lienzo(W * k, H * k), oc = of.getContext('2d');
+    oc.scale(k, k); oc.fillStyle = oc.strokeStyle = '#000'; cuerpo(oc, a, l, X, Y, s);
+    const d = oc.getImageData(0, 0, of.width, of.height).data;
+    ctx.fillStyle = '#EDE8DB'; ctx.beginPath();
+    for (let y = paso / 2; y < H; y += paso) for (let x = paso / 2; x < W; x += paso) {
+      if (d[((Math.floor(y * k) * of.width) + Math.floor(x * k)) * 4 + 3] > 120) { ctx.moveTo(x + rr, y); ctx.arc(x, y, rr, 0, Math.PI * 2); }
+    }
+    ctx.fill();
+  };
+
+  /* ---- 04 · juego de la pose ---- */
+  const caja = $('[data-pose]', km), cv = $('canvas', caja), ctx = cv.getContext('2d'), W = cv.width, H = cv.height, X = W / 2, Y = H - 50, S = .98;
+  const POSES = [{ a: 0, l: 0 }, { a: -62, l: 0 }, { a: -38, l: 16 }];
+  const precJ = $('.precision', caja), pctJ = $('b', precJ), barra = $('.pose-barra span', caja), pas = $('.pastilla', caja), num = $('.pose-pista i', caja);
+  const FRASES = [['¡Genial!', ''], ['¡Seguí así!', ''], ['¡WOW!', 'vi'], ['#zentotal', 'vi']];
+  let pose = 0, cont = contorno(W, H, POSES[0].a, POSES[0].l, X, Y, S), a = 40, l = 0, ta = 40, tl = 0, ult = -1e9, t0 = performance.now(), ultPas = 0;
+  const DUR = 10000;
+  const cambiarPose = () => { pose = (pose + 1) % POSES.length; cont = contorno(W, H, POSES[pose].a, POSES[pose].l, X, Y, S); num.textContent = pose + 1; t0 = performance.now(); };
+  $('.pose-otra', caja).addEventListener('click', cambiarPose);
+  const mover = e => {
+    const r = cv.getBoundingClientRect(), nx = (e.clientX - r.left) / r.width, ny = (e.clientY - r.top) / r.height;
+    ta = -85 + Math.max(0, Math.min(1, ny)) * 155; tl = (Math.max(0, Math.min(1, nx)) - .5) * 50; ult = performance.now();
+  };
+  cv.addEventListener('pointermove', mover); cv.addEventListener('pointerdown', e => { mover(e); cv.setPointerCapture && cv.setPointerCapture(e.pointerId); });
+  const dibujarPose = t => {
+    if (t - ult > 3000) { ta = Math.sin(t / 1700) * 55 - 15; tl = Math.sin(t / 2600) * 14; }   // sin nadie, se mueve solo
+    a += (ta - a) * .14; l += (tl - l) * .14;
+    ctx.clearRect(0, 0, W, H); ctx.drawImage(cont, 0, 0); puntos(ctx, a, l, X, Y, S, 11, 3.6);
+    const p = Math.max(0, Math.min(100, Math.round(100 - Math.abs(a - POSES[pose].a) * .7 - Math.abs(l - POSES[pose].l) * 2.2)));
+    pctJ.textContent = p + '%'; precJ.style.setProperty('--p', p / 100);
+    if (p >= 90 && t - ult < 3000 && t - ultPas > 2600) {
+      ultPas = t; const [txt, cl] = FRASES[Math.floor(Math.random() * FRASES.length)];
+      pas.textContent = txt; pas.className = 'pastilla ' + cl; void pas.offsetWidth; pas.classList.add('ver');
+    }
+    const k = Math.max(0, 1 - (t - t0) / DUR); barra.style.transform = `scaleX(${k.toFixed(3)})`;
+    if (k <= 0) cambiarPose();
+  };
+  dibujarPose(performance.now());
+
+  /* ---- 08 · silueta chica del prototipo ---- */
+  const mini = $('.mini-sil', km), mc = mini.getContext('2d');
+  const contMini = contorno(260, 260, -30, 0, 130, 245, .4, 1.5);
+  const dibujarMini = t => { const am = -30 + Math.sin(t / 1400) * 28; mc.clearRect(0, 0, 260, 260); mc.drawImage(contMini, 0, 0); puntos(mc, am, 0, 130, 245, .4, 6, 2); };
+  dibujarMini(0);
+
+  /* ---- 05 · recorrido en pantalla: el paso que cruza el medio de la pantalla manda ---- */
+  const reco = $('[data-reco]', km), pant = $('.reco-pantalla', reco), pin = $('.reco-pin', reco), pasos = $$('.reco-pasos li', reco);
+  const recorrido = () => {
+    if (!activa()) return;
+    const h = innerHeight, mira = MOVIL ? h * .68 : h * .5;
+    let mejor = pasos[0], md = 1e9;
+    pasos.forEach(li => { const r = li.getBoundingClientRect(), d = Math.abs(r.top + r.height / 2 - mira); if (d < md) { md = d; mejor = li; } });
+    pasos.forEach(li => li.classList.toggle('on', li === mejor));
+    if (pant.dataset.paso !== mejor.dataset.n) pant.dataset.paso = mejor.dataset.n;
+    if (MOVIL) {   // en el celular, sticky no anda dentro del transform: la pantalla se mantiene arriba con JS
+      const rr = reco.getBoundingClientRect(), z = rr.width / reco.offsetWidth, ph = pin.offsetHeight * z;
+      pin.style.translate = `0 ${Math.max(0, Math.min(rr.height - ph, 70 - rr.top) / z).toFixed(1)}px`;
+    }
+  };
+  km.addEventListener('scroll', recorrido, { passive: true }); addEventListener('resize', recorrido); recorrido();
+
+  /* ---- 06 · fachada: las notas aparecen y desaparecen; la tuya entra al publicarla ---- */
+  const fach = $('[data-fachada]', km), pantF = $('.fachada-pantalla', fach), capaN = $('.notas', fach), miscF = $('.fachada-misc', fach);
+  [['post-p1',6,62,40],['fig-649d6',30,8,60],['fig-47350',46,20,20],['post-p3',58,78,36],['fig-4a4d9',86,30,64],['fig-9e35e',64,12,20],['fig-83dad',18,84,44],['post-p2',92,82,30]].forEach(([n, x, y, w], i) => {
+    const img = document.createElement('img'); img.src = P(n); img.alt = ''; img.style.cssText = `left:${x}%;top:${y}%;width:${MOVIL ? w * .7 : w}px;animation-delay:${-i * 1.3}s`; miscF.appendChild(img);
+  });
+  const NOTAS = [['nacho', 'Me salvaste nachito! <3'], ['el grupo del parque', 'Los martes a las 7 no serían lo mismo sin ustedes.'],
+    ['cami', 'Gracias por esperarme en cada kilómetro, sin vos no llegaba ni a 21k!!!!!!!!!'], ['sofi', 'Gracias por esperarme siempre al final, aunque llegara última.'],
+    ['profe caro', 'Por enseñarme que el descanso también es parte del entrenamiento.']];
+  const COLORES = ['var(--violeta)', 'var(--verde)', 'var(--azul)', 'var(--rosa)'];
+  const LUG = MOVIL ? [[3, 4], [52, 3], [4, 66], [50, 68]] : [[3, 6], [16, 56], [68, 5], [70, 54], [38, 70], [40, 2]];
+  const enPantalla = new Map(); let iN = 0, iC = 0;
+  const poner = (para, msj, propia) => {
+    let libres = LUG.map((_, i) => i).filter(i => !enPantalla.has(i));
+    if (!libres.length) { const viejo = [...enPantalla.keys()][0]; sacar(viejo); libres = [viejo]; }
+    const slot = libres[Math.floor(Math.random() * libres.length)], [x, y] = LUG[slot];
+    const n = document.createElement('div'), len = msj.length;
+    n.className = 'nota ' + (len < 35 ? 'S' : len < 60 ? 'M' : len < 85 ? 'L' : 'XL');
+    n.style.cssText = `left:${x}%;top:${y}%;--c:${COLORES[iC++ % COLORES.length]};--r:${(Math.random() * 10 - 5).toFixed(1)}deg`;
+    const b = document.createElement('b'), p = document.createElement('p'); b.textContent = 'para: ' + para; p.textContent = msj; n.append(b, p);
+    capaN.appendChild(n); enPantalla.set(slot, { n, hasta: performance.now() + (propia ? 14000 : 9000) });
+    // si se sale por abajo o por la derecha, se acomoda adentro
+    requestAnimationFrame(() => { const rp = pantF.getBoundingClientRect(), rn = n.getBoundingClientRect(), z = rp.width / pantF.offsetWidth;
+      if (rn.bottom > rp.bottom - 8) n.style.top = Math.max(2, (pantF.offsetHeight - n.offsetHeight - 12) / pantF.offsetHeight * 100) + '%';
+      if (rn.right > rp.right - 8) n.style.left = Math.max(1, (pantF.offsetWidth - n.offsetWidth - 12) / pantF.offsetWidth * 100) + '%'; void z; });
+  };
+  const sacar = slot => { const e = enPantalla.get(slot); if (!e) return; enPantalla.delete(slot); e.n.classList.add('sale'); setTimeout(() => e.n.remove(), 650); };
+  let proxNota = 0;
+  const pasoFachada = t => {
+    enPantalla.forEach((e, s) => { if (t > e.hasta) sacar(s); });
+    if (t > proxNota && enPantalla.size < (MOVIL ? 3 : 4)) { const [pa, m] = NOTAS[iN++ % NOTAS.length]; poner(pa, m); proxNota = t + 2600; }
+  };
+  $('form', fach).addEventListener('submit', e => {
+    e.preventDefault(); const f = e.target, pa = f.para.value.trim(), m = f.msj.value.trim(); if (!pa || !m) return;
+    poner(pa.toLowerCase(), m, true); f.reset(); proxNota = performance.now() + 5000;
+  });
+
+  /* ---- 07 · render: se acerca despacio al scrollear ---- */
+  const marco = $('.render-marco', km);
+  const render = () => { const r = marco.getBoundingClientRect(), h = innerHeight, k = Math.max(0, Math.min(1, (h - r.top) / (h + r.height))); marco.style.setProperty('--s', (1.18 - k * .18).toFixed(3)); };
+  km.addEventListener('scroll', render, { passive: true }); render();
+
+  /* ---- un solo ciclo para todo lo animado, solo con la página abierta y lo que se ve ---- */
+  let ultimoMini = 0;
+  const ciclo = t => {
+    if (activa()) {
+      if (seVe(hero)) pasoHero(t);
+      if (seVe(caja)) dibujarPose(t); else t0 = t - (1 - (parseFloat((barra.style.transform.match(/[\d.]+/) || [1])[0]))) * DUR;
+      if (seVe(mini) && t - ultimoMini > 50) { ultimoMini = t; dibujarMini(t); }
+      if (seVe(pantF)) pasoFachada(t);
+    }
+    requestAnimationFrame(ciclo);
+  };
+  if (!REDUCIR) requestAnimationFrame(ciclo); else pasoFachada(performance.now());
+}
+
 function leerHash(){
   const h = location.hash.replace('#', '');
   cerrarMenu(true);
@@ -4805,10 +5636,10 @@ function prepararMovil(){
     km.insertBefore(caja, lienzo); caja.appendChild(lienzo);
     const medir = () => { caja.style.height = (lienzo.offsetHeight * zoomActual()).toFixed(1) + 'px'; };
     new ResizeObserver(medir).observe(lienzo); addEventListener('resize', medir); medir();
-    const btn = $('.hero .btn-menu', km); if (btn) km.appendChild(btn);      // fijo arriba, fuera de lo escalado
+    const btn = $('.hero .btn-menu, .post-hero .btn-menu', km); if (btn) km.appendChild(btn);      // fijo arriba, fuera de lo escalado
   });
   const zona = $('.submarcas-zona'); if (!zona) return;
-  // un mazo por marca, debajo de su botón "Conocé más" (post. con sus misceláneas)
+  // un mazo por marca, debajo de su botón "Conocé más", con sus misceláneas
   const botones = $$('.boton', zona);
   ['post', 'stop'].forEach((marca, i) => {
     const fotos = $$(`.foto-rot[data-mazo="${marca}"]`, zona); if (!fotos.length || !botones[i]) return;
@@ -4878,14 +5709,14 @@ function escalar(){
    ARRANQUE
    ===================================================================== */
 escalar(); addEventListener('resize', escalar);
-prepararMovil(); armarMapa(); armarTitulos(); armarKM6(); armarDecos(); armarKM2(); armarKM3(); armarMalas(); armarPies(); armarMenu(); iniciarKM4(); iniciarKM5();
+prepararMovil(); armarMapa(); armarTitulos(); armarKM6(); armarDecos(); armarKM2(); armarKM3(); armarMalas(); armarPies(); armarNavHero(); armarMenu(); iniciarKM4(); iniciarKM5();
 $$('[data-abrir-menu]').forEach(b => b.addEventListener('click', abrirMenu));
 $$('[data-cerrar-menu]').forEach(b => b.addEventListener('click', () => cerrarMenu()));
 addEventListener('keydown', e => { if (e.key === 'Escape') cerrarMenu(); });
 $$('[data-a]').forEach(b => b.addEventListener('click', () => scrollA(b.closest('article.km').id, b.dataset.a)));
 $$('[data-bajar]').forEach(b => b.addEventListener('click', () => { const k = b.closest('article.km'); irA_Y(k, k.scrollTop + innerHeight * .9); }));
 $$('[data-arriba]').forEach(b => b.addEventListener('click', () => irArriba(b.closest('article.km'))));
-iniciarScrollSuave(); iniciarEntradas(); iniciarStickers(); iniciarToques(); iniciarCursor(); iniciarFavicon(); iniciarFaviconSec(); iniciarBotonMenu(); iniciarRastro(); iniciarPerfil(); iniciarSobreFotos(); iniciarUnirPuntos(); iniciarCintaIconos(); iniciarReceta(); iniciarColab(); iniciarKM3Entradas(); iniciarProporcion(); iniciarTira(); iniciarCarruseles(); iniciarCarruselUI(); iniciarParalaje(); iniciarViajeKM6(); iniciarMazo(); iniciarMecer(); iniciarRasgos(); iniciarFlotar(); achicarTodo(); iniciarEscenaDS(); iniciarActivoScroll(); vigilarKM10(); iniciarGuia(); iniciarFuentesUI(); iniciarSticker(); iniciarComparador(); iniciarKM7Secciones();
+iniciarScrollSuave(); iniciarEntradas(); iniciarStickers(); iniciarToques(); iniciarCursor(); iniciarFavicon(); iniciarFaviconSec(); iniciarBotonMenu(); iniciarRastro(); iniciarPerfil(); iniciarSobreFotos(); iniciarUnirPuntos(); iniciarCintaIconos(); iniciarReceta(); iniciarColab(); iniciarKM3Entradas(); iniciarProporcion(); iniciarTira(); iniciarCarruseles(); iniciarCarruselUI(); iniciarParalaje(); iniciarViajeKM6(); iniciarMazo(); iniciarMecer(); iniciarRasgos(); iniciarFlotar(); achicarTodo(); iniciarEscenaDS(); iniciarActivoScroll(); vigilarKM10(); iniciarGuia(); iniciarFuentesUI(); iniciarSticker(); iniciarComparador(); iniciarKM7Secciones(); iniciarPost();
 addEventListener('hashchange', leerHash);
 
 if (location.hash && location.hash !== '#inicio') { portada.remove(); portadaFuera = true; leerHash(); }
