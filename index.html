@@ -613,6 +613,7 @@ a.punto{cursor:pointer} span.punto{cursor:default}
 .km6-intro{position:relative;height:540px;padding:148px 120px}
 .km6-intro p{position:relative;width:1254px;font:300 52px/1.18 var(--sora);color:var(--negro)}
 .km6-intro .decos{position:absolute;inset:0;z-index:2}
+.km6-intro .deco{transition:transform .7s cubic-bezier(.34,1.25,.64,1)}   /* hover sobre el texto: se corren a la derecha (iniciarViajeKM6) */
 .marca-card{position:relative;height:500px;border-radius:12px;background:var(--c);overflow:hidden;display:flex;align-items:center;justify-content:center}
 .marca-card .deco-card{position:absolute;left:146.78px;top:57px;max-width:none}
 .marca-card .logo{position:relative}
@@ -662,9 +663,6 @@ a.punto{cursor:pointer} span.punto{cursor:default}
 .rasgo{cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none}
 .rasgo.agarrado{cursor:grabbing;scale:1.08}
 .pin-tira{position:relative}
-/* KM 6 · carruseles de fotos: quedan fijos en pantalla y se deslizan de costado mientras se scrollea */
-.pin-carrusel{position:relative}
-.pin-carrusel > .carrusel{position:sticky}
 .pin-tira .pin-sticky{position:sticky;top:40px}
 .var-card .card .capa{position:absolute;inset:0;display:grid;place-items:center;background:var(--bg)}
 .var-card .card .ctrl{position:absolute;inset:0;pointer-events:none}
@@ -1332,7 +1330,7 @@ html.movil .siluetas-grande{width:100%;height:auto}
 html.movil .km > .escala-km{width:100%;overflow:clip}
 html.movil .km .escala-km > .lienzo{zoom:1;scale:var(--z);transform-origin:0 0}
 html.movil :is(#inicio,#portada) .escenario{zoom:1;scale:var(--zs);transform-origin:0 0;left:calc(-580px * var(--zs));top:calc(var(--dy,0px) * var(--zs))}
-html.movil :is(.pin-tira .pin-sticky, .pin-carrusel > .carrusel){position:relative;top:auto!important}
+html.movil .pin-tira .pin-sticky{position:relative;top:auto!important}
 html.movil .achicado{position:relative;flex:none}
 html.movil .achicado > *{position:relative!important;left:auto!important;top:auto!important;margin:0!important;transform-origin:0 0}
 
@@ -3377,45 +3375,30 @@ function iniciarEscenaDS(){
   km.addEventListener('scroll', act, { passive: true });
 }
 
-/* Carruseles de fotos (KM 6): se deslizan de costado con el scroll (como la tira del KM 3). El carrusel queda fijo
-   en el medio de la pantalla y cada foto se detiene un momento antes de dar paso a la siguiente. Las flechas del
-   prototipo siguen: llevan el scroll hasta la foto anterior o siguiente. Cada foto se corre un poco dentro de su marco (paralaje). */
+/* Carruseles de fotos (KM 6): la página scrollea normal (no se frena en cada marca). Las fotos de una marca
+   se recorren solo con las flechas, como el prototipo: Smart animate de 0,5 s y de la última vuelve a la primera
+   (y al revés). Mientras se mueve, cada foto se corre un poco dentro de su marco (paralaje). */
 function iniciarCarruseles(){
   $$('[data-carrusel]').forEach(c => {
-    const pista = $('.pista', c), figs = $$('figure', pista), PASO = MOVIL ? 452 : 1275, n = figs.length, km = c.closest('article.km');
-    const POR_FOTO = MOVIL ? 600 : 1000, RECORRIDO = POR_FOTO * (n - 1), ALTO = MOVIL ? 420 : 786;
-    const pin = document.createElement('div'); pin.className = 'pin-carrusel';
-    c.parentNode.insertBefore(pin, c); pin.appendChild(c);
-    let arriba = 40, i = 0;
-    const pintar = v => {
-      pista.style.transform = `translateX(${v.toFixed(1)}px)`;
-      figs.forEach((f, k) => { const rel = (k * PASO + v) / PASO; $('img', f).style.transform = `translateX(${(Math.max(-1, Math.min(1, rel)) * -30).toFixed(1)}px)`; });
+    const pista = $('.pista', c), figs = $$('figure', pista), PASO = MOVIL ? 452 : 1275, n = figs.length;
+    let i = 0, v = 0, anim = 0;
+    const pintar = x => {
+      v = x;
+      pista.style.transform = `translateX(${x.toFixed(1)}px)`;
+      figs.forEach((f, k) => { const rel = (k * PASO + x) / PASO; $('img', f).style.transform = `translateX(${(Math.max(-1, Math.min(1, rel)) * -30).toFixed(1)}px)`; });
     };
-    const medir = () => {
-      const z = zoomActual();
-      arriba = Math.max(40, (innerHeight / z - ALTO) / 2);
-      c.style.top = arriba + 'px'; pin.style.height = (ALTO + RECORRIDO) + 'px';
-    };
-    const suave = t => t <= 0 ? 0 : t >= 1 ? 1 : t * t * (3 - 2 * t);
-    const mover = seguirSuave(pintar);
-    const act = () => {
-      const z = zoomActual(), r = pin.getBoundingClientRect();
-      if (MOVIL) fijarMovil(c, r.top / z, arriba, RECORRIDO);
-      const p = Math.max(0, Math.min(1, (arriba * z - r.top) / (RECORRIDO * z)));
-      const t = p * (n - 1), k = Math.min(n - 2, Math.floor(t)), f = suave((t - k - .2) / .6);   // cada foto se queda quieta un rato
-      i = Math.round(t); mover(-(k + f) * PASO);
-    };
-    // flechas: llevan el scroll hasta la foto pedida (de la última vuelve a la primera, como el prototipo)
+    const curva = t => t < .5 ? 2 * t * t : 1 - (-2 * t + 2) ** 2 / 2;          // ease-in-out
     const ir = j => {
-      j = (j + n) % n;
-      const z = zoomActual(), topPin = pin.getBoundingClientRect().top + km.scrollTop;
-      irA_Y(km, topPin - arriba * z + (j / (n - 1)) * RECORRIDO * z);
+      i = (j + n) % n;
+      const desde = v, hasta = -i * PASO, t0 = performance.now(), D = REDUCIR ? 1 : 500;
+      cancelAnimationFrame(anim);
+      const paso = t => { const p = Math.min(1, (t - t0) / D); pintar(desde + (hasta - desde) * curva(p)); if (p < 1) anim = requestAnimationFrame(paso); };
+      anim = requestAnimationFrame(paso);
+      figs.forEach((f, k) => f.setAttribute('aria-hidden', k !== i));
     };
     $('.fl.sig', c).addEventListener('click', () => ir(i + 1));
     $('.fl.ant', c).addEventListener('click', () => ir(i - 1));
-    medir(); act();
-    addEventListener('resize', () => { medir(); act(); });
-    km.addEventListener('scroll', act, { passive: true });
+    pintar(0); figs.forEach((f, k) => f.setAttribute('aria-hidden', k !== 0));
   });
 }
 
@@ -3501,9 +3484,46 @@ function iniciarViajeKM6(){
     medidas = { cx: (rc.left - ri.left) / z, cy: (rc.top - ri.top) / z, desde: ri.top / z + km.scrollTop / z + 160,
       hasta: rc.top / z + km.scrollTop / z - (innerHeight / z - rc.height / z) / 2, fx: rc.width / z / 972, fy: rc.height / z / 500 };
   };
+  // Hover sobre el texto (solo con mouse): las piezas se corren a la zona libre de la derecha (x 1400–1880) para que
+  // se pueda leer. Mantienen su orden (izquierda/derecha, arriba/abajo) y se separan para no quedar encimadas.
+  // Usa "transform" del .deco: el viaje usa translate/rotate/scale y el empuje del mouse el transform del .mov.
+  let corre = false, viajeP = -1, mx = -1, my = -1;
+  const conMouse = !MOVIL && matchMedia('(hover: hover) and (pointer: fine)').matches;
+  if (conMouse) {
+    const ZX0 = 1400, ZX1 = 1880, ZY0 = 12, ZY1 = 528;
+    const xs = datos.map(d => d.x), ys = datos.map(d => d.y);
+    const x0 = Math.min(...xs), x1 = Math.max(...xs), y0 = Math.min(...ys), y1 = Math.max(...ys);
+    const pos = datos.map(d => ({ r: Math.max(d.w, d.h) / 2 + 8,
+      x: ZX0 + (d.x - x0) / (x1 - x0 || 1) * (ZX1 - ZX0), y: ZY0 + (d.y - y0) / (y1 - y0 || 1) * (ZY1 - ZY0) }));
+    for (let it = 0; it < 120; it++) {                               // se empujan entre ellas hasta no tocarse
+      pos.forEach((a, i) => pos.slice(i + 1).forEach(b => {
+        const dx = b.x - a.x, dy = b.y - a.y, dist = Math.hypot(dx, dy) || .01, falta = a.r + b.r - dist;
+        if (falta > 0) { const ux = dx / dist, uy = dy / dist; a.x -= ux * falta / 2; a.y -= uy * falta / 2; b.x += ux * falta / 2; b.y += uy * falta / 2; }
+      }));
+      pos.forEach(a => { a.x = Math.max(ZX0 + a.r, Math.min(ZX1 - a.r, a.x)); a.y = Math.max(ZY0 + a.r, Math.min(ZY1 - a.r, a.y)); });
+    }
+    const orden = datos.map((d, i) => i).sort((a, b) => datos[b].x - datos[a].x);   // la de más a la derecha sale primero
+    datos.forEach((d, i) => { d.cx = pos[i].x - d.x; d.cy = pos[i].y - d.y; d.orden = orden.indexOf(i); });
+  }
+  const texto = $('p', intro);
+  const aplicarCorre = () => {
+    if (!conMouse) return;
+    const r = texto.getBoundingClientRect(), m = 16;
+    const quiere = viajeP <= 0 && mx >= r.left - m && mx <= r.right + m && my >= r.top - m && my <= r.bottom + m;
+    if (quiere === corre) return; corre = quiere;
+    datos.forEach(d => {
+      d.el.style.transitionDelay = (corre ? d.orden : datos.length - 1 - d.orden) * 25 + 'ms';
+      d.el.style.transform = corre ? `translate(${d.cx.toFixed(1)}px, ${d.cy.toFixed(1)}px)` : '';
+    });
+  };
+  if (conMouse) {
+    intro.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; aplicarCorre(); });
+    intro.addEventListener('mouseleave', () => { mx = my = -1; aplicarCorre(); });
+  }
   const act = () => {
     if (!medidas) medir();
     const z = zoomActual(), y = km.scrollTop / z, p = (y - medidas.desde) / (medidas.hasta - medidas.desde);
+    viajeP = p; aplicarCorre();                                        // si arranca el viaje, vuelven a su lugar
     datos.forEach((d, i) => {
       if (d.lugar) {
         const t = suave((p - i * .015) / .85);                      // salen apenas escalonadas
