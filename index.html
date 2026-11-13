@@ -534,7 +534,7 @@ a.punto{cursor:pointer} span.punto{cursor:default}
 .st-nota{min-height:44px;font:400 16px/1.4 var(--reddit);color:var(--negro-60)}
 /* títulos display: pantallas de la app */
 .app-pantallas{display:flex;gap:32.35px}
-.app-pantallas img{width:302.433px;height:657.529px;object-fit:cover;transition:transform .35s var(--ease-out)}
+.app-pantallas img{width:302.433px;height:657.529px;object-fit:cover;border-radius:42px;box-shadow:0 10px 24px rgba(0,0,0,.16);transition:transform .35s var(--ease-out)}   /* esquinas de iPhone (≈14 % del ancho) */
 .app-pantallas img:hover{transform:translateY(-14px) rotate(-1.5deg)}
 
 /* ---------- KM 5 · COLORES ---------- */
@@ -1155,7 +1155,7 @@ html.movil .app-pantallas{gap:12px}
 html.movil .display-izq{gap:28px}
 html.movil .lab-sticker{width:100%}
 html.movil .st-lienzo{height:auto;aspect-ratio:547/250}
-html.movil .app-pantallas img{width:136px;height:296px}
+html.movil .app-pantallas img{width:136px;height:296px;border-radius:19px}
 
 /* ---- KM 5 ---- */
 html.movil .marcas .foto-marca{height:360px}
