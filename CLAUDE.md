@@ -585,3 +585,14 @@ El 10/11/2026 se borró todo lo construido y se empezó de nuevo. Respaldo de la
   - El botón "Conocé más sobre POST" del KM 1 vuelve a llevar a la Home, como en el prototipo. La entrada del 12/11 sobre esa página queda solo como historial.
 - 13/11/2026 · Mateo · **Home sin los logos de post. y STOP** arriba a la derecha (pedido del equipo). Se borró el bloque `.submarcas` de la Home, con sus estilos y su animación de entrada.
 - 13/11/2026 · Mateo · **Menú y mapa con 8 paradas**, revisados contra el Figma. Los números del menú ahora tienen el color de su punto en el mapa, como en el Figma: amarillo, naranja, rosa, violeta, azul, amarillo, naranja y rosa. Antes eran todos amarillos. Los toman de `PUNTOS_MAPA`.
+- 13/11/2026 · Equipo · **Dos conflictos de Git resueltos** (Pull con cambios de Mateo). Se combinaron las dos versiones:
+  - De Mateo: fotos de STOP con sus archivos (`foto-stop-1..3.jpg`), render de la fachada de post. (`fachada-render.jpg`), "1,75 m", paradas del KM 1 en 4415 px, página de post. borrada (el botón "Conocé más sobre POST" vuelve a la Home), menú y mapa con 8 paradas y números de colores.
+  - Nuestro: misceláneas de STOP alrededor de sus fotos (`data-mazo`, `DECOS.stopfotos`), textos de Arquigrafía iguales al Figma ("Post", Orientativas sin "¿Qué hay acá?"), hitos y parada a la derecha a 1113 px, headers con flechas y menú que lleva al header (ver abajo).
+  - Se borraron las fotos repetidas `assets/km1/foto-stop-centro.jpg` y `assets/km10/fachada-post.jpg`.
+  - **Regla:** antes de trabajar, siempre *Fetch* y *Pull*, y al terminar *Commit* + *Push* enseguida. Si GitHub Desktop avisa de conflictos, resolverlos antes de seguir editando.
+- 13/11/2026 · Equipo · **Headers con flechas a la parada anterior y la siguiente** (componente "Hero · Sección" del Figma, `512:2066`), en todos los KM (`armarNavHero`).
+  - Abajo a la izquierda: flecha + "Parada anterior", nombre y KM. Abajo a la derecha: "Siguiente parada", nombre, KM y flecha (Reddit Sans SemiBold 16, Sora SemiBold 24, Negro 80, línea de 2 px, chip con borde de 1 px; flechas en `assets/hero/`). Usan las mismas paradas que el footer de cada KM (el KM 1, las de sus paradas). Al pasar el mouse, el círculo se oscurece un poco y la flecha se corre 4 px.
+  - Como pide el componente, el índice y las flechas comparten la línea de base (178 px del borde de abajo) y la bajada queda 50 px arriba del índice: la bajada y el índice se ubican solos según cuántos links tenga cada KM. Entre links hay 18 px, como en el Figma.
+  - Las misceláneas del hero esquivan las flechas.
+  - Celular: una fila abajo del hero con solo la flecha y el KM de cada lado (los nombres no entran).
+- 13/11/2026 · Equipo · **Menú: tocar el nombre de una sección lleva a su header** (antes solo abría o cerraba las subsecciones). Las subsecciones se abren y cierran con la flechita de al lado del nombre o con el número. Si ya estás en esa sección, sube al header.
