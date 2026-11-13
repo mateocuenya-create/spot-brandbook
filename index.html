@@ -149,7 +149,7 @@ a.punto{cursor:pointer} span.punto{cursor:default}
 .foto-co .linea{position:absolute;z-index:2;left:1px;height:4px;background:radial-gradient(circle,var(--crema) 2px,transparent 2.4px) 0 0/12.1px 4px repeat-x}
 .oscuro{background:var(--negro);color:var(--crema)}
 .oscuro .fila > .t,.oscuro .txt{color:var(--crema)}
-.submarcas-zona{position:relative;height:3779px;background:var(--negro)}
+.submarcas-zona{position:relative;height:4685px;background:var(--negro)}
 .submarcas-zona .abs{position:absolute}
 .submarcas-zona .txt{color:var(--crema);width:830px;left:545px}
 .boton{position:absolute;display:inline-flex;align-items:center;gap:10px;padding:16px 30px;border-radius:54px;font:600 20px/normal var(--reddit);color:var(--negro);transform:translateX(-50%);
@@ -1164,7 +1164,7 @@ svg.esquema .nivel rect{transform-box:view-box;transform-origin:0 0;transition:t
 svg.esquema .nivel .banda{fill:var(--naranja);opacity:.2;transform:translateY(var(--y,0)) scaleY(var(--h,1))}
 svg.esquema .nivel .raya{fill:var(--naranja);transform:translateY(var(--y,0))}
 /* arquigrafía: el stand se arma, la parada se viste, los hitos se inflan y las pantallas se prenden */
-.frente{position:relative;width:1255px;aspect-ratio:1760/535;flex:none;--p:1}
+div.frente{position:relative;width:1255px;aspect-ratio:1760/535;flex:none;--p:1}   /* div: la foto de adelante del mazo del KM 1 también usa .frente */
 .frente i{position:absolute;inset:0;background:url(assets/km10/stand.png) 0 0/100% 100% no-repeat;will-change:transform}
 .frente .m1{clip-path:inset(0 78% 0 0);transform:translate(calc((1 - var(--p)) * -180px), calc((1 - var(--p)) * 40px)) rotate(calc((1 - var(--p)) * -6deg));opacity:calc(.2 + var(--p) * .8)}
 .frente .m2{clip-path:inset(0 23.2% 0 22%);transform:translateY(calc((1 - var(--p)) * 70px))}
@@ -1192,6 +1192,18 @@ svg.esquema .nivel .raya{fill:var(--naranja);transform:translateY(var(--y,0))}
 .juego-insignias .ins.agarrada{cursor:grabbing;z-index:2}
 .juego-insignias .ins.agarrada img{scale:1.12;filter:drop-shadow(0 12px 10px rgba(0,0,0,.25))}
 .pantallas-post{width:1255px;flex:none;display:flex;flex-direction:column;gap:8px;background:var(--negro)}
+/* Figma actualizado (KM 8): Iconografía sobre fondo Negro Spot; en Arquigrafía las imágenes van a la derecha (x 567, 1113 px)
+   y los hitos uno debajo del otro; la fachada de post. va debajo de las pantallas */
+.km10-sec.oscura{background:var(--negro)}
+.oscura .fila > .t,.oscura .txt,.oscura .pauta{color:var(--crema)}
+.senal-fila.ancha{justify-content:space-between}
+.ancha .vestir{width:1113px;aspect-ratio:1113/616}
+.ancha .hitos{flex-direction:column;gap:48px;width:1113px}
+.ancha .hito{width:1113px;aspect-ratio:1113/616}
+.col-der{width:1110px;flex:none;display:flex;flex-direction:column;gap:48px}
+.col-der .pantallas-post{width:100%}
+.fachada-post{width:100%;aspect-ratio:3/1;overflow:hidden}
+.fachada-post img{width:100%;height:100%;object-fit:cover;display:block}
 .pantallas-post video{display:block;width:100%;height:auto;background:#1c1c1c}
 .pantallas-post .s2{--d:.35s}
 .pantallas-post .s3{--d:.7s}
@@ -1536,10 +1548,12 @@ html.movil .alturas{display:grid;grid-template-columns:1fr 1fr;gap:28px 20px}
 html.movil .altura{width:auto}
 html.movil .altura b{font-size:24px}
 html.movil .altura span{font-size:17px}
-html.movil :is(.frente,.vestir,.pantallas-post){width:480px;margin-left:-24px}
+html.movil :is(div.frente,.vestir,.pantallas-post){width:480px;margin-left:-24px}
 html.movil .hitos{flex-direction:column;gap:12px;width:480px;margin-left:-24px}
 html.movil .hito{width:100%}
 html.movil .col-izq{width:100%;gap:20px}
+html.movil .col-der{width:480px;margin-left:-24px;gap:12px}
+html.movil .col-der .pantallas-post{width:100%;margin-left:0}
 html.movil .ui-fuente{font-size:24px;padding:12px 20px} html.movil .ui-fuente b{font-size:26px}   /* la ventana va achicada al 60 % */
 html.movil .juego-insignias{flex:none;height:360px;min-height:0;border-radius:22px}
 html.movil .frente .m1{transform:translate(calc((1 - var(--p)) * -60px), calc((1 - var(--p)) * 14px)) rotate(calc((1 - var(--p)) * -6deg))}
@@ -1654,24 +1668,29 @@ html.movil .carpeta p{font-size:16px;word-break:break-all}
     <img class="abs" src="assets/km1/post-logo-capa4.svg" alt="post." style="left:751px;top:232px;width:419px;height:193px">
     <p class="abs txt" style="top:659px">Post es la experiencia multimedia de Spot que acompaña el momento que llega después del recorrido. Si Spot se ocupa de lo que pasa antes y durante, Post se ocupa de lo que viene tras la meta: <b style="color:var(--verde)">el descanso</b>. Se trata de una cabina con pantallas LED por dentro y por fuera que se instala al final de carreras largas para recordarle a cada deportista, de forma lúdica, que recuperarse también es parte del entrenamiento.</p>
     <a class="boton" href="#inicio" style="left:960.5px;top:909px;background:var(--verde)">Conocé más sobre POST <img src="assets/km1/flecha-der.svg" alt=""></a>
-    <img class="foto-rot" src="assets/km1/foto-post-2.jpg" alt="Vista de la cabina post." style="left:964.6px;top:1282.3px;width:821.493px;height:462.324px;rotate:4.43deg">
-    <img class="foto-rot" src="assets/km1/foto-post-1.jpg" alt="Vista exterior de post." style="left:133.9px;top:1271.9px;width:806.071px;height:453.805px;rotate:-4.31deg">
-    <img class="foto-rot" src="assets/km1/foto-instalacion.jpg" alt="Instalación interactiva de estiramientos" style="left:403px;top:1183px;width:1114px;height:627px">
+    <img class="foto-rot" data-mazo="post" src="assets/km1/foto-post-2.jpg" alt="Vista de la cabina post." style="left:964.6px;top:1282.3px;width:821.493px;height:462.324px;rotate:4.43deg">
+    <img class="foto-rot" data-mazo="post" src="assets/km1/foto-post-1.jpg" alt="Vista exterior de post." style="left:133.9px;top:1271.9px;width:806.071px;height:453.805px;rotate:-4.31deg">
+    <img class="foto-rot" data-mazo="post" src="assets/km1/foto-instalacion.jpg" alt="Instalación interactiva de estiramientos" style="left:403px;top:1183px;width:1114px;height:627px">
     <div class="decos flota" data-decos="postfotos"></div>
     <div class="decos" data-decos="stop"></div>
     <img class="abs" src="assets/km1/stop-logo-comp3.svg" alt="STOP" style="left:751px;top:2329px;width:419px;height:193px">
     <p class="abs txt" style="top:2813px">Stop es el evento anual de Spot: una parada en el camino para celebrar lo recorrido. Alrededor de una carrera nocturna, propone una experiencia <b style="color:var(--rosa)">social, lúdica y reflexiva</b> donde corredores y acompañantes se encuentran, se divierten y se toman un momento para valorar todo el esfuerzo que los trajo hasta ahí. Si Spot acompaña el camino y Post cuida el después, Stop es la pausa que les da sentido a los dos.</p>
     <a class="boton" href="#inicio" style="left:945.5px;top:3063px;background:var(--rosa)">Conocé más sobre STOP <img src="assets/km1/flecha-der.svg" alt=""></a>
-    <a class="parada" href="#km10" style="left:262px;top:3356px">
+    <!-- Fotos de STOP (Figma "Group 111" 708:12461): mismo mazo que las de post., 2217 px más abajo -->
+    <img class="foto-rot" data-mazo="stop" src="assets/km1/foto-stop-2.jpg" alt="Tótem interactivo de STOP en una plaza de noche, con dos personas usando sus pantallas." style="left:964.6px;top:3499.3px;width:821.493px;height:462.324px;rotate:4.43deg">
+    <img class="foto-rot" data-mazo="stop" src="assets/km1/foto-stop-1.jpg" alt="Largada de la carrera de STOP con un pórtico de pantallas y mensajes de aliento." style="left:133.9px;top:3488.9px;width:806.071px;height:453.805px;rotate:-4.31deg">
+    <img class="foto-rot" data-mazo="stop" src="assets/km1/foto-stop-centro.jpg" alt="Fiesta de STOP en una terraza de noche, con DJ y una pantalla gigante." style="left:403px;top:3400px;width:1114px;height:627px">
+    <div class="decos flota" data-decos="stopfotos"></div>
+    <a class="parada" href="#km10" style="left:262px;top:4262px">
       <span class="circ"><img src="assets/km1/flecha-izq-32.svg" alt=""></span>
-      <span class="info" style="border-right:2px solid var(--crema);padding-right:20px"><span class="chip">KM10</span><span class="tx" style="text-align:right;align-items:flex-end"><small>Parada anterior</small><span>Arquigrafía</span></span></span>
+      <span class="info" style="border-right:2px solid var(--crema);padding-right:20px"><span class="chip">KM8</span><span class="tx" style="text-align:right;align-items:flex-end"><small>Parada anterior</small><span>Arquigrafía</span></span></span>
     </a>
-    <a class="parada" href="#km2" style="left:1112px;top:3356px">
+    <a class="parada" href="#km2" style="left:1112px;top:4262px">
       <span class="info" style="border-left:2px solid var(--crema);padding-left:20px"><span class="tx"><small>Siguiente parada</small><span>Manual de Voz y Tono</span></span><span class="chip">KM2</span></span>
       <span class="circ"><img src="assets/km1/flecha-der-32.svg" alt=""></span>
     </a>
-    <button class="volver-arriba" style="top:3484px" data-arriba><img src="assets/km1/slide-down-crema.svg" alt="">Volver arriba</button>
-    <p class="abs" style="left:765px;top:3663px;font:400 16px/normal var(--reddit);color:#fff;white-space:nowrap">© Copyright 2026 Spot. Todos los derechos reservados</p>
+    <button class="volver-arriba" style="top:4390px" data-arriba><img src="assets/km1/slide-down-crema.svg" alt="">Volver arriba</button>
+    <p class="abs" style="left:765px;top:4569px;font:400 16px/normal var(--reddit);color:#fff;white-space:nowrap">© Copyright 2026 Spot. Todos los derechos reservados</p>
   </section>
  </div>
 </article>
@@ -2397,16 +2416,16 @@ html.movil .carpeta p{font-size:16px;word-break:break-all}
       <p class="txt">Ordenada alfabéticamente, cada carpeta separa sola las tres marcas: primero todo lo de post., después spot. y al final stop.</p>
     </div>
   </section>
-  <footer class="pie-km" data-ant="km6|KM6|Elementos gráficos" data-sig="|KM8|Animaciones"></footer>
+  <footer class="pie-km" data-ant="km6|KM6|Elementos gráficos" data-sig="km10|KM8|Arquigrafía"></footer>
  </div>
 </article>
 
 <!-- ======================= KM 10 · Arquigrafía y señalética (Figma "Slide 16:9 - 10") ======================= -->
-<article id="km10" class="pantalla km" aria-label="KM 10: Arquigrafía y señalética">
+<article id="km10" class="pantalla km" aria-label="KM 8: Arquigrafía y señalética">
  <div class="lienzo">
-  <section class="hero" style="--c:var(--naranja)">
+  <section class="hero" style="--c:var(--rosa)">
     <button class="btn-menu" data-abrir-menu aria-label="Abrir índice"><img src="assets/km2/21764.svg" alt=""></button>
-    <span class="km-tag">KM 10</span>
+    <span class="km-tag">KM 8</span>
     <h1 class="titulo-km" data-t="Arquigrafía y señalética" data-w="1549" style="left:120px">Arquigrafía y señalética</h1>
     <p class="bajada" style="top:612px">La marca en el espacio</p>
     <nav class="links dos" style="top:724px"><button data-a="km10-principios">Principios ↗</button><button data-a="km10-tipos">Tipos de señales ↗</button><button data-a="km10-iconos">Iconografía ↗</button><button data-a="km10-medidas">Medidas ↗</button><button data-a="km10-arqui">Arquigrafía ↗</button></nav>
@@ -2417,40 +2436,30 @@ html.movil .carpeta p{font-size:16px;word-break:break-all}
   <section class="sec km10-sec" id="km10-principios">
     <div class="fila"><h2 class="t">Wayfinding</h2>
       <div class="c txt"><p>Spot también vive fuera de la pantalla: en eventos, stands y espacios que comparte con otras marcas. Ahí la identidad se vuelve arquigrafía, la marca construida en el lugar, y señalética, el sistema que le dice a cada persona dónde está y hacia dónde ir.</p>
-        <p>Las reglas son las mismas para Spot, post. y Stop. Para mostrarlas usamos como caso el evento anual, donde el sistema se pone a prueba en una plaza abierta y en un edificio de nueve pisos.</p></div></div>
-    <div class="principios">
-      <article class="principio"><span class="n">01 · Ubicación</span><h3>Señalar donde se decide</h3><p>En los ingresos, cruces, escaleras y ascensores: los puntos donde la persona elige hacia dónde ir. Lejos del destino, direccionales; al llegar, locativas.</p></article>
-      <article class="principio"><span class="n">02 · Contenido</span><h3>Nombrar por lo que pasa</h3><p>Cada espacio se nombra por su función y su horario, como “Piso 2 · Recuperación”, y no solo por un número. Así se entiende qué hay, además de dónde.</p></article>
-      <article class="principio"><span class="n">03 · Lectura</span><h3>Leer cansado</h3><p>Quien busca un cartel suele venir de correr. Pictograma grande, flecha y una palabra; la bajada es opcional y siempre corta.</p></article>
-      <article class="principio"><span class="n">04 · Color</span><h3>Un color por función</h3><p>Cada tipo de señal tiene un color fijo de la paleta de la marca que firma el espacio. En el evento, las direccionales van en rosa y las locativas en azul, siempre sobre negro o crema.</p></article>
-      <article class="principio"><span class="n">05 · Altura</span><h3>A la altura de la vista</h3><p>Las placas sobre pared van entre 1,50 y 1,70 m. Lo que tiene que verse por encima de la gente arranca en 2,25 m.</p></article>
-      <article class="principio"><span class="n">06 · Hitos</span><h3>Piezas que orientan</h3><p>Las piezas grandes, como portales, paradas o inflables, se ven de lejos: funcionan como referencia, punto de encuentro y fondo para la foto.</p></article>
-    </div>
+        <p>Las reglas son las mismas para Spot, Post y Stop. Para mostrarlas usamos como caso el evento anual, donde el sistema se pone a prueba en una plaza abierta y en un edificio de nueve pisos.</p></div></div>
   </section>
   <div class="divisor"></div>
   <section class="sec km10-sec" id="km10-tipos">
     <div class="fila"><h2 class="t">Tipos de señales</h2><p class="c txt">El sistema se arma con <b class="az">cuatro tipos de piezas</b>. Cada una responde a una pregunta distinta de quien se mueve por el espacio, y todas comparten flecha, pictograma y nombre.</p></div>
-    <div class="senal-fila"><div class="pauta"><h4>Direccionales</h4><p>¿Cómo llego? Flecha, pictograma y destino. Con un solo destino alcanza un pictograma grande; con dos o más, los destinos se apilan en placas horizontales.</p><p>Al aire libre van en postes autoportantes; adentro, sobre la pared, para no ocupar los pasillos.</p></div>
+    <div class="senal-fila"><div class="pauta"><h4>Direccionales</h4><p>¿Cómo llego? Flecha, pictograma y destino. Con un solo destino alcanza un pictograma grande; con dos o más, los destinos se apilan en placas horizontales.</p><p>Al aire libre van en postes autoportantes clavados en la tierra. Adentro, sobre la pared, para no ocupar los pasillos.</p></div>
       <img class="esquema" src="assets/km10/direccionales.svg" width="1255" height="445" loading="lazy" alt="Direccionales sobre la regla de alturas, con una persona como referencia: parada de bus, un destino, dos destinos y cuatro destinos sobre pared."></div>
-    <div class="senal-fila"><div class="pauta"><h4>Locativas</h4><p>¿Llegué? Nombran el lugar y sirven de referencia para encontrarse. Un stand lleva su cartel elevado; una sala, una placa junto a la puerta con nombre, piso y el color del mapa; un punto numerado, una pieza autoportante que se ve de lejos.</p></div>
+    <div class="senal-fila"><div class="pauta"><h4>Locativas</h4><p>Nombran el lugar y sirven de referencia para encontrarse. Un stand lleva su cartel elevado; una sala, una placa junto a la puerta con nombre, piso y el color del mapa; un punto numerado, una pieza autoportante que se ve de lejos.</p></div>
       <img class="esquema" src="assets/km10/locativas.svg" width="1255" height="445" loading="lazy" alt="Locativas sobre la regla de alturas: cartel de hamburguesería, cartel de sala y locativa 10."></div>
-    <div class="senal-fila"><div class="pauta"><h4>Orientativas</h4><p>¿Qué hay acá? El directorio de cada piso: número y nombre, y la lista de espacios con una línea sobre lo que se hace en cada uno. Va junto a escaleras y ascensores, lo primero que se ve al llegar.</p></div>
+    <div class="senal-fila"><div class="pauta"><h4>Orientativas</h4><p>El directorio de cada piso. Número, nombre y la lista de espacios con una línea sobre lo que se hace en cada uno. Va junto a escaleras y ascensores, lo primero que se ve al llegar.</p></div>
       <img class="esquema" src="assets/km10/orientativas.svg" width="1255" height="445" loading="lazy" alt="Orientativa: directorio del piso 2, Recuperación, junto a una persona como referencia."></div>
     <div class="senal-fila"><div class="pauta"><h4>Complementarias</h4><p>Resuelven dudas puntuales para que nadie tenga que preguntar: dónde pedir y dónde retirar, cómo conectarse al wi-fi, dónde está la tienda o dónde apoyar el celular para la foto grupal.</p></div>
       <img class="esquema" src="assets/km10/complementarias.svg" width="1255" height="416" loading="lazy" alt="Complementarias: placa wi-fi, soporte para la foto grupal, aviso de merch y carteles de pedí y retirá."></div>
   </section>
-  <div class="divisor"></div>
-  <section class="sec km10-sec" id="km10-iconos">
+  <section class="sec km10-sec oscura" id="km10-iconos">
     <div class="fila"><h2 class="t">Iconografía</h2><p class="c txt">Los pictogramas salen de Phosphor Icons en peso Bold, dentro de un cuadrado de esquinas redondeadas. Se agrupan en cuatro familias: orientación y traslado, servicios e información, comida y pausa, y recuperación y actividades.</p></div>
     <div class="senal-fila"><div class="pauta"><h4>Peso y color</h4><p>El relleno agrupa: las familias de servicios van en línea y las de comida y recuperación, sobre un color de la paleta.</p><p>Cuando el ícono va en color sobre fondo oscuro, el trazo se afina un poco para que se perciba con el mismo peso que el resto.</p></div>
       <img class="esquema iconos" src="assets/km10/iconos.svg" width="1255" height="486" loading="lazy" alt="Los pictogramas de la señalética en cuatro familias: orientación y traslado, servicios e información, comida, bebida y pausa, y recuperación y actividades."></div>
   </section>
-  <div class="divisor"></div>
   <section class="sec km10-sec" id="km10-medidas">
     <div class="fila"><h2 class="t">Medidas y alturas</h2><p class="c txt">Todas las piezas se dibujan sobre la misma regla de alturas, con una persona como referencia. Así cada señal se decide por dónde se lee y no solo por el espacio disponible.</p></div>
     <div class="alturas" data-alturas>
       <button class="altura"><b>0,75 m</b><span>Base de las piezas de piso, como los atriles de pedí y retirá.</span></button>
-      <button class="altura"><b>1,50 – 1,70 m</b><span>Altura de la vista: placas sobre pared, carteles de sala y directorios.</span></button>
+      <button class="altura"><b>1,50 – 1,70 m</b><span>Altura de la vista: placas sobre pared, carteles de sala y directorios. Para tener en cuenta, la altura promedio de una persona es de 1,75 cm.</span></button>
       <button class="altura"><b>2,25 m</b><span>Desde acá, lo que tiene que verse por encima de la gente.</span></button>
       <button class="altura"><b>3 m o más</b><span>Coronamientos de stands y portales, visibles desde lejos.</span></button>
     </div>
@@ -2461,19 +2470,20 @@ html.movil .carpeta p{font-size:16px;word-break:break-all}
     <div class="fila"><h2 class="t">Arquigrafía</h2><p class="c txt">La arquigrafía lleva la identidad a <b class="az">la escala del cuerpo y del edificio</b>. No inventa piezas nuevas: toma los elementos gráficos de la marca, como estrellas, puntos y caritas, y los vuelve estructura, volumen y color.</p></div>
     <div class="senal-fila"><div class="pauta"><h4>Un solo frente</h4><p>Los módulos de un stand se arman juntos, uno al lado del otro, y forman una sola fachada. Quien se acerca <b class="az">encuentra en un mismo lugar</b> todo lo que la marca ofrece.</p></div>
       <div class="frente" data-frente role="img" aria-label="Stand de STOP: un tótem, el mostrador con el frente “A SPOT TO STOP.” y un perchero de merch, armados como una sola fachada."><i class="m1"></i><i class="m2"></i><i class="m3"></i></div></div>
-    <div class="senal-fila"><div class="pauta"><h4>Lo existente, con identidad</h4><p>Cuando el espacio ya tiene su mobiliario, se lo viste en lugar de reemplazarlo. La parada de micro suma una franja de color con el nombre, los elementos gráficos y una direccional al lado, y pasa a ser un punto de reencuentro.</p></div>
+    <div class="senal-fila ancha"><div class="pauta"><h4>Nuestra identidad sobre lo existente</h4><p>Cuando el espacio ya tiene su mobiliario, se lo viste en lugar de reemplazarlo. La parada de micro suma una franja de color con el nombre, los elementos gráficos y una direccional al lado, y pasa a ser un punto de reencuentro.</p></div>
       <figure class="vestir" data-vestir><img src="assets/km10/parada.jpg" alt="Parada de micro en una plaza, vestida con una franja rosa que dice BUS STOP, los elementos gráficos de STOP y una direccional al lado." loading="lazy"></figure></div>
-    <div class="senal-fila"><div class="pauta"><h4>Hitos a gran escala</h4><p>Los elementos gráficos crecen hasta volverse objetos: una copa, una estrella y una carita inflables marcan la llegada y se ven desde lejos. La parada fotográfica suma un espejo y señales con frases que invitan a frenar.</p></div>
+    <div class="senal-fila ancha"><div class="pauta"><h4>Hitos inflables y a gran escala</h4><p>Los elementos gráficos crecen hasta volverse objetos: una copa, una estrella y una carita inflables marcan la llegada y se ven desde lejos. La parada fotográfica suma un espejo y señales con frases que invitan a frenar.</p></div>
       <div class="hitos" data-hitos><figure class="hito"><img src="assets/km10/inflables.jpg" alt="Copa, estrella y carita inflables de STOP iluminadas de noche frente a un edificio." loading="lazy"></figure>
         <figure class="hito"><img src="assets/km10/parada-foto.jpg" alt="Parada fotográfica: una carita inflable con anteojos, un espejo y señales con frases como “Pará, tomá aire.”." loading="lazy"></figure></div></div>
-    <div class="senal-fila"><div class="col-izq"><div class="pauta"><h4>La pantalla también es arquitectura</h4><p>En post., la fachada de pantallas cumple el mismo rol que un cartel: deja reconocer la instalación desde afuera, anuncia lo que está por empezar y suma movimiento con las animaciones de la marca.</p></div>
+    <div class="senal-fila ancha"><div class="col-izq"><div class="pauta"><h4>La pantalla también es arquitectura</h4><p>En post., la fachada de pantallas cumple el mismo rol que un cartel: deja reconocer la instalación desde afuera, anuncia lo que está por empezar y suma movimiento con las animaciones de la marca.</p></div>
         <div class="juego-insignias" data-juego aria-label="Juego: las misceláneas de post. (puntos y estrellas) caen y se pueden agarrar y tirar"><p class="pista">Agarrá un punto o una estrella y tiralo</p></div></div>
-      <div class="pantallas-post" data-pantallas>
+      <div class="col-der"><div class="pantallas-post" data-pantallas>
         <video class="s1" src="assets/km10/post-respirar.mp4" muted loop playsinline preload="none" style="aspect-ratio:2366/820" aria-label="Pantalla de la entrada de post.: animación respirar"></video>
         <video class="s2" src="assets/km10/post-running.mp4" muted loop playsinline preload="none" style="aspect-ratio:3240/1080" aria-label="Pantalla del frente de post.: animación running"></video>
-        <video class="s3" src="assets/km10/post-insignia.mp4" muted loop playsinline preload="none" style="aspect-ratio:4096/1484" aria-label="Pantalla de atrás de post.: animación insignia"></video></div></div>
+        <video class="s3" src="assets/km10/post-insignia.mp4" muted loop playsinline preload="none" style="aspect-ratio:4096/1484" aria-label="Pantalla de atrás de post.: animación insignia"></video></div>
+        <figure class="fachada-post"><img src="assets/km10/fachada-post.jpg" alt="Fachada de post. en una plaza: la cabina negra con el logo, puntos y aros verdes, y gente pasando." loading="lazy"></figure></div></div>
   </section>
-  <footer class="pie-km" data-ant="|KM9|Íconos" data-sig="inicio|KM0|Volver al inicio"></footer>
+  <footer class="pie-km" data-ant="km7|KM7|Design System" data-sig="inicio|KM0|Volver al inicio"></footer>
  </div>
 </article>
 
@@ -2543,7 +2553,7 @@ const DECOS = {
   km1: HERO('km1/', ['punto3.svg','punto4.svg','punto5.svg','punto6.svg','punto7.svg','punto8.svg','punto9.svg','star8.svg','star10.svg','star9-insignia.svg','insignia-img.png']),
   // KM 2–6: misma ubicación que el Figma, pero cada KM arranca con sus propias piezas (colores, estrella e insignia)
   km2: variarHero(2, 'naranja', 'grupo'), km3: variarHero(3, 'rosa', 'consistencia'), km4: variarHero(4, 'violeta', 'asistencia'),
-  km5: variarHero(5, 'azul', 'repetido'), km6: variarHero(6, 'amarillo', 'asociado'), km7: variarHero(7, 'naranja', 'integrante'), km10: variarHero(10, 'naranja', 'consistencia'),
+  km5: variarHero(5, 'azul', 'repetido'), km6: variarHero(6, 'amarillo', 'asociado'), km7: variarHero(7, 'naranja', 'integrante'), km10: variarHero(10, 'rosa', 'consistencia'),
   // KM 6: puntos y estrellas sueltos sobre el texto de introducción (relativos a la sección, y − 1080)
   km6intro: [[1,332,230,113],[2,544,160,113],[3,948,235,113],[4,327.4,109.5,112.3],[5,801.4,314.5,112.3],[6,195,298,71],[7,697.8,219,46.4],[8,696.8,330,46.4],
     [9,219.8,190,46.4],[10,959,148,71],[11,1151,292,71],[12,123,132,71],[13,791,131,71],[14,1088.8,133,46.4],[15,439,347,71],[16,588.8,304,46.4]].map(([n, x, y, w]) => ['km6/intro-' + n + '.svg', x, y, w, w, [0,0,0,0]]),
@@ -2564,6 +2574,14 @@ const DECOS = {
     ['km1/star6.svg',1745,1660,113.943,113.943,[8.97,6.58,5.61,6.58],15.82,92.277],['km1/spot4.svg',1515,1835,53.943,53.943,[-6.67,-12.01,-17.35,-12.01]],
     ['km1/spot10.svg',965,1875,14.921,14.921,[-24.13,-43.43,-62.73,-43.43]],['km1/spot5.svg',1240,1120,14.921,14.921,[-24.13,-43.43,-62.73,-43.43]]
   ],
+  // STOP alrededor de sus fotos: los mismos lugares que las de post. (2217 px más abajo), con piezas de STOP (las de "stop" de acá abajo)
+  stopfotos: [
+    ['km1/punto-a.svg',70,3442,52.828,52.828,[0,-0.88,-0.88,0]],['km1/punto-b.svg',40,3907,115.078,115.078,[0,0,0,0],-12.01,97.018],
+    ['km1/spot5.svg',345,3367,14.921,14.921,[-24.13,-43.43,-62.73,-43.43]],['km1/spot20.svg',250,4037,20.217,20.217,[-24.13,-43.43,-62.73,-43.43],28.36,14.921],
+    ['km1/spot2.svg',1585,3367,41.988,41.988,[-11.62,-20.91,-30.2,-20.91],28.36,30.989],['km1/spot9.svg',1825,3482,26.972,26.972,[-13.35,-24.03,-34.7,-24.03]],
+    ['km1/stop-cruz.svg',1758,3890,88,88,[0,0,0,0]],['km1/spot25.svg',1515,4052,53.943,53.943,[-6.67,-12.01,-17.35,-12.01]],
+    ['km1/spot19.svg',965,4092,14.921,14.921,[-24.13,-43.43,-62.73,-43.43]],['km1/spot5.svg',1240,3337,14.921,14.921,[-24.13,-43.43,-62.73,-43.43]]
+  ],
   stop: [
     ['km1/spot2.svg',1277,2369,41.988,41.988,[-11.62,-20.91,-30.2,-20.91],28.36,30.989],['km1/spot5.svg',573.42,2255,14.921,14.921,[-24.13,-43.43,-62.73,-43.43]],
     ['km1/spot5.svg',1082.93,2570.63,14.921,14.921,[-24.13,-43.43,-62.73,-43.43]],['km1/spot5.svg',1098.07,2270.91,14.921,14.921,[-24.13,-43.43,-62.73,-43.43]],
@@ -2581,7 +2599,7 @@ const CARITAS = { km1:[1527,414,'naranja'], km2:[1629,414,'violeta','cara-1'], k
 // heros en mobile: lugares elegidos a mano alrededor del texto (arriba, a la derecha del tag y abajo de los links),
 // por índice de HERO(): 0–6 puntos, 7 estrella grande, 8 estrella, 9 insignia (10 = dibujo de la insignia del KM 1)
 const HERO_MOVIL = [[400,64],[302,112],[54,724],[186,100],[338,806],[236,46],[128,866],[96,30],[396,690],[356,120]];
-const ESCALA_DECO_MOVIL = { post: .6, stop: .6, postfotos: .6, km6intro: .65 };
+const ESCALA_DECO_MOVIL = { post: .6, stop: .6, postfotos: .6, stopfotos: .6, km6intro: .65 };
 function decoMovil(key, d, i){
   const S = ESCALA_DECO_MOVIL[key] || .6;                                      // misceláneas más chicas en el celular
   const [src0, x0, y0, w0, h0, ins, rot, caja0] = d;
@@ -2602,6 +2620,7 @@ function decoMovil(key, d, i){
   }
   const mapa = {
     postfotos: [x * f, (y - 1150) * .35],                                       // alrededor del mazo de fotos
+    stopfotos: [x * f, (y - 3367) * .35],                                       // igual, alrededor del mazo de STOP
     km6intro: [24 + x * .33, 390 + (y - 109) * .8]                             // debajo del texto (en desktop van sobre él)
   }[key] || [x / 4, y * ALTO_HERO / 1080];                                      // heros
   return [src, mapa[0], mapa[1], ...resto];
@@ -3335,10 +3354,17 @@ function deslizable(zona, { mover, soltar, rueda }){
    MÁS JUEGO (pedido del equipo, 11/11)
    ===================================================================== */
 
-/* KM 1 · fotos de post. como el mazo de truus.co: la de adelante se arrastra y se tira
-   a un costado; las de atrás pasan adelante con un click. Vuelven a los lugares del Figma. */
+/* KM 1 · fotos de post. y de STOP como el mazo de truus.co: la de adelante se arrastra y se tira
+   a un costado; las de atrás pasan adelante con un click. Vuelven a los lugares del Figma.
+   Cada marca tiene su propio mazo (data-mazo); el de STOP está 2217 px más abajo, como en el Figma. */
 function iniciarMazo(){
-  const fotos = $$('.submarcas-zona .foto-rot'); if (fotos.length !== 3 || !window.gsap) return;
+  if (!window.gsap) return;
+  [['post', 0], ['stop', 2217]].forEach(([marca, dy]) => {
+    const fotos = $$(`.submarcas-zona .foto-rot[data-mazo="${marca}"]`);
+    if (fotos.length === 3) armarMazo(fotos, MOVIL ? 0 : dy);
+  });
+}
+function armarMazo(fotos, dy){
   const SLOT = MOVIL ? {
     izq:    { left: 0,   top: 46, width: 280, height: 158, rotation: -6, z: 1 },
     der:    { left: 152, top: 52, width: 280, height: 158, rotation: 6,  z: 2 },
@@ -3349,7 +3375,7 @@ function iniciarMazo(){
     centro: { left: 403,   top: 1183,   width: 1114,    height: 627,     rotation: 0,     z: 3 }
   };
   const pos = ['der', 'izq', 'centro'];                       // lugar de cada foto (orden del HTML)
-  const props = s => ({ left: s.left, top: s.top, width: s.width, height: s.height, rotation: s.rotation, x: 0, y: 0 });
+  const props = s => ({ left: s.left, top: s.top + dy, width: s.width, height: s.height, rotation: s.rotation, x: 0, y: 0 });
   fotos.forEach((f, k) => { f.style.rotate = ''; f.draggable = false; f.style.zIndex = SLOT[pos[k]].z; gsap.set(f, props(SLOT[pos[k]])); });
   const acomodar = () => fotos.forEach((f, k) => {
     const s = SLOT[pos[k]]; f.style.zIndex = s.z; f.classList.toggle('frente', pos[k] === 'centro');
@@ -4782,10 +4808,15 @@ function prepararMovil(){
     const btn = $('.hero .btn-menu', km); if (btn) km.appendChild(btn);      // fijo arriba, fuera de lo escalado
   });
   const zona = $('.submarcas-zona'); if (!zona) return;
-  const mazo = document.createElement('div'); mazo.className = 'mazo-movil';
-  $('.boton', zona).after(mazo);
-  $$('.foto-rot', zona).forEach(f => mazo.appendChild(f));
-  const pf = $('[data-decos="postfotos"]', zona); if (pf) mazo.appendChild(pf);
+  // un mazo por marca, debajo de su botón "Conocé más" (post. con sus misceláneas)
+  const botones = $$('.boton', zona);
+  ['post', 'stop'].forEach((marca, i) => {
+    const fotos = $$(`.foto-rot[data-mazo="${marca}"]`, zona); if (!fotos.length || !botones[i]) return;
+    const mazo = document.createElement('div'); mazo.className = 'mazo-movil';
+    botones[i].after(mazo);
+    fotos.forEach(f => mazo.appendChild(f));
+    const pf = $(`[data-decos="${marca}fotos"]`, zona); if (pf) mazo.appendChild(pf);
+  });
 }
 
 /* Mobile: achica un elemento con transform (scale) y le pone alrededor una caja (.achicado) con el tamaño achicado,
