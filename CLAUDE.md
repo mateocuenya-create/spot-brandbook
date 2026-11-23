@@ -649,3 +649,4 @@ El 10/11/2026 se borró todo lo construido y se empezó de nuevo. Respaldo de la
   - La página scrollea normal. Cuando se ve el 70 % de la escena, los 3 pasos se reproducen solos: los puntos, a los 1,5 s el botón se despliega y a los 4,6 s queda el botón amarillo con su frase.
   - Si la escena sale de la pantalla se reinicia, y se repite al volver.
   - En compu no cambia: sigue fija y avanza con el scroll.
+- 23/11/2026 · Mateo · **Carteles del glosario en el celular: respetan los márgenes** ("tercer lugar" en KM 2 y "deportes de recorrido" en KM 1; `iniciarGlosasMovil`). Antes arrancaban desde la palabra y se cortaban a la derecha. Ahora van de margen a margen de la columna (24 px de cada lado), estén donde estén la palabra, y si abajo no entran en la pantalla se abren para arriba. En compu no cambia.

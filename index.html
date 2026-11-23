@@ -1307,7 +1307,7 @@ html.movil .fila > *{width:auto!important;max-width:100%}
 html.movil .grande{font-size:30px!important}
 html.movil .divisor{width:432px}
 html.movil .sticky{position:static}
-html.movil .glosa .def{width:300px;padding:20px}
+html.movil .glosa .def{width:432px;box-sizing:border-box;padding:24px}   /* ocupa el ancho de la columna: iniciarGlosasMovil la alinea a los márgenes */
 
 /* ---- Portada y Home: se ve la franja central del escenario (el mapa entero) y se usa todo el alto ---- */
 html.movil :is(#inicio,#portada) .escenario{position:absolute;left:-580px;top:var(--dy,0px)}
@@ -5054,6 +5054,27 @@ function iniciarVideoHome(){
   document.addEventListener('visibilitychange', sincronizarVideoHome);
 }
 
+/* Mobile: los carteles del glosario ("tercer lugar", "deportes de recorrido") van de margen a margen (24 px de la columna
+   de 480), sin importar dónde esté la palabra. Si abajo no entran en la pantalla, se abren para arriba. */
+function iniciarGlosasMovil(){
+  if (!MOVIL) return;
+  $$('.glosa').forEach(g => {
+    const d = $('.def', g);
+    const ubicar = () => {
+      const l = g.closest('.lienzo').getBoundingClientRect(), z = l.width / 480, b = g.getClientRects()[0]; if (!b) return;
+      d.style.left = (24 - (b.left - l.left) / z).toFixed(1) + 'px';
+      d.style.top = ''; d.style.bottom = '';
+      const r = d.getBoundingClientRect();
+      if (r.bottom > innerHeight - 16 && b.top - r.height - 12 > 16) { d.style.top = 'auto'; d.style.bottom = 'calc(100% + 12px)'; }
+    };
+    ['focusin', 'mouseenter', 'click'].forEach(ev => g.addEventListener(ev, ubicar));
+    g.addEventListener('touchstart', ubicar, { passive: true });
+    addEventListener('resize', ubicar);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(ubicar);
+    ubicar();
+  });
+}
+
 function leerHash(){
   const h = location.hash.replace('#', '');
   cerrarMenu(true);
@@ -5178,7 +5199,7 @@ addEventListener('keydown', e => { if (e.key === 'Escape') cerrarMenu(); });
 $$('[data-a]').forEach(b => b.addEventListener('click', () => scrollA(b.closest('article.km').id, b.dataset.a)));
 $$('[data-bajar]').forEach(b => b.addEventListener('click', () => { const k = b.closest('article.km'); irA_Y(k, k.scrollTop + innerHeight * .9); }));
 $$('[data-arriba]').forEach(b => b.addEventListener('click', () => irArriba(b.closest('article.km'))));
-iniciarScrollSuave(); iniciarEntradas(); iniciarStickers(); iniciarToques(); iniciarCursor(); iniciarFavicon(); iniciarFaviconSec(); iniciarBotonMenu(); iniciarRastro(); iniciarPerfil(); iniciarSobreFotos(); iniciarUnirPuntos(); iniciarCintaIconos(); iniciarReceta(); iniciarColab(); iniciarKM3Entradas(); iniciarProporcion(); iniciarTira(); iniciarCarruseles(); iniciarCarruselUI(); iniciarParalaje(); iniciarViajeKM6(); iniciarMazo(); iniciarMecer(); iniciarRasgos(); iniciarFlotar(); achicarTodo(); iniciarEscenaDS(); iniciarActivoScroll(); iniciarCardsKM2Movil(); vigilarKM10(); iniciarGuia(); iniciarFuentesUI(); iniciarSticker(); iniciarComparador(); iniciarKM7Secciones(); iniciarKM1Entradas(); iniciarVideoHome();
+iniciarScrollSuave(); iniciarEntradas(); iniciarStickers(); iniciarToques(); iniciarCursor(); iniciarFavicon(); iniciarFaviconSec(); iniciarBotonMenu(); iniciarRastro(); iniciarPerfil(); iniciarSobreFotos(); iniciarUnirPuntos(); iniciarCintaIconos(); iniciarReceta(); iniciarColab(); iniciarKM3Entradas(); iniciarProporcion(); iniciarTira(); iniciarCarruseles(); iniciarCarruselUI(); iniciarParalaje(); iniciarViajeKM6(); iniciarMazo(); iniciarMecer(); iniciarRasgos(); iniciarFlotar(); achicarTodo(); iniciarEscenaDS(); iniciarActivoScroll(); iniciarCardsKM2Movil(); vigilarKM10(); iniciarGuia(); iniciarFuentesUI(); iniciarSticker(); iniciarComparador(); iniciarKM7Secciones(); iniciarKM1Entradas(); iniciarVideoHome(); iniciarGlosasMovil();
 addEventListener('hashchange', leerHash);
 
 if (location.hash && location.hash !== '#inicio') { portada.remove(); portadaFuera = true; leerHash(); }
