@@ -632,3 +632,12 @@ El 10/11/2026 se borró todo lo construido y se empezó de nuevo. Respaldo de la
   - **Desenfoque:** ya no se calcula en vivo sobre toda la pantalla. Cada cuadro se dibuja en un lienzo de 192 × 108 como el promedio de 13 copias apenas corridas, y el navegador lo agranda. Se ve igual de difuso. Si el lienzo no llega a dibujar, queda el `backdrop-filter` de antes (la clase `lienzo-listo` hace el cambio).
   - **Pausa:** el video solo corre con la Home a la vista. Se pausa al entrar a un KM y cuando la pestaña queda atrás, y sigue al volver.
   - **Se decidió no hacer:** cargar las imágenes de cada KM recién cuando hacen falta, ni el plan B de pasar a foto fija si se traba.
+- 23/11/2026 · Mateo · **KM 2 · "¿Qué enfoque tiene esta comunicación?" más sutil en el celular** (`iniciarEnfoqueMovil`). Antes cada card se abría al pasar por el medio de la pantalla y se cerraba al subir: volvía a su color y movía todo lo de abajo.
+  - Ahora cada card ya guarda el lugar de sus frases, así que no cambia de alto y la página no salta.
+  - Cuando asoma (al 80 % de la pantalla), pasa de su color a crema con un fundido de 0,8 s, aparecen las frases y **queda así**.
+  - Se reinician recién cuando toda la sección salió de la pantalla.
+  - En compu no cambia: sigue el hover.
+- 23/11/2026 · Mateo · **KM 2 · pilares y cards de "El tono" también más sutiles en el celular** (mismo criterio que las cards de enfoque; la función ahora es `iniciarCardsKM2Movil` y maneja los tres grupos).
+  - Cada card toma su color con un fundido de 0,8 s cuando asoma (al 80 % de la pantalla) y **queda así**. El grupo se reinicia recién cuando salió entero de la pantalla.
+  - Ninguna cambia de alto al scrollear. En "El tono", el ejemplo ya guarda su lugar y el título no se mueve.
+  - En compu no cambia: sigue el hover.

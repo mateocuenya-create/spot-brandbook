@@ -1369,10 +1369,10 @@ html.movil .submarcas-zona > p.abs:last-child{white-space:normal!important;text-
 /* ---- KM 2 ---- */
 html.movil .pilares{flex-direction:column}
 /* pilares: en el celular la descripción se ve siempre (no hay hover); tocar uno lo pinta de su color */
-html.movil .pilar{width:100%;height:auto;padding:36px 24px 40px;display:flex;flex-direction:column;gap:14px}
+html.movil .pilar{width:100%;height:auto;padding:36px 24px 40px;display:flex;flex-direction:column;gap:14px;transition:background .8s ease,color .8s ease}
 html.movil .pilar > *{position:static;width:auto}
 html.movil .pilar h3{font-size:40px;width:auto}
-html.movil .pilar .d{opacity:1;color:var(--crema);transition:color .3s var(--ease-out)}
+html.movil .pilar .d{opacity:1;color:var(--crema);transition:color .8s ease}
 html.movil .pilar .as{margin-top:14px}
 html.movil .pilar:is(:hover,:focus,:focus-within) .d{color:var(--negro)}
 html.movil .pilar:is(:focus,:focus-within){background:var(--c);color:var(--negro)}
@@ -1383,14 +1383,18 @@ html.movil .silueta{display:none}
 html.movil .rasgos{width:432px;height:560px}
 html.movil .rasgo{font-size:22px;padding:12px 26px;border-width:3px}
 html.movil .cards{width:100%;flex-direction:column}
-html.movil .card-enf{height:auto;min-height:180px}
+html.movil .card-enf{height:auto;justify-content:flex-start;transition:background .8s ease}
 html.movil .card-enf:is(:focus,:focus-within){background:var(--crema)}
-html.movil .card-enf:is(:focus,:focus-within) ul{max-height:186px;opacity:1;margin-top:16px}
+html.movil .card-enf ul{max-height:none;margin-top:16px;transition:opacity .8s ease .12s}
+html.movil .card-enf:is(:focus,:focus-within) ul{opacity:1}
 html.movil .cards-tono{flex-direction:column;gap:16px}
-html.movil .card-tono{width:100%;height:320px}
+html.movil .card-tono{width:100%;height:auto;min-height:320px;gap:24px}
+html.movil .card-tono::before{transition:left .8s ease,top .8s ease,width .8s ease,height .8s ease,border-radius .8s ease}
+html.movil .card-tono h5{transition:color .8s ease}
+html.movil .card-tono .ej{max-height:none;margin-top:12px;transition:opacity .8s ease .12s}
 html.movil .card-tono:is(:focus,:focus-within)::before{left:0;top:0;width:100%;height:100%;border-radius:0}
 html.movil .card-tono:is(:focus,:focus-within) h5{color:var(--negro)}
-html.movil .card-tono:is(:focus,:focus-within) .ej{max-height:140px;opacity:1;margin-top:12px}
+html.movil .card-tono:is(:focus,:focus-within) .ej{opacity:1}
 html.movil .perfil-sec{height:auto}
 html.movil .perfil{width:100%;padding:24px 0 0;gap:48px}
 html.movil .eje{grid-template-columns:1fr 1fr;column-gap:12px;row-gap:10px}
@@ -1592,10 +1596,10 @@ html.movil .pilar.activo .d{color:var(--negro)}
 html.movil .mv-item.activo .et{opacity:1;height:30px;margin-bottom:12px}
 html.movil .mv-item.activo .fr{font-weight:700;color:var(--violeta)}
 html.movil .card-enf.activo{background:var(--crema)}
-html.movil .card-enf.activo ul{max-height:186px;opacity:1;margin-top:16px}
+html.movil .card-enf.activo ul{opacity:1}
 html.movil .card-tono.activo::before{left:0;top:0;width:100%;height:100%;border-radius:0}
 html.movil .card-tono.activo h5{color:var(--negro)}
-html.movil .card-tono.activo .ej{max-height:140px;opacity:1;margin-top:12px}
+html.movil .card-tono.activo .ej{opacity:1}
 html.movil .logo-hover.activo .v2{opacity:1} html.movil .logo-hover.activo .v1{opacity:0}
 html.movil .mala.activo img{animation:negar .45s var(--ease-in-out)}
 html.movil .indebido.activo .caja{animation:negar .45s var(--ease-in-out)}
@@ -5094,7 +5098,7 @@ function achicarTodo(){
 
 /* Mobile: lo que en compu pasa con el mouse encima, en el celular pasa al llegar scrolleando: cuando la pieza cruza
    la franja del medio de la pantalla recibe .activo (y los eventos del mouse, para lo que se maneja con JS) */
-const ACTIVA_SCROLL = '.hito, #km10 .ico, .pilar, .mv-item, .card-enf, .card-tono, .fav-anim, .sobre-foto, .logo-hover, .mala, .indebido, div.signo, .filtros figure, .uso, .colab-muestra, .xan, .app-pantallas img';
+const ACTIVA_SCROLL = '.hito, #km10 .ico, .mv-item, .fav-anim, .sobre-foto, .logo-hover, .mala, .indebido, div.signo, .filtros figure, .uso, .colab-muestra, .xan, .app-pantallas img';
 function iniciarActivoScroll(){
   if (!MOVIL) return;
   $$('article.km').forEach(km => {
@@ -5112,6 +5116,25 @@ function iniciarActivoScroll(){
     };
     km.addEventListener('scroll', () => { if (!pend) { pend = true; requestAnimationFrame(mirar); } }, { passive: true });
   });
+}
+
+/* KM 2 en el celular (pilares, enfoque y tono): cada card toma su estado al asomar y queda así.
+   Cada grupo se reinicia recién cuando salió entero de la pantalla, para que nada cambie mientras se está leyendo. */
+function iniciarCardsKM2Movil(){
+  const km = $('#km2'); if (!MOVIL || !km) return;
+  const grupos = ['#pilares', '#enfoque', '#tono'].map(q => $(q, km)).filter(Boolean).map(caja => ({ caja, cards: [...caja.children] }));
+  let pend = false;
+  const mirar = () => {
+    pend = false; if (!km.classList.contains('activa')) return;
+    const h = innerHeight;
+    grupos.forEach(({ caja, cards }) => {
+      const r = caja.getBoundingClientRect();
+      if (r.bottom < 0 || r.top > h) { cards.forEach(c => c.classList.remove('activo')); return; }
+      cards.forEach(c => { if (c.getBoundingClientRect().top < h * .8) c.classList.add('activo'); });
+    });
+  };
+  km.addEventListener('scroll', () => { if (!pend) { pend = true; requestAnimationFrame(mirar); } }, { passive: true });
+  mirar();
 }
 
 /* Escala: las páginas se diseñaron a 1920 px (480 px en mobile) */
@@ -5140,7 +5163,7 @@ addEventListener('keydown', e => { if (e.key === 'Escape') cerrarMenu(); });
 $$('[data-a]').forEach(b => b.addEventListener('click', () => scrollA(b.closest('article.km').id, b.dataset.a)));
 $$('[data-bajar]').forEach(b => b.addEventListener('click', () => { const k = b.closest('article.km'); irA_Y(k, k.scrollTop + innerHeight * .9); }));
 $$('[data-arriba]').forEach(b => b.addEventListener('click', () => irArriba(b.closest('article.km'))));
-iniciarScrollSuave(); iniciarEntradas(); iniciarStickers(); iniciarToques(); iniciarCursor(); iniciarFavicon(); iniciarFaviconSec(); iniciarBotonMenu(); iniciarRastro(); iniciarPerfil(); iniciarSobreFotos(); iniciarUnirPuntos(); iniciarCintaIconos(); iniciarReceta(); iniciarColab(); iniciarKM3Entradas(); iniciarProporcion(); iniciarTira(); iniciarCarruseles(); iniciarCarruselUI(); iniciarParalaje(); iniciarViajeKM6(); iniciarMazo(); iniciarMecer(); iniciarRasgos(); iniciarFlotar(); achicarTodo(); iniciarEscenaDS(); iniciarActivoScroll(); vigilarKM10(); iniciarGuia(); iniciarFuentesUI(); iniciarSticker(); iniciarComparador(); iniciarKM7Secciones(); iniciarKM1Entradas(); iniciarVideoHome();
+iniciarScrollSuave(); iniciarEntradas(); iniciarStickers(); iniciarToques(); iniciarCursor(); iniciarFavicon(); iniciarFaviconSec(); iniciarBotonMenu(); iniciarRastro(); iniciarPerfil(); iniciarSobreFotos(); iniciarUnirPuntos(); iniciarCintaIconos(); iniciarReceta(); iniciarColab(); iniciarKM3Entradas(); iniciarProporcion(); iniciarTira(); iniciarCarruseles(); iniciarCarruselUI(); iniciarParalaje(); iniciarViajeKM6(); iniciarMazo(); iniciarMecer(); iniciarRasgos(); iniciarFlotar(); achicarTodo(); iniciarEscenaDS(); iniciarActivoScroll(); iniciarCardsKM2Movil(); vigilarKM10(); iniciarGuia(); iniciarFuentesUI(); iniciarSticker(); iniciarComparador(); iniciarKM7Secciones(); iniciarKM1Entradas(); iniciarVideoHome();
 addEventListener('hashchange', leerHash);
 
 if (location.hash && location.hash !== '#inicio') { portada.remove(); portadaFuera = true; leerHash(); }
