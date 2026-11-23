@@ -627,3 +627,8 @@ El 10/11/2026 se borró todo lo construido y se empezó de nuevo. Respaldo de la
     - las tres fotos de cada mazo se reparten como cartas desde abajo, y después se siguen pudiendo tirar.
   - **Paradas:** la anterior entra desde la izquierda, la siguiente desde la derecha, y después "Volver arriba".
   - Igual en el celular.
+- 23/11/2026 · Mateo · **Video de la Home más liviano** (al equipo se le trababa en algunas compus del campus; `iniciarVideoHome`).
+  - **Archivo:** `assets/home/home.mp4` pasó de 11 MB (960 × 540) a 1,9 MB (568 × 320), con `avconvert` PresetMediumQuality. Sigue a 24 cuadros por segundo. No usar PresetLowQuality: pesa menos, pero baja a 15 cuadros y el movimiento se ve cortado.
+  - **Desenfoque:** ya no se calcula en vivo sobre toda la pantalla. Cada cuadro se dibuja en un lienzo de 192 × 108 como el promedio de 13 copias apenas corridas, y el navegador lo agranda. Se ve igual de difuso. Si el lienzo no llega a dibujar, queda el `backdrop-filter` de antes (la clase `lienzo-listo` hace el cambio).
+  - **Pausa:** el video solo corre con la Home a la vista. Se pausa al entrar a un KM y cuando la pestaña queda atrás, y sigue al volver.
+  - **Se decidió no hacer:** cargar las imágenes de cada KM recién cuando hacen falta, ni el plan B de pasar a foto fija si se traba.
