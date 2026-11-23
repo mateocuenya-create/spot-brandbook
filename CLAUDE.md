@@ -650,3 +650,4 @@ El 10/11/2026 se borró todo lo construido y se empezó de nuevo. Respaldo de la
   - Si la escena sale de la pantalla se reinicia, y se repite al volver.
   - En compu no cambia: sigue fija y avanza con el scroll.
 - 23/11/2026 · Mateo · **Carteles del glosario en el celular: respetan los márgenes** ("tercer lugar" en KM 2 y "deportes de recorrido" en KM 1; `iniciarGlosasMovil`). Antes arrancaban desde la palabra y se cortaban a la derecha. Ahora van de margen a margen de la columna (24 px de cada lado), estén donde estén la palabra, y si abajo no entran en la pantalla se abren para arriba. En compu no cambia.
+- 23/11/2026 · Mateo · **KM 3 · Construcción: cotas centradas en el celular.** Los números (9, 24 y 124 px), sus flechas y las franjas naranja y rosa forman un bloque centrado en la pantalla, con el mismo margen a cada lado. Para que entre, las franjas miden 420 px de diseño en vez de 887. Los logos siguen pasando por debajo. En compu no cambia.
