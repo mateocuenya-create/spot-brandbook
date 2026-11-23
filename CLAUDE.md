@@ -641,3 +641,11 @@ El 10/11/2026 se borró todo lo construido y se empezó de nuevo. Respaldo de la
   - Cada card toma su color con un fundido de 0,8 s cuando asoma (al 80 % de la pantalla) y **queda así**. El grupo se reinicia recién cuando salió entero de la pantalla.
   - Ninguna cambia de alto al scrollear. En "El tono", el ejemplo ya guarda su lugar y el título no se mueve.
   - En compu no cambia: sigue el hover.
+- 23/11/2026 · Mateo · **KM 3 · Construcción: ya no vibra en el celular** (`iniciarTira`). La sección se mantenía fija con JS (`fijarMovil`), y en el iPhone el scroll y el JS van a destiempo, por eso temblaba.
+  - En el celular ya no se fija: la página scrollea normal y los logos pasan de costado mientras la tira cruza la pantalla. También desapareció el espacio vacío que quedaba abajo.
+  - En compu no cambia: sigue fija con `position: sticky`.
+  - Regla: en mobile no fijar piezas moviéndolas con JS al ritmo del scroll.
+- 23/11/2026 · Mateo · **KM 7 · De átomos a botones: ya no se fija en el celular** (`iniciarEscenaDS`), por la misma vibración que tenía Construcción. Se borró `fijarMovil`, que ya no usa nadie.
+  - La página scrollea normal. Cuando se ve el 70 % de la escena, los 3 pasos se reproducen solos: los puntos, a los 1,5 s el botón se despliega y a los 4,6 s queda el botón amarillo con su frase.
+  - Si la escena sale de la pantalla se reinicia, y se repite al volver.
+  - En compu no cambia: sigue fija y avanza con el scroll.
